@@ -75,7 +75,7 @@ const MainMenu = () => {
         <li id="cow" className="relative" onMouseOver={overMenu} onMouseOut={outMenu}>
           <Link href="/products">소고기</Link>
           <ol className={`w-32 absolute border border-black ${menu.cow ? "" : "hidden"}`}>
-            <li><Link href="#">특수모듬</Link></li>
+            <li><Link href="/products">특수모듬</Link></li>
             <li><Link href="#">육회/사시미</Link></li>
           </ol>
         </li>
