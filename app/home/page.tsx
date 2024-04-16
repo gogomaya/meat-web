@@ -1,14 +1,17 @@
 import MainLayout from "@/app/main-layout"
 import HomeSwiper from "./swiper"
-import {HomeBestMenu, HomeYoutube} from "./home"
+import {HomeBestMenu, HomeBestReview, HomeBrandStory, HomePledge, HomeYoutube} from "./home"
 
 const Home = () => {
   return (
     <MainLayout>
-      <div className="mt-4">
+      <div className="w-full">
         <HomeSwiper />
+        <HomePledge />
         <HomeBestMenu />
-        <HomeYoutube />
+        <HomeBestReview />
+        <HomeBrandStory />
+        <HomeYoutube/>
       </div>
     </MainLayout>
   )
