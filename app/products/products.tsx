@@ -1,6 +1,38 @@
 "use client"
 import Image from "next/image"
 import Link from "next/link"
+import {FormControl, InputLabel, MenuItem, Pagination, Select} from "@mui/material"
+
+export const ProductsSearch = () => {
+  return (
+    <section className="flex justify-between items-center">
+      <span>상품이 모두 <strong>4</strong>개 있습니다.</span>
+      <FormControl>
+        <InputLabel>상품정렬</InputLabel>
+        <Select
+          label="상품정렬"
+          className="w-32"
+        >
+          <MenuItem value="신상품">신상품</MenuItem>
+          <MenuItem value="추천순">추천순</MenuItem>
+          <MenuItem value="판매량순">판매량순</MenuItem>
+        </Select>
+      </FormControl>
+    </section>
+  )
+}
+
+export const ProductsPagination = () => {
+  return (
+    <Pagination
+      variant="outlined"
+      color="primary"
+      count={5}
+      page={1}
+      className="flex justify-center"
+    />
+  )
+}
 
 export const ProductsList = () => {
   return (
