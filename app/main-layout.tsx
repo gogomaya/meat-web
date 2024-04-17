@@ -9,9 +9,9 @@ import WorkOutlineIcon from "@mui/icons-material/WorkOutline"
 import CloseIcon from "@mui/icons-material/Close"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import {Accordion, AccordionDetails, AccordionSummary, Badge, Box, Divider, Drawer, IconButton, InputBase, Menu, MenuList, Typography} from "@mui/material"
-import TwitterIcon from '@mui/icons-material/Twitter';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import YouTubeIcon from '@mui/icons-material/YouTube';
+import TwitterIcon from "@mui/icons-material/Twitter"
+import InstagramIcon from "@mui/icons-material/Instagram"
+import YouTubeIcon from "@mui/icons-material/YouTube"
 
 const MainLayout = ({
   children
@@ -20,8 +20,8 @@ const MainLayout = ({
 }) => {
   return (
     <div className="max-w-screen-xl mx-auto">
-      <header className="fixed top-0 z-10 bg-white w-full max-w-screen-xl flex justify-center items-center"
-      style={{ backgroundColor: 'rgba(255, 255, 255, 0.88)' }}>
+      <header id="header" className="fixed top-0 z-10 bg-white w-full max-w-screen-xl flex justify-center items-center"
+        style={{backgroundColor: "rgba(255, 255, 255, 0.88)"}}>
         <MainMobileMenu />
         <Link href="/">
           <Image
@@ -71,7 +71,7 @@ const MainMenu = () => {
     setMenu(getMenu())
   }
   return (
-    <nav className="invisible md:visible flex-1 flex justify-center items-center">
+    <nav id="header" className="invisible md:visible flex-1 flex justify-center items-center">
       <ul className="flex">
         <li>
           <Link href="/products">오늘의 메뉴</Link>
@@ -247,8 +247,8 @@ const SearchBar = () => {
 }
 
 const MainBottom = () => (
-  <footer className="mt-4">
-    <section>
+  <footer className="mt-4" style={{backgroundColor: "#f0f0f0"}}>
+    <section className="mt-4">
       <Link href="/">
         <Image
           src="/images/logo.png"
@@ -285,7 +285,7 @@ const MainBottom = () => (
         </li>      
       </ul>
     </section>
-    <Divider className="mt-4" sx={{ border:'1px solid secondary' }}/>
+    <Divider className="mt-4" sx={{border:"1px solid secondary"}}/>
     <section className="mt-4">
       <ul className="flex justify-center items-center">
         <li>회사소개</li>

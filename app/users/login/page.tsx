@@ -1,5 +1,5 @@
 import MainLayout from "@/app/main-layout"
-import { GeneralPagination } from "@/app/reviews/reviews"
+import {GeneralPagination} from "@/app/reviews/reviews"
 
 const Login = () => {
   return (

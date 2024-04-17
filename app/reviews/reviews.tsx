@@ -39,7 +39,6 @@ export const ReviewCard = () => {
             꽃삼겹 기름 정말 깨끗하고요, 비린내 누린내 잡내 정말 1도 안나요.. 너무 신기해요. 
             여지껏 먹어본 대패고기들 중에 1등입니다. 
             저희 엄마랑 언니는 비계를 싫어해서 뒷다리살을 구워먹는 사람들인데, 꽃삼겹 대패는 이게 뭐냐 너무 맛있다고 하면서 잘 먹었습니다. 
-            정말 신선하고 고기가 야들야들하니 너무 좋았어요. 재구매하겠습니다, 번창하세요!
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -77,9 +76,9 @@ export const MonthlyBestReview = () => {
 
 export const PhotoReview = () => {
   return (
-    <><span>PHOTO REVIEW | 포토리뷰</span>
+    <><span className="mt-4">PHOTO REVIEW | 포토리뷰</span>
 
-      <section className="flex justify-between align-center">
+      <section className="flex justify-between align-center mt-4">
         <FormControl className="lg:w-[50.3%]">
           <InputLabel>카테고리를 선택해주세요</InputLabel>
           <Select
@@ -110,7 +109,9 @@ export const PhotoReview = () => {
           <IconButton type="button">
             <SearchIcon />
           </IconButton>
-        </section>    </section><ol>
+        </section>
+      </section>
+      <ol className="mt-4">
         <li className="inline-block align-top w-[50%] md:w-[33.3%] lg:w-[20.0%]">
           <ReviewCard />
         </li>
@@ -137,7 +138,7 @@ export const PhotoPagination = () => {
       color="primary"
       count={5}
       page={1}
-      className="flex justify-center"
+      className="flex justify-center mt-4"
     />
   )
 }

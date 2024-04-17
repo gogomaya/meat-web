@@ -1,6 +1,6 @@
 "use client"
 import {ProductsList} from "@/app/products/products"
-import { Divider, Typography } from "@mui/material"
+import {Divider, Typography} from "@mui/material"
 import Image from "next/image"
 
 export const HomePledge = () => {
@@ -37,8 +37,8 @@ export const HomeBestReview = () => {
 
 export const HomeBrandStory = () => {
   return (
-    <section className="flex items-center w-full" style={{ marginBottom: '50px', marginTop: '50px' }}>      
-      <Divider sx={{ border:'2px solid red', width: '115px'}}/>
+    <section className="flex items-center w-full" style={{marginBottom: "50px", marginTop: "50px"}}>      
+      <Divider sx={{border:"2px solid red", width: "115px"}}/>
       <Typography className="mx-5 w-[30%]" variant="h3">Brand Story</Typography>
       <div className="w-[46%]">
         <Typography className="mb-1" variant="h6" color="textSecondary">대한민국 육식문화</Typography>
