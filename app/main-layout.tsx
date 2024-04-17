@@ -20,8 +20,11 @@ const MainLayout = ({
 }) => {
   return (
     <div className="max-w-screen-xl mx-auto">
-      <header id="header" className="fixed top-0 z-10 bg-white w-full max-w-screen-xl flex justify-center items-center px-4 py-2"
-        style={{backgroundColor: "rgba(255, 255, 255, 0.88)"}}>
+      <header
+        id="header"
+        className="fixed top-0 z-10 bg-white w-full max-w-screen-xl flex justify-center items-center px-4 py-2"
+        style={{backgroundColor: "rgba(255, 255, 255, 0.88)"}}
+      >
         <MainMobileMenu />
         <Link href="/">
           <Image
@@ -140,7 +143,7 @@ const MainSearch = () => {
 const MainMobileMenu = () => {
   const [open, setOpen] = useState(false)
   return <>
-    <IconButton className="md:hidden" onClick={() => setOpen(true)}>
+    <IconButton style={{display: "none"}} className="!block md:!hidden" onClick={() => setOpen(true)}>
       <MenuIcon />
     </IconButton>
     <Drawer
