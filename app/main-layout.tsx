@@ -20,7 +20,7 @@ const MainLayout = ({
 }) => {
   return (
     <div className="max-w-screen-xl mx-auto">
-      <header id="header" className="fixed top-0 z-10 bg-white w-full max-w-screen-xl flex justify-center items-center"
+      <header id="header" className="fixed top-0 z-10 bg-white w-full max-w-screen-xl flex justify-center items-center px-4 py-2"
         style={{backgroundColor: "rgba(255, 255, 255, 0.88)"}}>
         <MainMobileMenu />
         <Link href="/">
@@ -29,6 +29,7 @@ const MainLayout = ({
             alt="Logo"
             width={32}
             height={32}
+            sizes="100vw"
             className="md:w-16"
             priority
           />
