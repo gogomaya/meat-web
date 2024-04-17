@@ -1,6 +1,19 @@
+import MainLayout from "@/app/main-layout"
+import HomeSwiper from "./swiper"
+import {HomeBestMenu, HomeBestReview, HomeBrandStory, HomePledge, HomeYoutube} from "./home"
+
 const Home = () => {
   return (
-    <div>Home</div>
+    <MainLayout>
+      <div className="w-full">
+        <HomeSwiper />
+        <HomePledge />
+        <HomeBestMenu />
+        <HomeBestReview />
+        <HomeBrandStory />
+        <HomeYoutube/>
+      </div>
+    </MainLayout>
   )
 }
 
