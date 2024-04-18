@@ -42,7 +42,7 @@ export const ProductsPagination = () => {
 export const ProductsList = () => {
   return (
     <ol>
-      <li className="inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]">
+      <li className="p-1 inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]">
         <Link href="/products/1">
           <Image
             src="/images/main-best-menu1.jpg"
@@ -51,7 +51,7 @@ export const ProductsList = () => {
             height={0}
             priority
             sizes="100vw"
-            className="w-full aspect-square object-cover"
+            className="w-full aspect-square object-cover rounded-lg"
           />
         </Link>
         <p>
@@ -59,7 +59,7 @@ export const ProductsList = () => {
           <strong>26,000원</strong>
         </p>
       </li>
-      <li className="inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]">
+      <li className="p-1 inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]">
         <Image
           src="/images/main-best-menu2.jpg"
           alt="best-menu2"
@@ -67,10 +67,10 @@ export const ProductsList = () => {
           height={0}
           priority
           sizes="100vw"
-          className="w-full aspect-square object-cover"
+          className="w-full aspect-square object-cover rounded-lg"
         />
       </li>
-      <li className="inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]">
+      <li className="p-1 inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]">
         <Image
           src="/images/main-swiper2.jpg"
           alt="best-menu3"
@@ -78,10 +78,10 @@ export const ProductsList = () => {
           height={0}
           priority
           sizes="100vw"
-          className="w-full aspect-square object-cover"
+          className="w-full aspect-square object-cover rounded-lg"
         />
       </li>
-      <li className="inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]">
+      <li className="p-1 inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]">
         <Image
           src="/images/main-swiper3.jpg"
           alt="best-menu4"
@@ -89,7 +89,7 @@ export const ProductsList = () => {
           height={0}
           priority
           sizes="100vw"
-          className="w-full aspect-square object-cover"
+          className="w-full aspect-square object-cover rounded-lg"
         />
       </li>
     </ol>
@@ -100,7 +100,7 @@ export const ProductsDetailContent = () => {
   return (
     <>
       <div className="container mx-auto py-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {/* 상품 이미지 */}
           <div className="flex justify-center items-center">
             <Image
@@ -108,6 +108,7 @@ export const ProductsDetailContent = () => {
               alt="Product Image"
               width={400}
               height={400}
+              priority
             />
           </div>
           {/* 상품 정보 */}
@@ -172,7 +173,7 @@ export const ProductDetail = () => {
 
 export const ShipDetail = () => {
   return (
-    <div>
+    <div className="py-2 px-4 mt-4">
       <strong>배송/주문/환불 정보</strong>
       <div><Typography>CJ 대한통운으로 배송됩니다</Typography>
         <div>- 배송지역은 제주도 지역을 포함한 도서 산간 지역의 경우 계절에 따라 발송 가능여부가 달라지기 때문에 상세 페이지 참고 부탁드립니다</div>
@@ -219,14 +220,18 @@ export const NavDetail = () => {
     }
   }
   return (
-    <nav className={`sticky top-12 w-full bg-white z-10 ${isFixed ? "visible" : "invisible md:visible"} flex-1 flex justify-center items-center nav-detail`} style={{height: "80px", backgroundColor: "rgba(255, 255, 255, 0.88)"}}>
-      <ul className="flex">
-        <li onClick={() => scrollToElement("detail")}><button>상품상세</button></li>
-        <li onClick={() => scrollToElement("review")} className="relative mx-3" ><button>리뷰</button></li>
-        <li onClick={() => scrollToElement("qna")}><button>문의</button></li>
-        <li onClick={() => scrollToElement("ship")} className="relative mx-3" ><button>주문정보</button></li>
+    <nav className={`sticky top-16 w-full bg-white z-10 ${isFixed ? "visible" : "invisible md:visible"} flex-1 flex justify-center items-center nav-detail`} style={{height: "80px", backgroundColor: "rgba(255, 255, 255, 0.88)"}}>
+      <ul className="flex gap-3">
+        <li onClick={() => scrollToElement("detail")} className="relative overflow-hidden">
+          <button>상품상세</button>
+          <span className="highlight-underline"></span>
+        </li>
+        <li onClick={() => scrollToElement("review")} className="hover:underline"><button>리뷰</button></li>
+        <li onClick={() => scrollToElement("qna")} className="hover:underline"><button>문의</button></li>
+        <li onClick={() => scrollToElement("ship")} className="hover:underline"><button>주문정보</button></li>
       </ul>
     </nav>
+
   )
 }
 

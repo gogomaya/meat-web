@@ -8,7 +8,7 @@ const Products = () => {
   return (
     <MainLayout>
       <ProductsDetailContent />
-      <Divider id="divider" className="my-8" />
+      <Divider id="divider" className="my-3" />
       <NavDetail />
       {/* 상품 상세 정보 */}
       <div id="detail"><ProductDetail /></div>
