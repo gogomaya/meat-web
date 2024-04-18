@@ -13,6 +13,9 @@ const RootLayout = ({
 }) => {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/images/logo.png" />
+      </head>
       <body>{children}</body>
     </html>
   )

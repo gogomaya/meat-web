@@ -37,7 +37,7 @@ export const HomeBestReview = () => {
 
 export const HomeBrandStory = () => {
   return (
-    <section className="flex items-center w-full" style={{marginBottom: "50px", marginTop: "50px"}}>      
+    <section className="flex items-center w-full px-4 py-2" style={{marginBottom: "50px", marginTop: "50px"}}>      
       <Divider sx={{border:"2px solid red", width: "115px"}}/>
       <Typography className="mx-5 w-[30%]" variant="h3">Brand Story</Typography>
       <div className="w-[46%]">
@@ -46,6 +46,28 @@ export const HomeBrandStory = () => {
         <Typography variant="h6" color="textSecondary">대한민국에서 가장 좋은 고기로 정직하게 보여드리겠습니다</Typography>
       </div>
     </section>
+  )
+}
+
+export const HomeDunDunRice = () => {
+  return (
+    <div className="container mx-auto py-16 bg-cover bg-center" style={{backgroundImage: "url(\"/images/main_visual_02.jpg\")"}}>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-white bg-opacity-75 rounded-lg p-8">
+        <div>
+          <Image
+            src="/images/main_visual_02.jpg"
+            alt="Ddun Dun Rice"
+            width={600}
+            height={400}
+            className="rounded-lg"
+          />
+        </div>
+        <div className="flex flex-col justify-center">
+          <p className="text-xl font-semibold mb-4">든든한 한끼를 즐겨보세요</p>
+          <p className="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dignissim erat id erat accumsan, a mattis eros ultricies. Ut sed sollicitudin nisl.</p>
+        </div>
+      </div>
+    </div>
   )
 }
 

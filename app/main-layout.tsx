@@ -12,6 +12,8 @@ import {Accordion, AccordionDetails, AccordionSummary, Badge, Box, Divider, Draw
 import TwitterIcon from "@mui/icons-material/Twitter"
 import InstagramIcon from "@mui/icons-material/Instagram"
 import YouTubeIcon from "@mui/icons-material/YouTube"
+import SupportAgentIcon from "@mui/icons-material/SupportAgent"
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline"
 
 const MainLayout = ({
   children
@@ -20,11 +22,8 @@ const MainLayout = ({
 }) => {
   return (
     <div className="max-w-screen-xl mx-auto">
-      <header
-        id="header"
-        className="fixed top-0 z-10 bg-white w-full max-w-screen-xl flex justify-center items-center px-4 py-2"
-        style={{backgroundColor: "rgba(255, 255, 255, 0.88)"}}
-      >
+      <header id="header" className="fixed top-0 z-10 bg-white w-full max-w-screen-xl flex justify-center items-center px-4"
+        style={{backgroundColor: "rgba(255, 255, 255, 0.88)"}}>
         <MainMobileMenu />
         <Link href="/">
           <Image
@@ -251,58 +250,74 @@ const SearchBar = () => {
 }
 
 const MainBottom = () => (
-  <footer className="mt-4" style={{backgroundColor: "#f0f0f0"}}>
-    <section className="mt-4">
-      <Link href="/">
-        <Image
-          src="/images/logo.png"
-          alt="Logo"
-          width={32}
-          height={32}
-          className="md:w-16"
-          priority
-        />
-      </Link>
-      <ul className="flex mt-4">
-        <li className="inline-block w-full lg:w-[25%]">
-          <Typography variant="h6"><strong>고객센터</strong></Typography>
-          <Typography variant="h6">1888-8888</Typography>
-          <Typography variant="body1">영업시간 | 09:00 - 18:00 (주말, 공휴일 제외)</Typography>
-          <Typography variant="body1">점심시간 | 12:00 - 13:00</Typography>
-          <Typography variant="body1">1888-8888</Typography>
-        </li>
-        <li className="inline-block w-full lg:w-[25%] mx-3">
-          <Typography variant="h6"><strong>PARTNERSHIP</strong></Typography>
-          <Typography variant="body1">입점제안 | hansol@hansol.com</Typography>
-          <Typography variant="body1">마케팅 제휴 | hansol@hansol.com</Typography>
-        </li>
-        <li className="inline-block w-full lg:w-[25%]">
-          <Typography variant="h6"><strong>RETURNS & EXCHANGES</strong></Typography>
-          <Typography variant="body1">반품주소 | 서울특별시 강남구 도곡동 115-15</Typography>
-          <Typography variant="body1">반품문의 | 1888-8888</Typography>
-        </li>
-        <li className="inline-block w-full lg:w-[25%]">
-          <Typography variant="h6"><strong>SNS</strong></Typography>
-          <TwitterIcon />
-          <InstagramIcon />
-          <YouTubeIcon />
-        </li>      
-      </ul>
+  <footer className="mt-4">
+    <section className="px-1 py-2">
+      <div className="flex mt-4 relative gap-5">
+        <div className="inline-block w-full lg:w-[50%] bg-gray-200 rounded-lg p-4">
+          <div className="flex items-center justify-center gap-3">
+            <div>
+              <h3 className="text-center">한솔축산<br></br>서비스 안내</h3>
+              <a href="tel:1588-8888" className="text-center block">1588-8888</a>
+            </div>
+            <HelpOutlineIcon className="w-12 h-12"/>
+          </div>
+          <p className="text-center">운영시간</p>
+          <p className="text-center">(점심시간 12:00 ~ 13:00)</p>
+          <div className="flex justify-center item-center gap-2">
+            <button className="w-full lg:w-[20.3%] bg-white rounded-lg text-center mt-2">1:1문의</button>
+            <button className="w-full lg:w-[20.3%] bg-white rounded-lg text-center mt-2">자주하는 질문</button>
+          </div>
+        </div>
+        <div className="inline-block w-full lg:w-[50%] bg-gray-300 rounded-lg p-4">
+          <div className="flex items-center justify-center gap-3">
+            <div>
+              <h3 className="text-center">고객센터</h3>
+              <a href="tel:1588-8888" className="text-center block">1588-8888</a>
+            </div>
+            <SupportAgentIcon className="w-12 h-12" />
+          </div>
+          <p className="text-center">운영시간</p>
+          <p className="text-center">(점심시간 12:00 ~ 13:00)</p>
+          <div className="flex justify-center item-center gap-2">
+            <button className="w-full lg:w-[20.3%] bg-white rounded-lg text-center mt-2">1:1문의</button>
+            <button className="w-full lg:w-[20.3%] bg-white rounded-lg text-center mt-2">자주하는 질문</button>
+          </div>
+        </div>
+      </div>
     </section>
     <Divider className="mt-4" sx={{border:"1px solid secondary"}}/>
-    <section className="mt-4">
-      <ul className="flex justify-center items-center">
-        <li>회사소개</li>
-        <li>이용안내</li>
-        <li>이용약관</li>
-        <li>개인정보처리방침</li>
-      </ul>
-      <p className="text-center">주식회사 한솔 | 대표 김김김 | 전화 02-222-2222 </p>
-      <p className="text-center">서울특별시 강남구 도곡동 115-15</p>
-      <p className="text-center">반품주소 |서울특별시 강남구 도곡동 115-15 </p>
-      <p className="text-center">사업자등록번호 | </p>
-      <p className="text-center">통신판매업신고번호 | </p>
-      <p className="text-center">© 2024 한솔. All right reserved.</p>
+    <section className="mt-8 p-5 bg-gray-200 text-sm flex items-start justify-between">
+      <div>
+        <ul className="flex gap-3">
+          <li>회사소개</li>
+          <li>이용안내</li>
+          <li>이용약관</li>
+          <li>개인정보처리방침</li>
+        </ul>
+        <h1 className="mt-4 mb-4"><strong>(주)한솔축산</strong></h1>
+        <ul className="flex gap-3">
+          <li>서울특별시 강남구 도곡동 115-15</li>
+          <li>대표이사 | 김김김</li>
+          <li>사업자등록번호 | 123123-123123123</li>
+          <li>통신판매업신고번호 | 1231231-123123</li>
+        </ul>
+        <ul className="flex gap-3">
+          <li>이메일 naver@naver.com</li>
+          <li>전화번호 02-020-02020</li>
+        </ul>
+        <p className="mb-3">© 2024 한솔. All right reserved.</p>
+      </div>
+      <div>
+        <Link href="/">
+          <Image
+            src="/images/logo.png"
+            alt="Logo"
+            width={150}
+            height={90}
+            sizes="100vw"
+          />
+        </Link>
+      </div>
     </section>
   </footer>
 )
