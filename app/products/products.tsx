@@ -150,17 +150,19 @@ export const ProductsDetailContent = () => {
             <Typography variant="body1" gutterBottom>
               <CheckRoundedIcon />포장방법
             </Typography>
-            <Typography variant="body1" gutterBottom>
-              <CheckRoundedIcon />수량
-            </Typography>
-            <div className="flex gap-2">
+            <div className="flex gap-5 pb-5">
+              <Typography variant="body1" gutterBottom>
+                <CheckRoundedIcon />수량
+              </Typography>
               <input
                 type="number"
                 value={quantity}
                 onChange={handleQuantityChange}
-                className="w-24 p-2 border border-gray-300 rounded-md"
+                className="w-24 p-1 border border-gray-300 rounded-md"
                 min="1"
               />
+            </div>
+            <div className="flex gap-2">
               <Button variant="contained" color="primary" className="mr-4">
                 장바구니
               </Button>
@@ -242,50 +244,23 @@ export const NavDetail = () => {
   const [isHovered, setIsHovered] = React.useState(false)
   const [isClicked, setIsClicked] = React.useState(false)
 
-  const handleMouseEnter = () => {
+
+  const handleMouseHover = () => {
     setIsHovered(true)
   }
 
-  const handleMouseLeave = () => {
-    setIsHovered(false)
+  const handleMouseClick = (menu: string | boolean | ((prevState: boolean) => boolean)) => {
+    setIsClicked(menu)
   }
-  const handleClick = () => {
-    setIsClicked(!isClicked)
-    scrollToElement("detail")
-  }
+
+
   return (
     <nav className={`sticky top-16 w-full bg-white z-10 ${isFixed ? "visible" : "invisible md:visible"} flex-1 flex justify-center items-center nav-detail`} style={{height: "80px", backgroundColor: "rgba(255, 255, 255, 0.88)"}}>
       <ul className="flex gap-3">
-        <li onClick={handleClick}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          className={isClicked || isHovered ? "highlight-underline" : ""}>
-          <button>상품상세</button>
-        </li>
-        <li onClick={handleClick}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          className={isClicked || isHovered ? "highlight-underline" : ""}>
-          <button>상품상세</button>
-        </li>
-        <li onClick={handleClick}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          className={isClicked || isHovered ? "highlight-underline" : ""}>
-          <button>리뷰</button>
-        </li>
-        <li onClick={handleClick}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          className={isClicked || isHovered ? "highlight-underline" : ""}>
-          <button>문의</button>
-        </li>
-        <li onClick={handleClick}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          className={isClicked || isHovered ? "highlight-underline" : ""}>
-          <button>주문정보</button>
-        </li>
+        <li onClick={() => { scrollToElement("detail"); handleMouseHover(); handleMouseClick("detail") }} className={[isHovered ? "highlight-underline" : "", isClicked === "detail"  ? "text-red-500" : ""].join(" ")}><button>상품상세</button></li>
+        <li onClick={() => { scrollToElement("review2"); handleMouseHover(); handleMouseClick("review2") }} className={[isHovered ? "highlight-underline" : "", isClicked === "review2"  ? "text-red-500" : ""].join(" ")}><button>리뷰</button></li>
+        <li onClick={() => { scrollToElement("qna"); handleMouseHover(); handleMouseClick("qna") }} className={[isHovered ? "highlight-underline" : "", isClicked === "qna"  ? "text-red-500" : ""].join(" ")}><button>문의</button></li>
+        <li onClick={() => { scrollToElement("ship"); handleMouseHover(); handleMouseClick("ship") }} className={[isHovered ? "highlight-underline" : "", isClicked === "ship"  ? "text-red-500" : ""].join(" ")}><button>주문정보 </button></li>
       </ul>
     </nav>
 
