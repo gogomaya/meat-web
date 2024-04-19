@@ -13,7 +13,7 @@ const Products = () => {
       {/* 상품 상세 정보 */}
       <div id="detail"><ProductDetail /></div>
       {/* 리뷰 */}
-      <div id="review" style={{backgroundColor: "#f0f1f1", height: "500px"}}>리뷰</div>
+      <div id="review2" style={{backgroundColor: "#f0f1f1", height: "500px"}}>리뷰</div>
       {/* 문의 */}
       <div id="qna" style={{backgroundColor: "#f0f0a0", height: "500px"}}>문의</div>
       {/* 주문정보 */}

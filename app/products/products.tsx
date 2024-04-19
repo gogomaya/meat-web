@@ -7,6 +7,8 @@ import * as React from "react"
 import {useTheme} from "@mui/material/styles"
 import AppBar from "@mui/material/AppBar"
 import SwipeableViews from "react-swipeable-views"
+import AddIcon from "@mui/icons-material/Add"
+import RemoveIcon from "@mui/icons-material/Remove"
 
 export const ProductsSearch = () => {
   return (
@@ -97,11 +99,21 @@ export const ProductsList = () => {
 }
 
 export const ProductsDetailContent = () => {
+  const [quantity, setQuantity] = React.useState(1)
+  const pricePerUnit = 69000 // 1개당 가격
+
+  // 수량 변경 핸들러
+  const handleQuantityChange = (event: { target: { value: string } }) => {
+    const newQuantity = parseInt(event.target.value)
+    if (!isNaN(newQuantity) && newQuantity > 0) {
+      setQuantity(newQuantity)
+    }
+  }
+
   return (
     <>
       <div className="container mx-auto py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {/* 상품 이미지 */}
           <div className="flex justify-center items-center">
             <Image
               src="/images/main-best-menu1.jpg"
@@ -111,17 +123,16 @@ export const ProductsDetailContent = () => {
               priority
             />
           </div>
-          {/* 상품 정보 */}
           <div>
             <Typography variant="h4" gutterBottom>
-            한우1++ 모듬구이
+              한우1++ 모듬구이
             </Typography>
             <Divider className="my-4" sx={{border:"2px solid red", width: "115px"}}/>
             <Typography variant="body1" gutterBottom>
-          일본식 커리 소스에 데미그라스 소스가 더해져 깊은 풍미를 가진 하이라이스 위에 부드럽고 바삭한 멘치카츠와 육즙 가득 토네이도 소세지가 구성된 스페셜 하이라이스
+              일본식 커리 소스에 데미그라스 소스가 더해져 깊은 풍미를 가진 하이라이스 위에 부드럽고 바삭한 멘치카츠와 육즙 가득 토네이도 소세지가 구성된 스페셜 하이라이스
             </Typography>
             <Typography variant="h5" gutterBottom>
-            가격: 69,000원
+              가격: {pricePerUnit * quantity}원
             </Typography>
             <Divider className="my-4" />
             <Typography variant="body1" gutterBottom>
@@ -142,12 +153,21 @@ export const ProductsDetailContent = () => {
             <Typography variant="body1" gutterBottom>
               <CheckRoundedIcon />수량
             </Typography>
-            <Button variant="contained" color="primary" className="mr-4">
-            장바구니
-            </Button>
-            <Button variant="contained" color="secondary">
-            바로구매
-            </Button>
+            <div className="flex gap-2">
+              <input
+                type="number"
+                value={quantity}
+                onChange={handleQuantityChange}
+                className="w-24 p-2 border border-gray-300 rounded-md"
+                min="1"
+              />
+              <Button variant="contained" color="primary" className="mr-4">
+                장바구니
+              </Button>
+              <Button variant="contained" color="secondary">
+                바로구매
+              </Button>
+            </div>
           </div>
         </div>
       </div>
@@ -219,16 +239,53 @@ export const NavDetail = () => {
       element.scrollIntoView({behavior: "smooth"})
     }
   }
+  const [isHovered, setIsHovered] = React.useState(false)
+  const [isClicked, setIsClicked] = React.useState(false)
+
+  const handleMouseEnter = () => {
+    setIsHovered(true)
+  }
+
+  const handleMouseLeave = () => {
+    setIsHovered(false)
+  }
+  const handleClick = () => {
+    setIsClicked(!isClicked)
+    scrollToElement("detail")
+  }
   return (
     <nav className={`sticky top-16 w-full bg-white z-10 ${isFixed ? "visible" : "invisible md:visible"} flex-1 flex justify-center items-center nav-detail`} style={{height: "80px", backgroundColor: "rgba(255, 255, 255, 0.88)"}}>
       <ul className="flex gap-3">
-        <li onClick={() => scrollToElement("detail")} className="relative overflow-hidden">
+        <li onClick={handleClick}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          className={isClicked || isHovered ? "highlight-underline" : ""}>
           <button>상품상세</button>
-          <span className="highlight-underline"></span>
         </li>
-        <li onClick={() => scrollToElement("review")} className="hover:underline"><button>리뷰</button></li>
-        <li onClick={() => scrollToElement("qna")} className="hover:underline"><button>문의</button></li>
-        <li onClick={() => scrollToElement("ship")} className="hover:underline"><button>주문정보</button></li>
+        <li onClick={handleClick}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          className={isClicked || isHovered ? "highlight-underline" : ""}>
+          <button>상품상세</button>
+        </li>
+        <li onClick={handleClick}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          className={isClicked || isHovered ? "highlight-underline" : ""}>
+          <button>리뷰</button>
+        </li>
+        <li onClick={handleClick}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          className={isClicked || isHovered ? "highlight-underline" : ""}>
+          <button>문의</button>
+        </li>
+        <li onClick={handleClick}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          className={isClicked || isHovered ? "highlight-underline" : ""}>
+          <button>주문정보</button>
+        </li>
       </ul>
     </nav>
 
