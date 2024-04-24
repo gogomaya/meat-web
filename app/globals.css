@@ -35,3 +35,41 @@ html, body {
 }
 
 
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Main menu item styles */
+li {
+  position: relative;
+}
+
+/* Submenu styles */
+#submenu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  width: max-content;
+  left: 0;
+  white-space: nowrap; /* Prevent line breaks */
+}
+
+#submenu.block {
+  display: block;
+}
+
+#submenu li {
+  padding: 5px 10px;
+}
+
+#submenu li > a {
+  padding: 5px 10px;
+  white-space: nowrap;
+}
+
+/* 상품 이미지 확대 */
+.figure.ct-img {
+  
+}

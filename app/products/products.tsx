@@ -110,17 +110,55 @@ export const ProductsDetailContent = () => {
     }
   }
 
+  const imageRef = React.useRef<HTMLDivElement | null>(null)
+
+  const ex_mouse_enter = (e: MouseEvent) => {
+    const self = imageRef.current
+
+    if (!self) return
+
+    var zoom = 2 // 확대 배율
+
+    const mglass = document.createElement("div")
+    mglass.className = "magnifying-glass"
+
+    const mimg = self.querySelector(".img-main")
+
+    if (checkedDevice() !== "pc") {
+      addClass(self, "scrollbar")
+      addClass(mglass, "fill")
+
+      const _img = new Image()
+      _img.onload = function () {
+        if (!self) return
+        this.width *= zoom
+        this.height *= zoom
+        self.appendChild(mglass)
+      }
+      _img.src = mimg?.src || ""
+      mglass.appendChild(_img)
+    } else {
+      mglass.style.backgroundImage = `URL('${mimg?.src}')`
+      mglass.style.backgroundSize = `${mimg?.clientWidth * parseInt(zoom)}px auto`
+      self.appendChild(mglass)
+    }
+
+    e.stopPropagation()
+  }
+
+
   return (
     <>
       <div className="container mx-auto py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center items-center ref={imageRef} onMouseEnter={ex_mouse_enter}">
             <Image
               src="/images/main-best-menu1.jpg"
               alt="Product Image"
               width={400}
               height={400}
               priority
+              className="figure.ct-img"
             />
           </div>
           <div>
@@ -265,5 +303,13 @@ export const NavDetail = () => {
     </nav>
 
   )
+}
+
+function checkedDevice() {
+  throw new Error("Function not implemented.")
+}
+
+function addClass(self: HTMLDivElement, arg1: string) {
+  throw new Error("Function not implemented.")
 }
 
