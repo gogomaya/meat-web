@@ -1,12 +1,13 @@
 import {ResponseApi} from "@/types/commonTypes"
 import {commonServices} from "./commonServices"
 
-export const naverServices = {
+export const kakaoServices = {
   accessToken: async (code: string, state: string): Promise<ResponseApi> => {
     try {
-      let url = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code"
-      url += `&client_id=${process.env.NEXT_PUBLIC_NAVER_CLIENT_ID}`
-      url += `&client_secret=${process.env.NEXT_PRIVATE_NAVER_CLIENT_SECRET}`
+      let url = "https://kauth.kakao.com/oauth/token?grant_type=authorization_code"
+      url += `&client_id=${process.env.NEXT_PRIVATE_KAKAO_REST_API_KEY}`
+      url += `&redirect_uri=${process.env.NEXT_PRIVATE_URL}${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}`
+      url += `&client_secret=${process.env.NEXT_PRIVATE_KAKAO_CLIENT_SECRET}`
       url += `&code=${code}&state=${state}`
       const response = await fetch(url)
       return await commonServices.responseJson(response)
@@ -17,7 +18,7 @@ export const naverServices = {
   getUser: async (accessToken: string): Promise<ResponseApi> => {
     try {
       const response = await fetch(
-        "https://openapi.naver.com/v1/nid/me", {
+        "https://kapi.kakao.com/v2/user/me", {
           headers: {
             Authorization: `Bearer ${accessToken}`
           }

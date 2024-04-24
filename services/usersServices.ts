@@ -23,6 +23,12 @@ export const usersServices = {
           body: JSON.stringify(cookieUser)
         })
         user = (await commonServices.responseJson(responseUser)).data
+      } else if (cookieUser.third_party === "Kakao") {
+        const responseUser = await fetch(`${process.env.NEXT_PRIVATE_URL}/api/users/kakao-login`, {
+          method: "POST",
+          body: JSON.stringify(cookieUser)
+        })
+        user = (await commonServices.responseJson(responseUser)).data
       }
       // 로그인 전용 페이지이고 회원 정보를 못 받은 경우
       if (loginOnly && !user.user_pk) {
