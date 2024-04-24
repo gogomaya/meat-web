@@ -158,7 +158,7 @@ const MainSearch = () => {
 const MainMobileMenu = () => {
   const [open, setOpen] = useState(false)
   return <>
-    <IconButton className="md:hidden" onClick={() => setOpen(true)}>
+    <IconButton style={{display: "none"}} className="!block md:!hidden" onClick={() => setOpen(true)}>
       <MenuIcon />
     </IconButton>
     <Drawer
