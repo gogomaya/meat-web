@@ -1,13 +1,14 @@
 "use client"
-import Image from "next/image"
 import Link from "next/link"
-import {Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, FormControl, IconButton, InputBase, InputLabel, MenuItem, Pagination, Select, Typography} from "@mui/material"
+import {Avatar, Button, Card, CardActions, CardContent, CardHeader, CardMedia, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, IconButton, InputBase, InputLabel, MenuItem, Pagination, Select, Typography} from "@mui/material"
 import * as React from "react"
 import ShareIcon from "@mui/icons-material/Share"
 import FavoriteIcon from "@mui/icons-material/Favorite"
 import MoreVertIcon from "@mui/icons-material/MoreVert"
 import {red} from "@mui/material/colors"
 import SearchIcon from "@mui/icons-material/Search"
+import {FaRegThumbsUp, FaRegThumbsDown} from "react-icons/fa"
+
 
 
 export const ReviewCard = () => {
@@ -54,54 +55,73 @@ export const ReviewCard = () => {
 }
 
 export const MonthlyBestReview = () => {
+  const [openDialog, setOpenDialog] = React.useState(false)
+
+  const openDialogHandler = () => {
+    setOpenDialog(true)
+  }
+
+  const closeDialogHandler = () => {
+    setOpenDialog(false)
+  }
+
   return (
-    <ol>
-      <li className="inline-block align-top w-[50%] md:w-[33.3%] lg:w-[33.3%]">
-        <ReviewCard />
-      </li>
-      <li className="inline-block align-top w-[50%] md:w-[33.3%] lg:w-[33.3%]">
-        <Link href="/products/1">
+    <>
+      <Dialog open={openDialog} onClose={closeDialogHandler} >
+        <DialogTitle>리뷰 상세 보기</DialogTitle>
+        <DialogContent>
+          {/* 여기에 리뷰 상세 내용을 표시합니다. */}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeDialogHandler} color="primary">닫기</Button>
+        </DialogActions>
+      </Dialog>
+
+      <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <li className="block" onClick={openDialogHandler}>
           <ReviewCard />
-        </Link>
-      </li>
-      <li className="inline-block align-top w-[50%] md:w-[33.3%] lg:w-[33.3%]">
-        <Link href="/products/1">
+        </li>
+        <li className="block" onClick={openDialogHandler}>
           <ReviewCard />
-        </Link>
-      </li>
-    </ol>
+        </li>
+        <li className="block" onClick={openDialogHandler}>
+          <ReviewCard />
+        </li>
+      </ol>
+    </>
   )
 }
   
 
 export const PhotoReview = () => {
   return (
-    <><span className="mt-4">PHOTO REVIEW | 포토리뷰</span>
+    <>
+      <span className="my-8 mt-4 block"><strong>PHOTO REVIEW | 포토리뷰</strong></span>
 
-      <section className="flex justify-between align-center mt-4">
-        <FormControl className="lg:w-[50.3%]">
+      <section className="flex justify-between items-center mt-4">
+        <FormControl className="w-full md:w-[50%] lg:w-[40%]">
           <InputLabel>카테고리를 선택해주세요</InputLabel>
           <Select
             label="카테고리"
-            className="w-50"
+            className="w-full"
           >
             <MenuItem value="소고기">소고기</MenuItem>
             <MenuItem value="돼지고기">돼지고기</MenuItem>
             <MenuItem value="간편식">간편식</MenuItem>
           </Select>
         </FormControl>
-        <FormControl>
+        <FormControl className="w-full md:w-[30%] lg:w-[20%]">
           <InputLabel>정렬</InputLabel>
           <Select
             label="최신순"
-            className="w-40"
+            className="w-full"
           >
             <MenuItem value="최신순">최신순</MenuItem>
             <MenuItem value="별점순">별점순</MenuItem>
             <MenuItem value="추천순">추천순</MenuItem>
           </Select>
         </FormControl>
-        <section className="flex">
+        <div className="flex w-full md:w-[20%] lg:w-[30%]">
           <InputBase
             className="flex-1"
             placeholder="검색어를 입력해주세요."
@@ -109,25 +129,23 @@ export const PhotoReview = () => {
           <IconButton type="button">
             <SearchIcon />
           </IconButton>
-        </section>
+        </div>
       </section>
-      <ol className="mt-4">
-        <li className="inline-block align-top w-[50%] md:w-[33.3%] lg:w-[20.0%]">
+      <ol className="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <li>
           <ReviewCard />
         </li>
-        <li className="inline-block align-top w-[50%] md:w-[33.3%] lg:w-[20.0%]">
+        <li>
           <ReviewCard />
         </li>
-        <li className="inline-block align-top w-[50%] md:w-[33.3%] lg:w-[20.0%]">
+        <li>
           <ReviewCard />
         </li>
-        <li className="inline-block align-top w-[50%] md:w-[33.3%] lg:w-[20.0%]">
+        <li>
           <ReviewCard />
         </li>
-        <li className="inline-block align-top w-[50%] md:w-[33.3%] lg:w-[20.0%]">
-          <ReviewCard />
-        </li>
-      </ol></>
+      </ol>
+    </>
   )
 }
 
@@ -145,58 +163,52 @@ export const PhotoPagination = () => {
 
 export const GeneralReview = () => {
   return (
-    <ol>
-      <li className="inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]">
-        <Link href="/products/1">
-          <Image
-            src="/images/main-best-menu1.jpg"
-            alt="best-menu1"
-            width={0}
-            height={0}
-            priority
-            sizes="100vw"
-            className="w-full aspect-square object-cover"
-          />
-        </Link>
-        <p>
-          <Link href="/products/1">한우암소 육회&사시미 400g</Link><br />
-          <strong>26,000원</strong>
-        </p>
-      </li>
-      <li className="inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]">
-        <Image
-          src="/images/main-best-menu2.jpg"
-          alt="best-menu2"
-          width={0}
-          height={0}
-          priority
-          sizes="100vw"
-          className="w-full aspect-square object-cover"
-        />
-      </li>
-      <li className="inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]">
-        <Image
-          src="/images/main-swiper2.jpg"
-          alt="best-menu3"
-          width={0}
-          height={0}
-          priority
-          sizes="100vw"
-          className="w-full aspect-square object-cover"
-        />
-      </li>
-      <li className="inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]">
-        <Image
-          src="/images/main-swiper3.jpg"
-          alt="best-menu4"
-          width={0}
-          height={0}
-          priority
-          sizes="100vw"
-          className="w-full aspect-square object-cover"
-        />
-      </li>
-    </ol>
+    <div className="my-4 bg-white shadow overflow-hidden sm:rounded-lg mt-4">
+      {/* 리뷰 헤더 */}
+      <div className="px-4 py-5 sm:px-6">
+        <h3 className="text-lg font-medium text-gray-900"> 아주 좋아요</h3>
+        <p className="mt-1 max-w-2xl text-sm text-gray-500">작성자 - 2024년 4월 24일</p>
+        <div className="mt-4 flex items-center">
+          {/* 별점 표시 */}
+          <div className="flex">
+            <svg className="h-5 w-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 2a.75.75 0 0 1 .67.41l1.69 3.429 3.775.549a.75.75 0 0 1 .416 1.279l-2.732 2.67.645 3.758a.75.75 0 0 1-1.088.791L10 14.729l-3.385 1.782a.75.75 0 0 1-1.088-.791l.645-3.758-2.732-2.67a.75.75 0 0 1 .416-1.28l3.775-.548 1.69-3.429A.75.75 0 0 1 10 2z" clipRule="evenodd" />
+            </svg>
+            <svg className="h-5 w-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 2a.75.75 0 0 1 .67.41l1.69 3.429 3.775.549a.75.75 0 0 1 .416 1.279l-2.732 2.67.645 3.758a.75.75 0 0 1-1.088.791L10 14.729l-3.385 1.782a.75.75 0 0 1-1.088-.791l.645-3.758-2.732-2.67a.75.75 0 0 1 .416-1.28l3.775-.548 1.69-3.429A.75.75 0 0 1 10 2z" clipRule="evenodd" />
+            </svg>
+            <svg className="h-5 w-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 2a.75.75 0 0 1 .67.41l1.69 3.429 3.775.549a.75.75 0 0 1 .416 1.279l-2.732 2.67.645 3.758a.75.75 0 0 1-1.088.791L10 14.729l-3.385 1.782a.75.75 0 0 1-1.088-.791l.645-3.758-2.732-2.67a.75.75 0 0 1 .416-1.28l3.775-.548 1.69-3.429A.75.75 0 0 1 10 2z" clipRule="evenodd" />
+            </svg>
+            <svg className="h-5 w-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 2a.75.75 0 0 1 .67.41l1.69 3.429 3.775.549a.75.75 0 0 1 .416 1.279l-2.732 2.67.645 3.758a.75.75 0 0 1-1.088.791L10 14.729l-3.385 1.782a.75.75 0 0 1-1.088-.791l.645-3.758-2.732-2.67a.75.75 0 0 1 .416-1.28l3.775-.548 1.69-3.429A.75.75 0 0 1 10 2z" clipRule="evenodd" />
+            </svg>
+            <svg className="h-5 w-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 2a.75.75 0 0 1 .67.41l1.69 3.429 3.775.549a.75.75 0 0 1 .416 1.279l-2.732 2.67.645 3.758a.75.75 0 0 1-1.088.791L10 14.729l-3.385 1.782a.75.75 0 0 1-1.088-.791l.645-3.758-2.732-2.67a.75.75 0 0 1 .416-1.28l3.775-.548 1.69-3.429A.75.75 0 0 1 10 2z" clipRule="evenodd" />
+            </svg>
+          </div>
+          {/* 리뷰 별점 */}
+          <p className="ml-2 text-sm text-gray-500">5점</p>
+        </div>
+      </div>
+      {/* 리뷰 본문 */}
+      <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
+        <dl className="sm:divide-y sm:divide-gray-200">
+          <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+            <div className="mt-1 text-sm text-gray-900 sm:col-span-2">국거리 용으로 샀는데 국물부터가 달라요 찐맛 <br></br>구이용으로도 먹어봤는데 나쁘지않아요 ㅎ워낙 고기맛이좋아</div>
+          </div>
+        </dl>
+      </div>
+      {/* 좋아요/싫어요 아이콘 */}
+      <div className="px-6 py-3 flex justify-between items-center">
+        <div className="flex items-center gap-1">
+          {/* 좋아요 아이콘 */}
+          <FaRegThumbsUp className="text-gray-500 cursor-pointer mr-2" />좋아요
+          {/* 싫어요 아이콘 */}
+          <FaRegThumbsDown className="text-gray-500 cursor-pointer" />싫어요
+        </div>
+      </div>
+    </div>
   )
 }
 
@@ -207,7 +219,7 @@ export const GeneralPagination = () => {
       color="primary"
       count={5}
       page={1}
-      className="flex justify-center"
+      className="flex justify-center my-4"
     />
   )
 }

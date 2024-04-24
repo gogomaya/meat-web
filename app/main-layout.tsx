@@ -28,7 +28,7 @@ const MainLayout = ({
         <Link href="/">
           <Image
             src="/images/logo.png"
-            alt="Logo"
+            alt=""
             width={32}
             height={32}
             sizes="100vw"
@@ -84,10 +84,6 @@ const MegaMenu = () => {
       <ul className="flex">
         <li id="todayMenu" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
           <Link href="/products">오늘의 메뉴</Link>
-          <ol id="submenu"className={`w-20 absolute border border-black ${menu.cow || menu.todayMenu || menu.fork || menu.simple || menu.review || menu.board ? "block" : "hidden"} bg-white py-2 rounded-lg shadow-md text-sm font-semibold`}>
-            <li><Link href="#">오늘의 특식</Link></li>
-            <li><Link href="#">오늘의 샐러드</Link></li>
-          </ol>
         </li>
         <li id="cow" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
           <Link href="/products">소고기</Link>
