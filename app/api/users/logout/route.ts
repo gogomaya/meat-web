@@ -8,7 +8,7 @@ export const GET = async () => {
     value: "",
     httpOnly: true,
     maxAge: 60 * 60,
-    domain: process.env.NEXT_PRIVATE_HOST
+    domain: process.env.NEXT_PUBLIC_HOST
   })
   return NextResponse.json({
     result: "logout"
