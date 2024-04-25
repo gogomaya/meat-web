@@ -1,9 +1,11 @@
 import MainLayout from "@/app/main-layout"
 import {GeneralPagination} from "@/app/reviews/reviews"
+import {usersServices} from "@/services/usersServices"
 
-const Login = () => {
+const Login = async () => {
+  const user = await usersServices.loginCheck(false)
   return (
-    <MainLayout>
+    <MainLayout user={user}>
       <h1 className="flex justify-center">
         <strong>로그인</strong>
       </h1>

@@ -4,7 +4,6 @@ import Image from "next/image"
 import Link from "next/link"
 import MenuIcon from "@mui/icons-material/Menu"
 import SearchIcon from "@mui/icons-material/Search"
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline"
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline"
 import CloseIcon from "@mui/icons-material/Close"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
@@ -14,11 +13,15 @@ import InstagramIcon from "@mui/icons-material/Instagram"
 import YouTubeIcon from "@mui/icons-material/YouTube"
 import SupportAgentIcon from "@mui/icons-material/SupportAgent"
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline"
+import Users from "@/components/users/users"
+import {User} from "@/types/usersTypes"
 
 const MainLayout = ({
-  children
+  children,
+  user
 }: {
   children: React.ReactNode
+  user: User
 }) => {
   return (
     <div className="max-w-screen-xl mx-auto">
@@ -40,9 +43,7 @@ const MainLayout = ({
         <MainSearch />
         <IconButton className="hidden md:block p-0">
         </IconButton>
-        <Link href="/users/login">
-          <PersonOutlineIcon className="md:w-8 md:h-8 mx-2" />
-        </Link>
+        <Users user={user} />
         <Link href="/carts">
           <Badge badgeContent={4} color="primary">
             <WorkOutlineIcon className="md:w-8 md:h-8" />

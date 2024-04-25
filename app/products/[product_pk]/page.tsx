@@ -1,14 +1,15 @@
-"use client"
 import React, {useState} from "react"
 import Divider from "@mui/material/Divider"
 import {ProductDetail, ProductsDetailContent, ShipDetail, NavDetail} from "../products"
 import MainLayout from "@/app/main-layout"
+import {usersServices} from "@/services/usersServices"
 import {GeneralReview} from "@/app/reviews/reviews"
-import Boards from "@/app/boards/page"
+// import Boards from "@/app/boards/page"
 
-const Products = () => {
+const Products = async () => {
+  const user = await usersServices.loginCheck(false)
   return (
-    <MainLayout>
+    <MainLayout user={user}>
       <ProductsDetailContent />
       <Divider id="divider" className="my-3" />
       <NavDetail />
@@ -20,7 +21,7 @@ const Products = () => {
       </div>
       {/* 문의 */}
       <div id="qna">
-        <Boards />
+        {/* <Boards /> */}
       </div>
       {/* 주문정보 */}
       <div id="ship"><ShipDetail /></div>

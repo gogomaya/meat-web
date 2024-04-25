@@ -16,7 +16,7 @@ const RootLayout = ({
       <head>
         <link rel="icon" href="/images/logo.png" />
       </head>
-      <body>{children}</body>
+      <body className="min-w-80">{children}</body>
     </html>
   )
 }

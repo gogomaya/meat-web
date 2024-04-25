@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build:local": "env-cmd -f .env next build",
+    "build:dev": "env-cmd -f .env.dev next build",
+    "build:prod": "env-cmd -f .env.prod next build",
     "start": "next start",
     "lint": "next lint --max-warnings=0",
     "fix": "next lint --fix",
@@ -17,16 +19,20 @@
     "@mui/material": "^5.15.15",
     "@types/react-icons": "^3.0.0",
     "@types/react-swipeable-views": "^0.13.5",
+    "mysql2": "^3.9.7",
     "next": "13.5.6",
     "react": "^18",
     "react-dom": "^18",
-    "swiper": "^11.1.1"
+    "swiper": "^11.1.1",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/uuid": "^9.0.8",
     "autoprefixer": "^10",
+    "env-cmd": "^10.1.0",
     "eslint": "^8",
     "eslint-config-next": "13.5.6",
     "husky": "^8.0.3",
