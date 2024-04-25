@@ -284,13 +284,6 @@ export const NavDetail = () => {
       window.removeEventListener("scroll", handleScroll)
     }
   }, [])
-  // scroll to move id 구현
-  // const scrollToElement = (id: string) => {
-  //   const element = document.getElementById(id)
-  //   if (element) {
-  //     element.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"})
-  //   }
-  // }
   const scrollToElement = (id: string) => {
     const element = document.getElementById(id)
     if (element) {
@@ -305,7 +298,8 @@ export const NavDetail = () => {
     }
   }
   const [isHovered, setIsHovered] = React.useState(false)
-  const [isClicked, setIsClicked] = React.useState(false)
+  const [isClicked, setIsClicked] = React.useState<boolean | string>(false)
+
 
 
   const handleMouseHover = () => {
@@ -320,10 +314,10 @@ export const NavDetail = () => {
   return (
     <nav className={`sticky top-16 w-full bg-white z-10 ${isFixed ? "visible" : "invisible md:visible"} flex-1 flex justify-center items-center nav-detail`} style={{height: "80px", backgroundColor: "rgba(255, 255, 255, 0.88)"}}>
       <ul className="flex gap-3">
-        {/* <li onClick={() => { scrollToElement("detail"); handleMouseHover(); handleMouseClick("detail") }} className={[isHovered ? "highlight-underline" : "", isClicked === "detail"  ? "text-red-500" : ""].join(" ")}><button>상품상세</button></li>
+        <li onClick={() => { scrollToElement("detail"); handleMouseHover(); handleMouseClick("detail") }} className={[isHovered ? "highlight-underline" : "", isClicked === "detail"  ? "text-red-500" : ""].join(" ")}><button>상품상세</button></li>
         <li onClick={() => { scrollToElement("review2"); handleMouseHover(); handleMouseClick("review2") }} className={[isHovered ? "highlight-underline" : "", isClicked === "review2"  ? "text-red-500" : ""].join(" ")}><button>리뷰</button></li>
         <li onClick={() => { scrollToElement("qna"); handleMouseHover(); handleMouseClick("qna") }} className={[isHovered ? "highlight-underline" : "", isClicked === "qna"  ? "text-red-500" : ""].join(" ")}><button>문의</button></li>
-        <li onClick={() => { scrollToElement("ship"); handleMouseHover(); handleMouseClick("ship") }} className={[isHovered ? "highlight-underline" : "", isClicked === "ship"  ? "text-red-500" : ""].join(" ")}><button>주문정보 </button></li> */}
+        <li onClick={() => { scrollToElement("ship"); handleMouseHover(); handleMouseClick("ship") }} className={[isHovered ? "highlight-underline" : "", isClicked === "ship"  ? "text-red-500" : ""].join(" ")}><button>주문정보 </button></li>
       </ul>
     </nav>
 

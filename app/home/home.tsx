@@ -75,7 +75,7 @@ export const HomeDunDunRice = () => {
 
 export const HomeBestMenu = () => {
   return (
-    <section className="mt-5">
+    <section className="mt-5 py-4">
       <h2 className="flex justify-center">BEST MENU</h2>
       <ProductsList />
     </section>
