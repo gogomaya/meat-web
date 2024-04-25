@@ -124,24 +124,24 @@ export const ProductsDetailContent = () => {
 
     const mimg = self.querySelector(".img-main")
 
-    if (checkedDevice() !== "pc") {
-      addClass(self, "scrollbar")
-      addClass(mglass, "fill")
+    // if (checkedDevice() !== "pc") {
+    //   addClass(self, "scrollbar")
+    //   addClass(mglass, "fill")
 
-      const _img = new Image()
-      _img.onload = function () {
-        if (!self) return
-        this.width *= zoom
-        this.height *= zoom
-        self.appendChild(mglass)
-      }
-      _img.src = mimg?.src || ""
-      mglass.appendChild(_img)
-    } else {
-      mglass.style.backgroundImage = `URL('${mimg?.src}')`
-      mglass.style.backgroundSize = `${mimg?.clientWidth * parseInt(zoom)}px auto`
-      self.appendChild(mglass)
-    }
+    //   const _img = new Image()
+    //   _img.onload = function () {
+    //     if (!self) return
+    //     this.width *= zoom
+    //     this.height *= zoom
+    //     self.appendChild(mglass)
+    //   }
+    //   _img.src = mimg?.src || ""
+    //   mglass.appendChild(_img)
+    // } else {
+    //   mglass.style.backgroundImage = `URL('${mimg?.src}')`
+    //   mglass.style.backgroundSize = `${mimg?.clientWidth * parseInt(zoom)}px auto`
+    //   self.appendChild(mglass)
+    // }
 
     e.stopPropagation()
   }
@@ -288,17 +288,17 @@ export const NavDetail = () => {
   }
 
   const handleMouseClick = (menu: string | boolean | ((prevState: boolean) => boolean)) => {
-    setIsClicked(menu)
+    // setIsClicked(menu)
   }
 
 
   return (
     <nav className={`sticky top-16 w-full bg-white z-10 ${isFixed ? "visible" : "invisible md:visible"} flex-1 flex justify-center items-center nav-detail`} style={{height: "80px", backgroundColor: "rgba(255, 255, 255, 0.88)"}}>
       <ul className="flex gap-3">
-        <li onClick={() => { scrollToElement("detail"); handleMouseHover(); handleMouseClick("detail") }} className={[isHovered ? "highlight-underline" : "", isClicked === "detail"  ? "text-red-500" : ""].join(" ")}><button>상품상세</button></li>
+        {/* <li onClick={() => { scrollToElement("detail"); handleMouseHover(); handleMouseClick("detail") }} className={[isHovered ? "highlight-underline" : "", isClicked === "detail"  ? "text-red-500" : ""].join(" ")}><button>상품상세</button></li>
         <li onClick={() => { scrollToElement("review2"); handleMouseHover(); handleMouseClick("review2") }} className={[isHovered ? "highlight-underline" : "", isClicked === "review2"  ? "text-red-500" : ""].join(" ")}><button>리뷰</button></li>
         <li onClick={() => { scrollToElement("qna"); handleMouseHover(); handleMouseClick("qna") }} className={[isHovered ? "highlight-underline" : "", isClicked === "qna"  ? "text-red-500" : ""].join(" ")}><button>문의</button></li>
-        <li onClick={() => { scrollToElement("ship"); handleMouseHover(); handleMouseClick("ship") }} className={[isHovered ? "highlight-underline" : "", isClicked === "ship"  ? "text-red-500" : ""].join(" ")}><button>주문정보 </button></li>
+        <li onClick={() => { scrollToElement("ship"); handleMouseHover(); handleMouseClick("ship") }} className={[isHovered ? "highlight-underline" : "", isClicked === "ship"  ? "text-red-500" : ""].join(" ")}><button>주문정보 </button></li> */}
       </ul>
     </nav>
 

@@ -1,9 +1,11 @@
 import MainLayout from "@/app/main-layout"
 import {GeneralPagination, GeneralReview, MonthlyBestReview, PhotoPagination, PhotoReview, ReviewCard} from "./reviews"
+import {usersServices} from "@/services/usersServices"
 
-const Products = () => {
+const Products = async () => {
+  const user = await usersServices.loginCheck(false)
   return (
-    <MainLayout>
+    <MainLayout user={user}>
       <h2 className="flex justify-center mt-6"><strong>이달의 베스트 리뷰</strong></h2>
       <MonthlyBestReview />
       <PhotoReview />
