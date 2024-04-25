@@ -71,6 +71,10 @@ export const ProductsList = () => {
           sizes="100vw"
           className="w-full aspect-square object-cover rounded-lg"
         />
+        <p>
+          <Link href="/products/1">한우암소 육회&사시미 400g</Link><br />
+          <strong>26,000원</strong>
+        </p>
       </li>
       <li className="p-1 inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]">
         <Image
@@ -82,6 +86,10 @@ export const ProductsList = () => {
           sizes="100vw"
           className="w-full aspect-square object-cover rounded-lg"
         />
+        <p>
+          <Link href="/products/1">한우암소 육회&사시미 400g</Link><br />
+          <strong>26,000원</strong>
+        </p>
       </li>
       <li className="p-1 inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]">
         <Image
@@ -93,6 +101,10 @@ export const ProductsList = () => {
           sizes="100vw"
           className="w-full aspect-square object-cover rounded-lg"
         />
+        <p>
+          <Link href="/products/1">한우암소 육회&사시미 400g</Link><br />
+          <strong>26,000원</strong>
+        </p>
       </li>
     </ol>
   )
@@ -273,10 +285,23 @@ export const NavDetail = () => {
     }
   }, [])
   // scroll to move id 구현
+  // const scrollToElement = (id: string) => {
+  //   const element = document.getElementById(id)
+  //   if (element) {
+  //     element.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"})
+  //   }
+  // }
   const scrollToElement = (id: string) => {
     const element = document.getElementById(id)
     if (element) {
-      element.scrollIntoView({behavior: "smooth"})
+      const offset = 140
+      const elementTop = element.getBoundingClientRect().top
+      const bodyRect = document.body.getBoundingClientRect().top
+      const scrollTo = elementTop - bodyRect - offset
+      window.scrollTo({
+        top: scrollTo,
+        behavior: "smooth"
+      })
     }
   }
   const [isHovered, setIsHovered] = React.useState(false)
