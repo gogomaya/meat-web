@@ -18,13 +18,13 @@ export const usersServices = {
       }
       // access_token으로 회원 정보 받기
       if (cookieUser.third_party === "Naver") {
-        const responseUser = await fetch(`${process.env.NEXT_PRIVATE_URL}/api/users/naver-login`, {
+        const responseUser = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/users/naver-login`, {
           method: "POST",
           body: JSON.stringify(cookieUser)
         })
         user = (await commonServices.responseJson(responseUser)).data
       } else if (cookieUser.third_party === "Kakao") {
-        const responseUser = await fetch(`${process.env.NEXT_PRIVATE_URL}/api/users/kakao-login`, {
+        const responseUser = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/users/kakao-login`, {
           method: "POST",
           body: JSON.stringify(cookieUser)
         })

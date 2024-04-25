@@ -6,7 +6,7 @@ export const naverServices = {
     try {
       let url = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code"
       url += `&client_id=${process.env.NEXT_PUBLIC_NAVER_CLIENT_ID}`
-      url += `&client_secret=${process.env.NEXT_PRIVATE_NAVER_CLIENT_SECRET}`
+      url += `&client_secret=${process.env.NEXT_PUBLIC_NAVER_CLIENT_SECRET}`
       url += `&code=${code}&state=${state}`
       const response = await fetch(url)
       return await commonServices.responseJson(response)
