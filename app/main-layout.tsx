@@ -41,7 +41,7 @@ const MainLayout = ({
         <IconButton className="hidden md:block p-0">
         </IconButton>
         <Link href="/users/login">
-          <PersonOutlineIcon className="md:w-8 md:h-8" />
+          <PersonOutlineIcon className="md:w-8 md:h-8 mx-2" />
         </Link>
         <Link href="/carts">
           <Badge badgeContent={4} color="primary">
