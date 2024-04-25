@@ -17,6 +17,7 @@
     "@emotion/styled": "^11.11.5",
     "@mui/icons-material": "^5.15.15",
     "@mui/material": "^5.15.15",
+    "@types/react-icons": "^3.0.0",
     "@types/react-swipeable-views": "^0.13.5",
     "mysql2": "^3.9.7",
     "next": "13.5.6",

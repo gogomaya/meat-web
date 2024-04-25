@@ -37,10 +37,12 @@ export const HomeBestReview = () => {
 
 export const HomeBrandStory = () => {
   return (
-    <section className="flex items-center w-full px-4 py-2" style={{marginBottom: "50px", marginTop: "50px"}}>      
-      <Divider sx={{border:"2px solid red", width: "115px"}}/>
-      <Typography className="mx-5 w-[30%]" variant="h3">Brand Story</Typography>
-      <div className="w-[46%]">
+    <section className="flex flex-col md:flex-row items-center w-full px-4 py-2" style={{marginBottom: "50px", marginTop: "50px"}}>
+      <Divider sx={{border:"2px solid red", width: "115px"}} className="mb-4 md:mb-0 md:mr-5" />
+      <div className="w-full md:w-[30%] md:mr-5">
+        <Typography variant="h3" className="mb-4 md:mb-0">Brand Story</Typography>
+      </div>
+      <div className="w-full md:w-[46%]">
         <Typography className="mb-1" variant="h6" color="textSecondary">대한민국 육식문화</Typography>
         <Typography className="mb-1" variant="h6" color="textSecondary">프리미엄에 프리미엄을 더하다</Typography>
         <Typography variant="h6" color="textSecondary">대한민국에서 가장 좋은 고기로 정직하게 보여드리겠습니다</Typography>

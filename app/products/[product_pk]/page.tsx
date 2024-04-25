@@ -3,6 +3,8 @@ import Divider from "@mui/material/Divider"
 import {ProductDetail, ProductsDetailContent, ShipDetail, NavDetail} from "../products"
 import MainLayout from "@/app/main-layout"
 import {usersServices} from "@/services/usersServices"
+import {GeneralReview} from "@/app/reviews/reviews"
+// import Boards from "@/app/boards/page"
 
 const Products = async () => {
   const user = await usersServices.loginCheck(false)
@@ -14,9 +16,13 @@ const Products = async () => {
       {/* 상품 상세 정보 */}
       <div id="detail"><ProductDetail /></div>
       {/* 리뷰 */}
-      <div id="review" style={{backgroundColor: "#f0f1f1", height: "500px"}}>리뷰</div>
+      <div id="review2">
+        <GeneralReview />
+      </div>
       {/* 문의 */}
-      <div id="qna" style={{backgroundColor: "#f0f0a0", height: "500px"}}>문의</div>
+      <div id="qna">
+        {/* <Boards /> */}
+      </div>
       {/* 주문정보 */}
       <div id="ship"><ShipDetail /></div>
     </MainLayout>
