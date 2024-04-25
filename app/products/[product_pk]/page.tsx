@@ -1,12 +1,13 @@
-"use client"
 import React, {useState} from "react"
 import Divider from "@mui/material/Divider"
 import {ProductDetail, ProductsDetailContent, ShipDetail, NavDetail} from "../products"
 import MainLayout from "@/app/main-layout"
+import {usersServices} from "@/services/usersServices"
 
-const Products = () => {
+const Products = async () => {
+  const user = await usersServices.loginCheck(false)
   return (
-    <MainLayout>
+    <MainLayout user={user}>
       <ProductsDetailContent />
       <Divider id="divider" className="my-3" />
       <NavDetail />
