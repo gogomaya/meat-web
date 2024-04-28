@@ -1,6 +1,6 @@
 import MainLayout from "@/app/main-layout"
 import HomeSwiper from "./swiper"
-import {HomeDunDunRice, HomeBestMenu, HomeBestReview, HomeBrandStory, HomePledge, HomeYoutube} from "./home"
+import {HomeDunDunRice, HomeBestMenu, HomeBestReview, HomeBrandStory, HomeKeyPoint, HomeYoutube} from "./home"
 import {usersServices} from "@/services/usersServices"
 
 const Home = async () => {
@@ -9,7 +9,7 @@ const Home = async () => {
     <MainLayout user={user}>
       <div className="w-full">
         <HomeSwiper />
-        <HomePledge />
+        <HomeKeyPoint />
         <HomeDunDunRice />
         <HomeBestMenu />
         <HomeBestReview />

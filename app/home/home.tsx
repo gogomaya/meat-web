@@ -2,8 +2,9 @@
 import {ProductsList} from "@/app/products/products"
 import {Divider, Typography} from "@mui/material"
 import Image from "next/image"
+import {useState} from "react"
 
-export const HomePledge = () => {
+export const HomeKeyPoint = () => {
   return (
     <section>
       <Image
@@ -13,7 +14,7 @@ export const HomePledge = () => {
         height={0}
         priority
         sizes="100vw"
-        className="w-full"
+        className="w-full py-4"
       />
     </section>
   )
@@ -29,7 +30,7 @@ export const HomeBestReview = () => {
         height={0}
         priority
         sizes="100vw"
-        className="w-full"
+        className="w-full py-4"
       />
     </section>
   )
@@ -52,16 +53,23 @@ export const HomeBrandStory = () => {
 }
 
 export const HomeDunDunRice = () => {
+  const [isHovered, setIsHovered] = useState(false)
+
   return (
-    <div className="container mx-auto py-16 bg-cover bg-center" style={{backgroundImage: "url(\"/images/main_visual_02.jpg\")"}}>
+    <div
+      className={"container mx-auto py-24 bg-center"}
+      style={{backgroundImage: "url('/images/3.jpg')"}}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-white bg-opacity-75 rounded-lg p-8">
         <div>
           <Image
-            src="/images/main_visual_02.jpg"
+            src="/images/10.jpg"
             alt="Ddun Dun Rice"
             width={600}
             height={400}
-            className="rounded-lg"
+            className={`rounded-lg ${isHovered ? "transform scale-110 transition-all duration-2000" : ""}`}
           />
         </div>
         <div className="flex flex-col justify-center">
@@ -75,8 +83,8 @@ export const HomeDunDunRice = () => {
 
 export const HomeBestMenu = () => {
   return (
-    <section className="mt-5 py-4">
-      <h2 className="flex justify-center">BEST MENU</h2>
+    <section className="mt-5 py-10">
+      <h2 className="flex justify-center"><strong>BEST MENU</strong></h2>
       <ProductsList />
     </section>
   )
