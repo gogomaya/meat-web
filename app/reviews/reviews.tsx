@@ -36,10 +36,10 @@ export const ReviewCard = () => {
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-            이야..이거 만족도 상당히 높습니다. 
-            꽃삼겹 기름 정말 깨끗하고요, 비린내 누린내 잡내 정말 1도 안나요.. 너무 신기해요. 
-            여지껏 먹어본 대패고기들 중에 1등입니다. 
-            저희 엄마랑 언니는 비계를 싫어해서 뒷다리살을 구워먹는 사람들인데, 꽃삼겹 대패는 이게 뭐냐 너무 맛있다고 하면서 잘 먹었습니다. 
+            이야..이거 만족도 상당히 높습니다.
+            꽃삼겹 기름 정말 깨끗하고요, 비린내 누린내 잡내 정말 1도 안나요.. 너무 신기해요.
+            여지껏 먹어본 대패고기들 중에 1등입니다.
+            저희 엄마랑 언니는 비계를 싫어해서 뒷다리살을 구워먹는 사람들인데, 꽃삼겹 대패는 이게 뭐냐 너무 맛있다고 하면서 잘 먹었습니다.
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
@@ -91,7 +91,7 @@ export const MonthlyBestReview = () => {
     </>
   )
 }
-  
+
 
 export const PhotoReview = () => {
   return (
