@@ -84,8 +84,15 @@ export const HomeDunDunRice = () => {
 export const HomeBestMenu = () => {
   return (
     <section className="mt-5 py-10">
-      <h2 className="flex justify-center"><strong>BEST MENU</strong></h2>
-      <ProductsList />
+      <Image
+        src="/images/monthly-best-review.jpg"
+        alt="best-menu1"
+        width={100}
+        height={100}
+        priority
+        sizes="100vw"
+        className="w-full py-10"
+      /><ProductsList />
     </section>
   )
 }
