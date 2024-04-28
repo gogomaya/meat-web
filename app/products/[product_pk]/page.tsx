@@ -2,6 +2,7 @@ import React, {useState} from "react"
 import Divider from "@mui/material/Divider"
 import {ProductDetail, ProductsDetailContent, ShipDetail, NavDetail} from "../products"
 import MainLayout from "@/app/main-layout"
+import Boards from "@/app/boards/page"
 import {usersServices} from "@/services/usersServices"
 import {GeneralReview} from "@/app/reviews/reviews"
 // import Boards from "@/app/boards/page"
@@ -21,7 +22,7 @@ const Products = async () => {
       </div>
       {/* 문의 */}
       <div id="qna">
-        {/* <Boards /> */}
+        <Boards />
       </div>
       {/* 주문정보 */}
       <div id="ship"><ShipDetail /></div>

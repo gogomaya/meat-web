@@ -9,6 +9,7 @@ import AppBar from "@mui/material/AppBar"
 import SwipeableViews from "react-swipeable-views"
 import AddIcon from "@mui/icons-material/Add"
 import RemoveIcon from "@mui/icons-material/Remove"
+import ProductSwiper from "./[product_pk]/swiper"
 
 export const ProductsSearch = () => {
   return (
@@ -42,12 +43,21 @@ export const ProductsPagination = () => {
 }
 
 export const ProductsList = () => {
+  const enlargeImage = (event: { currentTarget: { querySelector: (arg0: string) => { (): any; new(): any; style: { (): any; new(): any; transform: string } } } }) => {
+    event.currentTarget.querySelector("img").style.transform = "scale(1.02)"
+  }
+  const shrinkImage = (event: { currentTarget: { querySelector: (arg0: string) => { (): any; new(): any; style: { (): any; new(): any; transform: string } } } }) => {
+    event.currentTarget.querySelector("img").style.transform = "scale(1)"
+  }
+
   return (
     <ol>
-      <li className="p-1 inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]">
+      <li className="p-1 inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]" 
+        onMouseEnter={enlargeImage} 
+        onMouseLeave={shrinkImage}>
         <Link href="/products/1">
           <Image
-            src="/images/main-best-menu1.jpg"
+            src="/images/10.jpg"
             alt="best-menu1"
             width={0}
             height={0}
@@ -61,9 +71,11 @@ export const ProductsList = () => {
           <strong>26,000원</strong>
         </p>
       </li>
-      <li className="p-1 inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]">
+      <li className="p-1 inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]" 
+        onMouseEnter={enlargeImage} 
+        onMouseLeave={shrinkImage}>
         <Image
-          src="/images/main-best-menu2.jpg"
+          src="/images/17.jpg"
           alt="best-menu2"
           width={0}
           height={0}
@@ -76,9 +88,11 @@ export const ProductsList = () => {
           <strong>26,000원</strong>
         </p>
       </li>
-      <li className="p-1 inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]">
+      <li className="p-1 inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]" 
+        onMouseEnter={enlargeImage} 
+        onMouseLeave={shrinkImage}>
         <Image
-          src="/images/main-swiper2.jpg"
+          src="/images/29.jpg"
           alt="best-menu3"
           width={0}
           height={0}
@@ -91,9 +105,11 @@ export const ProductsList = () => {
           <strong>26,000원</strong>
         </p>
       </li>
-      <li className="p-1 inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]">
+      <li className="p-1 inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]" 
+        onMouseEnter={enlargeImage} 
+        onMouseLeave={shrinkImage}>
         <Image
-          src="/images/main-swiper3.jpg"
+          src="/images/37.jpg"
           alt="best-menu4"
           width={0}
           height={0}
@@ -164,14 +180,15 @@ export const ProductsDetailContent = () => {
       <div className="container mx-auto py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div className="flex justify-center items-center ref={imageRef} onMouseEnter={ex_mouse_enter}">
-            <Image
-              src="/images/main-best-menu1.jpg"
+            {/* <Image
+              src="/images/2.jpg"
               alt="Product Image"
-              width={400}
-              height={400}
-              priority
+              width={600}
+              height={800}
+              sizes="100vw"
               className="figure.ct-img"
-            />
+            /> */}
+            <ProductSwiper />
           </div>
           <div>
             <Typography variant="h4" gutterBottom>
@@ -284,13 +301,6 @@ export const NavDetail = () => {
       window.removeEventListener("scroll", handleScroll)
     }
   }, [])
-  // scroll to move id 구현
-  // const scrollToElement = (id: string) => {
-  //   const element = document.getElementById(id)
-  //   if (element) {
-  //     element.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"})
-  //   }
-  // }
   const scrollToElement = (id: string) => {
     const element = document.getElementById(id)
     if (element) {
@@ -305,7 +315,8 @@ export const NavDetail = () => {
     }
   }
   const [isHovered, setIsHovered] = React.useState(false)
-  const [isClicked, setIsClicked] = React.useState(false)
+  const [isClicked, setIsClicked] = React.useState<boolean | string>(false)
+
 
 
   const handleMouseHover = () => {
@@ -320,10 +331,10 @@ export const NavDetail = () => {
   return (
     <nav className={`sticky top-16 w-full bg-white z-10 ${isFixed ? "visible" : "invisible md:visible"} flex-1 flex justify-center items-center nav-detail`} style={{height: "80px", backgroundColor: "rgba(255, 255, 255, 0.88)"}}>
       <ul className="flex gap-3">
-        {/* <li onClick={() => { scrollToElement("detail"); handleMouseHover(); handleMouseClick("detail") }} className={[isHovered ? "highlight-underline" : "", isClicked === "detail"  ? "text-red-500" : ""].join(" ")}><button>상품상세</button></li>
+        <li onClick={() => { scrollToElement("detail"); handleMouseHover(); handleMouseClick("detail") }} className={[isHovered ? "highlight-underline" : "", isClicked === "detail"  ? "text-red-500" : ""].join(" ")}><button>상품상세</button></li>
         <li onClick={() => { scrollToElement("review2"); handleMouseHover(); handleMouseClick("review2") }} className={[isHovered ? "highlight-underline" : "", isClicked === "review2"  ? "text-red-500" : ""].join(" ")}><button>리뷰</button></li>
         <li onClick={() => { scrollToElement("qna"); handleMouseHover(); handleMouseClick("qna") }} className={[isHovered ? "highlight-underline" : "", isClicked === "qna"  ? "text-red-500" : ""].join(" ")}><button>문의</button></li>
-        <li onClick={() => { scrollToElement("ship"); handleMouseHover(); handleMouseClick("ship") }} className={[isHovered ? "highlight-underline" : "", isClicked === "ship"  ? "text-red-500" : ""].join(" ")}><button>주문정보 </button></li> */}
+        <li onClick={() => { scrollToElement("ship"); handleMouseHover(); handleMouseClick("ship") }} className={[isHovered ? "highlight-underline" : "", isClicked === "ship"  ? "text-red-500" : ""].join(" ")}><button>주문정보 </button></li>
       </ul>
     </nav>
 
