@@ -10,3 +10,7 @@ export interface SearchParams {
   orderDirection: string
   query: string
 }
+
+export interface EmptyObject {
+  [key: string]: any
+}

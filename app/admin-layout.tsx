@@ -5,7 +5,7 @@ import Link from "next/link"
 import {Paper, Breadcrumbs, Drawer} from "@mui/material"
 import MenuIcon from "@mui/icons-material/Menu"
 import LogoutIcon from "@mui/icons-material/Logout"
-// import {usersServices} from "@/services/usersServices"
+import {usersServices} from "@/services/usersServices"
 
 const AdminLayout = ({
   children
@@ -15,9 +15,9 @@ const AdminLayout = ({
   const pathname = usePathname()
   const router = useRouter()
   const logout = async () => {
-    // await usersServices.usersLogout()
+    await usersServices.usersLogout()
     router.refresh()
-    router.push("/admin")
+    router.push("/")
   }
   return (
     <div className="min-h-full flex">
@@ -35,25 +35,18 @@ const AdminLayout = ({
                   {pathname.includes("/admin/users") && (
                     <span>회원 관리</span>
                   )}
-                  {/* {pathname.includes(`/admin/products/${brand_id}`) && (
-                    <Link href={`/admin/products/${brand_id}`}>
-                      {brands.find((brand) => brand.id === brand_id)?.name}
-                    </Link>
-                  )} */}
-                  {pathname.includes("/admin/boards/shipped") && (
-                    <Link href={"/admin/boards/shipped"}>출고제품</Link>
+                  {pathname.includes("/admin/products/cow") && (
+                    <Link href={"/admin/products/cow"}>소고기</Link>
+                  )}
+                  {pathname.includes("/admin/products/pork") && (
+                    <Link href={"/admin/products/pork"}>돼지고기</Link>
+                  )}
+                  {pathname.includes("/admin/products/simple") && (
+                    <Link href={"/admin/products/simple"}>간편식</Link>
                   )}
                   {pathname.includes("/admin/boards/notice") && (
                     <Link href={"/admin/boards/notice"}>공지사항</Link>
                   )}
-                  {/* {(pathname.includes(`/admin/products/${brand_id}/create`) ||
-                    (pathname.includes("/admin/boards/") && pathname.includes("/create"))) && (
-                    <span>등록</span>
-                  )} */}
-                  {/* {(pathname.includes(`/admin/products/${brand_id}/detail`) ||
-                    (pathname.includes("/admin/boards/") && pathname.includes("/detail"))) && (
-                    <span>수정</span>
-                  )} */}
                 </Breadcrumbs>
               </div>
               <div className="flex-1"></div>
@@ -105,28 +98,32 @@ const AdminLayoutMenu = ({
           }}
         >회원 관리</Link>
       </li>
-      {/* <li className="px-4 py-2 border-b border-50 lg:border-0">
-        <AdminBrands brands={brands} />
-      </li> */}
-      {/* {brands.map((brand) => (
-        <li key={brand.brand_pk} className="px-4 py-2 border-b border-50 lg:border-0">
-          <Link
-            href={`/admin/products/${brand.id}`}
-            className={`${pathname.includes(brand.id) ? "text-yellow-700 " : ""}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
-            onClick={() => {
-              setTimeout(() => setHeaderMenuOpen?.(), 500)
-            }}
-          >- {brand.name}</Link>
-        </li>
-      ))} */}
       <li className="px-4 py-2 border-b border-50 lg:border-0">
         <Link
-          href="/admin/boards/shipped"
-          className={`${pathname.includes("/admin/boards/shipped") ? "text-yellow-700 " : ""}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
+          href="/admin/products/cow"
+          className={`${pathname.includes("/admin/products/cow") ? "text-yellow-700 " : ""}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
           onClick={() => {
             setTimeout(() => setHeaderMenuOpen?.(), 500)
           }}
-        >출고제품</Link>
+        >소고기</Link>
+      </li>
+      <li className="px-4 py-2 border-b border-50 lg:border-0">
+        <Link
+          href="/admin/products/pork"
+          className={`${pathname.includes("/admin/products/pork") ? "text-yellow-700 " : ""}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
+          onClick={() => {
+            setTimeout(() => setHeaderMenuOpen?.(), 500)
+          }}
+        >돼지고기</Link>
+      </li>
+      <li className="px-4 py-2 border-b border-50 lg:border-0">
+        <Link
+          href="/admin/products/simple"
+          className={`${pathname.includes("/admin/products/simple") ? "text-yellow-700 " : ""}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
+          onClick={() => {
+            setTimeout(() => setHeaderMenuOpen?.(), 500)
+          }}
+        >간편식</Link>
       </li>
       <li className="px-4 py-2 border-b border-50 lg:border-0">
         <Link

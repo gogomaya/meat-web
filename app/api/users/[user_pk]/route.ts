@@ -7,7 +7,7 @@ export const DELETE = async (
   _request: NextRequest,
   context: {params: {user_pk: number}}
 ) => {
-  adminCheck()
+  await adminCheck()
   const mysql = await mysql2Pool()
   const [rows]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
     select
