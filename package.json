@@ -13,8 +13,10 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-decoupled-document": "^41.3.1",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
+    "@hookform/resolvers": "^3.3.4",
     "@mui/icons-material": "^5.15.15",
     "@mui/material": "^5.15.15",
     "@types/react-icons": "^3.0.0",
@@ -24,8 +26,10 @@
     "next": "13.5.6",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.51.3",
     "swiper": "^11.1.1",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@types/node": "^20",

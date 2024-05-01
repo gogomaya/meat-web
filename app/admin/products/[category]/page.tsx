@@ -1,12 +1,12 @@
 import {adminCheck} from "@/app/admin/page"
 import {ResponseApi} from "@/types/commonTypes"
-import {Category, ProductsSearchParams} from "@/types/productsTypes"
+import {ProductCategory, ProductsSearchParams} from "@/types/productsTypes"
 import {productsServices} from "@/services/productsServices"
 import AdminLayout from "@/app/admin-layout"
-import AdminProductsList from "./products"
+import AdminProductsList from "./products-list"
 
 const AdminProducts = async (props: {
-  params: {category: Category}, searchParams: ProductsSearchParams
+  params: {category: ProductCategory}, searchParams: ProductsSearchParams
 }) => {
   await adminCheck()
   const searchParams = {

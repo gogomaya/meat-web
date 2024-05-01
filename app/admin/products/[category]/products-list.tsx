@@ -7,7 +7,7 @@ import {FormControl, MenuItem, Paper, Select, Table, TableBody, TableCell, Table
 import {IconButton, InputBase, Button} from "@mui/material"
 import SearchIcon from "@mui/icons-material/Search"
 import {EnhancedTabledHead, EnhancedTablePagination} from "@/components/common/Table"
-import {Category, Product, ProductsSearchParams} from "@/types/productsTypes"
+import {ProductCategory, Product, ProductsSearchParams} from "@/types/productsTypes"
 import {commonServices} from "@/services/commonServices"
 import moment from "moment"
 
@@ -19,7 +19,7 @@ const AdminProductsList = ({
 }: {
   products: Product[]
   total_rows: number
-  category: Category
+  category: ProductCategory
   searchParams: ProductsSearchParams
 }) => {
   const pathname = usePathname()

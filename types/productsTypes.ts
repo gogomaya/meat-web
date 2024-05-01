@@ -1,23 +1,22 @@
 import {SearchParams} from "./commonTypes"
 
-export type Category = "cow" | "pork" | "simple"
+export type ProductCategory = "cow" | "pork" | "simple"
 
 export interface Product {
   product_pk: number
   name: string
-  category: Category
+  category: ProductCategory
   category_menu: string
-  description: string
-  from: string
-  weight: string
-  type: string
-  part: string
-  per100g: string
-  grade: string
-  package: string
-  price: number
+  price: number | string
+  description?: string
+  origin?: string
+  weight?: string
+  type?: string
+  part?: string
+  per100g?: string
+  grade?: string
+  package?: string
   is_today: boolean
-  is_main: boolean
   is_best: boolean
   is_sold_out: boolean
   contents: string

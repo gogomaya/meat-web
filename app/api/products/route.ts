@@ -51,7 +51,7 @@ export const POST = async (request: NextRequest) => {
   for (const [key, value] of formData.entries()) {
     if (key === "image") {
       fileName = await fileUpload(value as File, "products")
-    } else if (key === "is_main" || key === "is_best") {
+    } else if (key === "is_today" || key === "is_best" || key === "is_sold_out") {
       product[key] = JSON.parse(String(value))
     } else {
       product[key] = value
@@ -60,10 +60,20 @@ export const POST = async (request: NextRequest) => {
 
   const columns = [
     "name",
-    "kind",
-    "price_text",
-    "is_main",
+    "category",
+    "category_menu",
+    "price",
+    "description",
+    "origin",
+    "weight",
+    "type",
+    "part",
+    "per100g",
+    "grade",
+    "package",
+    "is_today",
     "is_best",
+    "is_sold_out",
     "contents"
   ]
   const [result]: [ResultSetHeader, FieldPacket[]] = await mysql.execute(`
