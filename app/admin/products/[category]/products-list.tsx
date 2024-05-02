@@ -73,6 +73,8 @@ const AdminProductsList = ({
               headCells={[
                 {id: "product_pk", label: "No", sort: true},
                 {id: "name", label: "이름", sort: true},
+                {id: "category_menu", label: "메뉴", sort: false},
+                {id: "price", label: "금액", sort: true},
                 {id: "created_at", label: "작성시간", sort: true}
               ]}
             />
@@ -96,6 +98,8 @@ const AdminProductsList = ({
                       <Link className="ml-4" href={`${pathname}/detail/${product.product_pk}`}>{product.name}</Link>
                     </div>
                   </TableCell>
+                  <TableCell>{product.category_menu}</TableCell>
+                  <TableCell>{product.price.toLocaleString()}원</TableCell>
                   <TableCell>{moment(product.created_at).format("YYYY-MM-DD")}</TableCell>
                 </TableRow>
               ))}
@@ -126,6 +130,7 @@ const AdminProductsList = ({
                       <Link className="ml-4" href={`${pathname}/detail/${product.product_pk}`}>{product.name}</Link>
                     </div>
                   </TableCell>
+                  <TableCell>{product.price.toLocaleString()}원</TableCell>
                 </TableRow>
               ))}
             </TableBody>

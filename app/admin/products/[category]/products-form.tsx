@@ -261,7 +261,7 @@ const AdminProductsForm = ({
             render={({field}) => (
               <FormControlLabel control={
                 <Checkbox {...field} checked={field.value} />
-              } label="메인 페이지 Best Menu 노출" />
+              } label="메인 페이지 Best Menu" />
             )}
           />
           <Controller

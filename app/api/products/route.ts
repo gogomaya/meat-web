@@ -13,6 +13,7 @@ export const GET = async (request: NextRequest) => {
   const orderColumn = searchParams.get("orderColumn") || "product_pk"
   const orderDirection = searchParams.get("orderDirection") || "desc"
   const query = searchParams.get("query") || ""
+  const category_menu = searchParams.get("category_menu") || ""
 
   const mysql = await mysql2Pool()
   const [total_rows]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
@@ -21,7 +22,8 @@ export const GET = async (request: NextRequest) => {
   from products
   where
     ("" = ? or name like concat("%", ?, "%"))
-`, [query, query])
+    and ("" = ? or category_menu like concat("%", ?, "%"))
+`, [query, query, category_menu, category_menu])
   const [rows]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
     select
       p.*, pi.file_name as image_file_name
@@ -31,9 +33,10 @@ export const GET = async (request: NextRequest) => {
       p.product_pk = pi.product_pk and isnull(pi.uuid)
     where
       ("" = ? or name like concat("%", ?, "%"))
+      and ("" = ? or category_menu like concat("%", ?, "%"))
     order by ${orderColumn} ${orderDirection}
     limit ?, ?
-  `, [query, query, page, rowsPerPage])
+  `, [query, query, category_menu, category_menu, page, rowsPerPage])
   return NextResponse.json({
     products: rows,
     total_rows: total_rows[0].total_rows
@@ -98,7 +101,7 @@ export const POST = async (request: NextRequest) => {
   })
 }
 
-const deleteNotUsedImages = async (
+export const deleteNotUsedImages = async (
   product_pk: number, uuid: string, contents: string
 ) => {
   const mysql = await mysql2Pool()
