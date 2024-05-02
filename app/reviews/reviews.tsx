@@ -1,5 +1,4 @@
 "use client"
-import Link from "next/link"
 import {Avatar, Button, Card, CardActions, CardContent, CardHeader, CardMedia, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, IconButton, InputBase, InputLabel, MenuItem, Pagination, Select, Typography} from "@mui/material"
 import * as React from "react"
 import ShareIcon from "@mui/icons-material/Share"
@@ -8,6 +7,7 @@ import MoreVertIcon from "@mui/icons-material/MoreVert"
 import {red} from "@mui/material/colors"
 import SearchIcon from "@mui/icons-material/Search"
 import {FaRegThumbsUp, FaRegThumbsDown} from "react-icons/fa"
+import Image from "next/image"
 
 
 
@@ -76,8 +76,16 @@ export const MonthlyBestReview = () => {
           <Button onClick={closeDialogHandler} color="primary">닫기</Button>
         </DialogActions>
       </Dialog>
-
-      <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <Image
+        src="/images/monthly-best-review.jpg"
+        alt="best-menu1"
+        width={100}
+        height={100}
+        priority
+        sizes="100vw"
+        className="w-full py-10"
+      />
+      <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 py-4">
         <li className="block" onClick={openDialogHandler}>
           <ReviewCard />
         </li>
@@ -191,7 +199,6 @@ export const GeneralReview = () => {
           <p className="ml-2 text-sm text-gray-500">5점</p>
         </div>
       </div>
-      {/* 리뷰 본문 */}
       <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
         <dl className="sm:divide-y sm:divide-gray-200">
           <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
@@ -199,13 +206,10 @@ export const GeneralReview = () => {
           </div>
         </dl>
       </div>
-      {/* 좋아요/싫어요 아이콘 */}
       <div className="px-6 py-3 flex justify-between items-center">
         <div className="flex items-center gap-1">
-          {/* 좋아요 아이콘 */}
-          <FaRegThumbsUp className="text-gray-500 cursor-pointer mr-2" />좋아요
-          {/* 싫어요 아이콘 */}
-          <FaRegThumbsDown className="text-gray-500 cursor-pointer" />싫어요
+          <FaRegThumbsUp className="text-gray-500 cursor-pointer mr-2" /><span>좋아요</span>
+          <FaRegThumbsDown className="text-gray-500 cursor-pointer" /><span>싫어요</span>
         </div>
       </div>
     </div>

@@ -88,35 +88,35 @@ const MegaMenu = () => {
         </li>
         <li id="cow" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
           <Link href="/products">소고기</Link>
-          <ol id="submenu" className={`w-20 absolute border border-black ${menu.cow || menu.todayMenu || menu.pork || menu.simple || menu.review || menu.board ? "block" : "hidden"} bg-white py-2 rounded-lg shadow-md text-sm font-semibold`}>
+          <ol id="submenu" className={`w-20 absolute border border-black ${menu.cow ? "block" : "hidden"} bg-white py-2 rounded-lg shadow-md text-sm font-semibold`}>
             <li><Link href="#">특수모듬</Link></li>
             <li><Link href="#">육회/사시미</Link></li>
           </ol>
         </li>
         <li id="pork" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
           <Link href="/products">돼지고기</Link>
-          <ol id="submenu" className={`w-20 absolute border border-black ${menu.cow || menu.todayMenu || menu.pork || menu.simple || menu.review || menu.board ? "block" : "hidden"} bg-white py-2 rounded-lg shadow-md text-sm font-semibold`}>
+          <ol id="submenu" className={`w-20 absolute border border-black ${menu.pork ? "block" : "hidden"} bg-white py-2 rounded-lg shadow-md text-sm font-semibold`}>
             <li><Link href="#">한돈</Link></li>
             <li><Link href="#">생삼겹살</Link></li>
           </ol>
         </li>
         <li id="simple" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
           <Link href="/products">간편식</Link>
-          <ol id="submenu" className={`w-20 absolute border border-black ${menu.cow || menu.todayMenu || menu.pork || menu.simple || menu.review || menu.board ? "block" : "hidden"} bg-white py-2 rounded-lg shadow-md text-sm font-semibold`}>
+          <ol id="submenu" className={`w-20 absolute border border-black ${menu.simple ? "block" : "hidden"} bg-white py-2 rounded-lg shadow-md text-sm font-semibold`}>
             <li><Link href="#">곰탕&머릿고리</Link></li>
             <li><Link href="#">수육</Link></li>
           </ol>
         </li>
         <li id="review" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
           <Link href="/reviews">리뷰</Link>
-          <ol id="submenu" className={`w-20 absolute border border-black ${menu.cow || menu.todayMenu || menu.pork || menu.simple || menu.review || menu.board ? "block" : "hidden"} bg-white py-2 rounded-lg shadow-md text-sm font-semibold`}>
+          <ol id="submenu" className={`w-20 absolute border border-black ${menu.review ? "block" : "hidden"} bg-white py-2 rounded-lg shadow-md text-sm font-semibold`}>
             <li><Link href="#">고객 리뷰</Link></li>
             <li><Link href="#">전문가 리뷰</Link></li>
           </ol>
         </li>
         <li id="board" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
           <Link href="/boards">고객센터</Link>
-          <ol id="submenu" className={`w- absolute border border-black ${menu.cow || menu.todayMenu || menu.pork || menu.simple || menu.review || menu.board ? "block" : "hidden"} bg-white py-2 rounded-lg shadow-md text-sm font-semibold`}>
+          <ol id="submenu" className={`w- absolute border border-black ${menu.board ? "block" : "hidden"} bg-white py-2 rounded-lg shadow-md text-sm font-semibold`}>
             <li><Link href="#">공지사항</Link></li>
             <li><Link href="#">자주하는질문</Link></li>
           </ol>

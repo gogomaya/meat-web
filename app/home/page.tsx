@@ -1,7 +1,7 @@
 import {loginCheck} from "@/app/admin/page"
 import MainLayout from "@/app/main-layout"
 import HomeSwiper from "./swiper"
-import {HomeDunDunRice, HomeBestMenu, HomeBestReview, HomeBrandStory, HomePledge, HomeYoutube} from "./home"
+import {HomeDunDunRice, HomeBestMenu, HomeBestReview, HomeBrandStory, HomeKeyPoint, HomeYoutube} from "./home"
 
 const Home = async () => {
   const {user} = await loginCheck(false)
@@ -9,7 +9,7 @@ const Home = async () => {
     <MainLayout user={user}>
       <div className="w-full">
         <HomeSwiper />
-        <HomePledge />
+        <HomeKeyPoint />
         <HomeDunDunRice />
         <HomeBestMenu />
         <HomeBestReview />

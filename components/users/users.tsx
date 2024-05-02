@@ -35,7 +35,7 @@ const Users = ({user}: {user: User}) => {
               <Image
                 src="/images/naver-login-btn.png"
                 alt="naver-login-btn"
-                width={325}
+                width={200}
                 height={100}
                 sizes="100vw"
                 priority
@@ -56,7 +56,7 @@ const Users = ({user}: {user: User}) => {
               <Image
                 src="/images/kakao-login-btn.png"
                 alt="naver-login-btn"
-                width={325}
+                width={200}
                 height={100}
                 sizes="100vw"
                 priority

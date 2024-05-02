@@ -41,19 +41,17 @@ ul {
   padding: 0;
 }
 
-/* Main menu item styles */
 li {
   position: relative;
 }
 
-/* Submenu styles */
 #submenu {
   display: none;
   position: absolute;
   top: 100%;
   width: max-content;
   left: 0;
-  white-space: nowrap; /* Prevent line breaks */
+  white-space: nowrap; 
 }
 
 #submenu.block {
