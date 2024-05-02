@@ -125,6 +125,33 @@ const AdminLayoutMenu = ({
           }}
         >간편식</Link>
       </li>
+      <li className="px-4 py-2 border-b border-50 lg:border-0">
+        <Link
+          href="/admin/boards/notice"
+          className={`${pathname.includes("/admin/boards/notice") ? "text-yellow-700 " : ""}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
+          onClick={() => {
+            setTimeout(() => setHeaderMenuOpen?.(), 500)
+          }}
+        >공지사항</Link>
+      </li>
+      <li className="px-4 py-2 border-b border-50 lg:border-0">
+        <Link
+          href="/admin/boards/faq"
+          className={`${pathname.includes("/admin/boards/faq") ? "text-yellow-700 " : ""}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
+          onClick={() => {
+            setTimeout(() => setHeaderMenuOpen?.(), 500)
+          }}
+        >자주묻는질문</Link>
+      </li>
+      <li className="px-4 py-2 border-b border-50 lg:border-0">
+        <Link
+          href="/admin/boards/qna"
+          className={`${pathname.includes("/admin/boards/faq") ? "text-yellow-700 " : ""}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
+          onClick={() => {
+            setTimeout(() => setHeaderMenuOpen?.(), 500)
+          }}
+        >1:1문의하기</Link>
+      </li>
     </ul>
   )
 }
