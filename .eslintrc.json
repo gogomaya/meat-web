@@ -8,6 +8,7 @@
     "comma-dangle": "error",
     "array-bracket-spacing": "error",
     "object-curly-spacing": "error",
-    "arrow-parens": "error"
+    "arrow-parens": "error",
+    "no-trailing-spaces": "error"
   }
 }

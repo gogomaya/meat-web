@@ -1,42 +1,41 @@
-import {redirect} from "next/navigation"
-import {cookies} from "next/headers"
-import {CookieUser, User} from "@/types/usersTypes"
 import {commonServices} from "./commonServices"
+import {LoginChecked} from "@/types/usersTypes"
+import {ResponseApi, SearchParams} from "@/types/commonTypes"
 
 export const usersServices = {
-  loginCheck: async (loginOnly: boolean): Promise<User> => {
-    let user = {} as User
+  serverUsersCookie: (loginChecked: LoginChecked) => {
+    return `meat_web_user=${encodeURIComponent(JSON.stringify(loginChecked.cookieUser))}`
+  },
+  usersLogout: async (): Promise<ResponseApi> => {
     try {
-      const cookieUser = (JSON.parse(cookies().get("meat_web_user")?.value || "{}")) as CookieUser
-      // 로그인 전용 페이지이고 쿠키 정보가 없을 경우
-      if (loginOnly && (!cookieUser.third_party || !cookieUser.access_token)) {
-        redirect("/")
-      }
-      // 쿠키 정보가 없을 경우
-      if (!cookieUser.third_party || !cookieUser.access_token) {
-        return user
-      }
-      // access_token으로 회원 정보 받기
-      if (cookieUser.third_party === "Naver") {
-        const responseUser = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/users/naver-login`, {
-          method: "POST",
-          body: JSON.stringify(cookieUser)
-        })
-        user = (await commonServices.responseJson(responseUser)).data
-      } else if (cookieUser.third_party === "Kakao") {
-        const responseUser = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/users/kakao-login`, {
-          method: "POST",
-          body: JSON.stringify(cookieUser)
-        })
-        user = (await commonServices.responseJson(responseUser)).data
-      }
-      // 로그인 전용 페이지이고 회원 정보를 못 받은 경우
-      if (loginOnly && !user.user_pk) {
-        redirect("/")
-      }
-      return user
-    } finally {
-      return user
+      const response = await fetch("/api/users/logout")
+      return await commonServices.responseJson(response)
+    } catch (error) {
+      return {error}
+    }
+  },
+  usersList: async (loginChecked: LoginChecked, searchParams: SearchParams): Promise<ResponseApi> => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/users?` + new URLSearchParams({
+        ...searchParams
+      }), {
+        headers: {
+          cookie: usersServices.serverUsersCookie(loginChecked)
+        }
+      })
+      return await commonServices.responseJson(response)
+    } catch (error) {
+      throw error
+    }
+  },
+  usersDelete: async (user_pk: number): Promise<ResponseApi> => {
+    try {
+      const response = await fetch(`/api/users/${user_pk}`, {
+        method: "DELETE"
+      })
+      return await commonServices.responseJson(response)
+    } catch (error) {
+      return {error}
     }
   }
 }
