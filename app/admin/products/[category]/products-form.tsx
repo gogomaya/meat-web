@@ -1,7 +1,7 @@
 "use client"
 import {useEffect, useState} from "react"
 import {useRouter} from "next/navigation"
-import {Paper, TextField, Button, Select, MenuItem, FormControl, InputLabel, FormGroup, FormControlLabel, Checkbox} from "@mui/material"
+import {Paper, TextField, Button, Select, MenuItem, FormControl, InputLabel, FormControlLabel, Checkbox, FormHelperText} from "@mui/material"
 import {ResponseApi} from "@/types/commonTypes"
 import {ProductCategory, Product} from "@/types/productsTypes"
 import {commonServices} from "@/services/commonServices"
@@ -31,7 +31,7 @@ const AdminProductsForm = ({
       product_pk: yup.number().required(),
       name: yup.string().required("상품명을 입력해 주세요.").min(3, "상품명은 최소 3자 이상입니다."),
       category: yup.mixed<ProductCategory>().required(),
-      category_menu: yup.string().required(),
+      category_menu: yup.string().required("메뉴를 선택해 주세요."),
       price: yup.mixed<number | string>().required(),
       is_today: yup.boolean().default(product.is_today),
       is_best: yup.boolean().default(product.is_best),
@@ -102,7 +102,7 @@ const AdminProductsForm = ({
   return (
     <form onSubmit={(event) => event.preventDefault()}>
       <Paper className="p-4">
-        <FormControl variant="standard">
+        <FormControl variant="standard" error={!!errors.category_menu}>
           <InputLabel shrink>메뉴</InputLabel>
           <Controller
             control={control}
@@ -115,6 +115,9 @@ const AdminProductsForm = ({
               </Select>
             )}
           />
+          {errors.category_menu && errors.category_menu.message && (
+            <FormHelperText>{errors.category_menu.message}</FormHelperText>
+          )}
         </FormControl>
         <TextField
           className="!mt-8"
