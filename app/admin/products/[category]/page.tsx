@@ -15,6 +15,7 @@ const AdminProducts = async (props: {
     orderColumn: props.searchParams.orderColumn || "product_pk",
     orderDirection: props.searchParams.orderDirection || "desc",
     query: props.searchParams.query || "",
+    category: props.params.category || "",
     category_menu: props.searchParams.category_menu || ""
   } as ProductsSearchParams
   const response: ResponseApi = await productsServices.productsList(searchParams)
