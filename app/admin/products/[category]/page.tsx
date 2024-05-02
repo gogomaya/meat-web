@@ -8,7 +8,7 @@ import AdminProductsList from "./products-list"
 const AdminProducts = async (props: {
   params: {category: ProductCategory}, searchParams: ProductsSearchParams
 }) => {
-  await adminCheck()
+  await adminCheck(true)
   const searchParams = {
     rowsPerPage: Number(props.searchParams.rowsPerPage) || 10,
     page: Number(props.searchParams.page) || 0,

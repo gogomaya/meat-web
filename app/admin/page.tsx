@@ -42,10 +42,18 @@ export const loginCheck = async (loginOnly: boolean): Promise<LoginChecked> => {
   }
 }
 
-export const adminCheck = async (): Promise<LoginChecked> => {
+export const adminCheck = async (isPage: boolean): Promise<LoginChecked> => {
+  cookies() // cookies()를 호출해야 npm run build에서 오류가 발생하지 않는다.
   const loginChecked = await loginCheck(false)
   if (!loginChecked.user.is_admin) {
-    redirect("/admin")
+    if (isPage) {
+      redirect("/admin")
+    } else {
+      throw {
+        status: 500,
+        message: "관리자만 접근 가능합니다."
+      }
+    }
   }
   return loginChecked
 }

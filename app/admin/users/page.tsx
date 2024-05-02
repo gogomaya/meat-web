@@ -5,7 +5,7 @@ import AdminLayout from "@/app/admin-layout"
 import AdminUsersList from "./users"
 
 const AdminUsers = async (props: {searchParams: SearchParams}) => {
-  const loginChecked = await adminCheck()
+  const loginChecked = await adminCheck(true)
   const searchParams = {
     rowsPerPage: Number(props.searchParams.rowsPerPage) || 10,
     page: Number(props.searchParams.page) || 0,
