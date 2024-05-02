@@ -8,7 +8,7 @@ import AdminProductsForm from "@/app/admin/products/[category]/products-form"
 const AdminProductsDetail = async (props: {
   params: {category: ProductCategory, product_pk: number}
 }) => {
-  await adminCheck()
+  await adminCheck(true)
   const response: ResponseApi = await productsServices.productsDetail(props.params.product_pk)
   return (
     <AdminLayout>

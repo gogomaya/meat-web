@@ -41,7 +41,7 @@ export const DELETE = async (
   _request: NextRequest,
   context: {params: {product_pk: number}}
 ) => {
-  await adminCheck()
+  await adminCheck(false)
   const mysql = await mysql2Pool()
   await mysql.execute(`
     delete from products
@@ -70,7 +70,7 @@ export const PATCH = async (
   request: NextRequest,
   context: {params: {product_pk: number}}
 ) => {
-  await adminCheck()
+  await adminCheck(false)
   const searchParams = request.nextUrl.searchParams
   const uuid = searchParams.get("uuid") || "uuid"
   const mysql = await mysql2Pool()

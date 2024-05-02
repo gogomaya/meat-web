@@ -6,7 +6,7 @@ import AdminProductsForm from "@/app/admin/products/[category]/products-form"
 const AdminProductsCreate = async (props: {
   params: {category: ProductCategory}
 }) => {
-  await adminCheck()
+  await adminCheck(true)
   return (
     <AdminLayout>
       <AdminProductsForm

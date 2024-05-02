@@ -4,7 +4,7 @@ import {RowDataPacket, FieldPacket} from "mysql2/promise"
 import {adminCheck} from "@/app/admin/page"
 
 export const GET = async (request: NextRequest) => {
-  await adminCheck()
+  await adminCheck(false)
   const searchParams = request.nextUrl.searchParams
   const rowsPerPage = Number(searchParams.get("rowsPerPage")) || 10
   const page = (Number(searchParams.get("page")) * rowsPerPage) || 0

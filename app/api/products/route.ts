@@ -44,7 +44,7 @@ export const GET = async (request: NextRequest) => {
 }
 
 export const POST = async (request: NextRequest) => {
-  await adminCheck()
+  await adminCheck(false)
   const searchParams = request.nextUrl.searchParams
   const uuid = searchParams.get("uuid") || "uuid"
   const mysql = await mysql2Pool()
