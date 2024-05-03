@@ -69,7 +69,7 @@ export const HomeDunDunRice = () => {
             alt="Ddun Dun Rice"
             width={600}
             height={400}
-            className={`rounded-lg ${isHovered ? "transform scale-110 transition-all duration-2000" : ""}`}
+            className={`rounded-lg ${isHovered ? "transform scale-105 transition-all duration-5000" : ""}`}
           />
         </div>
         <div className="flex flex-col justify-center">
@@ -80,6 +80,28 @@ export const HomeDunDunRice = () => {
     </div>
   )
 }
+
+export const HomeIntro = () => {
+  const [isHovered, setIsHovered] = useState(false)
+
+  return (
+    <div
+      className={"container mx-auto py-24 my-10 bg-center relative"}
+      style={{backgroundImage: "url('/images/10.jpg')"}}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 rounded-lg p-8 relative z-10">
+        <div className="hidden md:block bg-white bg-opacity-75 rounded-lg w-full h-full md:w-1/2 md:col-start-2"></div>
+        <div className="flex flex-col justify-center w-full md:w-2/3 md:col-start-2">
+          <p className="text-xl font-semibold mb-4">든든한 한끼를 즐겨보세요</p>
+          <p className="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dignissim erat id erat accumsan, a mattis eros ultricies. Ut sed sollicitudin nisl.</p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 
 export const HomeBestMenu = () => {
   return (

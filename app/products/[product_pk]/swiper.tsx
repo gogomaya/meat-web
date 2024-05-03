@@ -14,6 +14,11 @@ export default function ProductSwiper() {
 
   return (
     <>
+      <style jsx>{`
+        .thumbsSwiper .swiper-slide-thumb-active {
+          opacity: 1;
+        }
+      `}</style>
       <Swiper
         loop={true}
         spaceBetween={10}
@@ -75,9 +80,9 @@ export default function ProductSwiper() {
         freeMode={true}
         watchSlidesProgress={true}
         modules={[FreeMode, Navigation, Thumbs]}
-        className="h-20 box-border my-3"
+        className="h-20 box-border my-3 opacity-90"
       >
-        <SwiperSlide>
+        <SwiperSlide className="thumbsSwiper">
           <Image
             src="/images/10.jpg"
             alt="Logo"
@@ -88,7 +93,7 @@ export default function ProductSwiper() {
             className="w-full"
           />
         </SwiperSlide>
-        <SwiperSlide>
+        <SwiperSlide className="thumbsSwiper">
           <Image
             src="/images/11.jpg"
             alt="Logo"
@@ -99,7 +104,7 @@ export default function ProductSwiper() {
             className="w-full"
           />
         </SwiperSlide>
-        <SwiperSlide>
+        <SwiperSlide className="thumbsSwiper">
           <Image
             src="/images/12.jpg"
             alt="Logo"
@@ -110,7 +115,7 @@ export default function ProductSwiper() {
             className="w-full"
           />
         </SwiperSlide>
-        <SwiperSlide>
+        <SwiperSlide className="thumbsSwiper">
           <Image
             src="/images/13.jpg"
             alt="Logo"

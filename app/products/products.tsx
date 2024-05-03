@@ -45,7 +45,7 @@ export const ProductsPagination = () => {
 
 export const ProductsList = () => {
   const enlargeImage = (event: { currentTarget: { querySelector: (arg0: string) => { (): any; new(): any; style: { (): any; new(): any; transform: string } } } }) => {
-    event.currentTarget.querySelector("img").style.transform = "scale(1.02)"
+    event.currentTarget.querySelector("img").style.transform = "scale(1.01)"
   }
   const shrinkImage = (event: { currentTarget: { querySelector: (arg0: string) => { (): any; new(): any; style: { (): any; new(): any; transform: string } } } }) => {
     event.currentTarget.querySelector("img").style.transform = "scale(1)"
