@@ -14,3 +14,8 @@ export interface User {
   is_admin?: boolean
   created_at?: string
 }
+
+export interface LoginChecked {
+  user: User
+  cookieUser: CookieUser
+}

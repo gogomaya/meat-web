@@ -1,14 +1,14 @@
 import React, {useState} from "react"
+import {loginCheck} from "@/app/admin/page"
 import Divider from "@mui/material/Divider"
 import {ProductDetail, ProductsDetailContent, ShipDetail, NavDetail} from "../products"
 import MainLayout from "@/app/main-layout"
 import Boards from "@/app/boards/page"
-import {usersServices} from "@/services/usersServices"
 import {GeneralReview} from "@/app/reviews/reviews"
 // import Boards from "@/app/boards/page"
 
 const Products = async () => {
-  const user = await usersServices.loginCheck(false)
+  const {user} = await loginCheck(false)
   return (
     <MainLayout user={user}>
       <ProductsDetailContent />

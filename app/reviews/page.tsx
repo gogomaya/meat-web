@@ -1,9 +1,9 @@
+import {loginCheck} from "@/app/admin/page"
 import MainLayout from "@/app/main-layout"
 import {GeneralPagination, GeneralReview, MonthlyBestReview, PhotoPagination, PhotoReview, ReviewCard} from "./reviews"
-import {usersServices} from "@/services/usersServices"
 
 const Products = async () => {
-  const user = await usersServices.loginCheck(false)
+  const {user} = await loginCheck(false)
   return (
     <MainLayout user={user}>
       <MonthlyBestReview />

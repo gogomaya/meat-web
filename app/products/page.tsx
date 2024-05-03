@@ -1,9 +1,9 @@
+import {loginCheck} from "@/app/admin/page"
 import MainLayout from "@/app/main-layout"
 import {ProductsList, ProductsPagination, ProductsSearch} from "./products"
-import {usersServices} from "@/services/usersServices"
 
 const Products = async () => {
-  const user = await usersServices.loginCheck(false)
+  const {user} = await loginCheck(false)
   return (
     <MainLayout user={user}>
       <h2 className="flex justify-center">상품리스트</h2>

@@ -1,10 +1,11 @@
+import {loginCheck} from "@/app/admin/page"
 import MainLayout from "@/app/main-layout"
 import HomeSwiper from "./swiper"
 import {HomeDunDunRice, HomeBestMenu, HomeBestReview, HomeBrandStory, HomeKeyPoint, HomeYoutube, HomeIntro} from "./home"
 import {usersServices} from "@/services/usersServices"
 
 const Home = async () => {
-  const user = await usersServices.loginCheck(false)
+  const {user} = await loginCheck(false)
   return (
     <MainLayout user={user}>
       <div className="w-full">

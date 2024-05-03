@@ -63,7 +63,7 @@ const MegaMenu = () => {
     return {
       todayMenu: false,
       cow: false,
-      fork: false,
+      pork: false,
       simple: false,
       review: false,
       board: false
@@ -93,9 +93,9 @@ const MegaMenu = () => {
             <li><Link href="#">육회/사시미</Link></li>
           </ol>
         </li>
-        <li id="fork" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
+        <li id="pork" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
           <Link href="/products">돼지고기</Link>
-          <ol id="submenu" className={`w-20 absolute border border-black ${menu.fork ? "block" : "hidden"} bg-white py-2 rounded-lg shadow-md text-sm font-semibold`}>
+          <ol id="submenu" className={`w-20 absolute border border-black ${menu.pork ? "block" : "hidden"} bg-white py-2 rounded-lg shadow-md text-sm font-semibold`}>
             <li><Link href="#">한돈</Link></li>
             <li><Link href="#">생삼겹살</Link></li>
           </ol>

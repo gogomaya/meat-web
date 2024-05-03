@@ -53,8 +53,8 @@ export const ProductsList = () => {
 
   return (
     <ol>
-      <li className="p-1 inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]" 
-        onMouseEnter={enlargeImage} 
+      <li className="p-1 inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]"
+        onMouseEnter={enlargeImage}
         onMouseLeave={shrinkImage}>
         <Link href="/products/1">
           <Image
@@ -72,8 +72,8 @@ export const ProductsList = () => {
           <strong>26,000원</strong>
         </p>
       </li>
-      <li className="p-1 inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]" 
-        onMouseEnter={enlargeImage} 
+      <li className="p-1 inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]"
+        onMouseEnter={enlargeImage}
         onMouseLeave={shrinkImage}>
         <Image
           src="/images/17.jpg"
@@ -89,8 +89,8 @@ export const ProductsList = () => {
           <strong>26,000원</strong>
         </p>
       </li>
-      <li className="p-1 inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]" 
-        onMouseEnter={enlargeImage} 
+      <li className="p-1 inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]"
+        onMouseEnter={enlargeImage}
         onMouseLeave={shrinkImage}>
         <Image
           src="/images/29.jpg"
@@ -106,8 +106,8 @@ export const ProductsList = () => {
           <strong>26,000원</strong>
         </p>
       </li>
-      <li className="p-1 inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]" 
-        onMouseEnter={enlargeImage} 
+      <li className="p-1 inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]"
+        onMouseEnter={enlargeImage}
         onMouseLeave={shrinkImage}>
         <Image
           src="/images/37.jpg"
