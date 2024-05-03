@@ -10,6 +10,7 @@ import SwipeableViews from "react-swipeable-views"
 import AddIcon from "@mui/icons-material/Add"
 import RemoveIcon from "@mui/icons-material/Remove"
 import ProductSwiper from "./[product_pk]/swiper"
+import HomeSwiper from "../home/swiper"
 
 export const ProductsSearch = () => {
   return (
@@ -44,7 +45,7 @@ export const ProductsPagination = () => {
 
 export const ProductsList = () => {
   const enlargeImage = (event: { currentTarget: { querySelector: (arg0: string) => { (): any; new(): any; style: { (): any; new(): any; transform: string } } } }) => {
-    event.currentTarget.querySelector("img").style.transform = "scale(1.02)"
+    event.currentTarget.querySelector("img").style.transform = "scale(1.01)"
   }
   const shrinkImage = (event: { currentTarget: { querySelector: (arg0: string) => { (): any; new(): any; style: { (): any; new(): any; transform: string } } } }) => {
     event.currentTarget.querySelector("img").style.transform = "scale(1)"
@@ -152,25 +153,6 @@ export const ProductsDetailContent = () => {
 
     const mimg = self.querySelector(".img-main")
 
-    // if (checkedDevice() !== "pc") {
-    //   addClass(self, "scrollbar")
-    //   addClass(mglass, "fill")
-
-    //   const _img = new Image()
-    //   _img.onload = function () {
-    //     if (!self) return
-    //     this.width *= zoom
-    //     this.height *= zoom
-    //     self.appendChild(mglass)
-    //   }
-    //   _img.src = mimg?.src || ""
-    //   mglass.appendChild(_img)
-    // } else {
-    //   mglass.style.backgroundImage = `URL('${mimg?.src}')`
-    //   mglass.style.backgroundSize = `${mimg?.clientWidth * parseInt(zoom)}px auto`
-    //   self.appendChild(mglass)
-    // }
-
     e.stopPropagation()
   }
 
@@ -179,15 +161,7 @@ export const ProductsDetailContent = () => {
     <>
       <div className="container mx-auto py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <div className="flex justify-center items-center ref={imageRef} onMouseEnter={ex_mouse_enter}">
-            {/* <Image
-              src="/images/2.jpg"
-              alt="Product Image"
-              width={600}
-              height={800}
-              sizes="100vw"
-              className="figure.ct-img"
-            /> */}
+          <div>
             <ProductSwiper />
           </div>
           <div>

@@ -62,6 +62,10 @@ const Users = ({user}: {user: User}) => {
                 priority
               />
             </Button>
+            <div className="item-center">
+              처음이신가요? <br />
+              카카오로 <span className="text-red-500">1초만에 로그인/회원가입</span>해보세요
+            </div>
           </div>
         </DialogContent>
         <DialogActions className="border">

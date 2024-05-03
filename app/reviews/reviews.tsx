@@ -31,7 +31,7 @@ export const ReviewCard = () => {
       <CardMedia
         component="img"
         height="194"
-        image="/images/review1.jpg"
+        image="/images/4.jpg"
         alt="Paella dish"
       />
       <CardContent>
