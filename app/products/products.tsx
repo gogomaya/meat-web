@@ -1,16 +1,10 @@
 "use client"
 import Image from "next/image"
 import Link from "next/link"
-import {Box, Button, Divider, FormControl, InputLabel, MenuItem, Pagination, Select, Tab, Tabs, Typography} from "@mui/material"
+import {Button, Divider, FormControl, InputLabel, MenuItem, Pagination, Select, Typography} from "@mui/material"
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded"
 import * as React from "react"
-import {useTheme} from "@mui/material/styles"
-import AppBar from "@mui/material/AppBar"
-import SwipeableViews from "react-swipeable-views"
-import AddIcon from "@mui/icons-material/Add"
-import RemoveIcon from "@mui/icons-material/Remove"
 import ProductSwiper from "./[product_pk]/swiper"
-import HomeSwiper from "../home/swiper"
 
 export const ProductsSearch = () => {
   return (
