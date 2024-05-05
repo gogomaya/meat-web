@@ -1,9 +1,10 @@
 "use client"
 
-import {useState} from "react"
+import {SetStateAction, useState} from "react"
 import {Divider, Typography} from "@mui/material"
 import Link from "next/link"
 import Image from "next/image"
+import React from "react"
 
 export const OrderDetailContent = () => {
 
@@ -96,25 +97,46 @@ export const OrderDetailContent = () => {
   }
 
   // 영수증 내용 렌더링 함수
-  const renderReceiptContent = () => {
-    if (orderInfo.receiptType === "personal") {
+  const RenderReceiptContent = () => {
+    const [phoneNumber, setPhoneNumber] = useState("010-111-1111")
+    const [editingPhoneNumber, setEditingPhoneNumber] = useState(false)
+
+    const handlePhoneNumberChange = (e: { target: { value: SetStateAction<string> } }) => {
+      setPhoneNumber(e.target.value)
+    }
+
+    const handleEditButtonClick = () => {
+      setEditingPhoneNumber(true)
+    }
+
+    const handleSaveButtonClick = () => {
+      setEditingPhoneNumber(false)
+      // 여기에 전화번호를 저장하는 로직을 추가할 수 있습니다.
+    }
+
+    if (orderInfo.receiptType === "personal" || orderInfo.receiptType === "business") {
       return (
         <div className="flex justify-between items-center border-b m-2" style={{backgroundColor: "#fff"}}>
-          <h5>개인소득공제용</h5>
-          <h5>010-111-1111</h5>
-          <button className="bg-green-500 text-white font-semibold px-6 py-3 rounded-lg shadow-lg hover:bg-green-600 transition-colors">
-            변경
-          </button>
-        </div>
-      )
-    } else if (orderInfo.receiptType === "business") {
-      return (
-        <div className="flex justify-between items-center border-b m-2" style={{backgroundColor: "#fff"}}>
-          <h5>사업자 지출증빙용</h5>
-          <h5>010-111-1111</h5>
-          <button className="bg-green-500 text-white font-semibold px-6 py-3 rounded-lg shadow-lg hover:bg-green-600 transition-colors">
-            변경
-          </button>
+          <h5>{orderInfo.receiptType === "personal" ? "개인소득공제용" : "사업자 지출증빙용"}</h5>
+          {editingPhoneNumber ? (
+            <input
+              type="text"
+              value={phoneNumber}
+              onChange={handlePhoneNumberChange}
+              style={{border: "1px solid black"}} // 추가된 부분
+            />
+          ) : (
+            <h5>{phoneNumber}</h5>
+          )}
+          {editingPhoneNumber ? (
+            <button className="bg-green-500 text-white font-semibold px-6 py-3 rounded-lg shadow-lg hover:bg-green-600 transition-colors" onClick={handleSaveButtonClick}>
+              저장
+            </button>
+          ) : (
+            <button className="bg-green-500 text-white font-semibold px-6 py-3 rounded-lg shadow-lg hover:bg-green-600 transition-colors" onClick={handleEditButtonClick}>
+              변경
+            </button>
+          )}
         </div>
       )
     } else {
@@ -122,18 +144,19 @@ export const OrderDetailContent = () => {
     }
   }
 
+
   return (
     <div className="container mx-auto p-8">
       <h2 className="text-2xl font-semibold mb-4">주문/결제</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <div className="bg-white rounded-lg shadow-lg p-3">
-            <h3 className="text-xl font-semibold mb-4">주문 상품</h3>
+          <div className="bg-white rounded-lg shadow-lg p-3 w-full">
+            <h3 className="text-xl font-semibold mb-4">주문상품</h3>
             {renderOrderItems()}
           </div>
           <div className="py-3">
             <div className="flex">
-              <div className="bg-white rounded-lg shadow-lg">
+              <div className="bg-white rounded-lg shadow-lg w-full">
                 <h2 className="text-2xl font-semibold mb-4 p-2">결제방법</h2>
                 <div className="p-3">
                   <label htmlFor="" className="py-2">
@@ -147,12 +170,12 @@ export const OrderDetailContent = () => {
               </div>
             </div>
           </div>
-          <div className="py-3">
+          <div className="py-3 bg-white rounded-lg shadow-lg p-3 w-full">
             <h2 className="text-2xl font-semibold mb-4">현금영수증 신청</h2>
             <div className="py-3 mr-3">
-              <input type="radio" name="receiptType" id="personal" onClick={() => handleReceiptTypeChange("personal")}/>개인소득공제
+              <input type="radio" name="receiptType" id="personal" onClick={() => handleReceiptTypeChange("personal")}/>개인소득공제 <span className="gap-6"></span>
               <input type="radio" name="receiptType" id="business" onClick={() => handleReceiptTypeChange("business")}/>사업자지출증빙
-              {renderReceiptContent()}
+              {RenderReceiptContent()}
             </div>
           </div>
         </div>
@@ -166,7 +189,7 @@ export const OrderDetailContent = () => {
               <p className="text-lg font-semibold">최종 결제 금액: {finalPrice}원</p>
             </div>
             <Divider />
-            <div className="max-w-md mx-auto my-8 px-4 py-8 bg-white shadow-lg rounded-lg">
+            <div className="max-w-md mx-auto my-8 px-4 rounded-lg">
               <h3 className="text-2xl text-gray-800 mb-4">결제수단</h3>
               <h5 className="text-lg text-gray-600 mb-2">위 주문내역을 확인하였으며, 결제 내역에 동의합니다.</h5>
               <div className="border-b py-3 px-4 flex justify-between cursor-pointer" onClick={toggleAccordian}>
@@ -246,7 +269,7 @@ export const OrderDetailContent = () => {
                 </div>
               )}
             </div>
-            <div className="mt-6">
+            <div className="mt-6 flex justify-end">
               <button className="bg-blue-500 text-white font-semibold px-6 py-3 rounded-lg shadow-lg hover:bg-blue-600 transition-colors">
                 결제하기
               </button>

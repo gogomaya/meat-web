@@ -1,10 +1,11 @@
 "use client"
 import Image from "next/image"
 import Link from "next/link"
-import {Button, Divider, FormControl, InputLabel, MenuItem, Pagination, Select, Typography} from "@mui/material"
+import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, FormControl, InputLabel, MenuItem, Pagination, Select, Typography} from "@mui/material"
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded"
 import * as React from "react"
 import ProductSwiper from "./[product_pk]/swiper"
+
 
 export const ProductsSearch = () => {
   return (
@@ -203,9 +204,7 @@ export const ProductsDetailContent = () => {
             </Typography>
             <Divider className="my-4" />
             <div className="flex flex-col items-end md:flex-row md:items-center md:justify-end md:space-x-4">
-              <Button variant="contained" color="secondary" className="btn">
-                장바구니
-              </Button>
+              <CartButton />
               <Button variant="contained" color="secondary" className="btn">
                 구매하기
               </Button>
@@ -226,6 +225,52 @@ export const ProductsDetailContent = () => {
         </div>
       </div>
     </>
+  )
+}
+
+export const CartButton = () => {
+  const [open, setOpen] = React.useState(false)
+
+  const handleOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
+  const handleConfirm = () => {
+    setOpen(false)
+    window.location.href = "/carts"
+  }
+
+  return (
+    <div>
+      <Button
+        variant="contained"
+        color="secondary"
+        className="btn"
+        onClick={handleOpen}
+      >
+        장바구니
+      </Button>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>알림</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            장바구니에 상품이 담겼습니다. 장바구니로 이동하시겠습니까?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            아니오
+          </Button>
+          <Button onClick={handleConfirm} color="primary" autoFocus>
+            예
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
   )
 }
 

@@ -7,7 +7,6 @@ const Order = async () => {
   const {user} = await loginCheck(false)
   return (
     <MainLayout user={user}>
-      <h2 className="flex justify-center"><strong>주문/결제</strong></h2>
       <OrderDetailContent />
     </MainLayout>
   )
