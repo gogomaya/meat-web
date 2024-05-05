@@ -167,7 +167,7 @@ export const ProductsDetailContent = () => {
               일본식 커리 소스에 데미그라스 소스가 더해져 깊은 풍미를 가진 하이라이스 위에 부드럽고 바삭한 멘치카츠와 육즙 가득 토네이도 소세지가 구성된 스페셜 하이라이스
             </Typography>
             <Typography variant="h5" gutterBottom>
-              가격: {pricePerUnit * quantity}원
+              가격: {pricePerUnit}원
             </Typography>
             <Divider className="my-4" />
             <Typography variant="body1" gutterBottom>
@@ -197,12 +197,29 @@ export const ProductsDetailContent = () => {
                 min="1"
               />
             </div>
-            <div className="flex gap-2">
-              <Button variant="contained" color="primary" className="mr-4">
+            <Divider className="my-4" />
+            <Typography variant="h5" gutterBottom className="flex flex-col items-end">
+              총금액: {pricePerUnit * quantity}원
+            </Typography>
+            <Divider className="my-4" />
+            <div className="flex flex-col items-end md:flex-row md:items-center md:justify-end md:space-x-4">
+              <Button variant="contained" color="secondary" className="btn">
                 장바구니
               </Button>
-              <Button variant="contained" color="secondary">
-                바로구매
+              <Button variant="contained" color="secondary" className="btn">
+                구매하기
+              </Button>
+            </div>
+            <div className="flex flex-col items-end space-y-4 py-3">
+              <Button>
+                <Image
+                  src="/images/naver-pay-btn.png"
+                  alt="naver-login-btn"
+                  width={180}
+                  height={100}
+                  sizes="100vw"
+                  priority
+                />
               </Button>
             </div>
           </div>

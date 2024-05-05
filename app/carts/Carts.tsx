@@ -22,6 +22,10 @@ export const CartsDetailContent = () => {
     setPosts(updatedPosts)
   }
 
+  const handleEmptyCart = () => {
+    setPosts([])
+  }
+
   const PostTemplate = ({post}) => {
     const [quantity, setQuantity] = useState(post.quantity)
     const [calculatedPrice, setCalculatedPrice] = useState(post.price * post.quantity)
