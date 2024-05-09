@@ -250,9 +250,9 @@ const MainMobileMenu = () => {
 
 const SearchBar = () => {
   return (
-    <section className="flex">
+    <section className="flex items-center bg-gray-100 rounded-full p-1">
       <InputBase
-        className="flex-1"
+        className="flex-1 ml-2"
         placeholder="검색어를 입력해주세요."
       />
       <IconButton type="button">

@@ -72,3 +72,6 @@ li {
   
 }
 
+.notch {position:relative; width:max-content; height:max-content; background:#fff; border:1px;}
+
+.notch:before {content:''; display:block;  position:absolute; bottom:0; left:0; background:#E6E0DD; border-width:0 100px 80px 0; border-style:solid; border-color:transparent transparent #fff; }

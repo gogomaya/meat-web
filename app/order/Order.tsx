@@ -148,7 +148,7 @@ export const OrderDetailContent = () => {
   return (
     <div className="container mx-auto p-8">
       <h2 className="text-2xl font-semibold mb-4">주문/결제</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 relative">
         <div>
           <div className="bg-white rounded-lg shadow-lg p-3 w-full">
             <h3 className="text-xl font-semibold mb-4">주문상품</h3>
@@ -170,23 +170,25 @@ export const OrderDetailContent = () => {
               </div>
             </div>
           </div>
-          <div className="py-3 bg-white rounded-lg shadow-lg p-3 w-full">
-            <h2 className="text-2xl font-semibold mb-4">현금영수증 신청</h2>
-            <div className="py-3 mr-3">
-              <input type="radio" name="receiptType" id="personal" onClick={() => handleReceiptTypeChange("personal")}/>개인소득공제 <span className="gap-6"></span>
-              <input type="radio" name="receiptType" id="business" onClick={() => handleReceiptTypeChange("business")}/>사업자지출증빙
-              {RenderReceiptContent()}
+          <div className="py-3">
+            <div className="py-3 bg-white rounded-lg shadow-lg p-3 w-full">
+              <h2 className="text-2xl font-semibold mb-4">현금영수증 신청</h2>
+              <div className="py-3 mr-3">
+                <input type="radio" name="receiptType" id="personal" onClick={() => handleReceiptTypeChange("personal")}/>개인소득공제 <span className="gap-6"></span>
+                <input type="radio" name="receiptType" id="business" onClick={() => handleReceiptTypeChange("business")}/>사업자지출증빙
+                {RenderReceiptContent()}
+              </div>
             </div>
           </div>
         </div>
         <div className="flex flex-col items-end">
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <h3 className="text-xl font-semibold mb-4">주문 상품</h3>
+          <div className="bg-white rounded-lg shadow-lg p-6 notch">
+            <h3 className="text-xl font-semibold mb-4">결제내역</h3>
             {renderOrderItems()}
             <div className="mt-6 p-4">
-              <p className="text-lg font-semibold mb-2">총 상품금액: {totalPrice}원</p>
-              <p className="text-lg font-semibold mb-2">할인 금액: {totalDiscount}원</p>
-              <p className="text-lg font-semibold">최종 결제 금액: {finalPrice}원</p>
+              <p className="text-lg mb-2">총 상품금액: {totalPrice.toLocaleString()}원</p>
+              <p className="text-lg mb-2">할인 금액: {totalDiscount.toLocaleString()}원</p>
+              <p className="text-lg">최종 결제 금액: {finalPrice.toLocaleString()}원</p>
             </div>
             <Divider />
             <div className="max-w-md mx-auto my-8 px-4 rounded-lg">
@@ -275,6 +277,17 @@ export const OrderDetailContent = () => {
               </button>
             </div>
           </div>
+        </div>
+        <div className="absolute top-0 right-20 w-20 h-20 flex justify-center items-center">
+          <Image
+            src="/images/free-icon-tack-2052642.png"
+            alt=""
+            width={100}
+            height={100}
+            sizes="100vw"
+            className="w-full"
+            priority
+          />
         </div>
       </div>
     </div>

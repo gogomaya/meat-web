@@ -1,6 +1,6 @@
 import {loginCheck} from "@/app/admin/page"
 import MainLayout from "@/app/main-layout"
-import {GeneralPagination, GeneralReview, MonthlyBestReview, PhotoPagination, PhotoReview, ReviewCard} from "./reviews"
+import {GeneralPagination, GeneralReview, MonthlyBestReview, PhotoPagination, PhotoReview} from "./reviews"
 
 const Products = async () => {
   const {user} = await loginCheck(false)

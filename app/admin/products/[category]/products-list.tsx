@@ -99,7 +99,7 @@ const AdminProductsList = ({
                     </div>
                   </TableCell>
                   <TableCell>{product.category_menu}</TableCell>
-                  <TableCell>{product.price.toLocaleString()}원</TableCell>
+                  <TableCell>{(product.price).toLocaleString()}원</TableCell>
                   <TableCell>{moment(product.created_at).format("YYYY-MM-DD")}</TableCell>
                 </TableRow>
               ))}
@@ -130,7 +130,7 @@ const AdminProductsList = ({
                       <Link className="ml-4" href={`${pathname}/detail/${product.product_pk}`}>{product.name}</Link>
                     </div>
                   </TableCell>
-                  <TableCell>{product.price.toLocaleString()}원</TableCell>
+                  <TableCell>{(product.price).toLocaleString()}원</TableCell>
                 </TableRow>
               ))}
             </TableBody>

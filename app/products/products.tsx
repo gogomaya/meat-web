@@ -124,9 +124,8 @@ export const ProductsList = () => {
 
 export const ProductsDetailContent = () => {
   const [quantity, setQuantity] = React.useState(1)
-  const pricePerUnit = 69000 // 1개당 가격
+  const pricePerUnit = 69000
 
-  // 수량 변경 핸들러
   const handleQuantityChange = (event: { target: { value: string } }) => {
     const newQuantity = parseInt(event.target.value)
     if (!isNaN(newQuantity) && newQuantity > 0) {
@@ -168,7 +167,7 @@ export const ProductsDetailContent = () => {
               일본식 커리 소스에 데미그라스 소스가 더해져 깊은 풍미를 가진 하이라이스 위에 부드럽고 바삭한 멘치카츠와 육즙 가득 토네이도 소세지가 구성된 스페셜 하이라이스
             </Typography>
             <Typography variant="h5" gutterBottom>
-              가격: {pricePerUnit}원
+              가격: {pricePerUnit.toLocaleString()}원
             </Typography>
             <Divider className="my-4" />
             <Typography variant="body1" gutterBottom>
@@ -200,14 +199,16 @@ export const ProductsDetailContent = () => {
             </div>
             <Divider className="my-4" />
             <Typography variant="h5" gutterBottom className="flex flex-col items-end">
-              총금액: {pricePerUnit * quantity}원
+              총금액: {(pricePerUnit * quantity).toLocaleString()}원
             </Typography>
             <Divider className="my-4" />
             <div className="flex flex-col items-end md:flex-row md:items-center md:justify-end md:space-x-4">
               <CartButton />
-              <Button variant="contained" color="secondary" className="btn">
-                구매하기
-              </Button>
+              <Link href="/order">
+                <Button variant="contained" color="secondary" className="btn">
+                  구매하기
+                </Button>
+              </Link>
             </div>
             <div className="flex flex-col items-end space-y-4 py-3">
               <Button>

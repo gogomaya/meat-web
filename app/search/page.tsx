@@ -1,15 +1,16 @@
 import {loginCheck} from "@/app/admin/page"
 import MainLayout from "@/app/main-layout"
-import {CartsDetailContent} from "./Carts"
 
-const Cart = async () => {
+const Home = async () => {
   const {user} = await loginCheck(false)
   return (
     <MainLayout user={user}>
-      <h2 className="flex justify-center">장바구니</h2>
-      <CartsDetailContent />
+      <div className="w-full">
+        <h2>검색결과</h2>
+
+      </div>
     </MainLayout>
   )
 }
 
-export default Cart
+export default Home

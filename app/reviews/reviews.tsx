@@ -8,16 +8,27 @@ import {red} from "@mui/material/colors"
 import SearchIcon from "@mui/icons-material/Search"
 import {FaRegThumbsUp, FaRegThumbsDown} from "react-icons/fa"
 import Image from "next/image"
-
-
+import CheckCircleIcon from "@mui/icons-material/CheckCircle"
 
 export const ReviewCard = () => {
+  const [copied, setCopied] = React.useState(false) // 복사 여부 상태 관리
+
+  const copyToClipboard = () => {
+    const currentUrl = window.location.href
+    navigator.clipboard.writeText(currentUrl)
+      .then(() => {
+        setCopied(true)
+        setTimeout(() => setCopied(false), 2000)
+      })
+      .catch((err) => console.error("Could not copy text: ", err))
+  }
+
   return (
     <Card sx={{maxWidth: 345}}>
       <CardHeader
         avatar={
           <Avatar sx={{bgcolor: red[500]}} aria-label="recipe">
-            R
+          R
           </Avatar>
         }
         action={
@@ -28,26 +39,20 @@ export const ReviewCard = () => {
         title="Shrimp and Chorizo Paella"
         subheader="September 14, 2016"
       />
-      <CardMedia
-        component="img"
-        height="194"
-        image="/images/4.jpg"
-        alt="Paella dish"
-      />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-            이야..이거 만족도 상당히 높습니다.
-            꽃삼겹 기름 정말 깨끗하고요, 비린내 누린내 잡내 정말 1도 안나요.. 너무 신기해요.
-            여지껏 먹어본 대패고기들 중에 1등입니다.
-            저희 엄마랑 언니는 비계를 싫어해서 뒷다리살을 구워먹는 사람들인데, 꽃삼겹 대패는 이게 뭐냐 너무 맛있다고 하면서 잘 먹었습니다.
+          이야..이거 만족도 상당히 높습니다.
+          꽃삼겹 기름 정말 깨끗하고요, 비린내 누린내 잡내 정말 1도 안나요.. 너무 신기해요.
+          여지껏 먹어본 대패고기들 중에 1등입니다.
+          저희 엄마랑 언니는 비계를 싫어해서 뒷다리살을 구워먹는 사람들인데, 꽃삼겹 대패는 이게 뭐냐 너무 맛있다고 하면서 잘 먹었습니다.
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
+        <IconButton aria-label="share" onClick={copyToClipboard}>
+          {copied ? <CheckCircleIcon /> : <ShareIcon />}
         </IconButton>
       </CardActions>
     </Card>
@@ -55,9 +60,34 @@ export const ReviewCard = () => {
 }
 
 export const MonthlyBestReview = () => {
+  const reviews = [
+    {
+      id: 1,
+      title: "Shrimp and Chorizo Paella",
+      date: "September 14, 2016",
+      content: "이야..이거 만족도 상당히 높습니다. 꽃삼겹 기름 정말 깨끗하고요, 비린내 누린내 잡내 정말 1도 안나요.. 너무 신기해요. 여지껏 먹어본 대패고기들 중에 1등입니다. 저희 엄마랑 언니는 비계를 싫어해서 뒷다리살을 구워먹는 사람들인데, 꽃삼겹 대패는 이게 뭐냐 너무 맛있다고 하면서 잘 먹었습니다.",
+      src: "17.jpg"
+    },
+    {
+      id: 2,
+      title: "Delicious Beef Steak",
+      date: "October 25, 2017",
+      content: "오랜만에 스테이크를 먹으러 갔는데 정말 맛있었습니다. 고기가 너무 부드럽고, 그릴맛이 일품이었습니다. 곁들여진 소스도 환상적이었습니다. 다음에 또 방문하고 싶은 식당이네요!",
+      src: "17.jpg"
+    },
+    {
+      id: 3,
+      title: "Tasty Sushi Rolls",
+      date: "April 8, 2019",
+      content: "점심으로 스시를 시켰는데, 롤이 정말 맛있었습니다. 신선한 재료와 조화로운 맛이 인상적이었습니다. 포장도 깔끔하게 되어있어서 가져다 먹기에 편리했습니다. 다음에 또 주문하려고요!",
+      src: "17.jpg"
+    }
+  ]
   const [openDialog, setOpenDialog] = React.useState(false)
+  const [selectedReview, setSelectedReview] = React.useState(null)
 
-  const openDialogHandler = () => {
+  const openDialogHandler = (review: React.SetStateAction<null>) => {
+    setSelectedReview(review)
     setOpenDialog(true)
   }
 
@@ -67,10 +97,28 @@ export const MonthlyBestReview = () => {
 
   return (
     <>
-      <Dialog open={openDialog} onClose={closeDialogHandler} >
+      <Dialog open={openDialog} onClose={closeDialogHandler} maxWidth="lg">
         <DialogTitle>리뷰 상세 보기</DialogTitle>
         <DialogContent>
-          {/* 여기에 리뷰 상세 내용을 표시합니다. */}
+          {selectedReview && (
+            <>
+              <div className="flex" style={{marginBottom: "20px"}}>
+                <Image
+                  src={`/images/${selectedReview.src}`}
+                  alt="상품 이미지"
+                  width={400}
+                  height={100}
+                  className="rounded"
+                  style={{marginRight: "20px"}}
+                />
+                <div style={{flex: 1}}>
+                  <h2 style={{margin: "0", fontSize: "1.2em"}}>{selectedReview.title}</h2>
+                  <p style={{margin: "5px 0", lineHeight: "1.5"}}>{selectedReview.date}</p>
+                  <p style={{margin: "5px 0", lineHeight: "1.5"}}>{selectedReview.content}</p>
+                </div>
+              </div>
+            </>
+          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={closeDialogHandler} color="primary">닫기</Button>
@@ -86,20 +134,15 @@ export const MonthlyBestReview = () => {
         className="w-full py-10"
       />
       <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 py-4">
-        <li className="block" onClick={openDialogHandler}>
-          <ReviewCard />
-        </li>
-        <li className="block" onClick={openDialogHandler}>
-          <ReviewCard />
-        </li>
-        <li className="block" onClick={openDialogHandler}>
-          <ReviewCard />
-        </li>
+        {reviews.map((review) => (
+          <li className="block" key={review.id} onClick={() => openDialogHandler(review)}>
+            <ReviewCard review={review} />
+          </li>
+        ))}
       </ol>
     </>
   )
 }
-
 
 export const PhotoReview = () => {
   return (
@@ -227,4 +270,3 @@ export const GeneralPagination = () => {
     />
   )
 }
-
