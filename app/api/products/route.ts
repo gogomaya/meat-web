@@ -15,6 +15,7 @@ export const GET = async (request: NextRequest) => {
   const query = searchParams.get("query") || ""
   const category = searchParams.get("category") || ""
   const category_menu = searchParams.get("category_menu") || ""
+  const is_today = searchParams.get("is_today") === "true"
 
   const mysql = await mysql2Pool()
   const [total_rows]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
@@ -25,7 +26,8 @@ export const GET = async (request: NextRequest) => {
     ("" = ? or name like concat("%", ?, "%"))
     and ("" = ? or category like concat("%", ?, "%"))
     and ("" = ? or category_menu like concat("%", ?, "%"))
-`, [query, query, category, category, category_menu, category_menu])
+    and ("" = ? or is_today = ?)
+`, [query, query, category, category, category_menu, category_menu, is_today, is_today])
   const [rows]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
     select
       p.*, pi.file_name as image_file_name
@@ -37,9 +39,10 @@ export const GET = async (request: NextRequest) => {
       ("" = ? or name like concat("%", ?, "%"))
       and ("" = ? or category like concat("%", ?, "%"))
       and ("" = ? or category_menu like concat("%", ?, "%"))
+      and ("" = ? or is_today = ?)
     order by ${orderColumn} ${orderDirection}
     limit ?, ?
-  `, [query, query, category, category, category_menu, category_menu, page, rowsPerPage])
+  `, [query, query, category, category, category_menu, category_menu, is_today, is_today, page, rowsPerPage])
   return NextResponse.json({
     products: rows,
     total_rows: total_rows[0].total_rows

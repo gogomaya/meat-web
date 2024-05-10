@@ -28,4 +28,5 @@ export interface Product {
 export interface ProductsSearchParams extends SearchParams {
   category: string
   category_menu: string
+  is_today: boolean
 }

@@ -1,4 +1,5 @@
 "use client"
+import {useRouter} from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
 import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, FormControl, InputLabel, MenuItem, Pagination, Select, Typography} from "@mui/material"
@@ -6,19 +7,28 @@ import CheckRoundedIcon from "@mui/icons-material/CheckRounded"
 import * as React from "react"
 import ProductSwiper from "./[product_pk]/swiper"
 import {Product} from "@/types/productsTypes"
+import {SearchParams} from "@/types/commonTypes"
 
-
-export const ProductsSearch = () => {
+export const ProductsSearch = ({products, searchParams}: {products: Product[], searchParams: SearchParams}) => {
+  const router = useRouter()
   return (
     <section className="flex justify-between items-center">
-      <span>상품이 모두 <strong>4</strong>개 있습니다.</span>
+      <span>상품이 모두 <strong>{products.length}</strong>개 있습니다.</span>
       <FormControl>
         <InputLabel>상품정렬</InputLabel>
         <Select
           label="상품정렬"
           className="w-32"
+          value={searchParams.orderColumn}
+          onChange={(event) => {
+            router.push("?" + new URLSearchParams({
+              ...searchParams,
+              page: "0",
+              orderColumn: String(event.target.value)
+            }))
+          }}
         >
-          <MenuItem value="신상품">신상품</MenuItem>
+          <MenuItem value="product_pk">신상품</MenuItem>
           <MenuItem value="추천순">추천순</MenuItem>
           <MenuItem value="판매량순">판매량순</MenuItem>
         </Select>
@@ -27,14 +37,21 @@ export const ProductsSearch = () => {
   )
 }
 
-export const ProductsPagination = () => {
+export const ProductsPagination = ({searchParams, total_rows}: {searchParams: SearchParams, total_rows: number}) => {
+  const router = useRouter()
   return (
     <Pagination
       variant="outlined"
       color="primary"
-      count={5}
-      page={1}
+      count={Math.ceil(total_rows / searchParams.rowsPerPage)}
+      page={searchParams.page + 1}
       className="flex justify-center"
+      onChange={(_, value) => {
+        router.push("?" + new URLSearchParams({
+          ...searchParams,
+          page: String(value - 1)
+        }))
+      }}
     />
   )
 }

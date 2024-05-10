@@ -15,6 +15,7 @@ import SupportAgentIcon from "@mui/icons-material/SupportAgent"
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline"
 import Users from "@/components/users/users"
 import {User} from "@/types/usersTypes"
+import {commonServices} from "@/services/commonServices"
 
 const MainLayout = ({
   children,
@@ -79,32 +80,35 @@ const MegaMenu = () => {
   const outMenu = () => {
     setMenu(getMenu())
   }
-
+  const categoriesMenu = commonServices.categoriesMenu()
   return (
     <nav id="header" className="invisible md:visible flex-1 flex justify-center items-center">
       <ul className="flex">
         <li id="todayMenu" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
-          <Link href="/products">오늘의 메뉴</Link>
+          <Link href="/products?is_today=true">오늘의 메뉴</Link>
         </li>
         <li id="cow" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
-          <Link href="/products">소고기</Link>
+          <Link href="/products?category=cow">소고기</Link>
           <ol id="submenu" className={`w-20 absolute border border-black ${menu.cow ? "block" : "hidden"} bg-white py-2 rounded-lg shadow-md text-sm font-semibold`}>
-            <li><Link href="#">특수모듬</Link></li>
-            <li><Link href="#">육회/사시미</Link></li>
+            {categoriesMenu.cow.map((category_menu) => (
+              <li key={category_menu}><Link href={`/products?category=cow&category_menu=${category_menu}`}>{category_menu}</Link></li>
+            ))}
           </ol>
         </li>
         <li id="pork" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
-          <Link href="/products">돼지고기</Link>
+          <Link href="/products?category=pork">돼지고기</Link>
           <ol id="submenu" className={`w-20 absolute border border-black ${menu.pork ? "block" : "hidden"} bg-white py-2 rounded-lg shadow-md text-sm font-semibold`}>
-            <li><Link href="#">한돈</Link></li>
-            <li><Link href="#">생삼겹살</Link></li>
+            {categoriesMenu.pork.map((category_menu) => (
+              <li key={category_menu}><Link href={`/products?category=pork&category_menu=${category_menu}`}>{category_menu}</Link></li>
+            ))}
           </ol>
         </li>
         <li id="simple" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
-          <Link href="/products">간편식</Link>
+          <Link href="/products?category=simple">간편식</Link>
           <ol id="submenu" className={`w-20 absolute border border-black ${menu.simple ? "block" : "hidden"} bg-white py-2 rounded-lg shadow-md text-sm font-semibold`}>
-            <li><Link href="#">곰탕&머릿고리</Link></li>
-            <li><Link href="#">수육</Link></li>
+            {categoriesMenu.simple.map((category_menu) => (
+              <li key={category_menu}><Link href={`/products?category=simple&category_menu=${category_menu}`}>{category_menu}</Link></li>
+            ))}
           </ol>
         </li>
         <li id="review" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
@@ -154,6 +158,7 @@ const MainSearch = () => {
 
 const MainMobileMenu = () => {
   const [open, setOpen] = useState(false)
+  const categoriesMenu = commonServices.categoriesMenu()
   return <>
     <IconButton style={{display: "none"}} className="!block md:!hidden" onClick={() => setOpen(true)}>
       <MenuIcon />
@@ -179,19 +184,20 @@ const MainMobileMenu = () => {
             <li>
               <Accordion>
                 <AccordionSummary>
-                  <Link href="/products">오늘의 메뉴</Link>
+                  <Link href="/products?is_today=true">오늘의 메뉴</Link>
                 </AccordionSummary>
               </Accordion>
             </li>
             <li>
               <Accordion>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  <Link href="/products">소고기</Link>
+                  <Link href="/products?category=cow">소고기</Link>
                 </AccordionSummary>
                 <AccordionDetails>
                   <ol>
-                    <li><Link href="#">특수모듬</Link></li>
-                    <li><Link href="#">육회/사시미</Link></li>
+                    {categoriesMenu.cow.map((category_menu) => (
+                      <li key={category_menu}><Link href={`/products?category=cow&category_menu=${category_menu}`}>{category_menu}</Link></li>
+                    ))}
                   </ol>
                 </AccordionDetails>
               </Accordion>
@@ -199,11 +205,13 @@ const MainMobileMenu = () => {
             <li>
               <Accordion>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  <Link href="/products">돼지고기</Link>
+                  <Link href="/products?category=pork">돼지고기</Link>
                 </AccordionSummary>
                 <AccordionDetails>
                   <ol>
-                    <li><Link href="#">한돈</Link></li>
+                    {categoriesMenu.pork.map((category_menu) => (
+                      <li key={category_menu}><Link href={`/products?category=pork&category_menu=${category_menu}`}>{category_menu}</Link></li>
+                    ))}
                   </ol>
                 </AccordionDetails>
               </Accordion>
@@ -211,12 +219,13 @@ const MainMobileMenu = () => {
             <li>
               <Accordion>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  <Link href="/products">간편식</Link>
+                  <Link href="/products?category=simple">간편식</Link>
                 </AccordionSummary>
                 <AccordionDetails>
                   <ol>
-                    <li><Link href="#">곰탕&머릿고리</Link></li>
-                    <li><Link href="#">수육</Link></li>
+                    {categoriesMenu.simple.map((category_menu) => (
+                      <li key={category_menu}><Link href={`/products?category=simple&category_menu=${category_menu}`}>{category_menu}</Link></li>
+                    ))}
                   </ol>
                 </AccordionDetails>
               </Accordion>
