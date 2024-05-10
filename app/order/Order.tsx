@@ -111,7 +111,6 @@ export const OrderDetailContent = () => {
 
     const handleSaveButtonClick = () => {
       setEditingPhoneNumber(false)
-      // 여기에 전화번호를 저장하는 로직을 추가할 수 있습니다.
     }
 
     if (orderInfo.receiptType === "personal" || orderInfo.receiptType === "business") {
@@ -144,6 +143,9 @@ export const OrderDetailContent = () => {
     }
   }
 
+  const handlePayment = () => {
+    alert("토스페이먼츠 호출")
+  }
 
   return (
     <div className="container mx-auto p-8">
@@ -153,6 +155,25 @@ export const OrderDetailContent = () => {
           <div className="bg-white rounded-lg shadow-lg p-3 w-full">
             <h3 className="text-xl font-semibold mb-4">주문상품</h3>
             {renderOrderItems()}
+          </div>
+          <div className="py-3">
+            <div className="bg-white rounded-lg shadow-lg w-full">
+              <h2 className="text-2xl font-semibold mb-4 p-2">배송지 정보</h2>
+              <div className="p-3">
+                <label htmlFor="recipientName" className="py-2">
+                  수령인 이름:
+                  <input type="text" id="recipientName" name="recipientName" className="ml-2 border border-gray-300 rounded-lg p-2" />
+                </label>
+                <label htmlFor="shippingAddress" className="py-2 block">
+                  배송 주소:
+                  <input type="text" id="shippingAddress" name="shippingAddress" className="ml-2 border border-gray-300 rounded-lg p-2" />
+                </label>
+                <label htmlFor="contactNumber" className="py-2 block">
+                  연락처:
+                  <input type="tel" id="contactNumber" name="contactNumber" className="ml-2 border border-gray-300 rounded-lg p-2" />
+                </label>
+              </div>
+            </div>
           </div>
           <div className="py-3">
             <div className="flex">
@@ -272,7 +293,10 @@ export const OrderDetailContent = () => {
               )}
             </div>
             <div className="mt-6 flex justify-end">
-              <button className="bg-blue-500 text-white font-semibold px-6 py-3 rounded-lg shadow-lg hover:bg-blue-600 transition-colors">
+              <button
+                className="bg-blue-500 text-white font-semibold px-6 py-3 rounded-lg shadow-lg hover:bg-blue-600 transition-colors"
+                onClick={handlePayment}
+              >
                 결제하기
               </button>
             </div>
