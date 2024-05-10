@@ -73,7 +73,10 @@ export const ProductsList = ({products}: {products: Product[]}) => {
           onMouseEnter={enlargeImage}
           onMouseLeave={shrinkImage}
         >
-          <Link href={`/products/${product.product_pk}`}>
+          <Link
+            href={`/products/${product.product_pk}`}
+            className="relative flex items-center justify-center"
+          >
             <Image
               src={`/upload-images/products/${product.image_file_name}`}
               alt={product.name}
@@ -81,8 +84,11 @@ export const ProductsList = ({products}: {products: Product[]}) => {
               height={0}
               priority
               sizes="100vw"
-              className="w-full aspect-square object-cover rounded-lg"
+              className={`w-full aspect-square object-cover rounded-lg ${product.is_sold_out ? "opacity-30" : ""}`}
             />
+            {product.is_sold_out ? (
+              <span className="absolute font-bold">Sold out</span>
+            ) : null}
           </Link>
           <p>
             <Link href={`/products/${product.product_pk}`}>{product.name}</Link><br />
@@ -94,7 +100,7 @@ export const ProductsList = ({products}: {products: Product[]}) => {
   )
 }
 
-export const ProductsDetailContent = () => {
+export const ProductsDetailContent = ({product}: {product: Product}) => {
   const [quantity, setQuantity] = React.useState(1)
   const pricePerUnit = 69000
 
@@ -128,35 +134,55 @@ export const ProductsDetailContent = () => {
       <div className="container mx-auto py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div>
-            <ProductSwiper />
+            <ProductSwiper product={product} />
           </div>
           <div>
             <Typography variant="h4" gutterBottom>
-              한우1++ 모듬구이
+              {product.name}
             </Typography>
             <Divider className="my-4" sx={{border:"2px solid red", width: "115px"}}/>
             <Typography variant="body1" gutterBottom>
-              일본식 커리 소스에 데미그라스 소스가 더해져 깊은 풍미를 가진 하이라이스 위에 부드럽고 바삭한 멘치카츠와 육즙 가득 토네이도 소세지가 구성된 스페셜 하이라이스
+              {product.description}
             </Typography>
             <Typography variant="h5" gutterBottom>
-              가격: {pricePerUnit.toLocaleString()}원
+              가격: {product.price.toLocaleString()}원
             </Typography>
             <Divider className="my-4" />
-            <Typography variant="body1" gutterBottom>
-              <CheckRoundedIcon />원산지
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-              <CheckRoundedIcon /> 제품중량
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-              <CheckRoundedIcon />100g당
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-              <CheckRoundedIcon />등급
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-              <CheckRoundedIcon />포장방법
-            </Typography>
+            {product.origin && (
+              <Typography variant="body1" gutterBottom>
+                <CheckRoundedIcon />{product.origin}
+              </Typography>
+            )}
+            {product.weight && (
+              <Typography variant="body1" gutterBottom>
+                <CheckRoundedIcon />{product.weight}
+              </Typography>
+            )}
+            {product.type && (
+              <Typography variant="body1" gutterBottom>
+                <CheckRoundedIcon />{product.type}
+              </Typography>
+            )}
+            {product.part && (
+              <Typography variant="body1" gutterBottom>
+                <CheckRoundedIcon />{product.part}
+              </Typography>
+            )}
+            {product.per100g && (
+              <Typography variant="body1" gutterBottom>
+                <CheckRoundedIcon />{product.per100g}
+              </Typography>
+            )}
+            {product.grade && (
+              <Typography variant="body1" gutterBottom>
+                <CheckRoundedIcon />{product.grade}
+              </Typography>
+            )}
+            {product.package && (
+              <Typography variant="body1" gutterBottom>
+                <CheckRoundedIcon />{product.package}
+              </Typography>
+            )}
             <div className="flex gap-5 pb-5">
               <Typography variant="body1" gutterBottom>
                 <CheckRoundedIcon />수량
@@ -171,7 +197,7 @@ export const ProductsDetailContent = () => {
             </div>
             <Divider className="my-4" />
             <Typography variant="h5" gutterBottom className="flex flex-col items-end">
-              총금액: {(pricePerUnit * quantity).toLocaleString()}원
+              총금액: {(Number(product.price) * quantity).toLocaleString()}원
             </Typography>
             <Divider className="my-4" />
             <div className="flex flex-col items-end md:flex-row md:items-center md:justify-end md:space-x-4">
@@ -247,19 +273,12 @@ export const CartButton = () => {
   )
 }
 
-export const ProductDetail = () => {
+export const ProductDetail = ({product}: {product: Product}) => {
   return (
-    <>
-      <Image
-        src="/images/products-detail.jpg"
-        alt="products-detail"
-        width={0}
-        height={0}
-        priority
-        sizes="100vw"
-        className="w-full object-cover mt-4"
-      />
-    </>
+    <div
+      className="leading-7 ck-content [&>h2]:text-2xl [&>h3]:text-xl [&>h4]:text-lg"
+      dangerouslySetInnerHTML={{__html: product.contents}}
+    />
   )
 }
 

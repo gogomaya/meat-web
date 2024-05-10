@@ -4,7 +4,7 @@ import {ProductsList, ProductsPagination, ProductsSearch} from "./products"
 import {productsServices} from "@/services/productsServices"
 import {ResponseApi} from "@/types/commonTypes"
 import ErrorPage from "@/app/error"
-import {ProductsSearchParams} from "@/types/productsTypes"
+import {ProductCategory, ProductsSearchParams} from "@/types/productsTypes"
 
 const Products = async (props: {
   searchParams: ProductsSearchParams
@@ -38,7 +38,7 @@ const Products = async (props: {
     } else if (searchParams.category_menu) {
       return searchParams.category_menu
     } else if (searchParams.category) {
-      return categoryName[searchParams.category as "cow" | "pork" | "simple"]
+      return categoryName[searchParams.category as ProductCategory]
     }
     return "상품 리스트"
   }
