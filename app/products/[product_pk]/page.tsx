@@ -4,9 +4,9 @@ import Divider from "@mui/material/Divider"
 import {ProductDetail, ProductsDetailContent, ShipDetail, NavDetail} from "../products"
 import {productsServices} from "@/services/productsServices"
 import MainLayout from "@/app/main-layout"
-import Boards from "@/app/boards/page"
 import {GeneralReview} from "@/app/reviews/reviews"
 import {ResponseApi} from "@/types/commonTypes"
+import {BoardsList} from "@/app/boards/boards"
 // import Boards from "@/app/boards/page"
 
 const Products = async (props: {
@@ -24,11 +24,12 @@ const Products = async (props: {
       <div id="detail"><ProductDetail product={product} /></div>
       {/* 리뷰 */}
       <div id="review2">
-        <GeneralReview />
+        {/* <GeneralReview {{title, content, likes, rating}}/> */}
+        <GeneralReview title="" content="" likes="5" rating="5"/>
       </div>
       {/* 문의 */}
       <div id="qna">
-        <Boards />
+        <BoardsList />
       </div>
       {/* 주문정보 */}
       <div id="ship"><ShipDetail /></div>
