@@ -1,23 +1,34 @@
 "use client"
+import {useRouter} from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
 import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, FormControl, InputLabel, MenuItem, Pagination, Select, Typography} from "@mui/material"
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded"
 import * as React from "react"
 import ProductSwiper from "./[product_pk]/swiper"
+import {Product} from "@/types/productsTypes"
+import {SearchParams} from "@/types/commonTypes"
 
-
-export const ProductsSearch = () => {
+export const ProductsSearch = ({products, searchParams}: {products: Product[], searchParams: SearchParams}) => {
+  const router = useRouter()
   return (
     <section className="flex justify-between items-center">
-      <span>상품이 모두 <strong>4</strong>개 있습니다.</span>
+      <span>상품이 모두 <strong>{products.length}</strong>개 있습니다.</span>
       <FormControl>
         <InputLabel>상품정렬</InputLabel>
         <Select
           label="상품정렬"
           className="w-32"
+          value={searchParams.orderColumn}
+          onChange={(event) => {
+            router.push("?" + new URLSearchParams({
+              ...searchParams,
+              page: "0",
+              orderColumn: String(event.target.value)
+            }))
+          }}
         >
-          <MenuItem value="신상품">신상품</MenuItem>
+          <MenuItem value="product_pk">신상품</MenuItem>
           <MenuItem value="추천순">추천순</MenuItem>
           <MenuItem value="판매량순">판매량순</MenuItem>
         </Select>
@@ -26,19 +37,26 @@ export const ProductsSearch = () => {
   )
 }
 
-export const ProductsPagination = () => {
+export const ProductsPagination = ({searchParams, total_rows}: {searchParams: SearchParams, total_rows: number}) => {
+  const router = useRouter()
   return (
     <Pagination
       variant="outlined"
       color="primary"
-      count={5}
-      page={1}
+      count={Math.ceil(total_rows / searchParams.rowsPerPage)}
+      page={searchParams.page + 1}
       className="flex justify-center"
+      onChange={(_, value) => {
+        router.push("?" + new URLSearchParams({
+          ...searchParams,
+          page: String(value - 1)
+        }))
+      }}
     />
   )
 }
 
-export const ProductsList = () => {
+export const ProductsList = ({products}: {products: Product[]}) => {
   const enlargeImage = (event: { currentTarget: { querySelector: (arg0: string) => { (): any; new(): any; style: { (): any; new(): any; transform: string } } } }) => {
     event.currentTarget.querySelector("img").style.transform = "scale(1.01)"
   }
@@ -48,81 +66,41 @@ export const ProductsList = () => {
 
   return (
     <ol>
-      <li className="p-1 inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]"
-        onMouseEnter={enlargeImage}
-        onMouseLeave={shrinkImage}>
-        <Link href="/products/1">
-          <Image
-            src="/images/10.jpg"
-            alt="best-menu1"
-            width={0}
-            height={0}
-            priority
-            sizes="100vw"
-            className="w-full aspect-square object-cover rounded-lg"
-          />
-        </Link>
-        <p>
-          <Link href="/products/1">한우암소 육회&사시미 400g</Link><br />
-          <strong>26,000원</strong>
-        </p>
-      </li>
-      <li className="p-1 inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]"
-        onMouseEnter={enlargeImage}
-        onMouseLeave={shrinkImage}>
-        <Image
-          src="/images/17.jpg"
-          alt="best-menu2"
-          width={0}
-          height={0}
-          priority
-          sizes="100vw"
-          className="w-full aspect-square object-cover rounded-lg"
-        />
-        <p>
-          <Link href="/products/1">한우암소 육회&사시미 400g</Link><br />
-          <strong>26,000원</strong>
-        </p>
-      </li>
-      <li className="p-1 inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]"
-        onMouseEnter={enlargeImage}
-        onMouseLeave={shrinkImage}>
-        <Image
-          src="/images/29.jpg"
-          alt="best-menu3"
-          width={0}
-          height={0}
-          priority
-          sizes="100vw"
-          className="w-full aspect-square object-cover rounded-lg"
-        />
-        <p>
-          <Link href="/products/1">한우암소 육회&사시미 400g</Link><br />
-          <strong>26,000원</strong>
-        </p>
-      </li>
-      <li className="p-1 inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]"
-        onMouseEnter={enlargeImage}
-        onMouseLeave={shrinkImage}>
-        <Image
-          src="/images/37.jpg"
-          alt="best-menu4"
-          width={0}
-          height={0}
-          priority
-          sizes="100vw"
-          className="w-full aspect-square object-cover rounded-lg"
-        />
-        <p>
-          <Link href="/products/1">한우암소 육회&사시미 400g</Link><br />
-          <strong>26,000원</strong>
-        </p>
-      </li>
+      {products.map((product) => (
+        <li
+          key={product.product_pk}
+          className="p-1 inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]"
+          onMouseEnter={enlargeImage}
+          onMouseLeave={shrinkImage}
+        >
+          <Link
+            href={`/products/${product.product_pk}`}
+            className="relative flex items-center justify-center"
+          >
+            <Image
+              src={`/upload-images/products/${product.image_file_name}`}
+              alt={product.name}
+              width={0}
+              height={0}
+              priority
+              sizes="100vw"
+              className={`w-full aspect-square object-cover rounded-lg ${product.is_sold_out ? "opacity-30" : ""}`}
+            />
+            {product.is_sold_out ? (
+              <span className="absolute font-bold">Sold out</span>
+            ) : null}
+          </Link>
+          <p>
+            <Link href={`/products/${product.product_pk}`}>{product.name}</Link><br />
+            <strong>{product.price.toLocaleString()}원</strong>
+          </p>
+        </li>
+      ))}
     </ol>
   )
 }
 
-export const ProductsDetailContent = () => {
+export const ProductsDetailContent = ({product}: {product: Product}) => {
   const [quantity, setQuantity] = React.useState(1)
   const pricePerUnit = 69000
 
@@ -156,35 +134,55 @@ export const ProductsDetailContent = () => {
       <div className="container mx-auto py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div>
-            <ProductSwiper />
+            <ProductSwiper product={product} />
           </div>
           <div>
             <Typography variant="h4" gutterBottom>
-              한우1++ 모듬구이
+              {product.name}
             </Typography>
             <Divider className="my-4" sx={{border:"2px solid red", width: "115px"}}/>
             <Typography variant="body1" gutterBottom>
-              일본식 커리 소스에 데미그라스 소스가 더해져 깊은 풍미를 가진 하이라이스 위에 부드럽고 바삭한 멘치카츠와 육즙 가득 토네이도 소세지가 구성된 스페셜 하이라이스
+              {product.description}
             </Typography>
             <Typography variant="h5" gutterBottom>
-              가격: {pricePerUnit.toLocaleString()}원
+              가격: {product.price.toLocaleString()}원
             </Typography>
             <Divider className="my-4" />
-            <Typography variant="body1" gutterBottom>
-              <CheckRoundedIcon />원산지
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-              <CheckRoundedIcon /> 제품중량
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-              <CheckRoundedIcon />100g당
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-              <CheckRoundedIcon />등급
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-              <CheckRoundedIcon />포장방법
-            </Typography>
+            {product.origin && (
+              <Typography variant="body1" gutterBottom>
+                <CheckRoundedIcon />{product.origin}
+              </Typography>
+            )}
+            {product.weight && (
+              <Typography variant="body1" gutterBottom>
+                <CheckRoundedIcon />{product.weight}
+              </Typography>
+            )}
+            {product.type && (
+              <Typography variant="body1" gutterBottom>
+                <CheckRoundedIcon />{product.type}
+              </Typography>
+            )}
+            {product.part && (
+              <Typography variant="body1" gutterBottom>
+                <CheckRoundedIcon />{product.part}
+              </Typography>
+            )}
+            {product.per100g && (
+              <Typography variant="body1" gutterBottom>
+                <CheckRoundedIcon />{product.per100g}
+              </Typography>
+            )}
+            {product.grade && (
+              <Typography variant="body1" gutterBottom>
+                <CheckRoundedIcon />{product.grade}
+              </Typography>
+            )}
+            {product.package && (
+              <Typography variant="body1" gutterBottom>
+                <CheckRoundedIcon />{product.package}
+              </Typography>
+            )}
             <div className="flex gap-5 pb-5">
               <Typography variant="body1" gutterBottom>
                 <CheckRoundedIcon />수량
@@ -199,7 +197,7 @@ export const ProductsDetailContent = () => {
             </div>
             <Divider className="my-4" />
             <Typography variant="h5" gutterBottom className="flex flex-col items-end">
-              총금액: {(pricePerUnit * quantity).toLocaleString()}원
+              총금액: {(Number(product.price) * quantity).toLocaleString()}원
             </Typography>
             <Divider className="my-4" />
             <div className="flex flex-col items-end md:flex-row md:items-center md:justify-end md:space-x-4">
@@ -275,19 +273,12 @@ export const CartButton = () => {
   )
 }
 
-export const ProductDetail = () => {
+export const ProductDetail = ({product}: {product: Product}) => {
   return (
-    <>
-      <Image
-        src="/images/products-detail.jpg"
-        alt="products-detail"
-        width={0}
-        height={0}
-        priority
-        sizes="100vw"
-        className="w-full object-cover mt-4"
-      />
-    </>
+    <div
+      className="leading-7 ck-content [&>h2]:text-2xl [&>h3]:text-xl [&>h4]:text-lg"
+      dangerouslySetInnerHTML={{__html: product.contents}}
+    />
   )
 }
 

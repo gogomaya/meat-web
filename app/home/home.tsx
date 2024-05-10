@@ -1,5 +1,6 @@
 "use client"
 import {ProductsList} from "@/app/products/products"
+import {Product} from "@/types/productsTypes"
 import {Divider, Typography} from "@mui/material"
 import Image from "next/image"
 import {useState} from "react"
@@ -103,7 +104,7 @@ export const HomeIntro = () => {
 }
 
 
-export const HomeBestMenu = () => {
+export const HomeBestMenu = ({products}: {products: Product[]}) => {
   return (
     <section className="mt-5 py-10">
       <Image
@@ -114,7 +115,7 @@ export const HomeBestMenu = () => {
         priority
         sizes="100vw"
         className="w-full py-10"
-      /><ProductsList />
+      /><ProductsList products={products} />
     </section>
   )
 }

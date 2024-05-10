@@ -8,8 +8,9 @@ import "swiper/css/free-mode"
 import "swiper/css/navigation"
 import "swiper/css/thumbs"
 import {useState} from "react"
+import {Product} from "@/types/productsTypes"
 
-export default function ProductSwiper() {
+export default function ProductSwiper({product}: {product: Product}) {
   const [thumbsSwiper, setThumbsSwiper] = useState(null)
 
   return (
@@ -29,7 +30,7 @@ export default function ProductSwiper() {
       >
         <SwiperSlide>
           <Image
-            src="/images/10.jpg"
+            src={`/upload-images/products/${product.image_file_name}`}
             alt="Logo"
             width={0}
             height={0}
@@ -73,7 +74,7 @@ export default function ProductSwiper() {
         </SwiperSlide>
       </Swiper>
       <Swiper
-        onSwiper={setThumbsSwiper}
+        onSwiper={setThumbsSwiper as (swiper: any) => void}
         loop={true}
         spaceBetween={10}
         slidesPerView={4}

@@ -12,7 +12,12 @@ export const GET = async (_: NextRequest,
     const headers = new Headers()
     headers.append("Content-Disposition", `filename=${encodeURIComponent(fileName)}`)
     headers.append("Content-Type", `image/${fileName.split(".").pop()}`)
-    const buffer = fs.readFileSync(`../${process.env.NEXT_PUBLIC_UPLOAD_IMAGES}/${table}/${fileName}`)
+    let buffer
+    if (fs.existsSync(`../${process.env.NEXT_PUBLIC_UPLOAD_IMAGES}/${table}/${fileName}`)) {
+      buffer = fs.readFileSync(`../${process.env.NEXT_PUBLIC_UPLOAD_IMAGES}/${table}/${fileName}`)
+    } else {
+      buffer = fs.readFileSync(`./public/images/${fileName}`)
+    }
     return new Response(buffer, {
       headers
     })
