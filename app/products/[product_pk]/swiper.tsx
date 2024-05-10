@@ -73,7 +73,7 @@ export default function ProductSwiper() {
         </SwiperSlide>
       </Swiper>
       <Swiper
-        onSwiper={setThumbsSwiper}
+        onSwiper={setThumbsSwiper as (swiper: any) => void}
         loop={true}
         spaceBetween={10}
         slidesPerView={4}

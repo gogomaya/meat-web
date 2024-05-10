@@ -5,6 +5,7 @@ import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogT
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded"
 import * as React from "react"
 import ProductSwiper from "./[product_pk]/swiper"
+import {Product} from "@/types/productsTypes"
 
 
 export const ProductsSearch = () => {
@@ -38,7 +39,7 @@ export const ProductsPagination = () => {
   )
 }
 
-export const ProductsList = () => {
+export const ProductsList = ({products}: {products: Product[]}) => {
   const enlargeImage = (event: { currentTarget: { querySelector: (arg0: string) => { (): any; new(): any; style: { (): any; new(): any; transform: string } } } }) => {
     event.currentTarget.querySelector("img").style.transform = "scale(1.01)"
   }
@@ -48,76 +49,30 @@ export const ProductsList = () => {
 
   return (
     <ol>
-      <li className="p-1 inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]"
-        onMouseEnter={enlargeImage}
-        onMouseLeave={shrinkImage}>
-        <Link href="/products/1">
-          <Image
-            src="/images/10.jpg"
-            alt="best-menu1"
-            width={0}
-            height={0}
-            priority
-            sizes="100vw"
-            className="w-full aspect-square object-cover rounded-lg"
-          />
-        </Link>
-        <p>
-          <Link href="/products/1">한우암소 육회&사시미 400g</Link><br />
-          <strong>26,000원</strong>
-        </p>
-      </li>
-      <li className="p-1 inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]"
-        onMouseEnter={enlargeImage}
-        onMouseLeave={shrinkImage}>
-        <Image
-          src="/images/17.jpg"
-          alt="best-menu2"
-          width={0}
-          height={0}
-          priority
-          sizes="100vw"
-          className="w-full aspect-square object-cover rounded-lg"
-        />
-        <p>
-          <Link href="/products/1">한우암소 육회&사시미 400g</Link><br />
-          <strong>26,000원</strong>
-        </p>
-      </li>
-      <li className="p-1 inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]"
-        onMouseEnter={enlargeImage}
-        onMouseLeave={shrinkImage}>
-        <Image
-          src="/images/29.jpg"
-          alt="best-menu3"
-          width={0}
-          height={0}
-          priority
-          sizes="100vw"
-          className="w-full aspect-square object-cover rounded-lg"
-        />
-        <p>
-          <Link href="/products/1">한우암소 육회&사시미 400g</Link><br />
-          <strong>26,000원</strong>
-        </p>
-      </li>
-      <li className="p-1 inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]"
-        onMouseEnter={enlargeImage}
-        onMouseLeave={shrinkImage}>
-        <Image
-          src="/images/37.jpg"
-          alt="best-menu4"
-          width={0}
-          height={0}
-          priority
-          sizes="100vw"
-          className="w-full aspect-square object-cover rounded-lg"
-        />
-        <p>
-          <Link href="/products/1">한우암소 육회&사시미 400g</Link><br />
-          <strong>26,000원</strong>
-        </p>
-      </li>
+      {products.map((product) => (
+        <li
+          key={product.product_pk}
+          className="p-1 inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]"
+          onMouseEnter={enlargeImage}
+          onMouseLeave={shrinkImage}
+        >
+          <Link href={`/products/${product.product_pk}`}>
+            <Image
+              src={`/upload-images/products/${product.image_file_name}`}
+              alt={product.name}
+              width={0}
+              height={0}
+              priority
+              sizes="100vw"
+              className="w-full aspect-square object-cover rounded-lg"
+            />
+          </Link>
+          <p>
+            <Link href={`/products/${product.product_pk}`}>{product.name}</Link><br />
+            <strong>{product.price.toLocaleString()}원</strong>
+          </p>
+        </li>
+      ))}
     </ol>
   )
 }
