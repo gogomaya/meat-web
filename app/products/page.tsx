@@ -24,6 +24,7 @@ const Products = async (props: {
   try {
     productsResponse = await productsServices.productsList(searchParams)
   } catch (error) {
+    console.error(error)
     return <ErrorPage />
   }
   const {products, total_rows} = productsResponse.data

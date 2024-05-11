@@ -12,6 +12,7 @@ const Home = async () => {
   try {
     productsHomeResponse = await productsServices.productsHomeLists()
   } catch (error) {
+    console.error(error)
     return <ErrorPage />
   }
   const {products_best} = productsHomeResponse.data
