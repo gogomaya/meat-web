@@ -7,11 +7,11 @@ declare global {
 const mysql2Pool = async () => {
   if (!global.mysql2Pool) {
     const mysql2Pool = mysql2.createPool({
-      host: "125.176.102.143",
-      port: 23306,
-      database: "meat_web",
-      user: "meat_web",
-      password: "meat_web"
+      host: process.env.NEXT_PUBLIC_MYSQL_HOST,
+      port: Number(process.env.NEXT_PUBLIC_MYSQL_PORT),
+      database: process.env.NEXT_PUBLIC_MYSQL_DATABASE,
+      user: process.env.NEXT_PUBLIC_MYSQL_USER,
+      password: process.env.NEXT_PUBLIC_MYSQL_PASSWORD
     })
     const [rows, fields] = await mysql2Pool.execute(`
       select 'MySQL Connected' as Result
