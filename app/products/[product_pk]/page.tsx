@@ -25,7 +25,7 @@ const Products = async (props: {
       {/* 리뷰 */}
       <div id="review2">
         {/* <GeneralReview {{title, content, likes, rating}}/> */}
-        <GeneralReview title="" content="" likes="5" rating="5"/>
+        <GeneralReview title="" content="" likes={0} rating={0} />
       </div>
       {/* 문의 */}
       <div id="qna">

@@ -159,6 +159,17 @@ const AdminProductsForm = ({
         />
         <TextField
           className="!mt-8"
+          label="배송관련 비고"
+          placeholder="배송관련 비고"
+          fullWidth
+          variant="standard"
+          InputLabelProps={{
+            shrink: true
+          }}
+          {...register("etc")}
+        />
+        <TextField
+          className="!mt-8"
           label="원산지"
           placeholder="원산지"
           fullWidth

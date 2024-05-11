@@ -9,6 +9,7 @@ export interface Product {
   category_menu: string
   price: number | string
   description?: string
+  etc?: string
   origin?: string
   weight?: string
   type?: string

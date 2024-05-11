@@ -107,6 +107,7 @@ export const PATCH = async (
     "category_menu",
     "price",
     "description",
+    "etc",
     "origin",
     "weight",
     "type",

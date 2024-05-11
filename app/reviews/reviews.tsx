@@ -16,7 +16,7 @@ export const reviews = [
     id: 1,
     title: "Shrimp and Chorizo Paella",
     date: "2024-03-09",
-    category: "fork",
+    category: "pork",
     content: "이야..이거 만족도 상당히 높습니다. 꽃삼겹 기름 정말 깨끗하고요, 비린내 누린내 잡내 정말 1도 안나요.. 너무 신기해요. 여지껏 먹어본 대패고기들 중에 1등입니다. 저희 엄마랑 언니는 비계를 싫어해서 뒷다리살을 구워먹는 사람들인데, 꽃삼겹 대패는 이게 뭐냐 너무 맛있다고 하면서 잘 먹었습니다.",
     rating: 5,
     likes: 10,
@@ -36,7 +36,7 @@ export const reviews = [
     id: 3,
     title: "Delicious Beef Steak",
     date: "2024-01-09",
-    category: "fork",
+    category: "pork",
     content: "오랜만에 스테이크를 먹으러 갔는데 정말 맛있었습니다. 고기가 너무 부드럽고, 그릴맛이 일품이었습니다. 곁들여진 소스도 환상적이었습니다. 다음에 또 방문하고 싶은 식당이네요!",
     rating: 1,
     likes: 20,
@@ -56,7 +56,7 @@ export const reviews = [
     id: 5,
     title: "Shrimp and Chorizo Paella",
     date: "2024-05-09",
-    category: "beef",
+    category: "simple",
     content: "점심으로 스시를 시켰는데, 롤이 정말 맛있었습니다. 신선한 재료와 조화로운 맛이 인상적이었습니다. 포장도 깔끔하게 되어있어서 가져다 먹기에 편리했습니다. 다음에 또 주문하려고요!",
     rating: 7,
     likes: 5,
@@ -88,7 +88,7 @@ export const ReviewCard = ({reviews}: {reviews: any[]}) => {
     setOpenDialog(false)
   }
 
-  const getContentPreview = (content: any) => {
+  const getContentPreview = (content: string) => {
     if (content.length > 100) {
       return `${content.substring(0, 100)}...`
     }
@@ -200,7 +200,6 @@ export const MonthlyBestReview = () => {
 export const PhotoReview = () => {
   const [sortBy, setSortBy] = React.useState("최신순")
 
-  // 최신순, 별점순, 추천순에 따른 정렬 함수
   const sortReviews = (reviews: any[]) => {
     switch(sortBy) {
     case "최신순":
@@ -232,7 +231,6 @@ export const PhotoReview = () => {
         </FormControl>
         <FormControl className="w-full md:w-[30%] lg:w-[20%]">
           <InputLabel>정렬</InputLabel>
-          {/* 정렬 기준을 변경할 때마다 setSortBy를 호출하여 상태를 업데이트 */}
           <Select
             label="최신순"
             className="w-full"
@@ -265,7 +263,24 @@ export const PhotoReview = () => {
   )
 }
 
-export const GeneralReview = ({title, content, likes, rating}: {title: string, content: string, likes: string, rating: string}) => {
+export const GeneralReview = ({title, content, likes, rating}: {title: string, content: string, likes: number, rating: number}) => {
+  const [liked, setLiked] = React.useState(false)
+  const [disliked, setDisliked] = React.useState(false)
+
+  const handleLikeClick = () => {
+    setLiked(!liked)
+    if (disliked) {
+      setDisliked(false)
+    }
+  }
+
+  const handleDislikeClick = () => {
+    setDisliked(!disliked)
+    if (liked) {
+      setLiked(false)
+    }
+  }
+
   return (
     <div className="my-4 bg-white shadow overflow-hidden sm:rounded-lg mt-4">
       <div className="px-4 py-5 sm:px-6">
@@ -292,8 +307,16 @@ export const GeneralReview = ({title, content, likes, rating}: {title: string, c
       </div>
       <div className="px-6 py-3 flex justify-between items-center">
         <div className="flex items-center gap-1">
-          <FaRegThumbsUp className="text-gray-500 cursor-pointer mr-2" /><span>좋아요</span>
-          <FaRegThumbsDown className="text-gray-500 cursor-pointer" /><span>싫어요</span>
+          <FaRegThumbsUp
+            className={liked ? "text-red-500 cursor-pointer mr-2" : "text-gray-500 cursor-pointer mr-2"}
+            onClick={handleLikeClick}
+          />
+          <span>좋아요</span>
+          <FaRegThumbsDown
+            className={disliked ? "text-red-500 cursor-pointer ml-2" : "text-gray-500 cursor-pointer ml-2"}
+            onClick={handleDislikeClick}
+          />
+          <span>싫어요</span>
         </div>
         <span>{likes}</span>
       </div>

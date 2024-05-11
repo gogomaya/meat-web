@@ -132,7 +132,7 @@ export const ProductsDetailContent = ({product}: {product: Product}) => {
   return (
     <>
       <div className="container mx-auto py-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 p-">
           <div>
             <ProductSwiper product={product} />
           </div>
@@ -147,40 +147,43 @@ export const ProductsDetailContent = ({product}: {product: Product}) => {
             <Typography variant="h5" gutterBottom>
               가격: {product.price.toLocaleString()}원
             </Typography>
+            <Typography variant="body1" gutterBottom>
+              {product.etc}
+            </Typography>
             <Divider className="my-4" />
             {product.origin && (
               <Typography variant="body1" gutterBottom>
-                <CheckRoundedIcon />{product.origin}
+                <CheckRoundedIcon />원산지 : {product.origin}
               </Typography>
             )}
             {product.weight && (
               <Typography variant="body1" gutterBottom>
-                <CheckRoundedIcon />{product.weight}
+                <CheckRoundedIcon />제품중량: {product.weight}
               </Typography>
             )}
             {product.type && (
               <Typography variant="body1" gutterBottom>
-                <CheckRoundedIcon />{product.type}
+                <CheckRoundedIcon />제품유형: {product.type}
               </Typography>
             )}
             {product.part && (
               <Typography variant="body1" gutterBottom>
-                <CheckRoundedIcon />{product.part}
+                <CheckRoundedIcon />부위: {product.part}
               </Typography>
             )}
             {product.per100g && (
               <Typography variant="body1" gutterBottom>
-                <CheckRoundedIcon />{product.per100g}
+                <CheckRoundedIcon />100g당 : {product.per100g}
               </Typography>
             )}
             {product.grade && (
               <Typography variant="body1" gutterBottom>
-                <CheckRoundedIcon />{product.grade}
+                <CheckRoundedIcon />등급 : {product.grade}
               </Typography>
             )}
             {product.package && (
               <Typography variant="body1" gutterBottom>
-                <CheckRoundedIcon />{product.package}
+                <CheckRoundedIcon />포장방법: {product.package}
               </Typography>
             )}
             <div className="flex gap-5 pb-5">
@@ -209,16 +212,18 @@ export const ProductsDetailContent = ({product}: {product: Product}) => {
               </Link>
             </div>
             <div className="flex flex-col items-end space-y-4 py-3">
-              <Button>
-                <Image
-                  src="/images/naver-pay-btn.png"
-                  alt="naver-login-btn"
-                  width={180}
-                  height={100}
-                  sizes="100vw"
-                  priority
-                />
-              </Button>
+              <Link href="/order">
+                <Button>
+                  <Image
+                    src="/images/naver-pay-btn.png"
+                    alt="naver-login-btn"
+                    width={180}
+                    height={100}
+                    sizes="100vw"
+                    priority
+                  />
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
