@@ -67,7 +67,7 @@ export const reviews = [
 export const ReviewCard = ({reviews}: {reviews: any[]}) => {
   const [copied, setCopied] = React.useState(false)
   const [openDialog, setOpenDialog] = React.useState(false)
-  const [selectedReview, setSelectedReview] = React.useState(null)
+  const [selectedReview, setSelectedReview] = React.useState(null as any)
 
   const copyToClipboard = () => {
     const currentUrl = window.location.href
@@ -79,7 +79,7 @@ export const ReviewCard = ({reviews}: {reviews: any[]}) => {
       .catch((err) => console.error("Could not copy text: ", err))
   }
 
-  const openDialogHandler = (review) => {
+  const openDialogHandler = (review: any) => {
     setSelectedReview(review)
     setOpenDialog(true)
   }
@@ -88,7 +88,7 @@ export const ReviewCard = ({reviews}: {reviews: any[]}) => {
     setOpenDialog(false)
   }
 
-  const getContentPreview = (content) => {
+  const getContentPreview = (content: any) => {
     if (content.length > 100) {
       return `${content.substring(0, 100)}...`
     }
@@ -204,7 +204,7 @@ export const PhotoReview = () => {
   const sortReviews = (reviews: any[]) => {
     switch(sortBy) {
     case "최신순":
-      return reviews.slice().sort((a, b) => new Date(b.date) - new Date(a.date))
+      return reviews.slice().sort((a, b) => (new Date(b.date) as any) - (new Date(a.date) as any))
     case "별점순":
       return reviews.slice().sort((a, b) => b.rating - a.rating)
     case "추천순":
@@ -304,7 +304,7 @@ export const GeneralReview = ({title, content, likes, rating}: {title: string, c
 export const GeneralReviews = () => {
   return (
     <div>
-      {reviews.map((review) => (
+      {reviews.map((review: any) => (
         <GeneralReview
           key={review.id}
           title={review.title}
