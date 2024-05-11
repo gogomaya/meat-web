@@ -318,14 +318,13 @@ const MainBottom = () => (
         </ul>
         <h1 className="mt-4 mb-4"><strong>(주)한솔축산</strong></h1>
         <ul className="flex flex-col md:flex-row gap-3">
-          <li>서울특별시 강남구 도곡동 115-15</li>
-          <li>대표이사 | 김김김</li>
-          <li>사업자등록번호 | 123123-123123123</li>
-          <li>통신판매업신고번호 | 1231231-123123</li>
+          <li>대전 서구 둔산3동 1862번지 1층</li>
+          <li><strong>대표자 |</strong> 한승구, 박수현</li>
+          <li><strong>사업자등록번호 |</strong> 405-98-61344</li>
         </ul>
         <ul className="flex flex-col md:flex-row gap-3">
           <li>이메일 naver@naver.com</li>
-          <li>전화번호 02-020-02020</li>
+          <li>전화번호 042-471-1534</li>
         </ul>
         <p className="mb-3">© 2024 한솔. All right reserved.</p>
       </div>

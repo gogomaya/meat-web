@@ -5,6 +5,38 @@ import {Divider, Typography} from "@mui/material"
 import Link from "next/link"
 import Image from "next/image"
 import React from "react"
+import DaumPostcode from "react-daum-postcode"
+
+export const Post = (props: { setcompany: (arg0: any) => void; company: any }) => {
+
+  const complete = (data: { address: any; addressType: string; bname: string; buildingName: string }) =>{
+    let fullAddress = data.address
+    let extraAddress = ""
+
+    if (data.addressType === "R") {
+      if (data.bname !== "") {
+        extraAddress += data.bname
+      }
+      if (data.buildingName !== "") {
+        extraAddress += (extraAddress !== "" ? `, ${data.buildingName}` : data.buildingName)
+      }
+      fullAddress += (extraAddress !== "" ? ` (${extraAddress})` : "")
+    }
+    props.setcompany({
+      ...props.company,
+      address:fullAddress
+    })
+  }
+
+  return (
+    <div>
+      <DaumPostcode
+        className="postmodal"
+        autoClose
+        onComplete={complete} />
+    </div>
+  )
+}
 
 export const OrderDetailContent = () => {
 
@@ -34,20 +66,41 @@ export const OrderDetailContent = () => {
   const totalDiscount = orderInfo.discount
   const finalPrice = totalPrice - totalDiscount
 
-  // 주문 상품 목록을 출력하는 함수
   const renderOrderItems = () => {
-    return orderItems.map((item) => (
-      <div key={item.id} className="flex justify-between items-center border-b pb-2 mb-2">
-        <div className="p-3">
-          <p className="font-semibold">{item.name}</p>
-          <p>수량: {item.quantity}</p>
-        </div>
-        <p>{item.price * item.quantity}원</p>
-      </div>
-    ))
+    return (
+      <table className="w-full">
+        <thead>
+          <tr>
+            <th className="py-2">상품사진</th>
+            <th className="py-2">상품명</th>
+            <th className="py-2">수량</th>
+            <th className="py-2">가격</th>
+          </tr>
+        </thead>
+        <tbody>
+          {orderItems.map((item) => (
+            <tr key={item.id}>
+              <td>
+                <Image
+                  src="/images/logo-toss-pay.svg"
+                  alt=""
+                  width={200}
+                  height={200}
+                  sizes="100vw"
+                  className="w-full"
+                  priority
+                />
+              </td>
+              <td className="p-3">{item.name}</td>
+              <td className="p-3">{item.quantity}</td>
+              <td className="p-3">{(item.price * item.quantity).toLocaleString()}원</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    )
   }
 
-  // 결제방법 타입 변경 핸들러
   const handlePayMethodChange = (type: string) => {
     setOrderInfo({...orderInfo, paymentMethod: type})
   }
@@ -89,6 +142,24 @@ export const OrderDetailContent = () => {
     } else {
       return null
     }
+  }
+
+  // 주소창 이벤트 핸들러
+  const [enroll_company, setEnroll_company] = useState({
+    address:""
+  })
+
+  const [popup, setPopup] = useState(false)
+
+  const handleInput = (e: { target: { name: any; value: any } }) => {
+    setEnroll_company({
+      ...enroll_company,
+      [e.target.name]:e.target.value
+    })
+  }
+
+  const handleComplete = (data: any) => {
+    setPopup(!popup)
   }
 
   // 영수증 타입 변경 핸들러
@@ -164,15 +235,18 @@ export const OrderDetailContent = () => {
                   수령인 이름:
                   <input type="text" id="recipientName" name="recipientName" className="ml-2 border border-gray-300 rounded-lg p-2" />
                 </label>
-                <label htmlFor="shippingAddress" className="py-2 block">
-                  배송 주소:
-                  <input type="text" id="shippingAddress" name="shippingAddress" className="ml-2 border border-gray-300 rounded-lg p-2" />
-                </label>
-                <label htmlFor="contactNumber" className="py-2 block">
-                  연락처:
-                  <input type="tel" id="contactNumber" name="contactNumber" className="ml-2 border border-gray-300 rounded-lg p-2" />
+                <br />
+                <label htmlFor="recipientAddress" className="py-2">
+                  배송지주소:
+                  <input type="text" id="contactNumber" required={true} name="address" onChange={handleInput}  value={enroll_company.address} className="ml-2 border border-gray-300 rounded-lg p-2" />
+                  <button onClick={handleComplete}>우편번호 찾기</button>
+                  {popup && <Post company={enroll_company} setcompany={setEnroll_company}></Post>}
                 </label>
               </div>
+              <label htmlFor="contactNumber" className="py-2 block">
+                연락처:
+                <input type="tel" id="contactNumber" name="contactNumber" className="ml-2 border border-gray-300 rounded-lg p-2" />
+              </label>
             </div>
           </div>
           <div className="py-3">
@@ -205,7 +279,6 @@ export const OrderDetailContent = () => {
         <div className="flex flex-col items-end">
           <div className="bg-white rounded-lg shadow-lg p-6 notch">
             <h3 className="text-xl font-semibold mb-4">결제내역</h3>
-            {renderOrderItems()}
             <div className="mt-6 p-4">
               <p className="text-lg mb-2">총 상품금액: {totalPrice.toLocaleString()}원</p>
               <p className="text-lg mb-2">할인 금액: {totalDiscount.toLocaleString()}원</p>
@@ -302,7 +375,7 @@ export const OrderDetailContent = () => {
             </div>
           </div>
         </div>
-        <div className="absolute top-0 right-20 w-20 h-20 flex justify-center items-center">
+        {/* <div className="absolute top-0 right-20 w-20 h-20 flex justify-center items-center">
           <Image
             src="/images/free-icon-tack-2052642.png"
             alt=""
@@ -312,9 +385,8 @@ export const OrderDetailContent = () => {
             className="w-full"
             priority
           />
-        </div>
+        </div> */}
       </div>
     </div>
   )
 }
-
