@@ -23,9 +23,9 @@ const Home = async () => {
         <HomeKeyPoint />
         <HomeDunDunRice />
         <HomeIntro />
-        {products_best.length && (
+        {products_best.length ? (
           <HomeBestMenu products={products_best} />
-        )}
+        ) : null}
         <HomeBestReview />
         <HomeBrandStory />
         <HomeYoutube/>
