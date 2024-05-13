@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic"
+
 import {NextRequest, NextResponse} from "next/server"
 import mysql2Pool from "@/libraries/mysql2Pool"
 import {RowDataPacket, FieldPacket} from "mysql2/promise"
