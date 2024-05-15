@@ -11,8 +11,8 @@ import {useState} from "react"
 import {Product} from "@/types/productsTypes"
 
 export default function ProductSwiper({product}: {product: Product}) {
-  const [thumbsSwiper, setThumbsSwiper] = useState(null)
-
+  // const [thumbsSwiper, setThumbsSwiper] = useState(null)
+  // swiper 고도화
   return (
     <>
       <style jsx>{`
@@ -20,26 +20,26 @@ export default function ProductSwiper({product}: {product: Product}) {
           opacity: 1;
         }
       `}</style>
-      <Swiper
+      {/* <Swiper
         loop={true}
         spaceBetween={10}
         navigation={true}
         thumbs={{swiper: thumbsSwiper}}
         modules={[FreeMode, Navigation, Thumbs]}
         className="h-80 w-full"
-      >
-        <SwiperSlide>
-          <Image
-            src={`/upload-images/products/${product.image_file_name}`}
-            alt="Logo"
-            width={0}
-            height={0}
-            priority
-            sizes="100vw"
-            className="w-full"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
+      > */}
+      {/* <SwiperSlide> */}
+      <Image
+        src={`/upload-images/products/${product.image_file_name}`}
+        alt="Logo"
+        width={0}
+        height={200}
+        priority
+        sizes="100vw"
+        className="w-full"
+      />
+      {/* </SwiperSlide> */}
+      {/* <SwiperSlide>
           <Image
             src="/images/11.jpg"
             alt="Logo"
@@ -127,7 +127,7 @@ export default function ProductSwiper({product}: {product: Product}) {
             className="w-full"
           />
         </SwiperSlide>
-      </Swiper>
+      </Swiper> */}
     </>
   )
 }

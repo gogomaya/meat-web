@@ -264,6 +264,7 @@ export const PhotoReview = () => {
 }
 
 export const GeneralReview = ({title, content, likes, rating}: {title: string, content: string, likes: number, rating: number}) => {
+
   const [liked, setLiked] = React.useState(false)
   const [disliked, setDisliked] = React.useState(false)
 
@@ -280,6 +281,7 @@ export const GeneralReview = ({title, content, likes, rating}: {title: string, c
       setLiked(false)
     }
   }
+
 
   return (
     <div className="my-4 bg-white shadow overflow-hidden sm:rounded-lg mt-4">
