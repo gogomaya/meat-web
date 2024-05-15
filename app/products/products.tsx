@@ -151,41 +151,39 @@ export const ProductsDetailContent = ({product}: {product: Product}) => {
               {product.etc}
             </Typography>
             <Divider className="my-4" />
-            {product.origin && (
-              <Typography variant="body1" gutterBottom>
-                <CheckRoundedIcon />원산지 : {product.origin}
-              </Typography>
-            )}
-            {product.weight && (
-              <Typography variant="body1" gutterBottom>
-                <CheckRoundedIcon />제품중량: {product.weight}
-              </Typography>
-            )}
-            {product.type && (
-              <Typography variant="body1" gutterBottom>
-                <CheckRoundedIcon />제품유형: {product.type}
-              </Typography>
-            )}
-            {product.part && (
-              <Typography variant="body1" gutterBottom>
-                <CheckRoundedIcon />부위: {product.part}
-              </Typography>
-            )}
-            {product.per100g && (
-              <Typography variant="body1" gutterBottom>
-                <CheckRoundedIcon />100g당 : {product.per100g}
-              </Typography>
-            )}
-            {product.grade && (
-              <Typography variant="body1" gutterBottom>
-                <CheckRoundedIcon />등급 : {product.grade}
-              </Typography>
-            )}
-            {product.package && (
-              <Typography variant="body1" gutterBottom>
-                <CheckRoundedIcon />포장방법: {product.package}
-              </Typography>
-            )}
+            <table>
+              <tbody>
+                <tr>
+                  <td>{product.origin && <><CheckRoundedIcon /> 원산지:</>}</td>
+                  <td className="flex justify-end">{product.origin}</td>
+                </tr>
+                <tr>
+                  <td>{product.weight && <><CheckRoundedIcon /> 제품중량:</>}</td>
+                  <td className="flex justify-end">{product.weight}</td>
+                </tr>
+                <tr>
+                  <td>{product.type && <><CheckRoundedIcon /> 제품유형:</>}</td>
+                  <td className="flex justify-end">{product.type}</td>
+                </tr>
+                <tr>
+                  <td>{product.part && <><CheckRoundedIcon /> 부위:</>}</td>
+                  <td className="flex justify-end">{product.part}</td>
+                </tr>
+                <tr>
+                  <td>{product.per100g && <><CheckRoundedIcon /> 100g당:</>}</td>
+                  <td className="flex justify-end">{product.per100g}</td>
+                </tr>
+                <tr>
+                  <td>{product.grade && <><CheckRoundedIcon /> 등급:</>}</td>
+                  <td className="flex justify-center">{product.grade}</td>
+                </tr>
+                <tr>
+                  <td>{product.package && <><CheckRoundedIcon /> 포장방법:</>}</td>
+                  <td className="flex justify-end">{product.grade}</td>
+                </tr>
+              </tbody>
+            </table>
+
             <div className="flex gap-5 pb-5">
               <Typography variant="body1" gutterBottom>
                 <CheckRoundedIcon />수량
