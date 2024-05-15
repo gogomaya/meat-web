@@ -265,7 +265,7 @@ export const CartButton = ({product}: { product: Product }) => {
 
   const handleButtonClick = () => {
     handleOpen()
-    addCartList(product, quantity) // 제품과 수량 정보를 전달
+    // addCartList(product, quantity) // 제품과 수량 정보를 전달
   }
 
   return (
