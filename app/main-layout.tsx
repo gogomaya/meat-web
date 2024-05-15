@@ -1,5 +1,5 @@
 "use client"
-import {useState} from "react"
+import {useState, useEffect} from "react"
 import Image from "next/image"
 import Link from "next/link"
 import MenuIcon from "@mui/icons-material/Menu"
@@ -49,12 +49,60 @@ const MainLayout = ({
         </Link>
       </header>
       <main className="pt-8 md:pt-16">{children}</main>
+      {/* CS 관련 아이콘 */}
+      <CsIcon />
       <MainBottom />
     </div>
   )
 }
 
 export default MainLayout
+
+
+export const CsIcon = () => {
+  const [isVisible, setIsVisible] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.pageYOffset
+      setIsVisible(scrollTop > 100)
+    }
+
+    if (typeof window !== "undefined") {
+      window.addEventListener("scroll", handleScroll)
+      return () => {
+        window.removeEventListener("scroll", handleScroll)
+      }
+    }
+  }, [])
+
+  return (
+    <div className={`fixed bottom-10 right-10 gap-2 flex flex-col ${isVisible ? "visible" : "hidden"}`}>
+      <Link href="https://pf.kakao.com/_anFaG">
+        <Image
+          src="/images/quick_kakao.png"
+          alt=""
+          width={32}
+          height={32}
+          sizes="100vw"
+          className="md:w-16"
+          priority
+        />
+      </Link>
+      <Link href="https://www.cjlogistics.com/ko/tool/parcel/tracking">
+        <Image
+          src="/images/quick_shipping.png"
+          alt=""
+          width={32}
+          height={32}
+          sizes="100vw"
+          className="md:w-16"
+          priority
+        />
+      </Link>
+    </div>
+  )
+}
 
 const MegaMenu = () => {
   const getMenu = () => {

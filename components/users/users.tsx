@@ -182,26 +182,32 @@ const Users = ({user}: {user: User}) => {
       </Dialog>
       <Dialog open={open === "logout"} onClose={() => setOpen("close")} maxWidth="xs" fullWidth>
         <DialogContent>
-          <Button
-            variant="outlined"
-            onClick={async () => {
-              await usersServices.usersLogout()
-              router.refresh()
-              setOpen("close")
-            }}
-            style={{marginBottom: "20px", padding: "15px 30px"}}
-          >
-            로그아웃
-          </Button>
-          <Button
-            variant="outlined"
-            onClick={() => {
-              // Handle my page button click event
-            }}
-            style={{padding: "15px 30px"}}
-          >
-            마이페이지
-          </Button>
+          <div>
+            <div className="flex flex-col justify-center item-center">
+              <Button
+                variant="outlined"
+                onClick={async () => {
+                  await usersServices.usersLogout()
+                  router.refresh()
+                  setOpen("close")
+                }}
+                style={{marginBottom: "20px", padding: "15px 30px"}}
+              >
+                로그아웃
+              </Button>
+            </div>
+            <div className="flex flex-col justify-center item-center">
+              <Button
+                variant="outlined"
+                onClick={() => {
+                  router.push("/mypage")
+                }}
+                style={{padding: "15px 30px"}}
+              >
+                마이페이지
+              </Button>
+            </div>
+          </div>
         </DialogContent>
         <DialogActions className="border" style={{justifyContent: "center"}}>
           <Button onClick={() => setOpen("close")}>닫기</Button>
