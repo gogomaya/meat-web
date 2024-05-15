@@ -3,7 +3,6 @@ import {SearchParams} from "./commonTypes"
 export type ProductCategory = "cow" | "pork" | "simple"
 
 export interface Product {
-  map(arg0: (product: { name: any; quantity: any; price: any }, index: number) => { id: number; name: any; quantity: any; price: any }): unknown
   product_pk: number
   name: string
   category: ProductCategory

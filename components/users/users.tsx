@@ -15,7 +15,7 @@ const Users = ({user}: {user: User}) => {
   const [open, setOpen] = useState("close")
 
   const [activeTab, setActiveTab] = useState("member")
-  const handleTabClick = (tab) => {
+  const handleTabClick = (tab: any) => {
     setActiveTab(tab)
   }
   return (
