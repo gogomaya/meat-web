@@ -157,7 +157,22 @@ const Users = ({user}: {user: User}) => {
             )}
             <div style={{textAlign: "center", marginTop: "20px"}}>
               처음이신가요? <br />
-              카카오로 <span style={{color: "#e53e3e", cursor: "pointer", transition: "color 0.3s ease"}}>1초만에 로그인/회원가입</span>해보세요
+              카카오로{" "}
+              <span
+                style={{color: "#e53e3e", cursor: "pointer", transition: "color 0.3s ease"}}
+                onClick={() => {
+                  let url = "https://kauth.kakao.com/oauth/authorize"
+                  url += `?client_id=${process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY}`
+                  url += "&response_type=code"
+                  url += `&redirect_uri=${document.location.origin}${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}`
+                  url += `&state=${uuidv4()}`
+                  window.open(url, "_blank")
+                  setOpen("close")
+                }}
+              >
+                1초만에 로그인/회원가입
+              </span>
+              해보세요
             </div>
           </div>
         </DialogContent>
@@ -174,8 +189,19 @@ const Users = ({user}: {user: User}) => {
               router.refresh()
               setOpen("close")
             }}
+            style={{marginBottom: "20px", padding: "15px 30px"}}
+          >
+            로그아웃
+          </Button>
+          <Button
+            variant="outlined"
+            onClick={() => {
+              // Handle my page button click event
+            }}
             style={{padding: "15px 30px"}}
-          >로그아웃</Button>
+          >
+            마이페이지
+          </Button>
         </DialogContent>
         <DialogActions className="border" style={{justifyContent: "center"}}>
           <Button onClick={() => setOpen("close")}>닫기</Button>
