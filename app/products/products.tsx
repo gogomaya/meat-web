@@ -9,11 +9,12 @@ import ProductSwiper from "./[product_pk]/swiper"
 import {Product} from "@/types/productsTypes"
 import {SearchParams} from "@/types/commonTypes"
 
+
 export const ProductsSearch = ({products, searchParams}: {products: Product[], searchParams: SearchParams}) => {
   const router = useRouter()
   return (
     <section className="flex justify-between items-center">
-      <span>상품이 모두 <strong>{products.length}</strong>개 있습니다.</span>
+      <span>상품이 모두<strong>{products.length}</strong>개 있습니다.</span>
       <FormControl>
         <InputLabel>상품정렬</InputLabel>
         <Select
@@ -102,7 +103,6 @@ export const ProductsList = ({products}: {products: Product[]}) => {
 
 export const ProductsDetailContent = ({product}: {product: Product}) => {
   const [quantity, setQuantity] = React.useState(1)
-  const pricePerUnit = 69000
 
   const handleQuantityChange = (event: { target: { value: string } }) => {
     const newQuantity = parseInt(event.target.value)
@@ -132,7 +132,7 @@ export const ProductsDetailContent = ({product}: {product: Product}) => {
   return (
     <>
       <div className="container mx-auto py-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 p-">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 p-4">
           <div>
             <ProductSwiper product={product} />
           </div>
@@ -204,8 +204,8 @@ export const ProductsDetailContent = ({product}: {product: Product}) => {
             </Typography>
             <Divider className="my-4" />
             <div className="flex flex-col items-end md:flex-row md:items-center md:justify-end md:space-x-4">
-              <CartButton />
-              <Link href="/order">
+              <CartButton product={product} />
+              <Link href={`/order?productId=${product.product_pk}`}>
                 <Button variant="contained" color="secondary" className="btn">
                   구매하기
                 </Button>
@@ -232,7 +232,7 @@ export const ProductsDetailContent = ({product}: {product: Product}) => {
   )
 }
 
-export const CartButton = () => {
+export const CartButton = ({product}: { product: Product }) => {
   const [open, setOpen] = React.useState(false)
 
   const handleOpen = () => {
@@ -243,9 +243,31 @@ export const CartButton = () => {
     setOpen(false)
   }
 
+
   const handleConfirm = () => {
     setOpen(false)
-    window.location.href = "/carts"
+    window.location.href = `/order?productId=${product.product_pk}`
+  }
+
+
+  // 장바구니 추가
+  const addCartList = async (product: Product, quantity: number) => {
+    try {
+      let cartItems: any[] = []
+      const storedCartItems = localStorage.getItem("cartItems")
+      if (storedCartItems !== null) {
+        cartItems = JSON.parse(storedCartItems)
+      }
+      cartItems.push({product, quantity}) // 제품과 수량 정보를 객체로 묶어서 추가
+      localStorage.setItem("cartItems", JSON.stringify(cartItems))
+    } catch (error) {
+      console.log("업로드 실패:", error)
+    }
+  }
+
+  const handleButtonClick = () => {
+    handleOpen()
+    addCartList(product, quantity) // 제품과 수량 정보를 전달
   }
 
   return (
@@ -254,7 +276,7 @@ export const CartButton = () => {
         variant="contained"
         color="secondary"
         className="btn"
-        onClick={handleOpen}
+        onClick={handleButtonClick}
       >
         장바구니
       </Button>
@@ -277,6 +299,7 @@ export const CartButton = () => {
     </div>
   )
 }
+
 
 export const ProductDetail = ({product}: {product: Product}) => {
   return (
@@ -375,4 +398,3 @@ function checkedDevice() {
 function addClass(self: HTMLDivElement, arg1: string) {
   throw new Error("Function not implemented.")
 }
-

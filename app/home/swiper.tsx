@@ -12,11 +12,23 @@ const HomeSwiper = () => {
       autoplay={{delay: 4000}}
       modules={[Autoplay, Pagination]}
       pagination={{clickable: true}}
-      className="border border-black"
+      className="w-full absolute full-css"
     >
       <SwiperSlide>
         <Image
-          src="/images/main-swiper1.jpg"
+          src="/images/12.jpg"
+          alt="Logo"
+          layout="responsive"
+          width={0}
+          height={0}
+          priority
+          sizes="100vw"
+          className="w-full"
+        />
+      </SwiperSlide>
+      <SwiperSlide>
+        <Image
+          src="/images/11.jpg"
           alt="Logo"
           width={0}
           height={0}
@@ -27,18 +39,7 @@ const HomeSwiper = () => {
       </SwiperSlide>
       <SwiperSlide>
         <Image
-          src="/images/main-swiper2.jpg"
-          alt="Logo"
-          width={0}
-          height={0}
-          priority
-          sizes="100vw"
-          className="w-full"
-        />
-      </SwiperSlide>
-      <SwiperSlide>
-        <Image
-          src="/images/main-swiper3.jpg"
+          src="/images/13.jpg"
           alt="Logo"
           width={0}
           height={0}

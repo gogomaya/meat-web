@@ -8,9 +8,6 @@ import WorkOutlineIcon from "@mui/icons-material/WorkOutline"
 import CloseIcon from "@mui/icons-material/Close"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import {Accordion, AccordionDetails, AccordionSummary, Badge, Box, Divider, Drawer, IconButton, InputBase, Menu, MenuList, Typography} from "@mui/material"
-import TwitterIcon from "@mui/icons-material/Twitter"
-import InstagramIcon from "@mui/icons-material/Instagram"
-import YouTubeIcon from "@mui/icons-material/YouTube"
 import SupportAgentIcon from "@mui/icons-material/SupportAgent"
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline"
 import Users from "@/components/users/users"
@@ -26,7 +23,7 @@ const MainLayout = ({
 }) => {
   return (
     <div className="max-w-screen-xl mx-auto">
-      <header id="header" className="fixed top-0 z-20 bg-white w-full max-w-screen-xl flex justify-center items-center px-4"
+      <header id="header" className="fixed top-0 z-20 bg-white w-full flex justify-center items-center px-4"
         style={{backgroundColor: "rgba(255, 255, 255, 0.88)"}}>
         <MainMobileMenu />
         <Link href="/">
@@ -323,8 +320,10 @@ const MainBottom = () => (
           <li><strong>사업자등록번호 |</strong> 405-98-61344</li>
         </ul>
         <ul className="flex flex-col md:flex-row gap-3">
-          <li>이메일 naver@naver.com</li>
-          <li>전화번호 042-471-1534</li>
+          <li>이메일 whddlrs1@naver.com</li>
+          <a href="tel:042-471-1534">
+            042-471-1534
+          </a>
         </ul>
         <p className="mb-3">© 2024 한솔. All right reserved.</p>
       </div>

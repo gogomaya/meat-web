@@ -7,6 +7,7 @@ import Image from "next/image"
 import React from "react"
 import DaumPostcode from "react-daum-postcode"
 
+// 배송지
 export const Post = (props: { setcompany: (arg0: any) => void; company: any }) => {
 
   const complete = (data: { address: any; addressType: string; bname: string; buildingName: string }) =>{
@@ -39,17 +40,22 @@ export const Post = (props: { setcompany: (arg0: any) => void; company: any }) =
 }
 
 export const OrderDetailContent = () => {
+  const [isOrderInfoOpen, setIsOrderInfoOpen] = useState(false)
+  const [isPersonalInfoOpen, setIsPersonalInfoOpen] = useState(false)
 
-  const [isAccordianOpen, setIsAccordianOpen] = useState(false)
+  const toggleOrderInfo = () => {
+    setIsOrderInfoOpen(!isOrderInfoOpen)
+  }
 
-  const toggleAccordian = () => {
-    setIsAccordianOpen(!isAccordianOpen)
+  const togglePersonalInfo = () => {
+    setIsPersonalInfoOpen(!isPersonalInfoOpen)
   }
 
   const [orderInfo, setOrderInfo] = useState({
     shippingAddress: "",
     orderItems: [],
     discount: 0,
+    shipfee: 0,
     paymentMethod: "",
     cashReceipt: false,
     receiptType: ""
@@ -64,11 +70,12 @@ export const OrderDetailContent = () => {
   // 결제 정보
   const totalPrice = orderItems.reduce((total, item) => total + item.price * item.quantity, 0)
   const totalDiscount = orderInfo.discount
-  const finalPrice = totalPrice - totalDiscount
+  const totalShipFee = orderInfo.shipfee
+  const finalPrice = totalPrice - totalDiscount + totalShipFee
 
   const renderOrderItems = () => {
     return (
-      <table className="w-full">
+      <table className="w-full p-4">
         <thead>
           <tr>
             <th className="py-2">상품사진</th>
@@ -80,20 +87,19 @@ export const OrderDetailContent = () => {
         <tbody>
           {orderItems.map((item) => (
             <tr key={item.id}>
-              <td>
+              <td className="flex justify-center">
                 <Image
-                  src="/images/logo-toss-pay.svg"
+                  src="/images/12.jpg"
                   alt=""
-                  width={200}
-                  height={200}
+                  width={100}
+                  height={50}
                   sizes="100vw"
-                  className="w-full"
                   priority
                 />
               </td>
-              <td className="p-3">{item.name}</td>
-              <td className="p-3">{item.quantity}</td>
-              <td className="p-3">{(item.price * item.quantity).toLocaleString()}원</td>
+              <td className="p-3 text-center">{item.name}</td>
+              <td className="p-3 text-center">{item.quantity}</td>
+              <td className="p-3 text-center">{(item.price * item.quantity).toLocaleString()}원</td>
             </tr>
           ))}
         </tbody>
@@ -105,7 +111,6 @@ export const OrderDetailContent = () => {
     setOrderInfo({...orderInfo, paymentMethod: type})
   }
 
-  // 결제방법 내용 렌더링 함수
   const renderPayMethodContent = () => {
     if (orderInfo.paymentMethod === "toss") {
       return (
@@ -221,32 +226,35 @@ export const OrderDetailContent = () => {
   return (
     <div className="container mx-auto p-8">
       <h2 className="text-2xl font-semibold mb-4">주문/결제</h2>
+      <div className="bg-white rounded-lg shadow-lg p-3 w-full mb-5">
+        <h3 className="text-xl font-semibold mb-4">주문상품</h3>
+        {renderOrderItems()}
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 relative">
         <div>
-          <div className="bg-white rounded-lg shadow-lg p-3 w-full">
-            <h3 className="text-xl font-semibold mb-4">주문상품</h3>
-            {renderOrderItems()}
-          </div>
           <div className="py-3">
             <div className="bg-white rounded-lg shadow-lg w-full">
               <h2 className="text-2xl font-semibold mb-4 p-2">배송지 정보</h2>
               <div className="p-3">
-                <label htmlFor="recipientName" className="py-2">
+                <label htmlFor="recipientName" className="py-2 block">
                   수령인 이름:
                   <input type="text" id="recipientName" name="recipientName" className="ml-2 border border-gray-300 rounded-lg p-2" />
                 </label>
                 <br />
-                <label htmlFor="recipientAddress" className="py-2">
-                  배송지주소:
-                  <input type="text" id="contactNumber" required={true} name="address" onChange={handleInput}  value={enroll_company.address} className="ml-2 border border-gray-300 rounded-lg p-2" />
-                  <button onClick={handleComplete}>우편번호 찾기</button>
+                <h2>배송지주소:</h2>
+                <div className="flex flex-col">
+                  <div className="flex items-center flex-grow mb-2">
+                    <input type="text" id="contactNumber" required={true} name="address" onChange={handleInput} value={enroll_company.address} className="mr-2 border border-gray-300 rounded-lg p-2 flex-grow" />
+                    <button onClick={handleComplete} className="ml-2 py-2 bg-blue-500 text-white rounded-lg post-button">우편번호 찾기</button>
+                  </div>
                   {popup && <Post company={enroll_company} setcompany={setEnroll_company}></Post>}
+                  <input type="text" id="addressLine2" name="addressLine2" placeholder="상세 주소" className="border border-gray-300 rounded-lg p-2 w-full" />
+                </div>
+                <label htmlFor="contactNumber" className="py-2 block">
+                  연락처:
+                  <input type="tel" id="contactNumber" name="contactNumber" className="ml-2 border border-gray-300 rounded-lg p-2" />
                 </label>
               </div>
-              <label htmlFor="contactNumber" className="py-2 block">
-                연락처:
-                <input type="tel" id="contactNumber" name="contactNumber" className="ml-2 border border-gray-300 rounded-lg p-2" />
-              </label>
             </div>
           </div>
           <div className="py-3">
@@ -277,37 +285,38 @@ export const OrderDetailContent = () => {
           </div>
         </div>
         <div className="flex flex-col items-end">
-          <div className="bg-white rounded-lg shadow-lg p-6 notch">
-            <h3 className="text-xl font-semibold mb-4">결제내역</h3>
+          <div className="bg-white rounded-lg shadow-lg p-3 notch">
+            <h2 className="text-xl font-semibold mb-4">결제내역</h2>
             <div className="mt-6 p-4">
               <p className="text-lg mb-2">총 상품금액: {totalPrice.toLocaleString()}원</p>
               <p className="text-lg mb-2">할인 금액: {totalDiscount.toLocaleString()}원</p>
+              <p className="text-lg mb-2">총 배송비: {totalShipFee.toLocaleString()}원</p>
               <p className="text-lg">최종 결제 금액: {finalPrice.toLocaleString()}원</p>
             </div>
             <Divider />
             <div className="max-w-md mx-auto my-8 px-4 rounded-lg">
               <h3 className="text-2xl text-gray-800 mb-4">결제수단</h3>
               <h5 className="text-lg text-gray-600 mb-2">위 주문내역을 확인하였으며, 결제 내역에 동의합니다.</h5>
-              <div className="border-b py-3 px-4 flex justify-between cursor-pointer" onClick={toggleAccordian}>
+              <div className="border-b py-3 px-4 flex justify-between cursor-pointer" onClick={toggleOrderInfo}>
                 <h5 className="text-lg text-gray-600">주문 상품 정보 동의</h5>
-                <svg xmlns="http://www.w3.org/2000/svg" className={`h-6 w-6 transform ${isAccordianOpen ? "rotate-180" : ""} transition-transform`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" className={`h-6 w-6 transform ${isOrderInfoOpen ? "rotate-180" : ""} transition-transform`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
                 </svg>
               </div>
-              {isAccordianOpen && (
+              {isOrderInfoOpen && (
                 <div className="p-4">
                   <textarea className="w-full h-40 p-2 text-sm border border-gray-300 rounded-lg mb-4">
                     주문할 상품의 상품명, 가격, 배송정보 등을 최종 확인하였으며, 구매에 동의하십니까? (전자상거래법 제 8조 2항)
                   </textarea>
                 </div>
               )}
-              <div className="border-b py-3 px-4 flex justify-between cursor-pointer" onClick={toggleAccordian}>
+              <div className="border-b py-3 px-4 flex justify-between cursor-pointer" onClick={togglePersonalInfo}>
                 <h5 className="text-lg text-gray-600">개인정보 수집 및 이용동의</h5>
-                <svg xmlns="http://www.w3.org/2000/svg" className={`h-6 w-6 transform ${isAccordianOpen ? "rotate-180" : ""} transition-transform`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" className={`h-6 w-6 transform ${isPersonalInfoOpen ? "rotate-180" : ""} transition-transform`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
                 </svg>
               </div>
-              {isAccordianOpen && (
+              {isPersonalInfoOpen && (
                 <div className="p-4">
                   수집하는 개인정보의 항목
                   ① 한솔축산는 구매, 원활한 고객상담, 각종 서비스의 제공을 위해 주문 이용 시 아래와 같은 개인정보를 수집하고 있습니다.
@@ -316,76 +325,18 @@ export const OrderDetailContent = () => {
                   o 보유 및 이용기간 : 회원 탈퇴시 까지(단, 관계 법령에 따름)
                   ② 서비스 이용과정이나 사업처리 과정에서 아래와 같은 정보들이 자동으로 생성되어 수집될 수 있습니다.
                   - IP Address, 쿠키, 방문 일시, OS종류, 브라우져 종류 서비스 이용 기록, 불량 이용 기록
-
                   ③ 부가 서비스 및 맞춤식 서비스 이용 또는 이벤트 응모 과정에서 해당 서비스의 이용자에 한해서만 아래와 같은 정보들이 수집될 수 있습니다.
-                  - 개인정보 추가 수집에 대해 동의를 받는 경우
-
-                  ④ 결제 과정에서 아래와 같은 정보들이 수집될 수 있습니다.
-                  - 신용카드 결제 시 : 카드사명, 카드번호 등
-                  - 휴대폰 결제 시 : 이동전화번호, 통신사, 결제승인번호, 이메일주소 등
-                  - 계좌이체 시 : 은행명, 계좌번호 등
-                  - 상품권 이용 시 : 상품권 번호
-                  - 환불시 : 환불계좌정보(은행명, 계좌번호, 예금주명)
-                  - 제휴포인트 결제시 : 제휴사명, 카드번호
-                  - 현금영수증 : 휴대폰번호, 현금영수증 카드번호,, 사업자번호
-                  개인정보의 수집 및 이용목적
-
-                  한솔축산은 수집한 개인정보를 다음의 목적을 위해 활용합니다. 이용자가 제공한 모든 정보는 하기 목적에 필요한 용도 이외로는 사용되지 않으며, 이용 목적이 변경될 시에는 사전동의를 구할 것입니다.
-
-                  ① 서비스 제공에 관한 계약 이행 및 서비스 제공에 따른 요금정산
-                  - 컨텐츠 제공, 특정 맞춤 서비스 제공, 물품배송 또는 청구서 등 발송, 금융거래 본인 인증 및 금융 서비스, 구매 및 요금 결제, 요금추심 등
-
-                  ② 비회원 관리
-                  - 비회원 구매 서비스 이용에 따른 본인 확인, 개인 식별, 분쟁 조정을 위한 기록보존, 불만처리 등 민원처리, 고지사항 전달
-
-                  개인정보 보유 및 이용기간
-
-                  이용자의 개인정보는 원칙적으로 회원탈퇴 시 지체없이 파기합니다. 단, 다음의 정보에 대해서는 아래의 이유로 명시한 기간 동안 보존합니다.
-
-                  ① 회사 내부 방침에 의한 정보보유 사유
-                  - 보존 항목 : 아이디(ID), 회원번호
-                  - 보존 근거 : 서비스 이용의 혼선 방지
-                  - 보존 기간 : 영구
-
-                  ② 관계 법령에 의한 정보보유 사유
-                  ‘상법’, ‘전자상거래 등에서의 소비자보호에 관한 법률’ 등 관계 법령의 규정에 의하여 보존할 필요가 있는 경우 관계 법령에서 정한 일정한 기간 동안 개인정보를 보관합니다. 이 경우 회사는 보관하는 정보를 그 보관의 목적으로만 이용하며 보존 기간은 아래와 같습니다.
-
-                  1. 계약 또는 청약철회 등에 관한 기록
-                  - 보존 근거 : 전자상거래 등에서의 소비자보호에 관한 법률
-                  - 보존 기간 : 5년
-                  2. 대금결제 및 재화 등의 공급에 관한 기록
-                  - 보존 근거 : 전자상거래 등에서의 소비자보호에 관한 법률
-                  - 보존 기간 : 5년
-                  3. 소비자의 불만 또는 분쟁처리에 관한 기록
-                  - 보존 근거 : 전자상거래 등에서의 소비자보호에 관한 법률
-                  - 보존 기간 : 3년
-                  4. 웹사이트 방문기록
-                  - 보존 근거 : 통신비밀보호법
-                  - 보존 기간 : 3개월
+                  - 생년월일, 생년월일, 성별, 개인맞춤 서비스 이용내역, 취미, 고객의 서비스 이용이나 이벤트에 대한 피드백
+                  ④ 제휴 서비스 이용 과정에서 아래와 같은 정보들이 수집될 수 있습니다.
+                  - 제휴 서비스 이용 기록, 제휴 서비스 이용 관련 고객의 특정 정보
                 </div>
               )}
             </div>
-            <div className="mt-6 flex justify-end">
-              <button
-                className="bg-blue-500 text-white font-semibold px-6 py-3 rounded-lg shadow-lg hover:bg-blue-600 transition-colors"
-                onClick={handlePayment}
-              >
-                결제하기
-              </button>
+            <div className="flex justify-end mt-4">
+              <button className="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-blue-600 transition-colors" onClick={handlePayment}>결제하기</button>
             </div>
           </div>
         </div>
-        {/* <div className="absolute top-0 right-20 w-20 h-20 flex justify-center items-center">
-          <Image
-            src="/images/free-icon-tack-2052642.png"
-            alt=""
-            width={100}
-            height={100}
-            sizes="100vw"
-            className="w-full"
-            priority
-          />
-        </div> */}
       </div>
     </div>
   )

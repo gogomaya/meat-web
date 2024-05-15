@@ -1,16 +1,17 @@
 import {loginCheck} from "@/app/admin/page"
 import MainLayout from "@/app/main-layout"
+import {SearchResult} from "./search"
 
-const Home = async () => {
+const Search = async () => {
   const {user} = await loginCheck(false)
   return (
     <MainLayout user={user}>
       <div className="w-full">
-        <h2>검색결과</h2>
-
+        <h2 className="flex justify-center"><strong>검색결과</strong></h2>
+        <SearchResult searchResults={[]} />
       </div>
     </MainLayout>
   )
 }
 
-export default Home
+export default Search

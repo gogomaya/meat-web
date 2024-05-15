@@ -14,6 +14,7 @@ export const CartsDetailContent = () => {
     {id: 3, src: "12.jpg", title: "세 번째 상품", price: 49000, quantity: 1}
   ])
   const [totalAmount, setTotalAmount] = useState(calculateTotalAmount(Posts))
+  const [selectedProducts, setSelectedProducts] = useState<any[]>([])
 
   useEffect(() => {
     const allIds = Posts.map((post) => post.id)
@@ -24,9 +25,9 @@ export const CartsDetailContent = () => {
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>, id: any) => {
     const isChecked = event.target.checked
     if (isChecked) {
-      setSelectedIds([...selectedIds, id]) // 선택된 상품의 id 추가
+      setSelectedIds([...selectedIds, id])
     } else {
-      setSelectedIds(selectedIds.filter((selectedId) => selectedId !== id)) // 선택된 상품의 id 제거
+      setSelectedIds(selectedIds.filter((selectedId) => selectedId !== id))
     }
     updateTotalAmount(id, isChecked)
   }
@@ -75,6 +76,11 @@ export const CartsDetailContent = () => {
   function calculateTotalAmount(posts: any[]) {
     return posts.reduce((acc, post) => acc + post.price * post.quantity, 0)
   }
+
+  useEffect(() => {
+    const selectedProductsData = Posts.filter((post) => selectedIds.includes(post.id))
+    setSelectedProducts(selectedProductsData)
+  }, [selectedIds, Posts])
 
   return (
     <>
@@ -173,7 +179,14 @@ export const CartsDetailContent = () => {
       </div>
       <div className="flex flex-col items-end md:flex-row md:items-center md:justify-end md:space-x-4">
         <Link href="/order">
-          <Button variant="contained" color="secondary" className="btn">
+          <Button
+            variant="contained"
+            color="secondary"
+            className="btn"
+            onClick={() => {
+              console.log(selectedProducts)
+            }}
+          >
             선택상품만 결제하기
           </Button>
         </Link>

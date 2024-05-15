@@ -17,9 +17,8 @@ const Home = async () => {
   }
   const {products_best} = productsHomeResponse.data
   return (
-    <MainLayout user={user}>
+    <><HomeSwiper /><MainLayout user={user}>
       <div className="w-full">
-        <HomeSwiper />
         <HomeKeyPoint />
         <HomeDunDunRice />
         <HomeIntro />
@@ -28,9 +27,9 @@ const Home = async () => {
         ) : null}
         <HomeBestReview />
         <HomeBrandStory />
-        <HomeYoutube/>
+        <HomeYoutube />
       </div>
-    </MainLayout>
+    </MainLayout></>
   )
 }
 
