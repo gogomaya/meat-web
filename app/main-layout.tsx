@@ -167,7 +167,7 @@ const MegaMenu = () => {
           <Link href="/boards">고객센터</Link>
           <ol id="submenu" className={`w- absolute border border-black ${menu.board ? "block" : "hidden"} bg-white py-2 rounded-lg shadow-md text-sm font-semibold`}>
             <li><Link href="#">공지사항</Link></li>
-            <li><Link href="#">자주하는질문</Link></li>
+            <li><Link href="/faq">자주하는질문</Link></li>
           </ol>
         </li>
       </ul>
@@ -290,7 +290,7 @@ const MainMobileMenu = () => {
                 <AccordionDetails>
                   <ol>
                     <li><Link href="#">공지사항</Link></li>
-                    <li><Link href="#">자주하는질문</Link></li>
+                    <li><Link href="/faq">자주하는질문</Link></li>
                   </ol>
                 </AccordionDetails>
               </Accordion>
