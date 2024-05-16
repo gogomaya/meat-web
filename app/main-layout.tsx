@@ -290,7 +290,7 @@ const MainMobileMenu = () => {
                 <AccordionDetails>
                   <ol>
                     <li><Link href="#">공지사항</Link></li>
-                    <li><Link href="#">자주하는질문</Link></li>
+                    <li><Link href="/faq">자주하는질문</Link></li>
                   </ol>
                 </AccordionDetails>
               </Accordion>
