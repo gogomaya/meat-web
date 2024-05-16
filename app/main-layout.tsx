@@ -356,10 +356,9 @@ const MainBottom = () => (
     <section className="mt-8 p-5 bg-gray-200 text-sm flex flex-col-reverse md:flex-row items-start justify-between">
       <div className="mb-4 md:mb-0">
         <ul className="flex flex-col md:flex-row gap-3">
-          <li>회사소개</li>
-          <li>이용안내</li>
-          <li>이용약관</li>
-          <li>개인정보처리방침</li>
+          <Link href={"https://smartstore.naver.com/hansolmeat1534"}>회사소개</Link>
+          <Link href={"/policy"}>이용약관</Link>
+          <Link href={"/policy"}>개인정보처리방침</Link>
         </ul>
         <h1 className="mt-4 mb-4"><strong>(주)한솔축산</strong></h1>
         <ul className="flex flex-col md:flex-row gap-3">
