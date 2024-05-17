@@ -13,6 +13,9 @@ import HelpOutlineIcon from "@mui/icons-material/HelpOutline"
 import Users from "@/components/users/users"
 import {User} from "@/types/usersTypes"
 import {commonServices} from "@/services/commonServices"
+import HeadsetIcon from "@mui/icons-material/Headset"
+import DraftsIcon from "@mui/icons-material/Drafts"
+import HomeIcon from "@mui/icons-material/Home"
 
 const MainLayout = ({
   children,
@@ -333,17 +336,7 @@ const MainBottom = () => {
       <div className="container">
         <div className="footer-content-wrap">
           <div className="footer-top-wrap">
-            <Link href="/">
-              <Image
-                src="/images/logo.png"
-                alt=""
-                width={100}
-                height={100}
-                sizes="100vw"
-                className="md:w-16"
-                priority
-              />
-            </Link>
+            <Link href="/"></Link>
             <div className="footer-top-details">한솔축산은 직접 작업하여 적은 유통마진으로 한우 1++ no.9과 한돈을 판매합니다.</div>
           </div>
           <div className="footer-divider"></div>
@@ -375,37 +368,35 @@ const MainBottom = () => {
               </div>
             </div>
             <div className="footer-single-menu-wrap cta">
-              <div className="footer-cta-wrap">
-                <div className="footer-cta-form w-form">
-                  <form id="email-form" name="email-form" data-name="Email Form" method="get" className="footer-form" data-wf-page-id="65746c3ec4e2ecd7e69d8809" data-wf-element-id="ab3fd5ff-5fbd-71da-31b2-49d1042be738">
-                    <input className="cta-email-input w-input" maxLength="256" name="email-2" data-name="Email 2" placeholder="your email address" type="email" id="email-2" required=""/>
-                    <input type="submit" data-wait="Please wait..." className="cta-submit-button w-button" value="submit now"/>
-                  </form>
-                  <div className="w-form-done">
-                    <div>Thank you! Your submission has been received!</div>
-                  </div>
-                  <div className="w-form-fail">
-                    <div>Oops! Something went wrong while submitting the form.</div>
-                  </div>
-                </div>
+              <div className="footer-cta-wrap flex justify-center item-center">
+                <Link href="/">
+                  <Image
+                    src="/images/logo.png"
+                    alt=""
+                    width={150}
+                    height={150}
+                    sizes="100vw"
+                    className="md:w-16"
+                    priority
+                  />
+                </Link>
               </div>
               <div className="footer-divider cta"></div>
               <div className="footer-location-wrap">
                 <div className="footer-location-single-wrap">
-                  {/* <img src="https://assets-global.website-files.com/6564340f7b64a3bebf176e50/65670b0816e4144c2373face_phone-ringing.png" loading="lazy" alt="" className="footer-details-icon"/> */}
-                  <div className="footer-details-text">(239) 555-0108</div>
+                  <HeadsetIcon/>
+                  <div className="footer-details-text">(042) 471-1534</div>
                 </div>
                 <div className="footer-location-single-wrap">
-                  {/* <img src="https://assets-global.website-files.com/6564340f7b64a3bebf176e50/65671a38a46461a78610ae07_Message%20Icon.png" loading="lazy" alt="" className="footer-details-icon"/> */}
-                  <div className="footer-details-text">info.zaisop129@gmail.com</div>
+                  <DraftsIcon />
+                  <div className="footer-details-text">whddlr1@naver.com</div>
                 </div>
                 <div className="footer-location-single-wrap">
-                  {/* <img src="https://assets-global.website-files.com/6564340f7b64a3bebf176e50/65671a9e1165e8b8b047f266_Pin.png" loading="lazy" alt="" className="footer-details-icon"/> */}
-                  <div className="footer-details-text">4140 Parker Rd. Allentown, New Mexico 31134</div>
+                  <HomeIcon />
+                  <div className="footer-details-text">대전 서구 둔산3동 1862번지 1층</div>
                 </div>
                 <div className="footer-location-single-wrap">
-                  <img src="https://assets-global.website-files.com/6564340f7b64a3bebf176e50/65671a9e1165e8b8b047f266_Pin.png" loading="lazy" alt="" className="footer-details-icon"/>
-                  <div className="footer-details-text">2972 Westheimer Rd. Santa Ana, Illinois 85486</div>
+                  <div className="footer-details-text">대표자 | 한승구, 박수현</div>
                 </div>
               </div>
             </div>
