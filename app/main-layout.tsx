@@ -50,7 +50,7 @@ const MainLayout = ({
           </Badge>
         </Link>
       </header>
-      <main className="pt-8 md:pt-16">{children}</main>
+      <main className="pt-8 md:pt-16 bg-[#FFF5E1]">{children}</main>
       <CsIcon />
       <MainBottom />
     </div>
