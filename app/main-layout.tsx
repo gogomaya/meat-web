@@ -24,7 +24,7 @@ const MainLayout = ({
   return (
     <div className="max-w-screen-xl mx-auto">
       <header id="header" className="fixed top-0 z-20 bg-white w-full max-w-screen-xl flex justify-center items-center px-4"
-        style={{backgroundColor: "rgba(255, 255, 255, 0.88)"}}>
+        style={{backgroundColor: "rgba(255, 245, 225, 0.88)"}}>
         <MainMobileMenu />
         <Link href="/">
           <Image
@@ -49,7 +49,6 @@ const MainLayout = ({
         </Link>
       </header>
       <main className="pt-8 md:pt-16">{children}</main>
-      {/* CS 관련 아이콘 */}
       <CsIcon />
       <MainBottom />
     </div>
@@ -76,14 +75,26 @@ export const CsIcon = () => {
     }
   }, [])
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    })
+  }
+
   return (
-    <div className={`fixed bottom-10 right-10 gap-2 flex flex-col ${isVisible ? "visible" : "hidden"}`}>
+    <div className={`fixed bottom-8 right-8 gap-2 flex flex-col justify-center item-center ${isVisible ? "visible" : "hidden"}`}>
+      <button onClick={scrollToTop} className="bg-gray-200 p-1 rounded-full flex items-center justify-center w-15 h-15">
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
+      </button>
       <Link href="https://pf.kakao.com/_anFaG">
         <Image
           src="/images/quick_kakao.png"
           alt=""
-          width={32}
-          height={32}
+          width={40}
+          height={40}
           sizes="100vw"
           className="md:w-16"
           priority
@@ -93,8 +104,8 @@ export const CsIcon = () => {
         <Image
           src="/images/quick_shipping.png"
           alt=""
-          width={32}
-          height={32}
+          width={40}
+          height={40}
           sizes="100vw"
           className="md:w-16"
           priority
@@ -215,7 +226,7 @@ const MainMobileMenu = () => {
       PaperProps={{sx: {width: "100%"}}}
     >
       <Box className="p-8">
-        <nav className="flex items-center">
+        <nav className="flex items-center gap-3">
           <Link href="/users/login">로그인</Link>
           <Link href="/users/sign-up">회원가입</Link>
           <span className="flex-1"></span>
@@ -225,7 +236,7 @@ const MainMobileMenu = () => {
         </nav>
         <SearchBar />
         <nav>
-          <ul>
+          <ul className="flex items-center">
             <li>
               <Accordion>
                 <AccordionSummary>
@@ -316,75 +327,93 @@ const SearchBar = () => {
   )
 }
 
-const MainBottom = () => (
-  <footer className="mt-4">
-    <section className="px-1 py-2">
-      <div className="flex mt-4 flex-col md:flex-row gap-5">
-        <div className="w-full md:w-[50%] bg-gray-200 rounded-lg p-4">
-          <div className="flex flex-col md:flex-row items-center justify-center gap-3">
-            <div>
-              <h3 className="text-center">한솔축산<br></br>서비스 안내</h3>
-              <a href="tel:1588-8888" className="text-center block">1588-8888</a>
+const MainBottom = () => {
+  return (
+    <section className="section footer">
+      <div className="container">
+        <div className="footer-content-wrap">
+          <div className="footer-top-wrap">
+            <Link href="/">
+              <Image
+                src="/images/logo.png"
+                alt=""
+                width={100}
+                height={100}
+                sizes="100vw"
+                className="md:w-16"
+                priority
+              />
+            </Link>
+            <div className="footer-top-details">한솔축산은 직접 작업하여 적은 유통마진으로 한우 1++ no.9과 한돈을 판매합니다.</div>
+          </div>
+          <div className="footer-divider"></div>
+          <div className="footer-menu-wrap">
+            <div className="footer-single-menu-wrap _1">
+              <div className="footer-menu-link-wrap">
+                <a href="https://smartstore.naver.com/hansolmeat1534" className="footer-menu-link">회사 소개</a>
+                <Link className="footer-menu-link" href={"/policy"}>이용약관</Link>
+                <Link className="footer-menu-link" href={"/policy"}>개인정보처리방침</Link>
+              </div>
             </div>
-            <HelpOutlineIcon className="w-12 h-12"/>
-          </div>
-          <p className="text-center">운영시간</p>
-          <p className="text-center">(점심시간 12:00 ~ 13:00)</p>
-          <div className="flex justify-center item-center gap-2 mt-2">
-            <button className="w-full lg:w-[20.3%] bg-white rounded-lg text-center">1:1문의</button>
-            <button className="w-full lg:w-[20.3%] bg-white rounded-lg text-center">자주하는 질문</button>
-          </div>
-        </div>
-        <div className="w-full md:w-[50%] bg-gray-300 rounded-lg p-4 mt-4 md:mt-0">
-          <div className="flex flex-col md:flex-row items-center justify-center gap-3">
-            <div>
-              <h3 className="text-center">고객센터</h3>
-              <a href="tel:1588-8888" className="text-center block">1588-8888</a>
+            <div className="footer-single-menu-wrap">
+              <div className="footer-pages-menu-link-wrap">
+                <div className="footer-menu-link-wrap">
+                  <a href="https://zaisop.webflow.io/product/meat-balls" className="footer-menu-link">Product single</a>
+                  <a href="/inner-pages/blog" className="footer-menu-link">Blog</a>
+                  <a href="https://zaisop.webflow.io/blogs/butcher-is-a-person-who-specializes-in-cutting-preparing-selling-meats-butchers-are-skilled" className="footer-menu-link">blog single</a>
+                  <a href="/inner-pages/team" className="footer-menu-link">team</a>
+                  <a href="https://zaisop.webflow.io/teams/kagiso-ramos" className="footer-menu-link">team single</a>
+                  <a href="/inner-pages/services" className="footer-menu-link">services</a>
+                </div>
+                <div className="footer-menu-link-wrap">
+                  <a href="https://zaisop.webflow.io/services/veal-entrecote" className="footer-menu-link">service single</a>
+                  <a href="/authentication/sign-in" className="footer-menu-link">sign in</a>
+                  <a href="/authentication/sign-up" className="footer-menu-link">Sign Up</a>
+                  <a href="/authentication/forgot-password" className="footer-menu-link">forgot password</a>
+                  <a href="/authentication/reset-password" className="footer-menu-link">reset password</a>
+                </div>
+              </div>
             </div>
-            <SupportAgentIcon className="w-12 h-12" />
+            <div className="footer-single-menu-wrap cta">
+              <div className="footer-cta-wrap">
+                <div className="footer-cta-form w-form">
+                  <form id="email-form" name="email-form" data-name="Email Form" method="get" className="footer-form" data-wf-page-id="65746c3ec4e2ecd7e69d8809" data-wf-element-id="ab3fd5ff-5fbd-71da-31b2-49d1042be738">
+                    <input className="cta-email-input w-input" maxLength="256" name="email-2" data-name="Email 2" placeholder="your email address" type="email" id="email-2" required=""/>
+                    <input type="submit" data-wait="Please wait..." className="cta-submit-button w-button" value="submit now"/>
+                  </form>
+                  <div className="w-form-done">
+                    <div>Thank you! Your submission has been received!</div>
+                  </div>
+                  <div className="w-form-fail">
+                    <div>Oops! Something went wrong while submitting the form.</div>
+                  </div>
+                </div>
+              </div>
+              <div className="footer-divider cta"></div>
+              <div className="footer-location-wrap">
+                <div className="footer-location-single-wrap">
+                  {/* <img src="https://assets-global.website-files.com/6564340f7b64a3bebf176e50/65670b0816e4144c2373face_phone-ringing.png" loading="lazy" alt="" className="footer-details-icon"/> */}
+                  <div className="footer-details-text">(239) 555-0108</div>
+                </div>
+                <div className="footer-location-single-wrap">
+                  {/* <img src="https://assets-global.website-files.com/6564340f7b64a3bebf176e50/65671a38a46461a78610ae07_Message%20Icon.png" loading="lazy" alt="" className="footer-details-icon"/> */}
+                  <div className="footer-details-text">info.zaisop129@gmail.com</div>
+                </div>
+                <div className="footer-location-single-wrap">
+                  {/* <img src="https://assets-global.website-files.com/6564340f7b64a3bebf176e50/65671a9e1165e8b8b047f266_Pin.png" loading="lazy" alt="" className="footer-details-icon"/> */}
+                  <div className="footer-details-text">4140 Parker Rd. Allentown, New Mexico 31134</div>
+                </div>
+                <div className="footer-location-single-wrap">
+                  <img src="https://assets-global.website-files.com/6564340f7b64a3bebf176e50/65671a9e1165e8b8b047f266_Pin.png" loading="lazy" alt="" className="footer-details-icon"/>
+                  <div className="footer-details-text">2972 Westheimer Rd. Santa Ana, Illinois 85486</div>
+                </div>
+              </div>
+            </div>
           </div>
-          <p className="text-center">운영시간</p>
-          <p className="text-center">(점심시간 12:00 ~ 13:00)</p>
-          <div className="flex justify-center item-center gap-2 mt-2">
-            <button className="w-full lg:w-[20.3%] bg-white rounded-lg text-center">1:1문의</button>
-            <button className="w-full lg:w-[20.3%] bg-white rounded-lg text-center">자주하는 질문</button>
-          </div>
+          <div className="footer-divider"></div>
         </div>
       </div>
     </section>
-    <Divider className="mt-4" sx={{border:"1px solid secondary"}}/>
-    <section className="mt-8 p-5 bg-gray-200 text-sm flex flex-col-reverse md:flex-row items-start justify-between">
-      <div className="mb-4 md:mb-0">
-        <ul className="flex flex-col md:flex-row gap-3">
-          <Link href={"https://smartstore.naver.com/hansolmeat1534"}>회사소개</Link>
-          <Link href={"/policy"}>이용약관</Link>
-          <Link href={"/policy"}>개인정보처리방침</Link>
-        </ul>
-        <h1 className="mt-4 mb-4"><strong>(주)한솔축산</strong></h1>
-        <ul className="flex flex-col md:flex-row gap-3">
-          <li>대전 서구 둔산3동 1862번지 1층</li>
-          <li><strong>대표자 |</strong> 한승구, 박수현</li>
-          <li><strong>사업자등록번호 |</strong> 405-98-61344</li>
-        </ul>
-        <ul className="flex flex-col md:flex-row gap-3">
-          <li>이메일 whddlrs1@naver.com</li>
-          <a href="tel:042-471-1534">
-            042-471-1534
-          </a>
-        </ul>
-        <p className="mb-3">© 2024 한솔. All right reserved.</p>
-      </div>
-      <div>
-        <Link href="/">
-          <Image
-            src="/images/logo.png"
-            alt="Logo"
-            width={150}
-            height={90}
-            sizes="100vw"
-          />
-        </Link>
-      </div>
-    </section>
-  </footer>
-)
+  )
+}
+
