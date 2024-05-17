@@ -8,14 +8,13 @@ import WorkOutlineIcon from "@mui/icons-material/WorkOutline"
 import CloseIcon from "@mui/icons-material/Close"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 import {Accordion, AccordionDetails, AccordionSummary, Badge, Box, Divider, Drawer, IconButton, InputBase, Menu, MenuList, Typography} from "@mui/material"
-import SupportAgentIcon from "@mui/icons-material/SupportAgent"
-import HelpOutlineIcon from "@mui/icons-material/HelpOutline"
 import Users from "@/components/users/users"
 import {User} from "@/types/usersTypes"
 import {commonServices} from "@/services/commonServices"
 import HeadsetIcon from "@mui/icons-material/Headset"
 import DraftsIcon from "@mui/icons-material/Drafts"
 import HomeIcon from "@mui/icons-material/Home"
+import ExpandLessIcon from "@mui/icons-material/ExpandLess"
 
 const MainLayout = ({
   children,
@@ -87,10 +86,8 @@ export const CsIcon = () => {
 
   return (
     <div className={`fixed bottom-8 right-8 gap-2 flex flex-col justify-center item-center ${isVisible ? "visible" : "hidden"}`}>
-      <button onClick={scrollToTop} className="bg-gray-200 p-1 rounded-full flex items-center justify-center w-15 h-15">
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-        </svg>
+      <button onClick={scrollToTop} className="bg-[#FFF5E1] p-1 rounded-full flex items-center justify-center w-16 h-16">
+        <ExpandLessIcon style={{fontSize: "32px"}} />
       </button>
       <Link href="https://pf.kakao.com/_anFaG">
         <Image
@@ -331,6 +328,13 @@ const SearchBar = () => {
 }
 
 const MainBottom = () => {
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    })
+  }
   return (
     <section className="section footer">
       <div className="container">
@@ -369,17 +373,17 @@ const MainBottom = () => {
             </div>
             <div className="footer-single-menu-wrap cta">
               <div className="footer-cta-wrap flex justify-end item-center">
-                <Link href="/">
-                  <Image
-                    src="/images/logo.png"
-                    alt=""
-                    width={150}
-                    height={150}
-                    sizes="100vw"
-                    className="md:w-16"
-                    priority
-                  />
-                </Link>
+                <Image
+                  src="/images/logo.png"
+                  alt=""
+                  width={150}
+                  height={150}
+                  sizes="100vw"
+                  style={{cursor: "pointer"}}
+                  className="md:w-16"
+                  priority
+                  onClick={scrollToTop}
+                />
               </div>
               <div className="footer-divider cta"></div>
               <div className="footer-location-wrap">
