@@ -410,7 +410,10 @@ const MainBottom = () => {
                   </Link>
                 </div>
                 <div className="footer-location-single-wrap">
-                  <div className="footer-details-text">대표자 | 한승구, 박수현</div>
+                  <div className="footer-details-text">사업자등록번호 405-98-61344</div>
+                </div>
+                <div className="footer-location-single-wrap">
+                  <div className="footer-details-text">대표자 한승구, 박수현</div>
                 </div>
               </div>
             </div>
