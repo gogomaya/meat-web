@@ -24,8 +24,8 @@ const MainLayout = ({
   user: User
 }) => {
   return (
-    <div className="max-w-screen-xl mx-auto">
-      <header id="header" className="fixed top-0 z-20 bg-white w-full max-w-screen-xl flex justify-center items-center px-4"
+    <div className="mx-auto">
+      <header id="header" className="fixed top-0 z-20 bg-white w-full flex justify-center items-center px-4"
         style={{backgroundColor: "rgba(255, 245, 225, 0.88)"}}>
         <MainMobileMenu />
         <Link href="/">
@@ -89,7 +89,7 @@ export const CsIcon = () => {
       <button onClick={scrollToTop} className="bg-[#FFF5E1] p-1 rounded-full flex items-center justify-center w-16 h-16">
         <ExpandLessIcon style={{fontSize: "32px"}} />
       </button>
-      <Link href="https://pf.kakao.com/_anFaG">
+      <Link href="http://pf.kakao.com/_NZDHK">
         <Image
           src="/images/quick_kakao.png"
           alt=""
