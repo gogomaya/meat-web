@@ -5,7 +5,6 @@ import HomeSwiper from "./swiper"
 import {HomeDunDunRice, HomeBestMenu, HomeBestReview, HomeBrandStory, HomeKeyPoint, HomeYoutube, HomeIntro} from "./home"
 import {productsServices} from "@/services/productsServices"
 import ErrorPage from "@/app/error"
-import {preLoader} from "./home"
 
 const Home = async () => {
   const {user} = await loginCheck(false)
@@ -31,7 +30,6 @@ const Home = async () => {
         <HomeBestReview />
         <HomeBrandStory />
         <HomeYoutube />
-        <preLoader />
       </div>
     </MainLayout>
   )
