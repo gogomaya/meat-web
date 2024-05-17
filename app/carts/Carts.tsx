@@ -1,10 +1,9 @@
 "use client"
 
-import {ChangeEvent, useEffect, useState} from "react"
-import IconButton from "@mui/material/IconButton"
+import {Button, Checkbox, Divider, IconButton, Typography, Dialog, DialogTitle, DialogActions} from "@mui/material"
 import DeleteIcon from "@mui/icons-material/Delete"
-import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Link, Typography} from "@mui/material"
 import Image from "next/image"
+import {useState, useEffect} from "react"
 
 export const CartsDetailContent = () => {
   const [selectedIds, setSelectedIds] = useState<number[]>([])
@@ -15,12 +14,18 @@ export const CartsDetailContent = () => {
   ])
   const [totalAmount, setTotalAmount] = useState(calculateTotalAmount(Posts))
   const [selectedProducts, setSelectedProducts] = useState<any[]>([])
+  const [open, setOpen] = useState(false)
 
   useEffect(() => {
     const allIds = Posts.map((post) => post.id)
     setSelectedIds(allIds)
     calculateTotalAmount(Posts)
   }, [Posts])
+
+  useEffect(() => {
+    const selectedProductsData = Posts.filter((post) => selectedIds.includes(post.id))
+    setSelectedProducts(selectedProductsData)
+  }, [selectedIds, Posts])
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>, id: any) => {
     const isChecked = event.target.checked
@@ -53,8 +58,6 @@ export const CartsDetailContent = () => {
     setOpen(false)
   }
 
-  const [open, setOpen] = useState(false)
-
   const handleOpenDialog = () => {
     setOpen(true)
   }
@@ -76,11 +79,6 @@ export const CartsDetailContent = () => {
   function calculateTotalAmount(posts: any[]) {
     return posts.reduce((acc, post) => acc + post.price * post.quantity, 0)
   }
-
-  useEffect(() => {
-    const selectedProductsData = Posts.filter((post) => selectedIds.includes(post.id))
-    setSelectedProducts(selectedProductsData)
-  }, [selectedIds, Posts])
 
   return (
     <>
@@ -115,10 +113,7 @@ export const CartsDetailContent = () => {
                   {Posts.map((post) => (
                     <tr key={post.id}>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <input
-                          type="checkbox"
-                          name="checkbox"
-                          id={`checkbox-${post.id}`}
+                        <Checkbox
                           onChange={(event) => handleCheckboxChange(event, post.id)}
                           checked={selectedIds.includes(post.id)}
                           style={{width: "20px", height: "20px"}}
@@ -177,19 +172,17 @@ export const CartsDetailContent = () => {
           </Typography>
         </div>
       </div>
-      <div className="flex flex-col items-end md:flex-row md:items-center md:justify-end md:space-x-4">
-        <Link href="/order">
-          <Button
-            variant="contained"
-            color="secondary"
-            className="btn"
-            onClick={() => {
-              console.log(selectedProducts)
-            }}
-          >
-            선택상품만 결제하기
-          </Button>
-        </Link>
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between md:space-x-4">
+        <Button
+          variant="contained"
+          color="secondary"
+          className="btn"
+          onClick={() => {
+            console.log(selectedProducts)
+          }}
+        >
+          선택상품만 결제하기
+        </Button>
         <div>
           <Button variant="contained" color="secondary" className="btn" onClick={handleOpenDialog}>
             장바구니 비우기
@@ -213,11 +206,9 @@ export const CartsDetailContent = () => {
         </div>
       </div>
       <div className="flex flex-col items-end space-y-4 py-3">
-        <Link href="/order">
-          <Button variant="contained" color="primary" className="btn">
-            바로구매
-          </Button>
-        </Link>
+        <Button variant="contained" color="primary" className="btn">
+          바로구매
+        </Button>
       </div>
     </>
   )
