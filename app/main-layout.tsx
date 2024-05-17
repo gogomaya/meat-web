@@ -85,7 +85,7 @@ export const CsIcon = () => {
   }
 
   return (
-    <div className={`fixed bottom-8 right-8 gap-2 flex flex-col justify-center item-center ${isVisible ? "visible" : "hidden"}`}>
+    <div className={`fixed bottom-8 z-1000 right-8 gap-2 flex flex-col justify-center item-center ${isVisible ? "visible" : "hidden"}`}>
       <button onClick={scrollToTop} className="bg-[#FFF5E1] p-1 rounded-full flex items-center justify-center w-16 h-16">
         <ExpandLessIcon style={{fontSize: "32px"}} />
       </button>
