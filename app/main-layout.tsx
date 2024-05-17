@@ -368,7 +368,7 @@ const MainBottom = () => {
               </div>
             </div>
             <div className="footer-single-menu-wrap cta">
-              <div className="footer-cta-wrap flex justify-center item-center">
+              <div className="footer-cta-wrap flex justify-end item-center">
                 <Link href="/">
                   <Image
                     src="/images/logo.png"
@@ -384,16 +384,26 @@ const MainBottom = () => {
               <div className="footer-divider cta"></div>
               <div className="footer-location-wrap">
                 <div className="footer-location-single-wrap">
-                  <HeadsetIcon/>
-                  <div className="footer-details-text">(042) 471-1534</div>
+                  <a href="tel:+82424711534">
+                    <HeadsetIcon/>
+                  </a>
+                  <a href="tel:+82424711534">
+                    <div className="footer-details-text">(042) 471-1534</div>
+                  </a>
                 </div>
                 <div className="footer-location-single-wrap">
-                  <DraftsIcon />
-                  <div className="footer-details-text">whddlr1@naver.com</div>
+                  <a href="mailto:whddlr1@naver.com"><DraftsIcon /></a>
+                  <div className="footer-details-text">
+                    <a href="mailto:whddlr1@naver.com">whddlr1@naver.com</a>
+                  </div>
                 </div>
                 <div className="footer-location-single-wrap">
-                  <HomeIcon />
-                  <div className="footer-details-text">대전 서구 둔산3동 1862번지 1층</div>
+                  <Link href="https://map.naver.com/p/entry/place/31221432?c=10.18,0,0,0,dh">
+                    <HomeIcon />
+                  </Link>
+                  <Link href="https://map.naver.com/p/entry/place/31221432?c=10.18,0,0,0,dh">
+                    <div className="footer-details-text">대전 서구 둔산3동 1862번지 1층</div>
+                  </Link>
                 </div>
                 <div className="footer-location-single-wrap">
                   <div className="footer-details-text">대표자 | 한승구, 박수현</div>
