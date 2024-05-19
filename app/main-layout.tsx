@@ -23,6 +23,19 @@ const MainLayout = ({
   children: React.ReactNode
   user: User
 }) => {
+  const [cartProductsLength, setCartProductsLength] = useState(0)
+  useEffect(() => {
+    const getCartProducts = () => {
+      const cartProducts = JSON.parse(localStorage.getItem("cartProducts") || "[]")
+      setCartProductsLength(cartProducts.length)
+    }
+    getCartProducts()
+    window.onmessage = (event) => {
+      if (event.data.cartProductsLength) {
+        getCartProducts()
+      }
+    }
+  }, [])
   return (
     <div className="mx-auto">
       <header id="header" className="fixed top-0 z-20 bg-white w-full flex justify-center items-center px-4"
@@ -45,7 +58,7 @@ const MainLayout = ({
         </IconButton>
         <Users user={user} />
         <Link href="/carts">
-          <Badge badgeContent={4} color="primary">
+          <Badge badgeContent={cartProductsLength} color="primary">
             <WorkOutlineIcon className="md:w-8 md:h-8" />
           </Badge>
         </Link>
