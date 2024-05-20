@@ -1,85 +1,30 @@
 "use client"
-
-import {Button, Checkbox, Divider, IconButton, Typography, Dialog, DialogTitle, DialogActions} from "@mui/material"
+import {useRouter} from "next/navigation"
+import {Button, Checkbox, Divider, IconButton, Typography, Dialog, DialogTitle, DialogActions, Skeleton} from "@mui/material"
 import DeleteIcon from "@mui/icons-material/Delete"
 import Image from "next/image"
 import {useState, useEffect} from "react"
+import {CartProduct} from "@/types/productsTypes"
+import {useForm} from "react-hook-form"
+import _ from "lodash"
 
 export const CartsDetailContent = () => {
-  const [selectedIds, setSelectedIds] = useState<number[]>([])
-  const [Posts, setPosts] = useState([
-    {id: 1, src: "12.jpg", title: "첫 번째 상품", price: 69000, quantity: 1},
-    {id: 2, src: "12.jpg", title: "두 번째 상품", price: 39000, quantity: 1},
-    {id: 3, src: "12.jpg", title: "세 번째 상품", price: 49000, quantity: 1}
-  ])
-  const [totalAmount, setTotalAmount] = useState(calculateTotalAmount(Posts))
-  const [selectedProducts, setSelectedProducts] = useState<any[]>([])
+  const router = useRouter()
   const [open, setOpen] = useState(false)
-
-  useEffect(() => {
-    const allIds = Posts.map((post) => post.id)
-    setSelectedIds(allIds)
-    calculateTotalAmount(Posts)
-  }, [Posts])
-
-  useEffect(() => {
-    const selectedProductsData = Posts.filter((post) => selectedIds.includes(post.id))
-    setSelectedProducts(selectedProductsData)
-  }, [selectedIds, Posts])
-
-  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>, id: any) => {
-    const isChecked = event.target.checked
-    if (isChecked) {
-      setSelectedIds([...selectedIds, id])
-    } else {
-      setSelectedIds(selectedIds.filter((selectedId) => selectedId !== id))
+  const cartProductsForm = useForm<{cartProducts: CartProduct[]}>({
+    defaultValues: {
+      cartProducts: null as unknown as CartProduct[]
     }
-    updateTotalAmount(id, isChecked)
+  })
+  const cartProducts = cartProductsForm.getValues("cartProducts")
+  const {register} = cartProductsForm
+  cartProductsForm.watch("cartProducts")
+  useEffect(() => {
+    cartProductsForm.setValue("cartProducts", JSON.parse(localStorage.getItem("cartProducts") || "[]"))
+  }, [cartProductsForm])
+  if (cartProducts === null) {
+    return <Skeleton variant="rectangular" animation="wave" width="100%" height={300} />
   }
-
-  const updateTotalAmount = (id: number, isChecked: boolean) => {
-    const post = Posts.find((post) => post.id === id)
-    if (post) {
-      const price = isChecked ? post.price : -post.price
-      setTotalAmount(totalAmount + price)
-    }
-  }
-
-  const handleDelete = (id: any) => {
-    const updatedPosts = Posts.filter((post) => post.id !== id)
-    setPosts(updatedPosts)
-    setTotalAmount(calculateTotalAmount(updatedPosts))
-    updateTotalAmount(id, false)
-  }
-
-  const handleEmptyCart = () => {
-    setPosts([])
-    setTotalAmount(0)
-    setOpen(false)
-  }
-
-  const handleOpenDialog = () => {
-    setOpen(true)
-  }
-
-  const handleCloseDialog = () => {
-    setOpen(false)
-  }
-
-  const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>, id: number) => {
-    const newQuantity = parseInt(event.target.value)
-    const updatedPosts = Posts.map((post) => ({
-      ...post,
-      quantity: post.id === id ? newQuantity : post.quantity
-    }))
-    setPosts(updatedPosts)
-    setTotalAmount(calculateTotalAmount(updatedPosts))
-  }
-
-  function calculateTotalAmount(posts: any[]) {
-    return posts.reduce((acc, post) => acc + post.price * post.quantity, 0)
-  }
-
   return (
     <>
       <div className="flex flex-col py-4">
@@ -105,62 +50,92 @@ export const CartsDetailContent = () => {
                       수량
                     </th>
                     <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      총금액
+                    </th>
+                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       삭제
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {Posts.map((post) => (
-                    <tr key={post.id}>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <Checkbox
-                          onChange={(event) => handleCheckboxChange(event, post.id)}
-                          checked={selectedIds.includes(post.id)}
-                          style={{width: "20px", height: "20px"}}
-                          className="rounded border-gray-300 focus:ring-indigo-500 h-4 w-4 text-indigo-600"
-                        />
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">{post.id}</div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex items-center">
-                          <div className="flex-shrink-0 h-12 w-12">
-                            <Image
-                              src={`/images/${post.src}`}
-                              alt="상품 이미지"
-                              width={48}
-                              height={48}
-                              className="rounded"
-                            />
-                          </div>
-                          <div className="ml-4">
-                            <Typography variant="body1" gutterBottom>{post.title}</Typography>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <Typography variant="body1" gutterBottom>{(post.price * post.quantity).toLocaleString()}원</Typography>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex items-center">
-                          <input
-                            type="number"
-                            value={post.quantity}
-                            onChange={(event) => handleQuantityChange(event, post.id)}
-                            className="w-16 p-1 border border-gray-300 rounded-md text-center"
-                            min="1"
-                          />
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <IconButton onClick={() => handleDelete(post.id)} color="secondary">
-                          <DeleteIcon />
-                        </IconButton>
+                {cartProducts.length === 0 ? (
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    <tr>
+                      <td colSpan={7} className="px-6 py-12 whitespace-nowrap">
+                        <div className="flex justify-center items-center">장바구니가 비었습니다.</div>
                       </td>
                     </tr>
-                  ))}
-                </tbody>
+                  </tbody>
+                ) : (
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {cartProducts.map((cartProduct, index) => (
+                      <tr key={cartProduct.product.product_pk}>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <Checkbox
+                            {...register(`cartProducts.${index}.checked`)}
+                            checked={cartProduct.checked}
+                            style={{width: "20px", height: "20px"}}
+                            className="rounded border-gray-300 focus:ring-indigo-500 h-4 w-4 text-indigo-600"
+                            onBlur={() => {
+                              localStorage.setItem("cartProducts", JSON.stringify(cartProducts))
+                            }}
+                          />
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-gray-900">{index + 1}</div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center">
+                            <div className="flex-shrink-0 h-12 w-12">
+                              <Image
+                                src={`/${process.env.NEXT_PUBLIC_UPLOAD_IMAGES}/products/${encodeURIComponent(String(cartProduct.product.image_file_name))}`}
+                                alt="상품 이미지"
+                                width={48}
+                                height={48}
+                                className="rounded"
+                              />
+                            </div>
+                            <div className="ml-4">
+                              <Typography variant="body1" gutterBottom>{cartProduct.product.name}</Typography>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <Typography variant="body1" gutterBottom>{cartProduct.product.price.toLocaleString()}원</Typography>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center">
+                            <input
+                              type="number"
+                              value={cartProduct.quantity}
+                              {...register(`cartProducts.${index}.quantity`)}
+                              className="w-16 p-1 border border-gray-300 rounded-md text-center"
+                              min="1"
+                              onBlur={() => {
+                                cartProductsForm.setValue(`cartProducts.${index}.quantity`, cartProduct.quantity < 1 ? 1 : Number(cartProduct.quantity))
+                                localStorage.setItem("cartProducts", JSON.stringify(cartProducts))
+                              }}
+                            />
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <Typography variant="body1" gutterBottom>{(Number(cartProduct.product.price) * cartProduct.quantity).toLocaleString()}원</Typography>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <IconButton onClick={() => {
+                            if (window.confirm("선택한 상품을 장바구니에서 삭제하시겠습니까?")) {
+                              cartProducts.splice(index, 1)
+                              localStorage.setItem("cartProducts", JSON.stringify(cartProducts))
+                              cartProductsForm.setValue("cartProducts", cartProducts)
+                              window.postMessage({cartProductsLength: "on"}, "*")
+                            }
+                          }} color="secondary">
+                            <DeleteIcon />
+                          </IconButton>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                )}
               </table>
             </div>
           </div>
@@ -168,7 +143,9 @@ export const CartsDetailContent = () => {
         <Divider className="my-4" sx={{border: "1px solid secondary"}} />
         <div className="flex flex-col items-end space-y-4">
           <Typography variant="h5" gutterBottom>
-            총금액: {totalAmount.toLocaleString()}원
+            총금액: {_.sumBy(cartProducts, (cartProduct) => {
+              return Number(cartProduct.product.price) * cartProduct.quantity
+            }).toLocaleString()}원
           </Typography>
         </div>
       </div>
@@ -177,28 +154,44 @@ export const CartsDetailContent = () => {
           variant="contained"
           color="secondary"
           className="btn"
+          disabled={!cartProducts.find((cartProduct) => cartProduct.checked)}
           onClick={() => {
-            console.log(selectedProducts)
+            router.push(`/order?orderProducts=${encodeURIComponent(
+              JSON.stringify(cartProducts.filter((cartProduct) => {
+                return cartProduct.checked
+              }))
+            )}`)
           }}
         >
           선택상품만 결제하기
         </Button>
         <div>
-          <Button variant="contained" color="secondary" className="btn" onClick={handleOpenDialog}>
+          <Button
+            variant="contained"
+            color="secondary"
+            className="btn"
+            disabled={cartProducts.length === 0}
+            onClick={() => setOpen(true)}
+          >
             장바구니 비우기
           </Button>
           <Dialog
             open={open}
-            onClose={handleCloseDialog}
+            onClose={() => setOpen(false)}
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
           >
             <DialogTitle id="alert-dialog-title">{"정말 장바구니를 비우시겠습니까?"}</DialogTitle>
             <DialogActions>
-              <Button onClick={handleCloseDialog} color="primary">
+              <Button onClick={() => setOpen(false)} color="primary">
                 아니오
               </Button>
-              <Button onClick={handleEmptyCart} color="secondary" autoFocus>
+              <Button onClick={() => {
+                localStorage.setItem("cartProducts", "[]")
+                cartProductsForm.setValue("cartProducts", [])
+                window.postMessage({cartProductsLength: "on"}, "*")
+                setOpen(false)
+              }} color="secondary" autoFocus>
                 네
               </Button>
             </DialogActions>
@@ -206,7 +199,15 @@ export const CartsDetailContent = () => {
         </div>
       </div>
       <div className="flex flex-col items-end space-y-4 py-3">
-        <Button variant="contained" color="primary" className="btn">
+        <Button
+          variant="contained"
+          color="primary"
+          className="btn"
+          disabled={cartProducts.length === 0}
+          onClick={() => {
+            router.push(`/order?orderProducts=${encodeURIComponent(JSON.stringify(cartProducts))}`)
+          }}
+        >
           바로구매
         </Button>
       </div>

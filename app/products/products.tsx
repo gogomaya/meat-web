@@ -6,9 +6,9 @@ import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogT
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded"
 import * as React from "react"
 import ProductSwiper from "./[product_pk]/swiper"
-import {Product} from "@/types/productsTypes"
+import {CartProduct, Product} from "@/types/productsTypes"
 import {SearchParams} from "@/types/commonTypes"
-
+import _ from "lodash"
 
 export const ProductsSearch = ({products, searchParams}: {products: Product[], searchParams: SearchParams}) => {
   const router = useRouter()
@@ -202,12 +202,32 @@ export const ProductsDetailContent = ({product}: {product: Product}) => {
             </Typography>
             <Divider className="my-4" />
             <div className="flex flex-col items-end md:flex-row md:items-center md:justify-end md:space-x-4">
-              <CartButton product={product} />
-              <Link href={`/order?productId=${product.product_pk}`}>
-                <Button variant="contained" color="secondary" className="btn">
+              <CartOrderButton
+                product={product}
+                quantity={quantity}
+                type="CART"
+              >
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  className="btn"
+                >
+                  장바구니
+                </Button>
+              </CartOrderButton>
+              <CartOrderButton
+                product={product}
+                quantity={quantity}
+                type="ORDER"
+              >
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  className="btn"
+                >
                   구매하기
                 </Button>
-              </Link>
+              </CartOrderButton>
             </div>
             <div className="flex flex-col items-end space-y-4 py-3">
               <Link href="/order">
@@ -230,66 +250,83 @@ export const ProductsDetailContent = ({product}: {product: Product}) => {
   )
 }
 
-export const CartButton = ({product}: { product: Product }) => {
+let cartProducts: CartProduct[] = []
+const CartOrderButton = ({
+  children,
+  product,
+  quantity,
+  type
+}: {
+  children: React.ReactElement<{onClick: Function}>
+  product: Product
+  quantity: number
+  type: "CART" | "ORDER"
+}) => {
+  const router = useRouter()
   const [open, setOpen] = React.useState(false)
-
-  const handleOpen = () => {
-    setOpen(true)
-  }
-
-  const handleClose = () => {
-    setOpen(false)
-  }
-
-
-  const handleConfirm = () => {
-    setOpen(false)
-    window.location.href = `/order?productId=${product.product_pk}`
-  }
-
-
-  // 장바구니 추가
-  const addCartList = async (product: Product, quantity: number) => {
+  const addCartOrderList = async (product: Product, quantity: number) => {
     try {
-      let cartItems: any[] = []
-      const storedCartItems = localStorage.getItem("cartItems")
-      if (storedCartItems !== null) {
-        cartItems = JSON.parse(storedCartItems)
+      cartProducts = JSON.parse(localStorage.getItem("cartProducts") || "[]")
+      const cartProduct = _.find(cartProducts, (cartProduct) => {
+        return cartProduct.product.product_pk === product.product_pk
+      })
+      if (cartProduct) {
+        cartProduct.product = product
+        cartProduct.quantity = quantity
+      } else {
+        cartProducts.push({
+          product,
+          quantity,
+          checked: true
+        })
       }
-      cartItems.push({product, quantity}) // 제품과 수량 정보를 객체로 묶어서 추가
-      localStorage.setItem("cartItems", JSON.stringify(cartItems))
+      localStorage.setItem("cartProducts", JSON.stringify(cartProducts))
+      window.postMessage({cartProductsLength: cartProducts.length}, "*")
+      setOpen(true)
     } catch (error) {
-      console.log("업로드 실패:", error)
+      alert("알 수 없는 오류가 발생하였습니다. 다시 시도 해주세요.")
+      localStorage.setItem("cartProducts", "")
     }
   }
-
-  const handleButtonClick = () => {
-    handleOpen()
-    // addCartList(product, quantity) // 제품과 수량 정보를 전달
-  }
-
   return (
     <div>
-      <Button
-        variant="contained"
-        color="secondary"
-        className="btn"
-        onClick={handleButtonClick}
-      >
-        장바구니
-      </Button>
-      <Dialog open={open} onClose={handleClose}>
+      {React.cloneElement(children, {
+        onClick: () => {
+          children.props.onClick?.()
+          addCartOrderList(product, quantity)
+        }
+      })}
+      <Dialog open={open} onClose={() => setOpen(false)}>
         <DialogTitle>알림</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            장바구니에 상품이 담겼습니다. 장바구니로 이동하시겠습니까?
+            {type === "CART" ?
+              "장바구니에 추가하였습니다. 장바구니로 이동하시겠습니까?" :
+              "장바구니에 있는 상품과 함께 주문하시겠습니까? 취소를 클릭하시면 선택하신 상품만 주문됩니다."
+            }
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={() => {
+            setOpen(false)
+            if (type === "ORDER") {
+              router.push(`/order?orderProducts=${encodeURIComponent(JSON.stringify(
+                cartProducts.filter((cartProduct) => {
+                  return cartProduct.product.product_pk === product.product_pk
+                })
+              ))}`)
+            }
+          }} color="primary">
             아니오
           </Button>
-          <Button onClick={handleConfirm} color="primary" autoFocus>
+          <Button onClick={() => {
+            setOpen(false)
+            if (type === "CART") {
+              router.push("/carts")
+            } else {
+              router.push(`/order?orderProducts=${encodeURIComponent(JSON.stringify(cartProducts))}`)
+            }
+          }} color="primary" autoFocus>
             예
           </Button>
         </DialogActions>
@@ -297,7 +334,6 @@ export const CartButton = ({product}: { product: Product }) => {
     </div>
   )
 }
-
 
 export const ProductDetail = ({product}: {product: Product}) => {
   return (

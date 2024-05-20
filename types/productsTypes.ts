@@ -31,3 +31,9 @@ export interface ProductsSearchParams extends SearchParams {
   category_menu: string
   is_today: boolean
 }
+
+export interface CartProduct {
+  product: Product
+  quantity: number
+  checked: boolean
+}
