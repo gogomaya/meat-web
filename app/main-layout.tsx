@@ -64,7 +64,7 @@ const MainLayout = ({
           </Badge>
         </Link>
       </header>
-      <main className="pt-8 md:pt-16 bg-[#FFF5E1]">{children}</main>
+      <main className="pt-8 md:pt-16">{children}</main>
       <CsIcon />
       <MainBottom />
     </div>
@@ -100,7 +100,7 @@ export const CsIcon = () => {
 
   return (
     <div className={`fixed bottom-8 z-1000 right-8 gap-2 flex flex-col justify-center item-center ${isVisible ? "visible" : "hidden"}`}>
-      <button onClick={scrollToTop} className="bg-[#FFF5E1] p-1 rounded-full flex items-center justify-center w-16 h-16">
+      <button onClick={scrollToTop} className="p-1 rounded-full flex items-center justify-center w-16 h-16">
         <ExpandLessIcon style={{fontSize: "32px"}} />
       </button>
       <Link href="http://pf.kakao.com/_NZDHK">
