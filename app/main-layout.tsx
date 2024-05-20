@@ -38,8 +38,10 @@ const MainLayout = ({
   }, [])
   return (
     <div className="mx-auto">
-      <header id="header" className="fixed top-0 z-20 bg-white w-full flex justify-center items-center px-4"
-        style={{backgroundColor: "rgba(255, 245, 225, 0.88)"}}>
+      <header
+        id="header"
+        className="fixed top-0 z-20 bg-transparent w-full flex justify-center items-center px-4 transition-colors duration-300"
+      >
         <MainMobileMenu />
         <Link href="/">
           <Image
@@ -54,8 +56,7 @@ const MainLayout = ({
         </Link>
         <MegaMenu />
         <MainSearch />
-        <IconButton className="hidden md:block p-0">
-        </IconButton>
+        <IconButton className="hidden md:block p-0"></IconButton>
         <Users user={user} />
         <Link href="/carts">
           <Badge badgeContent={cartProductsLength} color="primary">
@@ -349,89 +350,52 @@ const MainBottom = () => {
     })
   }
   return (
-    <section className="section footer">
-      <div className="container">
-        <div className="footer-content-wrap">
-          <div className="footer-top-wrap">
-            <Link href="/"></Link>
-            <div className="footer-top-details">한솔축산은 직접 작업하여 적은 유통마진으로 한우 1++ no.9과 한돈을 판매합니다.</div>
+    <section
+      className="section footer bg-cover bg-center bg-no-repeat"
+      style={{
+        backgroundImage: "url(\"/images/Bg.png\")"
+      }}
+    >
+      <div className="footer-inner flex flex-col md:flex-row justify-between items-center p-6 md:p-12 text-white" style={{backgroundColor: "transparent"}}>
+        <div className="footer-left space-y-4">
+          <div className="footer-menu-link space-x-4 text-lg">
+            <span className="footer-menu-content cursor-pointer hover:underline">회사소개</span>
+            <span className="footer-menu-content cursor-pointer hover:underline">이용안내</span>
+            <span className="footer-menu-content cursor-pointer hover:underline">이용약관</span>
+            <span className="footer-menu-content cursor-pointer hover:underline">개인정보처리방침</span>
           </div>
-          <div className="footer-divider"></div>
-          <div className="footer-menu-wrap">
-            <div className="footer-single-menu-wrap _1">
-              <div className="footer-menu-link-wrap">
-                <a href="https://smartstore.naver.com/hansolmeat1534" className="footer-menu-link">회사 소개</a>
-                <Link className="footer-menu-link" href={"/policy"}>이용약관</Link>
-                <Link className="footer-menu-link" href={"/policy"}>개인정보처리방침</Link>
-              </div>
-            </div>
-            <div className="footer-single-menu-wrap">
-              <div className="footer-pages-menu-link-wrap">
-                <div className="footer-menu-link-wrap">
-                  <a href="https://zaisop.webflow.io/product/meat-balls" className="footer-menu-link">Product single</a>
-                  <a href="/inner-pages/blog" className="footer-menu-link">Blog</a>
-                  <a href="https://zaisop.webflow.io/blogs/butcher-is-a-person-who-specializes-in-cutting-preparing-selling-meats-butchers-are-skilled" className="footer-menu-link">blog single</a>
-                  <a href="/inner-pages/team" className="footer-menu-link">team</a>
-                  <a href="https://zaisop.webflow.io/teams/kagiso-ramos" className="footer-menu-link">team single</a>
-                  <a href="/inner-pages/services" className="footer-menu-link">services</a>
-                </div>
-                <div className="footer-menu-link-wrap">
-                  <a href="https://zaisop.webflow.io/services/veal-entrecote" className="footer-menu-link">service single</a>
-                  <a href="/authentication/sign-in" className="footer-menu-link">sign in</a>
-                  <a href="/authentication/sign-up" className="footer-menu-link">Sign Up</a>
-                  <a href="/authentication/forgot-password" className="footer-menu-link">forgot password</a>
-                  <a href="/authentication/reset-password" className="footer-menu-link">reset password</a>
-                </div>
-              </div>
-            </div>
-            <div className="footer-single-menu-wrap cta">
-              <div className="footer-cta-wrap flex justify-end item-center">
-                <Image
-                  src="/images/logo.png"
-                  alt=""
-                  width={150}
-                  height={150}
-                  sizes="100vw"
-                  style={{cursor: "pointer"}}
-                  className="md:w-16"
-                  priority
-                  onClick={scrollToTop}
-                />
-              </div>
-              <div className="footer-divider cta"></div>
-              <div className="footer-location-wrap">
-                <div className="footer-location-single-wrap">
-                  <a href="tel:+82424711534">
-                    <HeadsetIcon/>
-                  </a>
-                  <a href="tel:+82424711534">
-                    <div className="footer-details-text">(042) 471-1534</div>
-                  </a>
-                </div>
-                <div className="footer-location-single-wrap">
-                  <a href="mailto:whddlr1@naver.com"><DraftsIcon /></a>
-                  <div className="footer-details-text">
-                    <a href="mailto:whddlr1@naver.com">whddlr1@naver.com</a>
-                  </div>
-                </div>
-                <div className="footer-location-single-wrap">
-                  <Link href="https://map.naver.com/p/entry/place/31221432?c=10.18,0,0,0,dh">
-                    <HomeIcon />
-                  </Link>
-                  <Link href="https://map.naver.com/p/entry/place/31221432?c=10.18,0,0,0,dh">
-                    <div className="footer-details-text">대전 서구 둔산3동 1862번지 1층</div>
-                  </Link>
-                </div>
-                <div className="footer-location-single-wrap">
-                  <div className="footer-details-text">사업자등록번호 405-98-61344</div>
-                </div>
-                <div className="footer-location-single-wrap">
-                  <div className="footer-details-text">대표자 한승구, 박수현</div>
-                </div>
-              </div>
-            </div>
+          <div className="footer-name text-2xl font-bold">
+            <span>(주) 한솔축산</span>
           </div>
-          <div className="footer-divider"></div>
+          <div className="footer-info text-sm leading-loose">
+            <span className="footer-info-detail block">
+              <span className="text-style-1 font-semibold">대표자</span> | 한승구, 박수현
+            </span>
+            <span className="footer-info-detail block">
+              <span className="text-style-1 font-semibold">주소</span> | 대전 서구 둔산3동 1862번지 1층
+            </span>
+            <span className="footer-info-detail block">
+              <span className="text-style-1 font-semibold">사업자등록번호</span> | 405-98-61344
+            </span>
+            <span className="footer-info-detail block">
+              <span className="text-style-1 font-semibold">이메일</span> | whddlrs1@naver.com
+            </span>
+            <span className="footer-info-detail block">
+              <span className="text-style-1 font-semibold">팩스</span> | 042-471-1534
+            </span>
+          </div>
+        </div>
+        <div className="footer-right mt-6 md:mt-0 flex justify-center w-full md:w-auto">
+          <Image
+            src="/images/logo.png"
+            alt="한솔축산 로고"
+            width={150}
+            height={150}
+            sizes="100vw"
+            className="w-32 h-32 md:w-48 md:h-48 cursor-pointer"
+            priority
+            onClick={scrollToTop}
+          />
         </div>
       </div>
     </section>
