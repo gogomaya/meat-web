@@ -27,12 +27,12 @@ const MainLayout = ({
   useEffect(() => {
     const getCartProducts = () => {
       const cartProducts = JSON.parse(localStorage.getItem("cartProducts") || "[]")
-      setCartProductsLength(cartProducts.length)
+      return cartProducts.length
     }
-    getCartProducts()
+    setCartProductsLength(getCartProducts())
     window.onmessage = (event) => {
       if (event.data.cartProductsLength) {
-        getCartProducts()
+        setCartProductsLength(getCartProducts())
       }
     }
   }, [])

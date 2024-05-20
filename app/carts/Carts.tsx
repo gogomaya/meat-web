@@ -1,4 +1,5 @@
 "use client"
+import {useRouter} from "next/navigation"
 import {Button, Checkbox, Divider, IconButton, Typography, Dialog, DialogTitle, DialogActions, Skeleton} from "@mui/material"
 import DeleteIcon from "@mui/icons-material/Delete"
 import Image from "next/image"
@@ -8,6 +9,7 @@ import {useForm} from "react-hook-form"
 import _ from "lodash"
 
 export const CartsDetailContent = () => {
+  const router = useRouter()
   const [open, setOpen] = useState(false)
   const cartProductsForm = useForm<{cartProducts: CartProduct[]}>({
     defaultValues: {
@@ -73,6 +75,9 @@ export const CartsDetailContent = () => {
                             checked={cartProduct.checked}
                             style={{width: "20px", height: "20px"}}
                             className="rounded border-gray-300 focus:ring-indigo-500 h-4 w-4 text-indigo-600"
+                            onBlur={() => {
+                              localStorage.setItem("cartProducts", JSON.stringify(cartProducts))
+                            }}
                           />
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
@@ -106,9 +111,8 @@ export const CartsDetailContent = () => {
                               className="w-16 p-1 border border-gray-300 rounded-md text-center"
                               min="1"
                               onBlur={() => {
-                                if (cartProduct.quantity < 1) {
-                                  cartProductsForm.setValue(`cartProducts.${index}.quantity`, 1)
-                                }
+                                cartProductsForm.setValue(`cartProducts.${index}.quantity`, cartProduct.quantity < 1 ? 1 : Number(cartProduct.quantity))
+                                localStorage.setItem("cartProducts", JSON.stringify(cartProducts))
                               }}
                             />
                           </div>
@@ -151,7 +155,13 @@ export const CartsDetailContent = () => {
           color="secondary"
           className="btn"
           disabled={!cartProducts.find((cartProduct) => cartProduct.checked)}
-          onClick={() => {}}
+          onClick={() => {
+            router.push(`/order?orderProducts=${encodeURIComponent(
+              JSON.stringify(cartProducts.filter((cartProduct) => {
+                return cartProduct.checked
+              }))
+            )}`)
+          }}
         >
           선택상품만 결제하기
         </Button>
@@ -194,7 +204,9 @@ export const CartsDetailContent = () => {
           color="primary"
           className="btn"
           disabled={cartProducts.length === 0}
-          onClick={() => {}}
+          onClick={() => {
+            router.push(`/order?orderProducts=${encodeURIComponent(JSON.stringify(cartProducts))}`)
+          }}
         >
           바로구매
         </Button>

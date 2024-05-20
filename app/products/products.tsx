@@ -6,7 +6,7 @@ import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogT
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded"
 import * as React from "react"
 import ProductSwiper from "./[product_pk]/swiper"
-import {Product} from "@/types/productsTypes"
+import {CartProduct, Product} from "@/types/productsTypes"
 import {SearchParams} from "@/types/commonTypes"
 import _ from "lodash"
 
@@ -202,12 +202,32 @@ export const ProductsDetailContent = ({product}: {product: Product}) => {
             </Typography>
             <Divider className="my-4" />
             <div className="flex flex-col items-end md:flex-row md:items-center md:justify-end md:space-x-4">
-              <CartButton product={product} quantity={quantity} />
-              <Link href={`/order?productId=${product.product_pk}`}>
-                <Button variant="contained" color="secondary" className="btn">
+              <CartOrderButton
+                product={product}
+                quantity={quantity}
+                type="CART"
+              >
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  className="btn"
+                >
+                  장바구니
+                </Button>
+              </CartOrderButton>
+              <CartOrderButton
+                product={product}
+                quantity={quantity}
+                type="ORDER"
+              >
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  className="btn"
+                >
                   구매하기
                 </Button>
-              </Link>
+              </CartOrderButton>
             </div>
             <div className="flex flex-col items-end space-y-4 py-3">
               <Link href="/order">
@@ -230,13 +250,23 @@ export const ProductsDetailContent = ({product}: {product: Product}) => {
   )
 }
 
-export const CartButton = ({product, quantity}: { product: Product, quantity: number }) => {
+let cartProducts: CartProduct[] = []
+const CartOrderButton = ({
+  children,
+  product,
+  quantity,
+  type
+}: {
+  children: React.ReactElement<{onClick: Function}>
+  product: Product
+  quantity: number
+  type: "CART" | "ORDER"
+}) => {
   const router = useRouter()
   const [open, setOpen] = React.useState(false)
-  // 장바구니 추가
-  const addCartList = async (product: Product, quantity: number) => {
+  const addCartOrderList = async (product: Product, quantity: number) => {
     try {
-      const cartProducts = JSON.parse(localStorage.getItem("cartProducts") || "[]")
+      cartProducts = JSON.parse(localStorage.getItem("cartProducts") || "[]")
       const cartProduct = _.find(cartProducts, (cartProduct) => {
         return cartProduct.product.product_pk === product.product_pk
       })
@@ -260,28 +290,42 @@ export const CartButton = ({product, quantity}: { product: Product, quantity: nu
   }
   return (
     <div>
-      <Button
-        variant="contained"
-        color="secondary"
-        className="btn"
-        onClick={() => addCartList(product, quantity)}
-      >
-        장바구니
-      </Button>
+      {React.cloneElement(children, {
+        onClick: () => {
+          children.props.onClick?.()
+          addCartOrderList(product, quantity)
+        }
+      })}
       <Dialog open={open} onClose={() => setOpen(false)}>
         <DialogTitle>알림</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            장바구니에 추가하였습니다. 장바구니로 이동하시겠습니까?
+            {type === "CART" ?
+              "장바구니에 추가하였습니다. 장바구니로 이동하시겠습니까?" :
+              "장바구니에 있는 상품과 함께 주문하시겠습니까? 취소를 클릭하시면 선택하신 상품만 주문됩니다."
+            }
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpen(false)} color="primary">
+          <Button onClick={() => {
+            setOpen(false)
+            if (type === "ORDER") {
+              router.push(`/order?orderProducts=${encodeURIComponent(JSON.stringify(
+                cartProducts.filter((cartProduct) => {
+                  return cartProduct.product.product_pk === product.product_pk
+                })
+              ))}`)
+            }
+          }} color="primary">
             아니오
           </Button>
           <Button onClick={() => {
             setOpen(false)
-            router.push("/carts")
+            if (type === "CART") {
+              router.push("/carts")
+            } else {
+              router.push(`/order?orderProducts=${encodeURIComponent(JSON.stringify(cartProducts))}`)
+            }
           }} color="primary" autoFocus>
             예
           </Button>

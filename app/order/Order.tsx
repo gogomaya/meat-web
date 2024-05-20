@@ -1,11 +1,12 @@
 "use client"
-
 import {SetStateAction, useState} from "react"
 import {Divider, Typography} from "@mui/material"
 import Link from "next/link"
 import Image from "next/image"
 import React from "react"
 import DaumPostcode from "react-daum-postcode"
+import {CartProduct} from "@/types/productsTypes"
+import _ from "lodash"
 
 // 배송지
 export const Post = (props: { setcompany: (arg0: any) => void; company: any }) => {
@@ -39,7 +40,11 @@ export const Post = (props: { setcompany: (arg0: any) => void; company: any }) =
   )
 }
 
-export const OrderDetailContent = () => {
+export const OrderDetailContent = ({
+  orderProducts
+}: {
+  orderProducts: CartProduct[]
+}) => {
   const [isOrderInfoOpen, setIsOrderInfoOpen] = useState(false)
   const [isPersonalInfoOpen, setIsPersonalInfoOpen] = useState(false)
 
@@ -53,7 +58,6 @@ export const OrderDetailContent = () => {
 
   const [orderInfo, setOrderInfo] = useState({
     shippingAddress: "",
-    orderItems: [],
     discount: 0,
     shipfee: 0,
     paymentMethod: "",
@@ -61,14 +65,10 @@ export const OrderDetailContent = () => {
     receiptType: ""
   })
 
-  // 주문 상품 목록
-  const orderItems = [
-    {id: 1, name: "상품1", quantity: 1, price: 10000},
-    {id: 2, name: "상품2", quantity: 2, price: 20000}
-  ]
-
   // 결제 정보
-  const totalPrice = orderItems.reduce((total, item) => total + item.price * item.quantity, 0)
+  const totalPrice = _.sumBy(orderProducts, (orderProduct) => {
+    return Number(orderProduct.product.price) * orderProduct.quantity
+  })
   const totalDiscount = orderInfo.discount
   const totalShipFee = orderInfo.shipfee
   const finalPrice = totalPrice - totalDiscount + totalShipFee
@@ -80,16 +80,17 @@ export const OrderDetailContent = () => {
           <tr>
             <th className="py-2">상품사진</th>
             <th className="py-2">상품명</th>
-            <th className="py-2">수량</th>
             <th className="py-2">가격</th>
+            <th className="py-2">수량</th>
+            <th className="py-2">총금액</th>
           </tr>
         </thead>
         <tbody>
-          {orderItems.map((item) => (
-            <tr key={item.id}>
+          {orderProducts.map((orderProduct) => (
+            <tr key={orderProduct.product.product_pk}>
               <td className="flex justify-center">
                 <Image
-                  src="/images/12.jpg"
+                  src={`/${process.env.NEXT_PUBLIC_UPLOAD_IMAGES}/products/${encodeURIComponent(String(orderProduct.product.image_file_name))}`}
                   alt=""
                   width={100}
                   height={50}
@@ -97,9 +98,10 @@ export const OrderDetailContent = () => {
                   priority
                 />
               </td>
-              <td className="p-3 text-center">{item.name}</td>
-              <td className="p-3 text-center">{item.quantity}</td>
-              <td className="p-3 text-center">{(item.price * item.quantity).toLocaleString()}원</td>
+              <td className="p-3 text-center">{orderProduct.product.name}</td>
+              <td className="p-3 text-center">{orderProduct.product.price.toLocaleString()}원</td>
+              <td className="p-3 text-center">{orderProduct.quantity}</td>
+              <td className="p-3 text-center">{(Number(orderProduct.product.price) * orderProduct.quantity).toLocaleString()}원</td>
             </tr>
           ))}
         </tbody>
@@ -220,6 +222,8 @@ export const OrderDetailContent = () => {
   }
 
   const handlePayment = () => {
+    console.log(orderProducts)
+    console.log(orderInfo)
     alert("토스페이먼츠 호출")
   }
 
