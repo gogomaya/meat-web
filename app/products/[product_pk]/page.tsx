@@ -17,22 +17,25 @@ const Products = async (props: {
   const {product} = productResponse.data
   return (
     <MainLayout user={user}>
-      <ProductsDetailContent product={product} />
-      <Divider id="divider" className="my-3" />
-      <NavDetail />
-      {/* 상품 상세 정보 */}
-      <div id="detail"><ProductDetail product={product} /></div>
-      {/* 리뷰 */}
-      <div id="review2">
-        {/* <GeneralReview {{title, content, likes, rating}}/> */}
-        <GeneralReview title="" content="" likes={0} rating={0} />
+      <div className="py-6"></div>
+      <div className="py-8">
+        <ProductsDetailContent product={product} />
+        <Divider id="divider" className="my-3" />
+        <NavDetail />
+        {/* 상품 상세 정보 */}
+        <div id="detail"><ProductDetail product={product} /></div>
+        {/* 리뷰 */}
+        <div id="review2">
+          {/* <GeneralReview {{title, content, likes, rating}}/> */}
+          <GeneralReview title="" content="" likes={0} rating={0} />
+        </div>
+        {/* 문의 */}
+        <div id="qna">
+          <BoardsList />
+        </div>
+        {/* 주문정보 */}
+        <div id="ship"><ShipDetail /></div>
       </div>
-      {/* 문의 */}
-      <div id="qna">
-        <BoardsList />
-      </div>
-      {/* 주문정보 */}
-      <div id="ship"><ShipDetail /></div>
     </MainLayout>
   )
 }
