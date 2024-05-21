@@ -2,7 +2,7 @@ import {ResponseApi} from "@/types/commonTypes"
 import {loginCheck} from "@/app/admin/page"
 import MainLayout from "@/app/main-layout"
 import HomeSwiper from "./swiper"
-import {HomeBanner, HomeBestMenu, HomeCateMenu, HomeWhyUs, ProductList} from "./home"
+import {HomeBanner, HomeBestMenu, HomeCateMenu, HomeWhyUs} from "./home"
 import {productsServices} from "@/services/productsServices"
 import ErrorPage from "@/app/error"
 
