@@ -2,7 +2,7 @@ import {ResponseApi} from "@/types/commonTypes"
 import {loginCheck} from "@/app/admin/page"
 import MainLayout from "@/app/main-layout"
 import HomeSwiper from "./swiper"
-import {HomeBestMenu, HomeWhyUs} from "./home"
+import {HomeBanner, HomeBestMenu, HomeCateMenu, HomeWhyUs, ProductList} from "./home"
 import {productsServices} from "@/services/productsServices"
 import ErrorPage from "@/app/error"
 
@@ -20,8 +20,11 @@ const Home = async () => {
   return (
     <MainLayout user={user}>
       <div className="w-full">
-        <HomeSwiper />
+        <HomeBanner />
+        <HomeCateMenu />
+        {/* <HomeSwiper /> */}
         <HomeWhyUs />
+        {/* <ProductList /> */}
         {products_best.length ? (
           <HomeBestMenu products={products_best} />
         ) : null}
