@@ -11,9 +11,6 @@ import {Accordion, AccordionDetails, AccordionSummary, Badge, Box, Divider, Draw
 import Users from "@/components/users/users"
 import {User} from "@/types/usersTypes"
 import {commonServices} from "@/services/commonServices"
-import HeadsetIcon from "@mui/icons-material/Headset"
-import DraftsIcon from "@mui/icons-material/Drafts"
-import HomeIcon from "@mui/icons-material/Home"
 import ExpandLessIcon from "@mui/icons-material/ExpandLess"
 
 const MainLayout = ({
@@ -24,23 +21,36 @@ const MainLayout = ({
   user: User
 }) => {
   const [cartProductsLength, setCartProductsLength] = useState(0)
+  const [headerOpacity, setHeaderOpacity] = useState(1)
+
   useEffect(() => {
     const getCartProducts = () => {
       const cartProducts = JSON.parse(localStorage.getItem("cartProducts") || "[]")
       return cartProducts.length
     }
     setCartProductsLength(getCartProducts())
-    window.onmessage = (event) => {
-      if (event.data.cartProductsLength) {
-        setCartProductsLength(getCartProducts())
-      }
+
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY
+      const headerHeight = document.getElementById("header")?.clientHeight || 0
+      const maxOpacity = 0.7
+      const opacity = scrollPosition === 0 ? 1 : maxOpacity
+      setHeaderOpacity(opacity)
+    }
+
+    window.addEventListener("scroll", handleScroll)
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
     }
   }, [])
+
   return (
     <div className="mx-auto">
       <header
         id="header"
-        className="fixed top-0 z-20 bg-transparent w-full flex justify-center items-center px-4 transition-colors duration-300"
+        className="fixed top-0 z-20 bg-cover bg-center bg-opacity-90 w-full flex justify-center items-center px-4 py-4 md:py-8 text-white transition-opacity duration-300"
+        style={{backgroundImage: "url('/images/Bg.png')", opacity: headerOpacity}}
       >
         <MainMobileMenu />
         <Link href="/">
@@ -56,9 +66,8 @@ const MainLayout = ({
         </Link>
         <MegaMenu />
         <MainSearch />
-        <IconButton className="hidden md:block p-0"></IconButton>
         <Users user={user} />
-        <Link href="/carts">
+        <Link href="/carts" className="text-red-100">
           <Badge badgeContent={cartProductsLength} color="primary">
             <WorkOutlineIcon className="md:w-8 md:h-8" />
           </Badge>
@@ -129,7 +138,7 @@ export const CsIcon = () => {
   )
 }
 
-const MegaMenu = () => {
+export const MegaMenu = () => {
   const getMenu = () => {
     return {
       todayMenu: false,
@@ -154,11 +163,11 @@ const MegaMenu = () => {
   return (
     <nav id="header" className="invisible md:visible flex-1 flex justify-center items-center">
       <ul className="flex">
-        <li id="todayMenu" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
-          <Link href="/products?is_today=true">오늘의 메뉴</Link>
+        <li id="todayMenu" className={`relative mx-3 ${menu.todayMenu ? "text-red-500" : ""}`} onMouseOver={overMenu} onMouseOut={outMenu}>
+          <Link href="/products?is_today=true" className="text-red-600">오늘의 메뉴</Link>
         </li>
         <li id="cow" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
-          <Link href="/products?category=cow">소고기</Link>
+          <Link href="/products?category=cow" className="text-red-100">소고기</Link>
           <ol id="submenu" className={`w-20 absolute border border-black ${menu.cow ? "block" : "hidden"} bg-white py-2 rounded-lg shadow-md text-sm font-semibold`}>
             {categoriesMenu.cow.map((category_menu) => (
               <li key={category_menu}><Link href={`/products?category=cow&category_menu=${category_menu}`}>{category_menu}</Link></li>
@@ -166,7 +175,7 @@ const MegaMenu = () => {
           </ol>
         </li>
         <li id="pork" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
-          <Link href="/products?category=pork">돼지고기</Link>
+          <Link href="/products?category=pork" className="text-red-100">돼지고기</Link>
           <ol id="submenu" className={`w-20 absolute border border-black ${menu.pork ? "block" : "hidden"} bg-white py-2 rounded-lg shadow-md text-sm font-semibold`}>
             {categoriesMenu.pork.map((category_menu) => (
               <li key={category_menu}><Link href={`/products?category=pork&category_menu=${category_menu}`}>{category_menu}</Link></li>
@@ -174,7 +183,7 @@ const MegaMenu = () => {
           </ol>
         </li>
         <li id="simple" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
-          <Link href="/products?category=simple">간편식</Link>
+          <Link href="/products?category=simple" className="text-red-100">간편식</Link>
           <ol id="submenu" className={`w-20 absolute border border-black ${menu.simple ? "block" : "hidden"} bg-white py-2 rounded-lg shadow-md text-sm font-semibold`}>
             {categoriesMenu.simple.map((category_menu) => (
               <li key={category_menu}><Link href={`/products?category=simple&category_menu=${category_menu}`}>{category_menu}</Link></li>
@@ -182,14 +191,14 @@ const MegaMenu = () => {
           </ol>
         </li>
         <li id="review" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
-          <Link href="/reviews">리뷰</Link>
+          <Link href="/reviews" className="text-red-100">리뷰</Link>
           <ol id="submenu" className={`w-20 absolute border border-black ${menu.review ? "block" : "hidden"} bg-white py-2 rounded-lg shadow-md text-sm font-semibold`}>
             <li><Link href="#">고객 리뷰</Link></li>
             <li><Link href="#">전문가 리뷰</Link></li>
           </ol>
         </li>
         <li id="board" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
-          <Link href="/boards">고객센터</Link>
+          <Link href="/boards" className="text-red-100">고객센터</Link>
           <ol id="submenu" className={`w- absolute border border-black ${menu.board ? "block" : "hidden"} bg-white py-2 rounded-lg shadow-md text-sm font-semibold`}>
             <li><Link href="#">공지사항</Link></li>
             <li><Link href="/faq">자주하는질문</Link></li>
@@ -200,13 +209,12 @@ const MegaMenu = () => {
   )
 }
 
-
 const MainSearch = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   return <>
     <Link
       href=""
-      className="hidden md:block p-0"
+      className="hidden md:block p-0 text-red-100"
       onClick={(event: React.MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault()
         setAnchorEl(event.currentTarget)

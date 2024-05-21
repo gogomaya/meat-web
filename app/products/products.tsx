@@ -408,7 +408,6 @@ export const NavDetail = () => {
   }
 
   const handleMouseClick = (menu: string | boolean | ((prevState: boolean) => boolean)) => {
-    // setIsClicked(menu)
   }
 
 
