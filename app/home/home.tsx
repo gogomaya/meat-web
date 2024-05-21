@@ -8,7 +8,7 @@ import {useEffect, useRef, useState} from "react"
 export const HomeBanner = () => {
   return (
     <section
-      className="section bg-cover bg-center bg-no-repeat py-2 p-6 md:p-12 text-white relative"
+      className="section bg-cover bg-center bg-no-repeat py-12 p-6 md:p-12 text-white relative"
       style={{
         backgroundImage: "url('/images/Bg.png')",
         backgroundPosition: "center",
@@ -44,10 +44,10 @@ export const HomeBanner = () => {
         .section::before {
           top: 0;
           left: 0;
-          width: 530px;
-          height: 340px;
+          width: 580px;
+          height: 440px;
           background-image: url('/images/meat-img02.png');
-          transform: translate(24%, 0%);
+          transform: translate(44%, -20%);
         }
         .section::after {
           bottom: 0;
@@ -102,6 +102,7 @@ export const HomeCateMenu = () => {
     </section>
   )
 }
+
 
 export const HomeBestMenu = ({products}: { products: Product[] }) => {
   const [isVisible, setIsVisible] = useState(false)
