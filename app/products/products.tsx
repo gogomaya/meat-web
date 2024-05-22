@@ -57,7 +57,7 @@ export const ProductsPagination = ({searchParams, total_rows}: {searchParams: Se
   )
 }
 
-export const ProductsList = ({products}: {products: Product[]}) => {
+export const ProductsList = ({products}: { products: Product[] }) => {
   const enlargeImage = (event: { currentTarget: { querySelector: (arg0: string) => { (): any; new(): any; style: { (): any; new(): any; transform: string } } } }) => {
     event.currentTarget.querySelector("img").style.transform = "scale(1.01)"
   }
@@ -66,11 +66,11 @@ export const ProductsList = ({products}: {products: Product[]}) => {
   }
 
   return (
-    <ol>
+    <ol className="flex flex-wrap">
       {products.map((product) => (
         <li
           key={product.product_pk}
-          className="p-1 inline-block align-top w-[50%] md:w-[33.3%] lg:w-[25%]"
+          className="p-1 w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
           onMouseEnter={enlargeImage}
           onMouseLeave={shrinkImage}
         >

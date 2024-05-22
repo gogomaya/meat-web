@@ -2318,6 +2318,7 @@ textarea.w-input, textarea.w-select {
   .w-lightbox-content {
     height: 96vh;
     margin-top: 2vh;
+    padding: 3.5rem;
   }
 
   .w-lightbox-view, .w-lightbox-view:before {
