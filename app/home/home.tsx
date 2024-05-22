@@ -33,76 +33,148 @@ export const HomeBanner = () => {
           <button className="py-2 px-4 bg-yellow-400 text-black rounded hover:bg-yellow-500 transition duration-300 ease-in-out shadow-lg">오늘의 메뉴 바로가기</button>
         </div>
       </div>
-
       <style jsx>{`
-        .section::before, .section::after {
-          content: '';
-          position: absolute;
-          background-size: contain;
-          background-repeat: no-repeat;
+      .section {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .section::before, .section::after {
+        content: '';
+        position: absolute;
+        background-size: contain;
+        background-repeat: no-repeat;
+        opacity: 0;
+      }
+
+      .section::before {
+        top: 0;
+        left: 0;
+        width: 480px;
+        height: 440px;
+        background-image: url('/images/meat-img02_1.png');
+        transform: translate(-100%, 0%);
+        animation: slideInFromLeft 1s forwards;
+        animation-delay: 0.005s;
+      }
+
+      .section::after {
+        bottom: 0;
+        right: 0;
+        width: 462px;
+        height: 446px;
+        background-image: url('/images/meat-img01.png');
+        transform: translate(100%, 37%);
+        animation: slideInFromRight 1s forwards;
+        animation-delay: 0.1s;
+      }
+
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
         }
-        .section::before {
-          top: 0;
-          left: 0;
-          width: 580px;
-          height: 440px;
-          background-image: url('/images/meat-img02.png');
-          transform: translate(44%, -20%);
+      }
+
+      @keyframes slideInFromRight {
+        from {
+          transform: translate(100%, 37%);
+          opacity: 0;
         }
-        .section::after {
-          bottom: 0;
-          right: 0;
-          width: 462px;
-          height: 446px;
-          background-image: url('/images/meat-img01.png');
+        to {
           transform: translate(-19%, 37%);
+          opacity: 1;
         }
-      `}</style>
+      }
+
+      @keyframes slideInFromLeft {
+        from {
+          transform: translate(-100%, 0%);
+          opacity: 0;
+        }
+        to {
+          transform: translate(46%, 0%);
+          opacity: 1;
+        }
+      }
+    `}</style>
     </section>
   )
 }
 
 export const HomeCateMenu = () => {
+  useEffect(() => {
+    const sections = document.querySelectorAll(".section")
+
+    const options = {
+      threshold: 0.1,
+      rootMargin: "0px"
+    }
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("fade-in")
+          observer.unobserve(entry.target)
+        }
+      })
+    }, options)
+
+    sections.forEach((section) => {
+      observer.observe(section)
+    })
+  }, [])
+
   return (
-    <section className="p-6 md:p-12">
-      <div className="flex flex-col md:flex-row gap-6">
-        <div className="relative section bg-cover bg-center bg-no-repeat flex-1 h-64 md:h-auto" style={{backgroundImage: "url('/images/12.jpg')"}}>
-          <div className="absolute inset-0 bg-black bg-opacity-40 hover:bg-opacity-60 transition duration-300"></div>
-          <div className="relative flex flex-col justify-center items-center h-full text-white p-4">
-            <div className="text-2xl font-bold mb-4">한우 투뿔 꽃등심 <br />부채살</div>
-            <button className="py-2 px-4 bg-yellow-500 text-black rounded hover:bg-yellow-600 transition duration-300">소고기 바로가기</button>
+    <section className="p-12 md:p-16">
+      <div className="flex flex-col md:flex-row gap-4">
+        <div className="relative section bg-cover bg-center bg-no-repeat flex-1 h-64 md:h-auto rounded-lg overflow-hidden" data-index="0" style={{backgroundImage: "linear-gradient(to bottom, #271a11, rgba(0, 0, 0, 0) 67%), url('/images/Rectangle 6.png')"}}>
+          <div className="absolute inset-0 bg-black bg-opacity-10 hover:bg-opacity-20 transition duration-300 rounded-lg"></div>
+          <div className="relative flex flex-col justify-center items-center h-full text-white p-2">
+            <div className="text-xl md:text-4xl font-bold mb-16 text-center">한우 투뿔 꽃등심 <br />부채살</div>
+            <button className="py-1 px-2 bg-black text-yellow-500 rounded hover:bg-gray-800 transition duration-300">소고기 바로가기</button>
           </div>
         </div>
-        <div className="flex flex-col flex-1 gap-6">
-          <div className="flex flex-1 gap-6">
-            <div className="relative section bg-cover bg-center bg-no-repeat flex-1 h-64 md:h-auto" style={{backgroundImage: "url('/images/11.jpg')"}}>
-              <div className="absolute inset-0 bg-black bg-opacity-50 hover:bg-opacity-70 transition duration-300"></div>
-              <div className="relative flex flex-col justify-center items-center h-full text-white p-4">
-                <div className="text-2xl font-bold mb-4">생삼겹살 목살</div>
-                <button className="py-2 px-4 bg-yellow-500 text-black rounded hover:bg-yellow-600 transition duration-300">돼지고기 바로가기</button>
+        <div className="flex flex-col flex-1 gap-4">
+          <div className="flex flex-1 gap-4">
+            <div className="relative section bg-cover bg-center bg-no-repeat flex-1 h-32 md:h-48 rounded-lg overflow-hidden" data-index="1" style={{backgroundImage: "linear-gradient(to left, #271a11, rgba(217, 217, 217, 0) 100%), url('/images/Rectangle 10.png')"}}>
+              <div className="absolute inset-0 bg-black bg-opacity-10 hover:bg-opacity-20 transition duration-300 rounded-lg"></div>
+              <div className="relative flex flex-col justify-center items-center h-full text-white p-2">
+                <div className="text-md md:text-lg mb-8 font-bold text-center text-yellow-400">한돈 국내산</div>
+                <div className="text-xl md:text-2xl font-bold mb-12 text-center">🐷 생삼겹살 목살</div>
+                <button className="py-1 px-2 bg-black text-yellow-500 rounded hover:bg-gray-800 transition duration-300">돼지고기 바로가기</button>
               </div>
             </div>
-            <div className="relative section bg-cover bg-center bg-no-repeat flex-1 h-64 md:h-auto" style={{backgroundImage: "url('/images/13.jpg')"}}>
-              <div className="absolute inset-0 bg-black bg-opacity-60 hover:bg-opacity-80 transition duration-300"></div>
-              <div className="relative flex flex-col justify-center items-center h-full text-white p-4">
-                <div className="text-2xl font-bold mb-4">육회 & 육사시미</div>
-                <button className="py-2 px-4 bg-yellow-500 text-black rounded hover:bg-yellow-600 transition duration-300">육회 바로가기</button>
+            <div className="relative section bg-cover bg-center bg-no-repeat flex-1 h-32 md:h-48 rounded-lg overflow-hidden" data-index="2" style={{backgroundImage: "linear-gradient(to left, #271a11, rgba(217, 217, 217, 0) 100%), url('/images/Rectangle 8.png')"}}>
+              <div className="absolute inset-0 bg-black bg-opacity-10 hover:bg-opacity-20 transition duration-300 rounded-lg"></div>
+              <div className="relative flex flex-col justify-center items-center h-full text-white p-2">
+                <div className="text-md md:text-lg mb-8 font-bold text-center text-yellow-400">가장 신선한</div>
+                <div className="text-xl md:text-2xl font-bold mb-12 text-center">🥩 육회 & 육사시미</div>
+                <button className="py-1 px-2 bg-black text-yellow-500 rounded hover:bg-gray-800 transition duration-300">육회 바로가기</button>
               </div>
             </div>
           </div>
-          <div className="relative section bg-cover bg-center bg-no-repeat flex-1 h-64 md:h-auto" style={{backgroundImage: "url('/images/15.jpg')"}}>
-            <div className="absolute inset-0 bg-black bg-opacity-70 hover:bg-opacity-90 transition duration-300"></div>
-            <div className="relative flex flex-col justify-center items-center h-full text-white p-4">
-              <div className="text-2xl font-bold mb-4">고추장불고기 & 간장불고기 <br />제육볶음 주물럭 밀키트</div>
-              <button className="py-2 px-4 bg-yellow-500 text-black rounded hover:bg-yellow-600 transition duration-300">밀키트 바로가기</button>
+          <div className="relative section bg-cover bg-center bg-no-repeat flex-1 h-32 md:h-48 rounded-lg overflow-hidden" data-index="3" style={{backgroundImage: "linear-gradient(to left, #271a11, rgba(217, 217, 217, 0) 100%), url('/images/Rectangle 7.png')"}}>
+            <div className="absolute inset-0 bg-black bg-opacity-10 hover:bg-opacity-20 transition duration-300 rounded-lg"></div>
+            <div className="relative flex flex-col justify-center items-center h-full text-white p-2">
+              <div className="text-xl md:text-2xl font-bold mb-12 text-center">🍲 고추장불고기 & 간장불고기 <br />제육볶음 주물럭 밀키트</div>
+              <button className="py-1 px-2 bg-black text-yellow-500 rounded hover:bg-gray-800 transition duration-300">밀키트 바로가기</button>
             </div>
           </div>
         </div>
       </div>
+      <style jsx>{`
+        .section {
+          opacity: 0;
+          transform: translateY(50px);
+          transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+        .fade-in {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      `}</style>
     </section>
   )
 }
-
 
 export const HomeBestMenu = ({products}: { products: Product[] }) => {
   const [isVisible, setIsVisible] = useState(false)
@@ -161,6 +233,7 @@ export const HomeBestMenu = ({products}: { products: Product[] }) => {
     </section>
   )
 }
+
 
 
 export const HomeWhyUs = () => {
