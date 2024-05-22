@@ -22,7 +22,7 @@ export const HomeBanner = () => {
         alignItems: "center"
       }}
     >
-      <div className="flex flex-col items-center space-y-4 md:w-1/2" style={{maxWidth: "800px"}}>
+      <div className="flex flex-col items-center space-y-4 md:w-1/2 z-6" style={{maxWidth: "800px"}}>
         <div className="text-6xl font-extrabold text-yellow-400 shadow-lg">Premium No.9</div>
         <div className="text-4xl font-bold text-white shadow">모든 작업을 직접하여 적은 유통마진으로</div>
         <div className="text-2xl text-gray-300 shadow">
@@ -30,10 +30,19 @@ export const HomeBanner = () => {
           <span style={{color: "yellow"}}>No.9</span>만을 판매하는 한솔축산입니다.
         </div>
         <div className="space-y-2">
-          <button className="py-2 px-4 bg-yellow-400 text-black rounded hover:bg-yellow-500 transition duration-300 ease-in-out shadow-lg">오늘의 메뉴 바로가기</button>
+          <Link href="/products?is_today=true">
+            <button className="py-2 px-4 bg-yellow-400 text-black rounded hover:bg-yellow-500 transition duration-300 ease-in-out shadow-lg">오늘의 메뉴 바로가기</button>
+          </Link>
         </div>
       </div>
       <style jsx>{`
+      @media (max-width: 768px) {
+        .section::before,
+        .section::after {
+          display: none;
+        }
+      }
+
       .section {
         position: relative;
         overflow: hidden;
@@ -130,7 +139,9 @@ export const HomeCateMenu = () => {
           <div className="absolute inset-0 bg-black bg-opacity-10 hover:bg-opacity-20 transition duration-300 rounded-lg"></div>
           <div className="relative flex flex-col justify-center items-center h-full text-white p-2">
             <div className="text-xl md:text-4xl font-bold mb-16 text-center">한우 투뿔 꽃등심 <br />부채살</div>
-            <button className="py-1 px-2 bg-black text-yellow-500 rounded hover:bg-gray-800 transition duration-300">소고기 바로가기</button>
+            <Link href="/products?category=cow">
+              <button className="py-1 px-2 md:py-2 md:px-4 bg-black text-yellow-500 rounded hover:bg-gray-800 transition duration-300">소고기 바로가기</button>
+            </Link>
           </div>
         </div>
         <div className="flex flex-col flex-1 gap-4">
@@ -140,7 +151,9 @@ export const HomeCateMenu = () => {
               <div className="relative flex flex-col justify-center items-center h-full text-white p-2">
                 <div className="text-md md:text-lg mb-8 font-bold text-center text-yellow-400">한돈 국내산</div>
                 <div className="text-xl md:text-2xl font-bold mb-12 text-center">🐷 생삼겹살 목살</div>
-                <button className="py-1 px-2 bg-black text-yellow-500 rounded hover:bg-gray-800 transition duration-300">돼지고기 바로가기</button>
+                <Link href="/products?category=pork">
+                  <button className="py-1 px-2 md:py-2 md:px-4 bg-black text-yellow-500 rounded hover:bg-gray-800 transition duration-300">돼지고기 바로가기</button>
+                </Link>
               </div>
             </div>
             <div className="relative section bg-cover bg-center bg-no-repeat flex-1 h-32 md:h-48 rounded-lg overflow-hidden" data-index="2" style={{backgroundImage: "linear-gradient(to left, #271a11, rgba(217, 217, 217, 0) 100%), url('/images/Rectangle 8.png')"}}>
@@ -148,7 +161,9 @@ export const HomeCateMenu = () => {
               <div className="relative flex flex-col justify-center items-center h-full text-white p-2">
                 <div className="text-md md:text-lg mb-8 font-bold text-center text-yellow-400">가장 신선한</div>
                 <div className="text-xl md:text-2xl font-bold mb-12 text-center">🥩 육회 & 육사시미</div>
-                <button className="py-1 px-2 bg-black text-yellow-500 rounded hover:bg-gray-800 transition duration-300">육회 바로가기</button>
+                <Link href="/products?category=cow&category_menu=육회/사시미">
+                  <button className="py-1 px-2 md:py-2 md:px-4 bg-black text-yellow-500 rounded hover:bg-gray-800 transition duration-300">육회 바로가기</button>
+                </Link>
               </div>
             </div>
           </div>
@@ -156,7 +171,9 @@ export const HomeCateMenu = () => {
             <div className="absolute inset-0 bg-black bg-opacity-10 hover:bg-opacity-20 transition duration-300 rounded-lg"></div>
             <div className="relative flex flex-col justify-center items-center h-full text-white p-2">
               <div className="text-xl md:text-2xl font-bold mb-12 text-center">🍲 고추장불고기 & 간장불고기 <br />제육볶음 주물럭 밀키트</div>
-              <button className="py-1 px-2 bg-black text-yellow-500 rounded hover:bg-gray-800 transition duration-300">밀키트 바로가기</button>
+              <Link href="/products?category=simple">
+                <button className="py-1 px-2 md:py-2 md:px-4 bg-black text-yellow-500 rounded hover:bg-gray-800 transition duration-300">밀키트 바로가기</button>
+              </Link>
             </div>
           </div>
         </div>
@@ -208,7 +225,7 @@ export const HomeBestMenu = ({products}: { products: Product[] }) => {
         </div>
         <div className="flex justify-between items-start mb-8 px-6">
           <div className="flex items-center space-x-2" style={animationStyle}>
-            <div className="text-4xl font-bold text-gray-700">🥇 베스트 상품</div>
+            <div className="text-4xl font-bold text-gray-700">베스트 상품🥇</div>
           </div>
           <div>
             <Link href="/">
@@ -233,8 +250,6 @@ export const HomeBestMenu = ({products}: { products: Product[] }) => {
     </section>
   )
 }
-
-
 
 export const HomeWhyUs = () => {
   const [isHovered, setIsHovered] = useState(false)

@@ -248,7 +248,7 @@ const MainMobileMenu = () => {
       PaperProps={{sx: {width: "100%"}}}
     >
       <Box className="p-8">
-        <nav className="flex items-center gap-3">
+        <nav className="gap-3">
           <Link href="/users/login">로그인</Link>
           <Link href="/users/sign-up">회원가입</Link>
           <span className="flex-1"></span>
@@ -258,7 +258,7 @@ const MainMobileMenu = () => {
         </nav>
         <SearchBar />
         <nav>
-          <ul className="flex items-center">
+          <ul className="items-center">
             <li>
               <Accordion>
                 <AccordionSummary>
