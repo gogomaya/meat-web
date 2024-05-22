@@ -91,7 +91,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
             className="product-item"
             style={{
               padding: "15px",
-              width: "calc(33.333% - 20px)", // Adjust this as needed
+              width: "calc(33.333% - 20px)",
               borderRadius: "15px",
               backgroundColor: "#f9f9f9",
               boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
@@ -141,7 +141,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
                     color: "#ff0000"
                   }}
                 >
-                  Sold out
+                Sold out
                 </span>
               )}
             </Link>
@@ -165,7 +165,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
                   fontSize: "0.8rem"
                 }}
               >
-                당일배송
+              당일배송
               </button>
               <button
                 className="product-button"
@@ -179,7 +179,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
                   fontSize: "0.8rem"
                 }}
               >
-                택배배송
+              택배배송
               </button>
               <button
                 className="product-button"
@@ -193,12 +193,16 @@ export const ProductsList = ({products}: { products: Product[] }) => {
                   fontSize: "0.8rem"
                 }}
               >
-                카드결제
+              카드결제
               </button>
             </div>
           </li>
         ))
-      ) : (null)}
+      ) : (
+        <div style={{width: "100%", textAlign: "center", padding: "20px"}}>
+        No products available.
+        </div>
+      )}
     </ol>
   )
 }
