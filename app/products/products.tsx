@@ -58,45 +58,147 @@ export const ProductsPagination = ({searchParams, total_rows}: {searchParams: Se
 }
 
 export const ProductsList = ({products}: { products: Product[] }) => {
-  const enlargeImage = (event: { currentTarget: { querySelector: (arg0: string) => { (): any; new(): any; style: { (): any; new(): any; transform: string } } } }) => {
-    event.currentTarget.querySelector("img").style.transform = "scale(1.01)"
-  }
-  const shrinkImage = (event: { currentTarget: { querySelector: (arg0: string) => { (): any; new(): any; style: { (): any; new(): any; transform: string } } } }) => {
-    event.currentTarget.querySelector("img").style.transform = "scale(1)"
+  const enlargeImage = (event: React.MouseEvent<HTMLLIElement>) => {
+    const img = event.currentTarget.querySelector("img") as HTMLElement
+    if (img) {
+      img.style.transform = "scale(1.01)"
+    }
   }
 
+  const shrinkImage = (event: React.MouseEvent<HTMLLIElement>) => {
+    const img = event.currentTarget.querySelector("img") as HTMLElement
+    if (img) {
+      img.style.transform = "scale(1)"
+    }
+  }
+
+  React.useEffect(() => {
+    const items = document.querySelectorAll(".product-item") as NodeListOf<HTMLElement>
+    items.forEach((item, index) => {
+      setTimeout(() => {
+        item.style.opacity = "1"
+        item.style.transform = "translateY(0)"
+      }, index * 100)
+    })
+  }, [])
+
   return (
-    <ol className="flex flex-wrap">
-      {products.map((product) => (
-        <li
-          key={product.product_pk}
-          className="p-1 w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
-          onMouseEnter={enlargeImage}
-          onMouseLeave={shrinkImage}
-        >
-          <Link
-            href={`/products/${product.product_pk}`}
-            className="relative flex items-center justify-center"
+    <ol style={{display: "flex", flexWrap: "wrap", gap: "20px", padding: "10px"}}>
+      {products.length > 0 ? (
+        products.map((product) => (
+          <li
+            key={product.product_pk}
+            className="product-item"
+            style={{
+              padding: "15px",
+              width: "calc(33.333% - 20px)", // Adjust this as needed
+              borderRadius: "15px",
+              backgroundColor: "#f9f9f9",
+              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+              transition: "transform 0.3s, opacity 0.3s",
+              opacity: 0,
+              transform: "translateY(20px)"
+            }}
+            onMouseEnter={enlargeImage}
+            onMouseLeave={shrinkImage}
           >
-            <Image
-              src={`/upload-images/products/${product.image_file_name}`}
-              alt={product.name}
-              width={0}
-              height={0}
-              priority
-              sizes="100vw"
-              className={`w-full aspect-square object-cover rounded-lg ${product.is_sold_out ? "opacity-30" : ""}`}
-            />
-            {product.is_sold_out ? (
-              <span className="absolute font-bold">Sold out</span>
-            ) : null}
-          </Link>
-          <p>
-            <Link href={`/products/${product.product_pk}`}>{product.name}</Link><br />
-            <strong>{product.price.toLocaleString()}원</strong>
-          </p>
-        </li>
-      ))}
+            <Link
+              href={`/products/${product.product_pk}`}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                position: "relative"
+              }}
+            >
+              <Image
+                src={`/upload-images/products/${product.image_file_name}`}
+                alt={product.name}
+                width={0}
+                height={0}
+                priority
+                sizes="100vw"
+                style={{
+                  width: "100%",
+                  aspectRatio: "1/1",
+                  objectFit: "cover",
+                  borderRadius: "10px",
+                  transform: "scale(1)",
+                  transition: "transform 0.3s",
+                  opacity: product.is_sold_out ? 0.3 : 1
+                }}
+              />
+              {product.is_sold_out && (
+                <span
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    fontWeight: "bold",
+                    fontSize: "1.2rem",
+                    color: "#ff0000"
+                  }}
+                >
+                  Sold out
+                </span>
+              )}
+            </Link>
+            <p style={{textAlign: "left", margin: "10px 0", fontSize: "1rem"}}>
+              <Link href={`/products/${product.product_pk}`} style={{color: "#333", textDecoration: "none"}}>
+                {product.name}
+              </Link>
+              <br />
+              <strong style={{color: "#000", fontSize: "1.1rem"}}>{product.price.toLocaleString()}원</strong>
+            </p>
+            <div style={{display: "flex", flexWrap: "wrap", gap: "10px"}}>
+              <button
+                className="product-button"
+                style={{
+                  padding: "5px 8px",
+                  backgroundColor: "#000",
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: "20px",
+                  cursor: "pointer",
+                  fontSize: "0.8rem"
+                }}
+              >
+                당일배송
+              </button>
+              <button
+                className="product-button"
+                style={{
+                  padding: "5px 8px",
+                  backgroundColor: "#000",
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: "20px",
+                  cursor: "pointer",
+                  fontSize: "0.8rem"
+                }}
+              >
+                택배배송
+              </button>
+              <button
+                className="product-button"
+                style={{
+                  padding: "5px 8px",
+                  backgroundColor: "#ffeb3b",
+                  color: "#000",
+                  border: "none",
+                  borderRadius: "20px",
+                  cursor: "pointer",
+                  fontSize: "0.8rem"
+                }}
+              >
+                카드결제
+              </button>
+            </div>
+          </li>
+        ))
+      ) : (null)}
     </ol>
   )
 }
