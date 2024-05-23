@@ -118,6 +118,7 @@ export const HomeCateMenu = () => {
       threshold: 0.1,
       rootMargin: "0px"
     }
+
     const observer = new IntersectionObserver((entries, observer) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -135,7 +136,8 @@ export const HomeCateMenu = () => {
   return (
     <section className="p-12 md:p-16">
       <div className="flex flex-col md:flex-row gap-4">
-        <div className="relative section bg-cover bg-center bg-no-repeat flex-1 h-64 md:h-auto rounded-lg overflow-hidden" data-index="0" style={{backgroundImage: "linear-gradient(to bottom, #271a11, rgba(0, 0, 0, 0) 67%), url('/images/Rectangle 6.png')"}}>
+        <div className="relative section flex-1 h-64 md:h-auto rounded-lg overflow-hidden" data-index="0">
+          <div className="bg-image absolute inset-0 bg-cover bg-center bg-no-repeat" style={{backgroundImage: "linear-gradient(to bottom, #271a11, rgba(0, 0, 0, 0) 67%), url('/images/Rectangle 6.png')"}}></div>
           <div className="absolute inset-0 bg-black bg-opacity-10 hover:bg-opacity-20 transition duration-300 rounded-lg"></div>
           <div className="relative flex flex-col justify-center items-center h-full text-white p-2">
             <div className="text-xl md:text-4xl font-bold mb-16 text-center">한우 투뿔 꽃등심 <br />부채살</div>
@@ -146,7 +148,8 @@ export const HomeCateMenu = () => {
         </div>
         <div className="flex flex-col flex-1 gap-4">
           <div className="flex flex-1 gap-4">
-            <div className="relative section bg-cover bg-center bg-no-repeat flex-1 h-32 md:h-48 rounded-lg overflow-hidden" data-index="1" style={{backgroundImage: "linear-gradient(to left, #271a11, rgba(217, 217, 217, 0) 100%), url('/images/Rectangle 10.png')"}}>
+            <div className="relative section flex-1 h-32 md:h-48 rounded-lg overflow-hidden" data-index="1">
+              <div className="bg-image absolute inset-0 bg-cover bg-center bg-no-repeat" style={{backgroundImage: "linear-gradient(to left, #271a11, rgba(217, 217, 217, 0) 100%), url('/images/Rectangle 10.png')"}}></div>
               <div className="absolute inset-0 bg-black bg-opacity-10 hover:bg-opacity-20 transition duration-300 rounded-lg"></div>
               <div className="relative flex flex-col justify-center items-center h-full text-white p-2">
                 <div className="text-md md:text-lg mb-8 font-bold text-center text-yellow-400">한돈 국내산</div>
@@ -156,7 +159,8 @@ export const HomeCateMenu = () => {
                 </Link>
               </div>
             </div>
-            <div className="relative section bg-cover bg-center bg-no-repeat flex-1 h-32 md:h-48 rounded-lg overflow-hidden" data-index="2" style={{backgroundImage: "linear-gradient(to left, #271a11, rgba(217, 217, 217, 0) 100%), url('/images/Rectangle 8.png')"}}>
+            <div className="relative section flex-1 h-32 md:h-48 rounded-lg overflow-hidden" data-index="2">
+              <div className="bg-image absolute inset-0 bg-cover bg-center bg-no-repeat" style={{backgroundImage: "linear-gradient(to left, #271a11, rgba(217, 217, 217, 0) 100%), url('/images/Rectangle 8.png')"}}></div>
               <div className="absolute inset-0 bg-black bg-opacity-10 hover:bg-opacity-20 transition duration-300 rounded-lg"></div>
               <div className="relative flex flex-col justify-center items-center h-full text-white p-2">
                 <div className="text-md md:text-lg mb-8 font-bold text-center text-yellow-400">가장 신선한</div>
@@ -167,7 +171,8 @@ export const HomeCateMenu = () => {
               </div>
             </div>
           </div>
-          <div className="relative section bg-cover bg-center bg-no-repeat flex-1 h-32 md:h-48 rounded-lg overflow-hidden" data-index="3" style={{backgroundImage: "linear-gradient(to left, #271a11, rgba(217, 217, 217, 0) 100%), url('/images/Rectangle 7.png')"}}>
+          <div className="relative section flex-1 h-32 md:h-48 rounded-lg overflow-hidden" data-index="3">
+            <div className="bg-image absolute inset-0 bg-cover bg-center bg-no-repeat" style={{backgroundImage: "linear-gradient(to left, #271a11, rgba(217, 217, 217, 0) 100%), url('/images/Rectangle 7.png')"}}></div>
             <div className="absolute inset-0 bg-black bg-opacity-10 hover:bg-opacity-20 transition duration-300 rounded-lg"></div>
             <div className="relative flex flex-col justify-center items-center h-full text-white p-2">
               <div className="text-xl md:text-2xl font-bold mb-12 text-center">🍲 고추장불고기 & 간장불고기 <br />제육볶음 주물럭 밀키트</div>
@@ -187,6 +192,12 @@ export const HomeCateMenu = () => {
         .fade-in {
           opacity: 1;
           transform: translateY(0);
+        }
+        .bg-image {
+          transition: transform 1.9s ease-in-out;
+        }
+        .section:hover .bg-image {
+          transform: scale(1.2);
         }
       `}</style>
     </section>

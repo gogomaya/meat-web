@@ -367,12 +367,12 @@ const MainBottom = () => {
       <div className="footer-inner flex flex-col md:flex-row justify-between items-center p-6 md:p-12 text-white" style={{backgroundColor: "transparent"}}>
         <div className="footer-left space-y-4">
           <div className="footer-menu-link space-x-4 text-lg">
-            <span className="footer-menu-content cursor-pointer hover:underline">회사소개</span>
-            <span className="footer-menu-content cursor-pointer hover:underline">이용안내</span>
-            <span className="footer-menu-content cursor-pointer hover:underline">이용약관</span>
-            <span className="footer-menu-content cursor-pointer hover:underline">개인정보처리방침</span>
+            <span className="footer-menu-content cursor-pointer hover:underline">회사소개</span><span>|</span>
+            <span className="footer-menu-content cursor-pointer hover:underline">이용안내</span><span>|</span>
+            <span className="footer-menu-content cursor-pointer hover:underline">이용약관</span><span>|</span>
+            <span className="footer-menu-content cursor-pointer hover:underline">개인정보처리방침 </span>
           </div>
-          <div className="footer-name text-2xl font-bold">
+          <div className="footer-name text-2xl font-bold flex justify-between items-center">
             <span>(주) 한솔축산</span>
           </div>
           <div className="footer-info text-sm leading-loose">
@@ -392,18 +392,25 @@ const MainBottom = () => {
               <span className="text-style-1 font-semibold">팩스</span> | 042-471-1534
             </span>
           </div>
+          <div className="footer-info-detail block">
+            <span className="text-style-1">
+              © 2024 한솔. All right reserved.
+            </span>
+          </div>
         </div>
-        <div className="footer-right mt-6 md:mt-0 flex justify-center w-full md:w-auto">
-          <Image
-            src="/images/logo.png"
-            alt="한솔축산 로고"
-            width={150}
-            height={150}
-            sizes="100vw"
-            className="w-32 h-32 md:w-48 md:h-48 cursor-pointer"
-            priority
-            onClick={scrollToTop}
-          />
+        <div className="footer-name text-2xl font-bold flex justify-between items-center">
+          <div className="footer-right mt-6 md:mt-0 flex justify-center w-full md:w-auto">
+            <Image
+              src="/images/logo.png"
+              alt="한솔축산 로고"
+              width={60}
+              height={60}
+              sizes="100vw"
+              className="w-20 h-20 md:w-24 md:h-24 cursor-pointer"
+              priority
+              onClick={scrollToTop}
+            />
+          </div>
         </div>
       </div>
     </section>

@@ -4,7 +4,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
 
 html, body {
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: "Noto Serif KR", "sans-serif";
   color: black;
   height: 100%;
 }
@@ -19,10 +19,10 @@ html, body {
   content: "";
   position: absolute;
   width: 100%;
-  height: 3px; /* 라인의 높이 조정 */
+  height: 3px;
   bottom: 0;
   left: 0;
-  background-color: #ff0000; /* 형광펜 밑줄의 색상 */
+  background-color: #ff0000;
   visibility: hidden;
   transform: scaleX(0);
   transition: all 0.2s;
