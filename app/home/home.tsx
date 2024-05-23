@@ -134,7 +134,7 @@ export const HomeCateMenu = () => {
   }, [])
 
   return (
-    <section className="p-12 md:p-16">
+    <section className="p-12 md:p-16 mx-8">
       <div className="flex flex-col md:flex-row gap-4">
         <div className="relative section flex-1 h-64 md:h-auto rounded-lg overflow-hidden" data-index="0">
           <div className="bg-image absolute inset-0 bg-cover bg-center bg-no-repeat" style={{backgroundImage: "linear-gradient(to bottom, #271a11, rgba(0, 0, 0, 0) 67%), url('/images/Rectangle 6.png')"}}></div>
@@ -194,10 +194,10 @@ export const HomeCateMenu = () => {
           transform: translateY(0);
         }
         .bg-image {
-          transition: transform 1.9s ease-in-out;
+          transition: transform 2s ease-in-out;
         }
         .section:hover .bg-image {
-          transform: scale(1.2);
+          transform: scale(1.15);
         }
       `}</style>
     </section>
@@ -272,7 +272,7 @@ export const HomeWhyUs = () => {
         backgroundImage: "url(\"/images/Bg.png\")"
       }}
     >
-      <div className="flex flex-col md:flex-row justify-between items-center">
+      <div className="flex flex-col md:flex-row justify-between items-center mx-12">
         <div className="flex flex-col space-y-4 md:w-1/2">
           <div className="why-inner text-xl font-extrabold text-yellow-400">WHY US?</div>
           <div className="why-inner text-4xl font-bold text-white">왜<span className="text-yellow-400">&apos;한솔축산&apos;</span>인가?</div>

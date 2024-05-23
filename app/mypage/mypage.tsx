@@ -4,7 +4,7 @@ import Image from "next/image"
 // 배송 리스트
 export const OrderList = () => {
   return (
-    <section>
+    <section className="mx-12 p-2">
       <Image
         src="/images/main-pledge.jpg"
         alt="Logo"

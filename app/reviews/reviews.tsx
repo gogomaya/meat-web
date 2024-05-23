@@ -217,7 +217,7 @@ export const PhotoReview = () => {
 
   return (
     <>
-      <section className="flex justify-between items-center mt-4">
+      <section className="flex justify-between items-center m-8 p-2">
         <FormControl className="w-full md:w-[50%] lg:w-[40%]">
           <InputLabel>카테고리를 선택해주세요</InputLabel>
           <Select
