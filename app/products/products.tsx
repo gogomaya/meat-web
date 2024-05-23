@@ -13,27 +13,31 @@ import _ from "lodash"
 export const ProductsSearch = ({products, searchParams}: {products: Product[], searchParams: SearchParams}) => {
   const router = useRouter()
   return (
-    <section className="flex justify-between items-center">
-      <span>상품이 모두<strong>{products.length}</strong>개 있습니다.</span>
-      <FormControl>
-        <InputLabel>상품정렬</InputLabel>
-        <Select
-          label="상품정렬"
-          className="w-32"
-          value={searchParams.orderColumn}
-          onChange={(event) => {
-            router.push("?" + new URLSearchParams({
-              ...searchParams,
-              page: "0",
-              orderColumn: String(event.target.value)
-            }))
-          }}
-        >
-          <MenuItem value="product_pk">신상품</MenuItem>
-          <MenuItem value="추천순">추천순</MenuItem>
-          <MenuItem value="판매량순">판매량순</MenuItem>
-        </Select>
-      </FormControl>
+    <section className="flex justify-between items-center mx-8 p-2 rounded-lg">
+      <span className="text-lg font-semibold">
+        상품이 모두 <strong>{products.length}</strong>개 있습니다.
+      </span>
+      <div className="flex-1 ml-8 p-2">
+        <FormControl className="w-48">
+          <InputLabel>상품정렬</InputLabel>
+          <Select
+            label="상품정렬"
+            className="w-full bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
+            value={searchParams.orderColumn}
+            onChange={(event) => {
+              router.push("?" + new URLSearchParams({
+                ...searchParams,
+                page: "0",
+                orderColumn: String(event.target.value)
+              }))
+            }}
+          >
+            <MenuItem value="product_pk">신상품</MenuItem>
+            <MenuItem value="추천순">추천순</MenuItem>
+            <MenuItem value="판매량순">판매량순</MenuItem>
+          </Select>
+        </FormControl>
+      </div>
     </section>
   )
 }
@@ -83,7 +87,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
   }, [])
 
   return (
-    <ol style={{display: "flex", flexWrap: "wrap", gap: "20px", padding: "10px"}}>
+    <ol className="m-8 p-2" style={{display: "flex", flexWrap: "wrap", gap: "20px", padding: "10px"}}>
       {products.length > 0 ? (
         products.map((product) => (
           <li
@@ -237,7 +241,7 @@ export const ProductsDetailContent = ({product}: { product: Product }) => {
   return (
     <div className="container mx-auto py-8">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 md:p-8">
-        <div className="relative" style={{border: "3px solid #4A4A4A", borderRadius: "10px"}}>
+        <div className="relative" style={{border: "3px solid #4A4A4A", borderRadius: "10px", overflow: "hidden"}}>
           <Image
             src={`/upload-images/products/${product.image_file_name}`}
             alt={product.name}
@@ -248,8 +252,7 @@ export const ProductsDetailContent = ({product}: { product: Product }) => {
             style={{
               width: "100%",
               aspectRatio: "1/1",
-              objectFit: "cover",
-              borderRadius: "10px"
+              objectFit: "cover"
             }}
           />
         </div>

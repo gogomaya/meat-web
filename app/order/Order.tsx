@@ -75,7 +75,7 @@ export const OrderDetailContent = ({
 
   const renderOrderItems = () => {
     return (
-      <table className="w-full p-4">
+      <table className="w-full p-4 mx-12">
         <thead>
           <tr>
             <th className="py-2">상품사진</th>
