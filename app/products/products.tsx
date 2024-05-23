@@ -2,7 +2,7 @@
 import {useRouter} from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
-import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, FormControl, InputLabel, MenuItem, Pagination, Select, Typography} from "@mui/material"
+import {Box, Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, FormControl, InputLabel, MenuItem, Pagination, Select, Typography} from "@mui/material"
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded"
 import * as React from "react"
 import ProductSwiper from "./[product_pk]/swiper"
@@ -207,10 +207,10 @@ export const ProductsList = ({products}: { products: Product[] }) => {
   )
 }
 
-export const ProductsDetailContent = ({product}: {product: Product}) => {
+export const ProductsDetailContent = ({product}: { product: Product }) => {
   const [quantity, setQuantity] = React.useState(1)
 
-  const handleQuantityChange = (event: { target: { value: string } }) => {
+  const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newQuantity = parseInt(event.target.value)
     if (!isNaN(newQuantity) && newQuantity > 0) {
       setQuantity(newQuantity)
@@ -234,125 +234,141 @@ export const ProductsDetailContent = ({product}: {product: Product}) => {
     e.stopPropagation()
   }
 
-
   return (
-    <>
-      <div className="container mx-auto py-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 p-4">
-          <div>
-            <ProductSwiper product={product} />
+    <div className="container mx-auto py-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 md:p-8">
+        <div className="relative" style={{border: "3px solid #4A4A4A", borderRadius: "10px"}}>
+          <Image
+            src={`/upload-images/products/${product.image_file_name}`}
+            alt={product.name}
+            width={0}
+            height={0}
+            priority
+            sizes="100vw"
+            style={{
+              width: "100%",
+              aspectRatio: "1/1",
+              objectFit: "cover",
+              borderRadius: "10px"
+            }}
+          />
+        </div>
+        <div>
+          <Typography variant="h4" gutterBottom style={{fontWeight: "bold", fontSize: "2.6rem"}}>
+            {product.name}
+          </Typography>
+          <Typography variant="body1" paragraph style={{marginBottom: "1rem"}}>
+            {product.description}
+          </Typography>
+          <div style={{marginBottom: "1rem"}}>
+            <span style={{marginRight: "10px", color: "#A51C30", fontWeight: "bold", fontSize: "2.6rem"}}>{product.price.toLocaleString()}원</span>
+            <div className="py-3" style={{display: "flex", flexWrap: "wrap", gap: "10px"}}>
+              <button
+                className="product-button"
+                style={{
+                  padding: "5px 8px",
+                  backgroundColor: "#000",
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: "20px",
+                  cursor: "pointer",
+                  fontSize: "0.8rem"
+                }}
+              >
+                당일배송
+              </button>
+              <button
+                className="product-button"
+                style={{
+                  padding: "5px 8px",
+                  backgroundColor: "#000",
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: "20px",
+                  cursor: "pointer",
+                  fontSize: "0.8rem"
+                }}
+              >
+                택배배송
+              </button>
+              <button
+                className="product-button"
+                style={{
+                  padding: "5px 8px",
+                  backgroundColor: "#ffeb3b",
+                  color: "#000",
+                  border: "none",
+                  borderRadius: "20px",
+                  cursor: "pointer",
+                  fontSize: "0.8rem"
+                }}
+              >
+                카드결제
+              </button>
+            </div>
+            <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
+            {product.origin && (
+              <>
+                <div className="flex items-center" style={{marginBottom: "0.5rem"}}>
+                  <div style={{marginRight: "10px"}}>원산지</div>
+                  <div>{product.origin}</div>
+                </div>
+                <div className="flex items-center" style={{marginBottom: "0.5rem"}}>
+                  <div style={{marginRight: "10px"}}>제품중량</div>
+                  <div>{product.weight}</div>
+                </div>
+                <div className="flex items-center" style={{marginBottom: "0.5rem"}}>
+                  <div style={{marginRight: "10px"}}>제품유형</div>
+                  <div>{product.type}</div>
+                </div>
+                <div className="flex items-center" style={{marginBottom: "0.5rem"}}>
+                  <div style={{marginRight: "10px"}}>부위</div>
+                  <div>{product.part}</div>
+                </div>
+                <div className="flex items-center" style={{marginBottom: "0.5rem"}}>
+                  <div style={{marginRight: "10px"}}>등급</div>
+                  <div>{product.grade}</div>
+                </div>
+                <div className="flex items-center" style={{marginBottom: "0.5rem"}}>
+                  <div style={{marginRight: "10px"}}>포장방법</div>
+                  <div>{product.etc}</div>
+                </div>
+              </>
+            )}
           </div>
+          <div style={{marginBottom: "1rem"}} className="flex gap-5 pb-5">
+            <Typography variant="body1" gutterBottom>
+              수량
+            </Typography>
+            <input
+              type="number"
+              value={quantity}
+              onChange={handleQuantityChange}
+              style={{width: "5rem", padding: "0.5rem", border: "1px solid #ccc", borderRadius: "5px"}}
+              min="1"
+            />
+          </div>
+          <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
           <div>
-            <Typography variant="h4" gutterBottom>
-              {product.name}
+            <Typography variant="h5" gutterBottom className="flex flex-col items-end" style={{marginBottom: "1rem"}}>
+            총금액: {(Number(product.price) * quantity).toLocaleString()}원
             </Typography>
-            <Divider className="my-4" sx={{border:"2px solid red", width: "115px"}}/>
-            <Typography variant="body1" gutterBottom>
-              {product.description}
-            </Typography>
-            <Typography variant="h5" gutterBottom>
-              가격: {product.price.toLocaleString()}원
-            </Typography>
-            <Typography variant="body1" gutterBottom>
-              {product.etc}
-            </Typography>
-            <Divider className="my-4" />
-            <table>
-              <tbody>
-                <tr>
-                  <td>{product.origin && <><CheckRoundedIcon /> 원산지:</>}</td>
-                  <td className="flex justify-end">{product.origin}</td>
-                </tr>
-                <tr>
-                  <td>{product.weight && <><CheckRoundedIcon /> 제품중량:</>}</td>
-                  <td className="flex justify-end">{product.weight}</td>
-                </tr>
-                <tr>
-                  <td>{product.type && <><CheckRoundedIcon /> 제품유형:</>}</td>
-                  <td className="flex justify-end">{product.type}</td>
-                </tr>
-                <tr>
-                  <td>{product.part && <><CheckRoundedIcon /> 부위:</>}</td>
-                  <td className="flex justify-end">{product.part}</td>
-                </tr>
-                <tr>
-                  <td>{product.per100g && <><CheckRoundedIcon /> 100g당:</>}</td>
-                  <td className="flex justify-end">{product.per100g}</td>
-                </tr>
-                <tr>
-                  <td>{product.grade && <><CheckRoundedIcon /> 등급:</>}</td>
-                  <td className="flex justify-center">{product.grade}</td>
-                </tr>
-                <tr>
-                  <td>{product.package && <><CheckRoundedIcon /> 포장방법:</>}</td>
-                  <td className="flex justify-end">{product.grade}</td>
-                </tr>
-              </tbody>
-            </table>
-
-            <div className="flex gap-5 pb-5">
-              <Typography variant="body1" gutterBottom>
-                <CheckRoundedIcon />수량
-              </Typography>
-              <input
-                type="number"
-                value={quantity}
-                onChange={handleQuantityChange}
-                className="w-24 p-1 border border-gray-300 rounded-md"
-                min="1"
-              />
-            </div>
-            <Divider className="my-4" />
-            <Typography variant="h5" gutterBottom className="flex flex-col items-end">
-              총금액: {(Number(product.price) * quantity).toLocaleString()}원
-            </Typography>
-            <Divider className="my-4" />
             <div className="flex flex-col items-end md:flex-row md:items-center md:justify-end md:space-x-4">
-              <CartOrderButton
-                product={product}
-                quantity={quantity}
-                type="CART"
-              >
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  className="btn"
-                >
-                  장바구니
+              <CartOrderButton product={product} quantity={quantity} type="CART">
+                <Button variant="contained" style={{backgroundColor: "#A51C30"}} className="btn">
+                장바구니
                 </Button>
               </CartOrderButton>
-              <CartOrderButton
-                product={product}
-                quantity={quantity}
-                type="ORDER"
-              >
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  className="btn"
-                >
-                  구매하기
+              <CartOrderButton product={product} quantity={quantity} type="ORDER">
+                <Button variant="contained" style={{backgroundColor: "#271A11"}} className="btn">
+                구매하기
                 </Button>
               </CartOrderButton>
-            </div>
-            <div className="flex flex-col items-end space-y-4 py-3">
-              <Link href="/order">
-                <Button>
-                  <Image
-                    src="/images/naver-pay-btn.png"
-                    alt="naver-login-btn"
-                    width={180}
-                    height={100}
-                    sizes="100vw"
-                    priority
-                  />
-                </Button>
-              </Link>
             </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

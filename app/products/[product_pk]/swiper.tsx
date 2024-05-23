@@ -33,7 +33,7 @@ export default function ProductSwiper({product}: {product: Product}) {
         src={`/upload-images/products/${product.image_file_name}`}
         alt="Logo"
         width={0}
-        height={200}
+        height={0}
         priority
         sizes="100vw"
         className="w-full"

@@ -389,7 +389,7 @@ const MainBottom = () => {
               <span className="text-style-1 font-semibold">이메일</span> | whddlrs1@naver.com
             </span>
             <span className="footer-info-detail block">
-              <span className="text-style-1 font-semibold">팩스</span> | 042-471-1534
+              <span className="text-style-1 font-semibold">전화</span> | 042-471-1534
             </span>
           </div>
           <div className="footer-info-detail block">
