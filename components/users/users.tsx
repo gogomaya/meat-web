@@ -1,5 +1,5 @@
 "use client"
-import {useState} from "react"
+import {useEffect, useState} from "react"
 import {useRouter} from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
@@ -18,6 +18,15 @@ const Users = ({user}: {user: User}) => {
   const handleTabClick = (tab: any) => {
     setActiveTab(tab)
   }
+  useEffect(() => {
+    const onMessage = (event: MessageEvent<any>) => {
+      if (event.data.loginPopup) {
+        setOpen("login")
+      }
+    }
+    window.addEventListener("message", onMessage)
+    return () => window.removeEventListener("message", onMessage)
+  }, [])
   return (
     <div style={{display: "flex", alignItems: "center"}}>
       <Link className="text-red-100" href="" onClick={() => setOpen(user && user.user_pk ? "logout" : "login")}>

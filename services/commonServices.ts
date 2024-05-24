@@ -27,6 +27,9 @@ export const commonServices = {
       headers: {"content-type": "text/html"}
     })
   },
+  ssrCsr: () => {
+    return typeof window === "undefined" ? process.env.NEXT_PUBLIC_URL : ""
+  },
   categoriesMenu: (): {cow: string[], pork: string[], simple: string[]} => {
     return {
       cow: [

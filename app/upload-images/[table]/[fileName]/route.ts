@@ -7,7 +7,8 @@ export const GET = async (_: NextRequest,
   context: {params: {table: string, fileName: string}}
 ) => {
   try {
-    const table = context.params.table === "products" ? "products" : "boards" as Table
+    const table = context.params.table === "products" ? "products"
+      : context.params.table === "boards" ? "boards" : "reviews" as Table
     const fileName = context.params.fileName
     const headers = new Headers()
     headers.append("Content-Disposition", `filename=${encodeURIComponent(fileName)}`)

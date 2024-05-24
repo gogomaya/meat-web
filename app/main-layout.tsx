@@ -29,7 +29,11 @@ const MainLayout = ({
       return cartProducts.length
     }
     setCartProductsLength(getCartProducts())
-
+    const onMessage = (event: MessageEvent<any>) => {
+      if (event.data.cartProductsLength) {
+        setCartProductsLength(getCartProducts())
+      }
+    }
     const handleScroll = () => {
       const scrollPosition = window.scrollY
       const headerHeight = document.getElementById("header")?.clientHeight || 0
@@ -37,10 +41,10 @@ const MainLayout = ({
       const opacity = scrollPosition === 0 ? 1 : maxOpacity
       setHeaderOpacity(opacity)
     }
-
+    window.addEventListener("message", onMessage)
     window.addEventListener("scroll", handleScroll)
-
     return () => {
+      window.removeEventListener("message", onMessage)
       window.removeEventListener("scroll", handleScroll)
     }
   }, [])
