@@ -40,7 +40,6 @@ export const PATCH = async (
   context: {params: {review_pk: number}}
 ) => {
   await loginCheck(true)
-  const searchParams = request.nextUrl.searchParams
   const mysql = await mysql2Pool()
   const review = {} as EmptyObject
   const formData = await request.formData()
@@ -58,7 +57,7 @@ export const PATCH = async (
     "contents"
   ]
   await mysql.execute(`
-    update  reviews
+    update reviews
     set
       ${columns.map((column) => `${column} = ?`).join(", ")}
     where

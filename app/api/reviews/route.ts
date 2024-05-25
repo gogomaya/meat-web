@@ -23,41 +23,43 @@ export const GET = async (request: NextRequest) => {
     ("" = ? or product_pk = ?)
     and ("" = ? or contents like concat("%", ?, "%"))
 `, [product_pk, product_pk, query, query])
-  const [rows]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
+  const [reviews]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
     select
       r.*,
-      ifnull(u.name, u.nickname) as user_name,
-      p.name as product_name,
-      if(isnull(ri.review_pk), '[]', json_arrayagg(
-        json_object(
-          'review_image_pk', ri.review_image_pk, 'file_name', ri.file_name
-        )
-      )) as review_images
+      (select ifnull(u.name, u.nickname) from users u where u.user_pk = r.user_pk) as user_name,
+      (select name from products p where p.product_pk = r.product_pk) as product_name
     from reviews r
-    inner join users u
-    on
-      r.user_pk = u.user_pk
-    inner join products p
-    on
-      r.product_pk = p.product_pk
-    left outer join reviews_images ri
-    on
-      r.review_pk = ri.review_pk
     where
       ("" = ? or r.product_pk = ?)
       and ("" = ? or r.contents like concat("%", ?, "%"))
-    group by r.review_pk
     order by ${orderColumn} ${orderDirection}
     limit ?, ?
   `, [product_pk, product_pk, query, query, page, rowsPerPage])
+  for (const review of reviews) {
+    // reviews_images
+    const [reviews_images]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
+    select
+      review_image_pk, file_name
+    from reviews_images
+    where
+      review_pk = ?
+    order by review_image_pk asc
+    `, [review.review_pk])
+    review.reviews_images = reviews_images
+    // reviews_replies
+    const [reviews_replies]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
+    select
+      rr.*,
+      (select ifnull(u.name, u.nickname) from users u where u.user_pk = rr.user_pk) as user_name
+    from reviews_replies rr
+    where
+      review_pk = ?
+    order by review_reply_pk desc
+    `, [review.review_pk])
+    review.reviews_replies = reviews_replies
+  }
   return NextResponse.json({
-    reviews: rows.map((row) => {
-      row.review_images = JSON.parse(row.review_images)
-      row.review_images.forEach((image_file_name: string, index: number) => {
-        row.review_images[index] = JSON.parse(image_file_name)
-      })
-      return row
-    }),
+    reviews,
     total_rows: total_rows[0].total_rows
   })
 }

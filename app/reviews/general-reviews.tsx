@@ -4,6 +4,7 @@ import {Button, Dialog, DialogActions, DialogContent, Rating, TextField, Textare
 import CancelIcon from "@mui/icons-material/Cancel"
 import {FaRegThumbsUp, FaRegThumbsDown} from "react-icons/fa"
 import Image from "next/image"
+import {GeneralReviewsReplies} from "./general-reviews-replies"
 import {ResponseApi} from "@/types/commonTypes"
 import {Product} from "@/types/productsTypes"
 import {User} from "@/types/usersTypes"
@@ -80,7 +81,7 @@ export const GeneralReview = ({
         </dl>
       </div>
       <div className="px-2">
-        {review.review_images?.map((review_image) => (
+        {review.reviews_images?.map((review_image) => (
           <span
             key={review_image.review_image_pk}
             className="p-2 inline-block h-[166px]"
@@ -113,8 +114,8 @@ export const GeneralReview = ({
           />
           <span>싫어요</span>
         </div>
-        {/* <span>{likes}</span> */}
       </div>
+      <GeneralReviewsReplies user={user} product={product} review={review} />
     </div>
   )
 }
@@ -204,11 +205,14 @@ const GeneralReviewsForm = ({
         review.review_pk === 0 ? "상품 리뷰가 등록 되었습니다." : "상품 리뷰가 수정 되었습니다."
       )
       await reviewsList()
+      if (review.review_pk === 0) {
+        reviewForm.reset()
+      }
     }
     backdrop.close()
   }
   const reviewsDelete = async () => {
-    if (!confirm("삭제 하시겠습니까?")) {
+    if (!confirm("상품 리뷰를 삭제 하시겠습니까?")) {
       return
     }
     backdrop.open()
@@ -268,9 +272,9 @@ const GeneralReviewsForm = ({
             placeholder="리뷰를 작성해 주세요. (5자 이상)"
             {...register("contents")}
           ></TextareaAutosize>
-          {review.review_images?.length ? (
+          {review.reviews_images?.length ? (
             <div className="mt-2 px-2">
-              {review.review_images?.map((review_image) => (
+              {review.reviews_images?.map((review_image) => (
                 <span
                   key={review_image.review_image_pk}
                   className="p-2 relative inline-block h-[166px]"
@@ -318,7 +322,7 @@ const GeneralReviewsForm = ({
             닫기
           </Button>
           {review.review_pk ? (
-            <Button onClick={reviewsDelete} color="primary" autoFocus>
+            <Button onClick={reviewsDelete} color="primary">
               삭제하기
             </Button>
           ) : null}

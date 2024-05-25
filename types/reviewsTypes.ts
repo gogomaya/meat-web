@@ -8,16 +8,29 @@ export interface Review {
   contents: string
   created_at?: string
   images?: File[]
-  review_images?: ReviewImage[]
+  reviews_images?: ReviewsImage[]
+  reviews_replies?: ReviewsReply[]
   product_name?: string
   user_name?: string
 }
 
-export interface ReviewImage {
+export interface ReviewsImage {
   review_image_pk: number
   file_name: string
 }
 
+export interface ReviewsReply {
+  review_pk: number
+  review_reply_pk: number
+  user_pk: number
+  contents: string
+  user_name?: string
+}
+
 export interface ReviewsSearchParams extends SearchParams {
   product_pk: number
+}
+
+export interface ReviewsRepliesSearchParams extends SearchParams {
+  review_pk: number
 }
