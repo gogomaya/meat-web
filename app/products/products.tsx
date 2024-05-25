@@ -61,6 +61,25 @@ export const ProductsPagination = ({searchParams, total_rows}: {searchParams: Se
   )
 }
 
+export const ProductSubtitle = () => {
+  return (
+    <div>
+      <h2 className="flex justify-center text-red-100"
+        style={{
+          backgroundImage: "url('/images/Bg.png')",
+          backgroundPosition: "center calc(10% - 620px)",
+          backgroundRepeat: "repeat",
+          backgroundSize: "cover",
+          textAlign: "center",
+          minHeight: "200px",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center"
+        }}>상품상세</h2>
+    </div>
+  )
+}
+
 export const ProductsList = ({products}: { products: Product[] }) => {
   const enlargeImage = (event: React.MouseEvent<HTMLLIElement>) => {
     const img = event.currentTarget.querySelector("img") as HTMLElement
@@ -87,7 +106,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
   }, [])
 
   return (
-    <ol className="m-8 p-2" style={{display: "flex", flexWrap: "wrap", gap: "20px", padding: "10px"}}>
+    <ol className="m-8 p-2" style={{display: "flex", flexWrap: "wrap", gap: "30px", padding: "10px"}}>
       {products.length > 0 ? (
         products.map((product) => (
           <li
@@ -240,8 +259,8 @@ export const ProductsDetailContent = ({product}: { product: Product }) => {
 
   return (
     <div className="container mx-auto py-8">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 md:p-8">
-        <div className="relative" style={{border: "3px solid #4A4A4A", borderRadius: "10px", overflow: "hidden"}}>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 p-4 md:p-8">
+        <div className="relative">
           <Image
             src={`/upload-images/products/${product.image_file_name}`}
             alt={product.name}
@@ -252,9 +271,10 @@ export const ProductsDetailContent = ({product}: { product: Product }) => {
             style={{
               width: "100%",
               aspectRatio: "1/1",
-              objectFit: "cover"
-            }}
-          />
+              objectFit: "cover",
+              border: "3px solid #4A4A4A",
+              borderRadius: "10px"
+            }} />
         </div>
         <div>
           <Typography variant="h4" gutterBottom style={{fontWeight: "bold", fontSize: "2.6rem"}}>
@@ -278,7 +298,7 @@ export const ProductsDetailContent = ({product}: { product: Product }) => {
                   fontSize: "0.8rem"
                 }}
               >
-                당일배송
+                  당일배송
               </button>
               <button
                 className="product-button"
@@ -292,7 +312,7 @@ export const ProductsDetailContent = ({product}: { product: Product }) => {
                   fontSize: "0.8rem"
                 }}
               >
-                택배배송
+                  택배배송
               </button>
               <button
                 className="product-button"
@@ -306,65 +326,62 @@ export const ProductsDetailContent = ({product}: { product: Product }) => {
                   fontSize: "0.8rem"
                 }}
               >
-                카드결제
+                  카드결제
               </button>
             </div>
             <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
             {product.origin && (
               <>
                 <div className="flex items-center" style={{marginBottom: "0.5rem"}}>
-                  <div style={{marginRight: "10px"}}>원산지</div>
-                  <div>{product.origin}</div>
+                  <div style={{marginRight: "20px", flex: "0 0 100px"}}>원산지</div>
+                  <div style={{flexGrow: 1}}>{product.origin}</div>
                 </div>
                 <div className="flex items-center" style={{marginBottom: "0.5rem"}}>
-                  <div style={{marginRight: "10px"}}>제품중량</div>
-                  <div>{product.weight}</div>
+                  <div style={{marginRight: "20px", flex: "0 0 100px"}}>제품중량</div>
+                  <div style={{flexGrow: 1}}>{product.weight}</div>
                 </div>
                 <div className="flex items-center" style={{marginBottom: "0.5rem"}}>
-                  <div style={{marginRight: "10px"}}>제품유형</div>
-                  <div>{product.type}</div>
+                  <div style={{marginRight: "20px", flex: "0 0 100px"}}>제품유형</div>
+                  <div style={{flexGrow: 1}}>{product.type}</div>
                 </div>
                 <div className="flex items-center" style={{marginBottom: "0.5rem"}}>
-                  <div style={{marginRight: "10px"}}>부위</div>
-                  <div>{product.part}</div>
+                  <div style={{marginRight: "20px", flex: "0 0 100px"}}>부위</div>
+                  <div style={{flexGrow: 1}}>{product.part}</div>
                 </div>
                 <div className="flex items-center" style={{marginBottom: "0.5rem"}}>
-                  <div style={{marginRight: "10px"}}>등급</div>
-                  <div>{product.grade}</div>
+                  <div style={{marginRight: "20px", flex: "0 0 100px"}}>등급</div>
+                  <div style={{flexGrow: 1}}>{product.grade}</div>
                 </div>
                 <div className="flex items-center" style={{marginBottom: "0.5rem"}}>
-                  <div style={{marginRight: "10px"}}>포장방법</div>
-                  <div>{product.etc}</div>
+                  <div style={{marginRight: "20px", flex: "0 0 100px"}}>포장방법</div>
+                  <div style={{flexGrow: 1}}>{product.etc}</div>
                 </div>
               </>
             )}
           </div>
-          <div style={{marginBottom: "1rem"}} className="flex gap-5 pb-5">
-            <Typography variant="body1" gutterBottom>
-              수량
-            </Typography>
+          <div style={{marginBottom: "1rem"}} className="flex items-center gap-4 pb-5">
+            <div style={{flex: "0 0 100px"}}>수량</div>
             <input
               type="number"
               value={quantity}
               onChange={handleQuantityChange}
-              style={{width: "5rem", padding: "0.5rem", border: "1px solid #ccc", borderRadius: "5px"}}
-              min="1"
-            />
+              style={{width: "5rem", height: "2rem", padding: "0.5rem", border: "1px solid #ccc", borderRadius: "5px"}}
+              min="1" />
           </div>
           <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
           <div>
             <Typography variant="h5" gutterBottom className="flex flex-col items-end" style={{marginBottom: "1rem"}}>
-            총금액: {(Number(product.price) * quantity).toLocaleString()}원
+                총금액: {(Number(product.price) * quantity).toLocaleString()}원
             </Typography>
             <div className="flex flex-col items-end md:flex-row md:items-center md:justify-end md:space-x-4">
               <CartOrderButton product={product} quantity={quantity} type="CART">
-                <Button variant="contained" style={{backgroundColor: "#A51C30"}} className="btn">
-                장바구니
+                <Button variant="contained" style={{backgroundColor: "#A51C30", width: "100%"}} className="btn">
+                    장바구니
                 </Button>
               </CartOrderButton>
               <CartOrderButton product={product} quantity={quantity} type="ORDER">
-                <Button variant="contained" style={{backgroundColor: "#271A11"}} className="btn">
-                구매하기
+                <Button variant="contained" style={{backgroundColor: "#271A11", width: "100%"}} className="btn">
+                    구매하기
                 </Button>
               </CartOrderButton>
             </div>

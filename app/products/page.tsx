@@ -50,7 +50,7 @@ const Products = async (props: {
           <h2 className="flex justify-center text-red-100 py-8"
             style={{
               backgroundImage: "url('/images/Bg.png')",
-              backgroundPosition: "center",
+              backgroundPosition: "center calc(10% - 620px)",
               backgroundRepeat: "repeat",
               backgroundSize: "cover",
               textAlign: "center",

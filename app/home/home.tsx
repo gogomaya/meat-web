@@ -187,7 +187,7 @@ export const HomeCateMenu = () => {
         .section {
           opacity: 0;
           transform: translateY(50px);
-          transition: opacity 1s ease-out, transform 1s ease-out;
+          transition: opacity 2s ease-out, transform 1s ease-out;
         }
         .fade-in {
           opacity: 1;
@@ -197,7 +197,7 @@ export const HomeCateMenu = () => {
           transition: transform 2s ease-in-out;
         }
         .section:hover .bg-image {
-          transform: scale(1.15);
+          transform: scale(1.13);
         }
       `}</style>
     </section>
