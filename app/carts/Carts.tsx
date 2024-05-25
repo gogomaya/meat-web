@@ -27,7 +27,7 @@ export const CartsDetailContent = () => {
   }
   return (
     <>
-      <div className="flex flex-col py-4">
+      <div className="flex flex-col py-4 m-8 p-2">
         <div className="my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 py-4">
           <div className="py-4 align-middle inline-block min-w-full sm:px-6 lg:px-8">
             <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
@@ -149,7 +149,7 @@ export const CartsDetailContent = () => {
           </Typography>
         </div>
       </div>
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between md:space-x-4">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between md:space-x-4 m-8 p-2">
         <Button
           variant="contained"
           color="secondary"
@@ -198,7 +198,7 @@ export const CartsDetailContent = () => {
           </Dialog>
         </div>
       </div>
-      <div className="flex flex-col items-end space-y-4 py-3">
+      <div className="flex flex-col items-end space-y-4 py-3 m-8">
         <Button
           variant="contained"
           color="primary"

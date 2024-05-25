@@ -1,10 +1,10 @@
 import React, {useState} from "react"
 import {loginCheck} from "@/app/admin/page"
 import Divider from "@mui/material/Divider"
-import {ProductDetail, ProductsDetailContent, ShipDetail, NavDetail} from "../products"
+import {ProductDetail, ProductsDetailContent, ShipDetail, NavDetail, ProductSubtitle} from "../products"
 import {productsServices} from "@/services/productsServices"
 import MainLayout from "@/app/main-layout"
-import {GeneralReview, PhotoReview} from "@/app/reviews/reviews"
+import {GeneralReview, PhotoReview, ProductDetailReview} from "@/app/reviews/reviews"
 import {ResponseApi} from "@/types/commonTypes"
 import {BoardsList} from "@/app/boards/boards"
 // import Boards from "@/app/boards/page"
@@ -18,7 +18,8 @@ const Products = async (props: {
   return (
     <MainLayout user={user}>
       <div className="py-6"></div>
-      <div className="py-8">
+      <div>
+        <ProductSubtitle />
         <ProductsDetailContent product={product} />
         <NavDetail />
         {/* 상품 상세 정보 */}
@@ -26,7 +27,7 @@ const Products = async (props: {
         {/* 리뷰 */}
         <div id="review2" className="mx-16 px-2">
           {/* <GeneralReview {{title, content, likes, rating}}/> */}
-          <PhotoReview />
+          <ProductDetailReview />
           {/* <GeneralReview title="" content="" likes={0} rating={0} /> */}
         </div>
         <Divider className="mx-16 px-2" style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />

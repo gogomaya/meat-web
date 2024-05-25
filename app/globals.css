@@ -1,12 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
 
 html, body {
   font-family: "Noto Serif KR", "sans-serif";
   color: black;
   height: 100%;
+}
+
+@font-face {
+  font-family: "Noto Serif KR", "sans-serif";
+  color: black;
+  height: 100%;
+  font-display: block;
+  src: local("NotoSerifKR-Regular"), url("/fonts/NotoSerifKR-Regular.ttf") format("ttf");
 }
 
 .highlight-underline {

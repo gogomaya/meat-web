@@ -1,5 +1,5 @@
 "use client"
-import {Avatar, Button, Card, CardActions, CardContent, CardHeader, CardMedia, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, IconButton, InputBase, InputLabel, MenuItem, Pagination, Select, Typography} from "@mui/material"
+import {Avatar, Button, Card, CardActions, CardContent, CardHeader, CardMedia, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, Grid, IconButton, InputBase, InputLabel, MenuItem, Pagination, Select, Typography} from "@mui/material"
 import * as React from "react"
 import ShareIcon from "@mui/icons-material/Share"
 import FavoriteIcon from "@mui/icons-material/Favorite"
@@ -10,6 +10,7 @@ import {FaRegThumbsUp, FaRegThumbsDown} from "react-icons/fa"
 import Image from "next/image"
 import CheckCircleIcon from "@mui/icons-material/CheckCircle"
 import StarIcon from "@mui/icons-material/Star"
+import LinearProgress from "@mui/material"
 
 export const reviews = [
   {
@@ -194,6 +195,89 @@ export const MonthlyBestReview = () => {
         ))}
       </ol>
     </>
+  )
+}
+
+export const ProductDetailReview = () => {
+  const reviews = [
+    {
+      name: "Emily Selman",
+      rating: 4,
+      comment: "This is the bag of my dreams. I took it on my last vacation and was able to fit an absurd amount of snacks for the many long and hungry flights.",
+      imageUrl: "/images/1.jpg"
+    },
+    {
+      name: "Hector Gibbons",
+      rating: 5,
+      comment: "Before getting the Ruck Snack, I struggled my whole life with pulverized snacks, endless crumbs, and other heartbreaking snack catastrophes. Now, I can stow my snacks with confidence and style!",
+      imageUrl: "/images/1.jpg"
+    },
+    {
+      name: "Mark Edwards",
+      rating: 5,
+      comment: "I love how versatile this bag is. It can hold anything ranging from cookies that come in trays to cookies that come in tins.",
+      imageUrl: "/images/1.jpg"
+    },
+    {
+      name: "Mark Edwards",
+      rating: 5,
+      comment: "I love how versatile this bag is. It can hold anything ranging from cookies that come in trays to cookies that come in tins.",
+      imageUrl: "/images/1.jpg"
+    }
+  ]
+
+  const reviewStats = {
+    total: 1624,
+    fiveStars: 63,
+    fourStars: 10,
+    threeStars: 6,
+    twoStars: 12,
+    oneStar: 9
+  }
+
+  return (
+    <div className="p-4 bg-white">
+      <Typography variant="h4" component="h2" className="font-bold mb-4">
+        Customer Reviews
+      </Typography>
+
+      <div className="mb-6">
+        {Object.entries(reviewStats).slice(1).map(([key, val], index) => (
+          <div key={index} className="flex items-center">
+            <Typography variant="body1" className="w-24">
+              {key.replace("Stars", " Stars")}
+            </Typography>
+            {/* <LinearProgress variant="determinate" value={val} className="flex-grow mx-2" /> */}
+            <Typography variant="body2">{val}%</Typography>
+          </div>
+        ))}
+      </div>
+      <Grid container spacing={2}>
+        {reviews.map((review, index) => (
+          <Grid item xs={12} sm={6} md={3} key={index}>
+            <Card variant="outlined" className="h-full">
+              <CardContent>
+                {/* <img src={review.imageUrl} alt={review.name} className="w-16 h-16 rounded-full" /> */}
+                <Typography variant="h5" component="h3" className="font-bold mt-2">
+                  {review.name}
+                </Typography>
+                <div className="flex items-center mt-1">
+                  {Array.from({length: review.rating}, (_, i) => (
+                    <StarIcon key={i} className="text-yellow-400" />
+                  ))}
+                </div>
+                <Typography variant="body2" className="mt-2">
+                  {review.comment}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+      <Button variant="outlined" className="mt-4">
+        Write a review
+      </Button>
+    </div>
   )
 }
 
