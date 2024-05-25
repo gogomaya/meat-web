@@ -18,6 +18,8 @@ const Home = async () => {
     <MainLayout user={user}>
       <div className="w-full">
         <h2>마이페이지</h2>
+        <h2>마이페이지</h2>
+        <h2>마이페이지</h2>
         {/* 주문목록 */}
         <OrderList />
         {/* 취소/반품/환불 내역 */}

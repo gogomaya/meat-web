@@ -49,7 +49,7 @@ const MainLayout = ({
     <div className="mx-auto">
       <header
         id="header"
-        className="top-0 z-20 bg-cover bg-center bg-opacity-90 w-full flex justify-center items-center px-4 py-4 md:py-8 md:px-12 text-white transition-opacity duration-300"
+        className="sticky top-0 z-20 bg-cover bg-center bg-opacity-90 w-full flex justify-center items-center px-4 py-4 md:py-8 md:px-12 text-white transition-opacity duration-300"
         style={{backgroundImage: "url('/images/Bg.png')", backgroundPosition: "center calc(50% - 235px)", opacity: headerOpacity}}
       >
         <MainMobileMenu />
