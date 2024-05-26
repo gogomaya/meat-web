@@ -16,11 +16,11 @@ import {toastError, toastSuccess} from "@/components/common/Toast"
 export const GeneralReviewsReply = ({
   user,
   reviews_reply,
-  reviewsRepliesList
+  reviewsRepliesRead
 }: {
   user: User
   reviews_reply: ReviewsReply
-  reviewsRepliesList: Function
+  reviewsRepliesRead: Function
 }) => {
   const [open, setOpen] = useState(false)
   useEffect(() => {
@@ -47,7 +47,7 @@ export const GeneralReviewsReply = ({
       </div>
       <dl className="sm:divide-y sm:divide-gray-200">
         {open ? (
-          <GeneralReviewsRepliesForm user={user} reviews_reply={reviews_reply} reviewsRepliesList={reviewsRepliesList} />
+          <GeneralReviewsRepliesForm user={user} reviews_reply={reviews_reply} reviewsRepliesRead={reviewsRepliesRead} />
         ) : (
           <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
             <div
@@ -75,11 +75,11 @@ export const GeneralReviewsReplies = ({
     }
   })
   reviewsReplyForm.watch("reviews_replies")
-  const reviewsRepliesList = async () => {
+  const reviewsRepliesRead = async () => {
     const reviewsRepliesSearchParams = {
       review_pk: review.review_pk
     } as ReviewsRepliesSearchParams
-    const reviewsRepliesResponse: ResponseApi = await reviewsServices.reviewsRepliesList(reviewsRepliesSearchParams)
+    const reviewsRepliesResponse: ResponseApi = await reviewsServices.reviewsRepliesRead(reviewsRepliesSearchParams)
     reviewsReplyForm.setValue("reviews_replies", reviewsRepliesResponse.data.reviews_replies)
   }
   return (
@@ -98,7 +98,7 @@ export const GeneralReviewsReplies = ({
             key={reviews_reply.review_reply_pk}
             user={user}
             reviews_reply={reviews_reply}
-            reviewsRepliesList={reviewsRepliesList}
+            reviewsRepliesRead={reviewsRepliesRead}
           />
         ))}
         <GeneralReviewsRepliesForm
@@ -109,7 +109,7 @@ export const GeneralReviewsReplies = ({
             user_pk: user.user_pk,
             contents: ""
           }}
-          reviewsRepliesList={reviewsRepliesList}
+          reviewsRepliesRead={reviewsRepliesRead}
         />
       </div>
     </div>
@@ -119,11 +119,11 @@ export const GeneralReviewsReplies = ({
 const GeneralReviewsRepliesForm = ({
   user,
   reviews_reply,
-  reviewsRepliesList
+  reviewsRepliesRead
 }: {
   user: User
   reviews_reply: ReviewsReply
-  reviewsRepliesList: Function
+  reviewsRepliesRead: Function
 }) => {
   const [open, setOpen] = useState(!!reviews_reply.review_reply_pk)
   const reviewsReplyForm = useForm<ReviewsReply>({
@@ -149,7 +149,7 @@ const GeneralReviewsRepliesForm = ({
       toastSuccess(
         reviews_reply.review_reply_pk === 0 ? "댓글이 등록 되었습니다." : "댓글이 수정 되었습니다."
       )
-      await reviewsRepliesList()
+      await reviewsRepliesRead()
       if (reviews_reply.review_reply_pk === 0) {
         reviewsReplyForm.reset()
       }
@@ -167,7 +167,7 @@ const GeneralReviewsRepliesForm = ({
     } else {
       setOpen(false)
       toastSuccess("댓글이 삭제 되었습니다.")
-      await reviewsRepliesList()
+      await reviewsRepliesRead()
     }
     backdrop.close()
   }

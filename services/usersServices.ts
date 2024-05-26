@@ -14,7 +14,7 @@ export const usersServices = {
       return {error}
     }
   },
-  usersList: async (loginChecked: LoginChecked, searchParams: SearchParams): Promise<ResponseApi> => {
+  usersRead: async (loginChecked: LoginChecked, searchParams: SearchParams): Promise<ResponseApi> => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/users?` + new URLSearchParams({
         ...searchParams

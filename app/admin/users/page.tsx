@@ -13,7 +13,7 @@ const AdminUsers = async (props: {searchParams: SearchParams}) => {
     orderDirection: props.searchParams.orderDirection || "desc",
     query: props.searchParams.query || ""
   } as SearchParams
-  const response: ResponseApi = await usersServices.usersList(loginChecked, searchParams)
+  const response: ResponseApi = await usersServices.usersRead(loginChecked, searchParams)
   return (
     <AdminLayout>
       <div></div>

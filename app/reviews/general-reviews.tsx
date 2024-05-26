@@ -21,12 +21,12 @@ export const GeneralReview = ({
   user,
   product,
   review,
-  reviewsList
+  reviewsRead
 }: {
   user: User
   product?: Product
   review: Review
-  reviewsList: Function
+  reviewsRead: Function
 }) => {
   const [liked, setLiked] = React.useState(false)
   const [disliked, setDisliked] = React.useState(false)
@@ -55,7 +55,7 @@ export const GeneralReview = ({
             {review.user_name} - {moment(review.created_at).format("YYYY. MM. DD")}
           </p>
           {review.user_pk === user.user_pk ? (
-            <GeneralReviewsForm user={user} review={review} reviewsList={reviewsList} />
+            <GeneralReviewsForm user={user} review={review} reviewsRead={reviewsRead} />
           ) : null}
         </div>
         <div className="mt-4 flex items-center">
@@ -124,11 +124,11 @@ export const GeneralReviews = ({
     }
   })
   reviewForm.watch("reviews")
-  const reviewsList = async () => {
+  const reviewsRead = async () => {
     const reviewsSearchParams = {
       product_pk: product?.product_pk
     } as ReviewsSearchParams
-    const reviewsResponse: ResponseApi = await reviewsServices.reviewsList(reviewsSearchParams)
+    const reviewsResponse: ResponseApi = await reviewsServices.reviewsRead(reviewsSearchParams)
     reviewForm.setValue("reviews", reviewsResponse.data.reviews)
   }
   return (
@@ -143,7 +143,7 @@ export const GeneralReviews = ({
             grade: 5,
             contents: ""
           }}
-          reviewsList={reviewsList}
+          reviewsRead={reviewsRead}
         />
       ) : null}
       {reviewForm.getValues("reviews").map((review: Review) => (
@@ -152,7 +152,7 @@ export const GeneralReviews = ({
           user={user}
           product={product}
           review={review}
-          reviewsList={reviewsList}
+          reviewsRead={reviewsRead}
         />
       ))}
     </div>
@@ -162,11 +162,11 @@ export const GeneralReviews = ({
 const GeneralReviewsForm = ({
   user,
   review,
-  reviewsList
+  reviewsRead
 }: {
   user: User
   review: Review
-  reviewsList: Function
+  reviewsRead: Function
 }) => {
   const [open, setOpen] = useState(false)
   const reviewForm = useForm<Review>({
@@ -193,7 +193,7 @@ const GeneralReviewsForm = ({
       toastSuccess(
         review.review_pk === 0 ? "상품 리뷰가 등록 되었습니다." : "상품 리뷰가 수정 되었습니다."
       )
-      await reviewsList()
+      await reviewsRead()
       if (review.review_pk === 0) {
         reviewForm.reset()
       }
@@ -211,7 +211,7 @@ const GeneralReviewsForm = ({
     } else {
       setOpen(false)
       toastSuccess("상품 리뷰가 삭제 되었습니다.")
-      await reviewsList()
+      await reviewsRead()
     }
     backdrop.close()
   }
@@ -225,7 +225,7 @@ const GeneralReviewsForm = ({
       toastError(response.error)
     } else {
       toastSuccess("해당 이미지가 삭제 되었습니다.")
-      await reviewsList()
+      await reviewsRead()
     }
     backdrop.close()
   }

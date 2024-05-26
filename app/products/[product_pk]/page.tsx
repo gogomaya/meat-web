@@ -18,7 +18,7 @@ const Products = async (props: {
     product_pk: props.params.product_pk
   } as ReviewsSearchParams
   const productResponse: ResponseApi = await productsServices.productsDetail(props.params.product_pk)
-  const reviewsResponse: ResponseApi = await reviewsServices.reviewsList(reviewsSearchParams)
+  const reviewsResponse: ResponseApi = await reviewsServices.reviewsRead(reviewsSearchParams)
   const {product} = productResponse.data
   const {reviews} = reviewsResponse.data
   return (

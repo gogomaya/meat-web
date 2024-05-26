@@ -20,7 +20,7 @@ export const productsServices = {
       return {error}
     }
   },
-  productsList: async (searchParams: SearchParams): Promise<ResponseApi> => {
+  productsRead: async (searchParams: SearchParams): Promise<ResponseApi> => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/products?` + new URLSearchParams({
         ...searchParams
@@ -30,7 +30,7 @@ export const productsServices = {
       throw error
     }
   },
-  productsHomeLists: async (): Promise<ResponseApi> => {
+  productsHome: async (): Promise<ResponseApi> => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/products/home`)
       return await commonServices.responseJson(response)

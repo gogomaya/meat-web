@@ -24,7 +24,7 @@ export const reviewsServices = {
       return {error}
     }
   },
-  reviewsList: async (searchParams: SearchParams): Promise<ResponseApi> => {
+  reviewsRead: async (searchParams: SearchParams): Promise<ResponseApi> => {
     try {
       const response = await fetch(`${commonServices.ssrCsr()}/api/reviews?` + new URLSearchParams({
         ...searchParams
@@ -90,7 +90,7 @@ export const reviewsServices = {
       return {error}
     }
   },
-  reviewsRepliesList: async (searchParams: SearchParams): Promise<ResponseApi> => {
+  reviewsRepliesRead: async (searchParams: SearchParams): Promise<ResponseApi> => {
     try {
       const response = await fetch(`${commonServices.ssrCsr()}/api/reviews/replies?` + new URLSearchParams({
         ...searchParams

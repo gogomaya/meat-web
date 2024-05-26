@@ -18,7 +18,7 @@ const AdminProducts = async (props: {
     category: props.params.category || "",
     category_menu: props.searchParams.category_menu || ""
   } as ProductsSearchParams
-  const response: ResponseApi = await productsServices.productsList(searchParams)
+  const response: ResponseApi = await productsServices.productsRead(searchParams)
   return (
     <AdminLayout>
       <AdminProductsList

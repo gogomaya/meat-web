@@ -22,7 +22,7 @@ const Products = async (props: {
   } as ProductsSearchParams
   let productsResponse: ResponseApi = {}
   try {
-    productsResponse = await productsServices.productsList(searchParams)
+    productsResponse = await productsServices.productsRead(searchParams)
   } catch (error) {
     console.error(error)
     return <ErrorPage />

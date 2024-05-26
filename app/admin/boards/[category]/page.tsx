@@ -17,7 +17,7 @@ const AdminBoards = async (props: {
     query: props.searchParams.query || "",
     category: props.params.category || ""
   } as BoardsSearchParams
-  const response: ResponseApi = await boardsServices.boardsList(searchParams, props.params.category)
+  const response: ResponseApi = await boardsServices.boardsRead(searchParams, props.params.category)
   return (
     <AdminLayout>
       <AdminBoardsList
