@@ -5,7 +5,7 @@ import {RowDataPacket, FieldPacket} from "mysql2/promise"
 import fs from "fs"
 import moment from "moment"
 
-export type Table = "products" | "boards"
+export type Table = "products" | "boards" | "reviews"
 
 export const fileUpload = async (file: File, table: Table) => {
   const path = `../${process.env.NEXT_PUBLIC_UPLOAD_IMAGES}/${table}`

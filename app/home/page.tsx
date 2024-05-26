@@ -10,7 +10,7 @@ const Home = async () => {
   const {user} = await loginCheck(false)
   let productsHomeResponse: ResponseApi = {}
   try {
-    productsHomeResponse = await productsServices.productsHomeLists()
+    productsHomeResponse = await productsServices.productsHome()
   } catch (error) {
     console.error(error)
     return <ErrorPage />

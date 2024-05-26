@@ -1,20 +1,31 @@
-import React, {useState} from "react"
 import {loginCheck} from "@/app/admin/page"
 import Divider from "@mui/material/Divider"
 import {ProductDetail, ProductsDetailContent, ShipDetail, NavDetail, ProductSubtitle} from "../products"
 import {productsServices} from "@/services/productsServices"
+import {reviewsServices} from "@/services/reviewsServices"
 import MainLayout from "@/app/main-layout"
+import {GeneralReviews} from "@/app/reviews/general-reviews"
 import {GeneralReview, PhotoReview, ProductDetailReview} from "@/app/reviews/reviews"
 import {ResponseApi} from "@/types/commonTypes"
+import {ProductsSearchParams} from "@/types/productsTypes"
+import {ReviewsSearchParams} from "@/types/reviewsTypes"
 import {BoardsList} from "@/app/boards/boards"
 // import Boards from "@/app/boards/page"
 
 const Products = async (props: {
-  params: {product_pk: number}
+  params: {product_pk: number},
+  searchParams: ProductsSearchParams
 }) => {
   const {user} = await loginCheck(false)
+  const reviewsSearchParams = {
+    rowsPerPage: Number(props.searchParams.rowsPerPage) || 10,
+    page: Number(props.searchParams.page) || 0,
+    product_pk: props.params.product_pk
+  } as ReviewsSearchParams
   const productResponse: ResponseApi = await productsServices.productsDetail(props.params.product_pk)
+  const reviewsResponse: ResponseApi = await reviewsServices.reviewsRead(reviewsSearchParams)
   const {product} = productResponse.data
+  const {reviews, total_rows} = reviewsResponse.data
   return (
     <MainLayout user={user}>
       <div>
@@ -25,11 +36,16 @@ const Products = async (props: {
         <div id="detail" className="mx-16 px-2"><ProductDetail product={product} /></div>
         {/* 리뷰 */}
         <div id="review2" className="mx-16 px-2">
-          {/* <GeneralReview {{title, content, likes, rating}}/> */}
+          <GeneralReviews
+            user={user}
+            product={product}
+            reviews={reviews}
+            total_rows={total_rows}
+            reviewsSearchParams={reviewsSearchParams}
+          />
           <ProductDetailReview />
-          {/* <GeneralReview title="" content="" likes={0} rating={0} /> */}
         </div>
-        <Divider className="mx-16 px-2" style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
+        <Divider className="mt-8 mx-16 px-2" style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
         {/* 문의 */}
         <div id="qna" className="mx-16 px-2">
           <BoardsList />

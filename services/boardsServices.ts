@@ -20,7 +20,7 @@ export const boardsServices = {
       return {error}
     }
   },
-  boardsList: async (searchParams: SearchParams, category: string): Promise<ResponseApi> => {
+  boardsRead: async (searchParams: SearchParams, category: string): Promise<ResponseApi> => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/boards?` + new URLSearchParams({
         ...searchParams,
@@ -75,7 +75,7 @@ export const boardsServices = {
       return {error}
     }
   },
-  boardsRepliesList: async (board_pk: number): Promise<ResponseApi> => {
+  boardsRepliesRead: async (board_pk: number): Promise<ResponseApi> => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/boards/replies/${board_pk}`)
       return await commonServices.responseJson(response)

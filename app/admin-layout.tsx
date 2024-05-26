@@ -47,6 +47,12 @@ const AdminLayout = ({
                   {pathname.includes("/admin/boards/notice") && (
                     <Link href={"/admin/boards/notice"}>공지사항</Link>
                   )}
+                  {pathname.includes("/admin/boards/faq") && (
+                    <Link href={"/admin/boards/notice"}>자주묻는질문</Link>
+                  )}
+                  {pathname.includes("/admin/boards/qna") && (
+                    <Link href={"/admin/boards/notice"}>1:1문의하기</Link>
+                  )}
                 </Breadcrumbs>
               </div>
               <div className="flex-1"></div>
@@ -146,7 +152,7 @@ const AdminLayoutMenu = ({
       <li className="px-4 py-2 border-b border-50 lg:border-0">
         <Link
           href="/admin/boards/qna"
-          className={`${pathname.includes("/admin/boards/faq") ? "text-yellow-700 " : ""}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
+          className={`${pathname.includes("/admin/boards/qna") ? "text-yellow-700 " : ""}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
           onClick={() => {
             setTimeout(() => setHeaderMenuOpen?.(), 500)
           }}
