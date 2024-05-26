@@ -2,9 +2,9 @@
 import React, {useState} from "react"
 import {Button, Dialog, DialogActions, DialogContent, Rating, TextField, TextareaAutosize} from "@mui/material"
 import CancelIcon from "@mui/icons-material/Cancel"
-import {FaRegThumbsUp, FaRegThumbsDown} from "react-icons/fa"
 import Image from "next/image"
 import {GeneralReviewsReplies} from "./general-reviews-replies"
+import {GeneralReviewsLikes} from "./general-reviews-likes"
 import {ResponseApi} from "@/types/commonTypes"
 import {Product} from "@/types/productsTypes"
 import {User} from "@/types/usersTypes"
@@ -102,20 +102,9 @@ export const GeneralReview = ({
         ))}
       </div>
       <div className="px-6 py-3 flex justify-between items-center">
-        <div className="flex items-center gap-1">
-          <FaRegThumbsUp
-            className={liked ? "text-red-500 cursor-pointer mr-2" : "text-gray-500 cursor-pointer mr-2"}
-            onClick={handleLikeClick}
-          />
-          <span>좋아요</span>
-          <FaRegThumbsDown
-            className={disliked ? "text-red-500 cursor-pointer ml-2" : "text-gray-500 cursor-pointer ml-2"}
-            onClick={handleDislikeClick}
-          />
-          <span>싫어요</span>
-        </div>
+        <GeneralReviewsLikes  user={user} review={review} />
       </div>
-      <GeneralReviewsReplies user={user} product={product} review={review} />
+      <GeneralReviewsReplies user={user} review={review} />
     </div>
   )
 }

@@ -1,7 +1,6 @@
 import {NextRequest, NextResponse} from "next/server"
 import mysql2Pool from "@/libraries/mysql2Pool"
-import {FieldPacket, ResultSetHeader, RowDataPacket} from "mysql2/promise"
-import {fileUpload} from "@/app/api/ckeditor5/upload-images/route"
+import {FieldPacket, RowDataPacket} from "mysql2/promise"
 import {EmptyObject} from "@/types/commonTypes"
 import {loginCheck} from "@/app/admin/page"
 

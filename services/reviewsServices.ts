@@ -124,5 +124,28 @@ export const reviewsServices = {
     } catch (error) {
       return {error}
     }
+  },
+  reviewsLikesPut: async (review_pk: number, user_pk: number, is_like: boolean): Promise<ResponseApi> => {
+    try {
+      const response = await fetch(`/api/reviews/${review_pk}/likes`, {
+        method: "PUT",
+        body: JSON.stringify({
+          review_pk,
+          user_pk,
+          is_like
+        })
+      })
+      return await commonServices.responseJson(response)
+    } catch (error) {
+      return {error}
+    }
+  },
+  reviewsLikesRead: async (review_pk: number): Promise<ResponseApi> => {
+    try {
+      const response = await fetch(`${commonServices.ssrCsr()}/api/reviews/${review_pk}/likes`)
+      return await commonServices.responseJson(response)
+    } catch (error) {
+      throw error
+    }
   }
 }

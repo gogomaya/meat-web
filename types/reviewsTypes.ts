@@ -10,6 +10,7 @@ export interface Review {
   images?: File[]
   reviews_images?: ReviewsImage[]
   reviews_replies?: ReviewsReply[]
+  reviews_likes?: ReviewsLike[]
   product_name?: string
   user_name?: string
 }
@@ -25,6 +26,12 @@ export interface ReviewsReply {
   user_pk: number
   contents: string
   user_name?: string
+}
+
+export interface ReviewsLike {
+  review_pk: number
+  user_pk: number
+  is_like: number
 }
 
 export interface ReviewsSearchParams extends SearchParams {

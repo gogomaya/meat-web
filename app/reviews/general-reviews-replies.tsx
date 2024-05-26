@@ -4,7 +4,6 @@ import {Button, TextareaAutosize} from "@mui/material"
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp"
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown"
 import {ResponseApi} from "@/types/commonTypes"
-import {Product} from "@/types/productsTypes"
 import {User} from "@/types/usersTypes"
 import {Review, ReviewsRepliesSearchParams, ReviewsReply, ReviewsSearchParams} from "@/types/reviewsTypes"
 import {useForm} from "react-hook-form"
@@ -64,11 +63,9 @@ export const GeneralReviewsReply = ({
 
 export const GeneralReviewsReplies = ({
   user,
-  product,
   review
 }: {
   user: User
-  product?: Product
   review: Review
 }) => {
   const [open, setOpen] = useState(false)

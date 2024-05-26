@@ -57,6 +57,15 @@ export const GET = async (request: NextRequest) => {
     order by review_reply_pk desc
     `, [review.review_pk])
     review.reviews_replies = reviews_replies
+    // reviews_likes
+    const [reviews_likes]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
+    select
+      user_pk, is_like
+    from reviews_likes
+    where
+      review_pk = ?
+    `, [review.review_pk])
+    review.reviews_likes = reviews_likes
   }
   return NextResponse.json({
     reviews,
