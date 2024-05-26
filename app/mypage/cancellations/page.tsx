@@ -1,9 +1,9 @@
-import {ResponseApi} from "@/types/commonTypes"
 import {loginCheck} from "@/app/admin/page"
+import ErrorPage from "@/app/error"
 import MainLayout from "@/app/main-layout"
 import {productsServices} from "@/services/productsServices"
-import ErrorPage from "@/app/error"
-import {MyPageBanner, OrderList, Side, SideButton} from "./mypage"
+import {ResponseApi} from "@/types/commonTypes"
+import {MyPageBanner, Side, SideButton} from "../mypage"
 
 const Home = async () => {
   const {user} = await loginCheck(false)
@@ -17,15 +17,11 @@ const Home = async () => {
   return (
     <MainLayout user={user}>
       <div className="w-full">
-        <MyPageBanner title="Orders" titleKor="주문내역" />
+        <MyPageBanner title="Withdraw Order" titleKor="취소/반품/환불" />
         <SideButton />
         <div className="flex">
           <Side></Side>
         </div>
-        {/* 주문목록 */}
-        {/* <OrderList /> */}
-        {/* 취소/반품/환불 내역 */}
-        {/* 영수증 조회/출력 */}
       </div>
     </MainLayout>
   )
