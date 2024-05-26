@@ -305,11 +305,13 @@ export const GeneralReviews = ({
           reviewsRead={reviewsRead}
         />
       ))}
-      <GeneralReviewsPagination
-        searchParams={reviewsSearchParams}
-        total_rows={total_rows}
-        reviewsRead={reviewsRead}
-      />
+      {reviewForm.getValues("reviews").length ? (
+        <GeneralReviewsPagination
+          searchParams={reviewsSearchParams}
+          total_rows={total_rows}
+          reviewsRead={reviewsRead}
+        />
+      ) : null}
     </div>
   )
 }
