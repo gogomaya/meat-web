@@ -187,7 +187,7 @@ export const HomeCateMenu = () => {
         .section {
           opacity: 0;
           transform: translateY(50px);
-          transition: opacity 1s ease-out, transform 1s ease-out;
+          transition: opacity 2s ease-out, transform 1s ease-out;
         }
         .fade-in {
           opacity: 1;
@@ -197,7 +197,7 @@ export const HomeCateMenu = () => {
           transition: transform 2s ease-in-out;
         }
         .section:hover .bg-image {
-          transform: scale(1.15);
+          transform: scale(1.13);
         }
       `}</style>
     </section>
@@ -230,7 +230,7 @@ export const HomeBestMenu = ({products}: { products: Product[] }) => {
 
   return (
     <section className="mt-5 py-10">
-      <div className="container mx-auto">
+      <div className="mx-auto">
         <div ref={elementRef} className="flex flex-col items-start mb-4 px-6" style={animationStyle}>
           <h2 className="text-lg font-semibold text-gray-600">당신의 식탁을 풍요롭게</h2>
         </div>

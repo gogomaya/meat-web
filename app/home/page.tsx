@@ -19,7 +19,7 @@ const Home = async () => {
 
   return (
     <MainLayout user={user}>
-      <div className="w-full py-14">
+      <div className="w-full">
         <HomeBanner />
         <HomeCateMenu />
         {/* <HomeSwiper /> */}

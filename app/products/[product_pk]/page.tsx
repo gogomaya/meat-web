@@ -1,10 +1,11 @@
 import {loginCheck} from "@/app/admin/page"
 import Divider from "@mui/material/Divider"
-import {ProductDetail, ProductsDetailContent, ShipDetail, NavDetail} from "../products"
+import {ProductDetail, ProductsDetailContent, ShipDetail, NavDetail, ProductSubtitle} from "../products"
 import {productsServices} from "@/services/productsServices"
 import {reviewsServices} from "@/services/reviewsServices"
 import MainLayout from "@/app/main-layout"
 import {GeneralReviews} from "@/app/reviews/general-reviews"
+import {GeneralReview, PhotoReview, ProductDetailReview} from "@/app/reviews/reviews"
 import {ResponseApi} from "@/types/commonTypes"
 import {ProductsSearchParams} from "@/types/productsTypes"
 import {ReviewsSearchParams} from "@/types/reviewsTypes"
@@ -27,8 +28,8 @@ const Products = async (props: {
   const {reviews, total_rows} = reviewsResponse.data
   return (
     <MainLayout user={user}>
-      <div className="py-6"></div>
-      <div className="py-8">
+      <div>
+        <ProductSubtitle />
         <ProductsDetailContent product={product} />
         <NavDetail />
         {/* 상품 상세 정보 */}
@@ -42,6 +43,7 @@ const Products = async (props: {
             total_rows={total_rows}
             reviewsSearchParams={reviewsSearchParams}
           />
+          <ProductDetailReview />
         </div>
         <Divider className="mt-8 mx-16 px-2" style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
         {/* 문의 */}

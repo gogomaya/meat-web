@@ -53,8 +53,8 @@ const MainLayout = ({
     <div className="mx-auto">
       <header
         id="header"
-        className="fixed top-0 z-20 bg-cover bg-center bg-opacity-90 w-full flex justify-center items-center px-4 py-4 md:py-8 md:px-12 text-white transition-opacity duration-300"
-        style={{backgroundImage: "url('/images/Bg.png')", backgroundPosition: "center calc(50% - 275px)", opacity: headerOpacity}}
+        className="sticky top-0 z-20 bg-cover bg-center bg-opacity-90 w-full flex justify-center items-center px-4 py-4 md:py-8 md:px-12 text-white transition-opacity duration-300"
+        style={{backgroundImage: "url('/images/Bg.png')", backgroundPosition: "center calc(50% - 235px)", opacity: headerOpacity}}
       >
         <MainMobileMenu />
         <Link href="/">
@@ -77,7 +77,7 @@ const MainLayout = ({
           </Badge>
         </Link>
       </header>
-      <main className="pt-8 md:pt-16">{children}</main>
+      <main>{children}</main>
       <CsIcon />
       <MainBottom />
     </div>
@@ -368,17 +368,31 @@ const MainBottom = () => {
         backgroundImage: "url(\"/images/Bg.png\")"
       }}
     >
-      <div className="footer-inner flex flex-col md:flex-row justify-between items-center p-6 md:p-12 text-white" style={{backgroundColor: "transparent"}}>
-        <div className="footer-left space-y-4">
-          <div className="footer-menu-link space-x-4 text-lg">
-            <span className="footer-menu-content cursor-pointer hover:underline">회사소개</span><span>|</span>
-            <span className="footer-menu-content cursor-pointer hover:underline">이용안내</span><span>|</span>
-            <span className="footer-menu-content cursor-pointer hover:underline">이용약관</span><span>|</span>
-            <span className="footer-menu-content cursor-pointer hover:underline">개인정보처리방침 </span>
+      <div className="bg-transparent p-6 md:p-12 text-white">
+        <div className="footer-menu-link space-x-4 text-lg">
+          <span className="footer-menu-content cursor-pointer hover:underline">회사소개</span><span>|</span>
+          <span className="footer-menu-content cursor-pointer hover:underline">이용안내</span><span>|</span>
+          <span className="footer-menu-content cursor-pointer hover:underline">이용약관</span><span>|</span>
+          <span className="footer-menu-content cursor-pointer hover:underline">개인정보처리방침</span>
+        </div>
+        <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+          <div className="text-2xl font-bold" style={{textAlign: "left"}}>
+          (주) 한솔축산
           </div>
-          <div className="footer-name text-2xl font-bold flex justify-between items-center">
-            <span>(주) 한솔축산</span>
+          <div className="mt-6 md:mt-0 flex justify-center w-full md:w-auto">
+            <Image
+              src="/images/logo.png"
+              alt="한솔축산 로고"
+              width={60}
+              height={60}
+              sizes="100vw"
+              className="w-20 h-20 md:w-24 md:h-24 cursor-pointer"
+              priority
+              onClick={scrollToTop}
+            />
           </div>
+        </div>
+        <div className="footer-left space-y-4 mt-6">
           <div className="footer-info text-sm leading-loose">
             <span className="footer-info-detail block">
               <span className="text-style-1 font-semibold">대표자</span> | 한승구, 박수현
@@ -398,22 +412,8 @@ const MainBottom = () => {
           </div>
           <div className="footer-info-detail block">
             <span className="text-style-1">
-              © 2024 한솔. All right reserved.
+            © 2024 한솔. All right reserved.
             </span>
-          </div>
-        </div>
-        <div className="footer-name text-2xl font-bold flex justify-between items-center">
-          <div className="footer-right mt-6 md:mt-0 flex justify-center w-full md:w-auto">
-            <Image
-              src="/images/logo.png"
-              alt="한솔축산 로고"
-              width={60}
-              height={60}
-              sizes="100vw"
-              className="w-20 h-20 md:w-24 md:h-24 cursor-pointer"
-              priority
-              onClick={scrollToTop}
-            />
           </div>
         </div>
       </div>
