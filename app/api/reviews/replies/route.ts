@@ -6,7 +6,7 @@ import {loginCheck} from "@/app/admin/page"
 
 export const GET = async (request: NextRequest) => {
   const searchParams = request.nextUrl.searchParams
-  const rowsPerPage = Number(searchParams.get("rowsPerPage")) || 10
+  const rowsPerPage = Number(searchParams.get("rowsPerPage")) || 1000
   const page = (Number(searchParams.get("page")) * rowsPerPage) || 0
   const orderColumn = searchParams.get("orderColumn") || "review_reply_pk"
   const orderDirection = searchParams.get("orderDirection") || "desc"

@@ -13,109 +13,6 @@ import {reviewsServices} from "@/services/reviewsServices"
 import {backdrop} from "@/components/common/Backdrop"
 import {toastError, toastSuccess} from "@/components/common/Toast"
 
-export const GeneralReviewsReply = ({
-  user,
-  reviews_reply,
-  reviewsRepliesRead
-}: {
-  user: User
-  reviews_reply: ReviewsReply
-  reviewsRepliesRead: Function
-}) => {
-  const [open, setOpen] = useState(false)
-  useEffect(() => {
-    setOpen(false)
-  }, [reviews_reply])
-  return (
-    <div className="my-4 bg-white shadow overflow-hidden mt-4">
-      <div className="px-4 pt-5 sm:px-6">
-        <div className="flex justify-between items-center">
-          <p className="mt-1 max-w-2xl text-sm text-gray-500">
-            {reviews_reply.user_name}
-          </p>
-          {reviews_reply.user_pk === user.user_pk ? (
-            <Button
-              variant={open ? undefined : "contained"}
-              color={open ? undefined : "primary"}
-              className={`${open ? "" : "!bg-[#ed6c02] hover:!bg-[#e65100]"}`}
-              onClick={() => setOpen(!open)}
-            >
-              {open ? "취소" : "수정하기"}
-            </Button>
-          ) : null}
-        </div>
-      </div>
-      <dl className="sm:divide-y sm:divide-gray-200">
-        {open ? (
-          <GeneralReviewsRepliesForm user={user} reviews_reply={reviews_reply} reviewsRepliesRead={reviewsRepliesRead} />
-        ) : (
-          <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
-            <div
-              className="text-sm text-gray-900 sm:col-span-2"
-              dangerouslySetInnerHTML={{__html: reviews_reply.contents.replaceAll("\n", "<br />")}}
-            />
-          </div>
-        )}
-      </dl>
-    </div>
-  )
-}
-
-export const GeneralReviewsReplies = ({
-  user,
-  review
-}: {
-  user: User
-  review: Review
-}) => {
-  const [open, setOpen] = useState(false)
-  const reviewsReplyForm = useForm<{reviews_replies: ReviewsReply[]}>({
-    defaultValues: {
-      reviews_replies: review.reviews_replies
-    }
-  })
-  reviewsReplyForm.watch("reviews_replies")
-  const reviewsRepliesRead = async () => {
-    const reviewsRepliesSearchParams = {
-      review_pk: review.review_pk
-    } as ReviewsRepliesSearchParams
-    const reviewsRepliesResponse: ResponseApi = await reviewsServices.reviewsRepliesRead(reviewsRepliesSearchParams)
-    reviewsReplyForm.setValue("reviews_replies", reviewsRepliesResponse.data.reviews_replies)
-  }
-  return (
-    <div className="relative">
-      <div className="mr-6 flex justify-center absolute top-[-36px] right-0">
-        <span>댓글 {reviewsReplyForm.getValues("reviews_replies").length}</span>
-        {open ?
-          <KeyboardArrowUpIcon className="cursor-pointer" onClick={() => setOpen(false)} />
-          :
-          <KeyboardArrowDownIcon className="cursor-pointer" onClick={() => setOpen(true)} />
-        }
-      </div>
-      <div className={open ? "border-t border-gray-200 px-4 py-5 sm:p-0" : "hidden"}>
-        {reviewsReplyForm.getValues("reviews_replies").map((reviews_reply: ReviewsReply) => (
-          <GeneralReviewsReply
-            key={reviews_reply.review_reply_pk}
-            user={user}
-            reviews_reply={reviews_reply}
-            reviewsRepliesRead={reviewsRepliesRead}
-          />
-        ))}
-        <GeneralReviewsRepliesForm
-          user={user}
-          reviews_reply={{
-            review_pk: review.review_pk,
-            review_reply_pk: 0,
-            user_pk: user.user_pk,
-            contents: ""
-          }}
-          reviewsRepliesRead={reviewsRepliesRead}
-        />
-      </div>
-    </div>
-  )
-}
-
 const GeneralReviewsRepliesForm = ({
   user,
   reviews_reply,
@@ -216,6 +113,109 @@ const GeneralReviewsRepliesForm = ({
         >
           {reviews_reply.review_reply_pk === 0 ? "댓글 작성하기" : "수정하기"}
         </Button>
+      </div>
+    </div>
+  )
+}
+
+export const GeneralReviewsReply = ({
+  user,
+  reviews_reply,
+  reviewsRepliesRead
+}: {
+  user: User
+  reviews_reply: ReviewsReply
+  reviewsRepliesRead: Function
+}) => {
+  const [open, setOpen] = useState(false)
+  useEffect(() => {
+    setOpen(false)
+  }, [reviews_reply])
+  return (
+    <div className="my-4 bg-white shadow overflow-hidden mt-4">
+      <div className="px-4 pt-5 sm:px-6">
+        <div className="flex justify-between items-center">
+          <p className="mt-1 max-w-2xl text-sm text-gray-500">
+            {reviews_reply.user_name}
+          </p>
+          {reviews_reply.user_pk === user.user_pk ? (
+            <Button
+              variant={open ? undefined : "contained"}
+              color={open ? undefined : "primary"}
+              className={`${open ? "" : "!bg-[#ed6c02] hover:!bg-[#e65100]"}`}
+              onClick={() => setOpen(!open)}
+            >
+              {open ? "취소" : "수정하기"}
+            </Button>
+          ) : null}
+        </div>
+      </div>
+      <dl className="sm:divide-y sm:divide-gray-200">
+        {open ? (
+          <GeneralReviewsRepliesForm user={user} reviews_reply={reviews_reply} reviewsRepliesRead={reviewsRepliesRead} />
+        ) : (
+          <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+            <div
+              className="text-sm text-gray-900 sm:col-span-2"
+              dangerouslySetInnerHTML={{__html: reviews_reply.contents.replaceAll("\n", "<br />")}}
+            />
+          </div>
+        )}
+      </dl>
+    </div>
+  )
+}
+
+export const GeneralReviewsReplies = ({
+  user,
+  review
+}: {
+  user: User
+  review: Review
+}) => {
+  const [open, setOpen] = useState(false)
+  const reviewsReplyForm = useForm<{reviews_replies: ReviewsReply[]}>({
+    defaultValues: {
+      reviews_replies: review.reviews_replies
+    }
+  })
+  reviewsReplyForm.watch("reviews_replies")
+  const reviewsRepliesRead = async () => {
+    const reviewsRepliesSearchParams = {
+      review_pk: review.review_pk
+    } as ReviewsRepliesSearchParams
+    const reviewsRepliesResponse: ResponseApi = await reviewsServices.reviewsRepliesRead(reviewsRepliesSearchParams)
+    reviewsReplyForm.setValue("reviews_replies", reviewsRepliesResponse.data.reviews_replies)
+  }
+  return (
+    <div className="relative">
+      <div className="mr-6 flex justify-center absolute top-[-36px] right-0">
+        <span>댓글 {reviewsReplyForm.getValues("reviews_replies").length}</span>
+        {open ?
+          <KeyboardArrowUpIcon className="cursor-pointer" onClick={() => setOpen(false)} />
+          :
+          <KeyboardArrowDownIcon className="cursor-pointer" onClick={() => setOpen(true)} />
+        }
+      </div>
+      <div className={open ? "border-t border-gray-200 px-4 py-5 sm:p-0" : "hidden"}>
+        {reviewsReplyForm.getValues("reviews_replies").map((reviews_reply: ReviewsReply) => (
+          <GeneralReviewsReply
+            key={reviews_reply.review_reply_pk}
+            user={user}
+            reviews_reply={reviews_reply}
+            reviewsRepliesRead={reviewsRepliesRead}
+          />
+        ))}
+        <GeneralReviewsRepliesForm
+          user={user}
+          reviews_reply={{
+            review_pk: review.review_pk,
+            review_reply_pk: 0,
+            user_pk: user.user_pk,
+            contents: ""
+          }}
+          reviewsRepliesRead={reviewsRepliesRead}
+        />
       </div>
     </div>
   )

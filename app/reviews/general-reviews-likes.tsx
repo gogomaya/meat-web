@@ -51,7 +51,6 @@ export const GeneralReviewsLikes = ({
       dislikedCount: 0
     }
     reviewsLikeForm.getValues("reviews_likes").forEach((reviews_like) => {
-      console.log(reviews_like)
       if (reviews_like.is_like) {
         like.likedCount++
       } else {
