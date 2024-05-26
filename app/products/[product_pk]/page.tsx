@@ -17,7 +17,6 @@ const Products = async (props: {
   const {product} = productResponse.data
   return (
     <MainLayout user={user}>
-      <div className="py-6"></div>
       <div>
         <ProductSubtitle />
         <ProductsDetailContent product={product} />
