@@ -36,6 +36,7 @@ export interface ReviewsLike {
 
 export interface ReviewsSearchParams extends SearchParams {
   product_pk: number
+  user_pk: number
 }
 
 export interface ReviewsRepliesSearchParams extends SearchParams {
