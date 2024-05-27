@@ -257,6 +257,7 @@ export const ProductDetailReview = () => {
           <Grid item xs={12} sm={6} md={3} key={index}>
             <Card variant="outlined" className="h-full">
               <CardContent>
+
                 {/* <img src={review.imageUrl} alt={review.name} className="w-16 h-16 rounded-full" /> */}
                 <Typography variant="h5" component="h3" className="font-bold mt-2">
                   {review.name}
@@ -275,7 +276,7 @@ export const ProductDetailReview = () => {
         ))}
       </Grid>
       <Button variant="outlined" className="mt-4">
-        Write a review
+        상품 리뷰 작성하기
       </Button>
     </div>
   )
