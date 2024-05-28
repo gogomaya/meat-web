@@ -1,5 +1,5 @@
 import {ResponseApi} from "@/types/commonTypes"
-import {loginCheck} from "@/app/admin/page"
+import {loginCheck} from "@/app/users/login/loginCheck"
 import MainLayout from "@/app/main-layout"
 // import HomeSwiper from "./swiper"
 import {HomeBanner, HomeBestMenu, HomeCateMenu, HomeWhyUs} from "./home"

@@ -4,7 +4,7 @@ import {RowDataPacket, FieldPacket} from "mysql2/promise"
 import fs from "fs"
 import {EmptyObject} from "@/types/commonTypes"
 import {deleteNotUsedImages} from "@/app/api/boards/route"
-import {loginCheck} from "@/app/admin/page"
+import {loginCheck} from "@/app/users/login/loginCheck"
 
 export const GET = async (
   _request: NextRequest,

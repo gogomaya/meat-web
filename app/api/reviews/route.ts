@@ -3,7 +3,7 @@ import mysql2Pool from "@/libraries/mysql2Pool"
 import {FieldPacket, ResultSetHeader, RowDataPacket} from "mysql2/promise"
 import {fileUpload} from "@/app/api/ckeditor5/upload-images/route"
 import {EmptyObject} from "@/types/commonTypes"
-import {loginCheck} from "@/app/admin/page"
+import {loginCheck} from "@/app/users/login/loginCheck"
 
 export const GET = async (request: NextRequest) => {
   const searchParams = request.nextUrl.searchParams

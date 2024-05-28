@@ -1,4 +1,4 @@
-import {loginCheck} from "@/app/admin/page"
+import {loginCheck} from "@/app/users/login/loginCheck"
 import Divider from "@mui/material/Divider"
 import {ProductDetail, ProductsDetailContent, ShipDetail, NavDetail, ProductSubtitle} from "../products"
 import {productsServices} from "@/services/productsServices"

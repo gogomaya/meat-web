@@ -4,7 +4,7 @@ import {RowDataPacket, FieldPacket, ResultSetHeader} from "mysql2/promise"
 import fs from "fs"
 import {fileUpload} from "@/app/api/ckeditor5/upload-images/route"
 import {EmptyObject} from "@/types/commonTypes"
-import {adminCheck} from "@/app/admin/page"
+import {adminCheck} from "@/app/users/login/loginCheck"
 
 export const GET = async (request: NextRequest) => {
   const searchParams = request.nextUrl.searchParams

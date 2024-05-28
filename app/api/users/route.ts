@@ -1,7 +1,7 @@
 import {NextRequest, NextResponse} from "next/server"
 import mysql2Pool from "@/libraries/mysql2Pool"
 import {RowDataPacket, FieldPacket} from "mysql2/promise"
-import {adminCheck} from "@/app/admin/page"
+import {adminCheck} from "@/app/users/login/loginCheck"
 
 export const GET = async (request: NextRequest) => {
   await adminCheck(false)

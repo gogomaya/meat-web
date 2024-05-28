@@ -2,7 +2,7 @@ import {NextRequest, NextResponse} from "next/server"
 import mysql2Pool from "@/libraries/mysql2Pool"
 import {FieldPacket, RowDataPacket} from "mysql2/promise"
 import {EmptyObject} from "@/types/commonTypes"
-import {loginCheck} from "@/app/admin/page"
+import {loginCheck} from "@/app/users/login/loginCheck"
 
 export const GET = async (request: NextRequest) => {
   const searchParams = request.nextUrl.searchParams

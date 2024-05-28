@@ -1,4 +1,4 @@
-import {adminCheck} from "@/app/admin/page"
+import {adminCheck} from "@/app/users/login/loginCheck"
 import {ResponseApi} from "@/types/commonTypes"
 import {ProductCategory, ProductsSearchParams} from "@/types/productsTypes"
 import {productsServices} from "@/services/productsServices"
