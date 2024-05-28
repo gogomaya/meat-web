@@ -246,14 +246,26 @@ export const OrderDetailContent = ({
             <div>
               <div className="flex items-center justify-between py-2">
                 <div className="w-1/4 font-medium">수령인 이름</div>
-                <div className="w-3/4"><input type="text" placeholder="이름을 입력하세요."/></div>
+                <div className="w-3/4">
+                  <input
+                    type="text"
+                    placeholder="이름을 입력하세요."
+                    className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
               </div>
               <Divider style={{backgroundColor: "#ddd", height: "0.1px"}} />
             </div>
             <div>
               <div className="flex items-center justify-between py-2">
                 <div className="w-1/4 font-medium">연락처</div>
-                <div className="w-3/4"><input type="text" placeholder="010-1234-1234"/></div>
+                <div className="w-3/4">
+                  <input
+                    type="text"
+                    placeholder="010-1234-1234"
+                    className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
               </div>
               <Divider style={{backgroundColor: "#ddd", height: "0.1px"}} />
             </div>
@@ -303,7 +315,7 @@ export const OrderDetailContent = ({
                               width={200}
                               height={200}
                               sizes="100vw"
-                              className="w-34 h-auto" // Adjusted size
+                              className="w-34 h-auto"
                               priority
                             />
                           </Link>
@@ -324,7 +336,7 @@ export const OrderDetailContent = ({
                               width={200}
                               height={200}
                               sizes="100vw"
-                              className="w-34 h-auto" // Adjusted size
+                              className="w-34 h-auto"
                               priority
                             />
                           </Link>

@@ -10,6 +10,7 @@ import {ResponseApi} from "@/types/commonTypes"
 import {ProductsSearchParams} from "@/types/productsTypes"
 import {ReviewsSearchParams} from "@/types/reviewsTypes"
 import {BoardsList} from "@/app/boards/boards"
+import {QnaBoard} from "@/app/qna/qna"
 // import Boards from "@/app/boards/page"
 
 const Products = async (props: {
@@ -48,7 +49,7 @@ const Products = async (props: {
         <Divider className="mt-8 mx-16 px-2" style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
         {/* 문의 */}
         <div id="qna" className="mx-16 px-2">
-          <BoardsList />
+          <QnaBoard />
         </div>
         {/* 주문정보 */}
         <div id="ship" className="mx-16 p-2"><ShipDetail /></div>
