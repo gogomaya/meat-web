@@ -13,6 +13,7 @@ export const GET = async (request: NextRequest) => {
   const orderDirection = searchParams.get("orderDirection") || "desc"
   const query = searchParams.get("query") || ""
   const product_pk = searchParams.get("product_pk") || ""
+  const user_pk = searchParams.get("user_pk") || ""
 
   const mysql = await mysql2Pool()
   const [total_rows]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
@@ -21,8 +22,9 @@ export const GET = async (request: NextRequest) => {
   from reviews
   where
     ("" = ? or product_pk = ?)
+    and ("" = ? or user_pk = ?)
     and ("" = ? or contents like concat("%", ?, "%"))
-`, [product_pk, product_pk, query, query])
+`, [product_pk, product_pk, user_pk, user_pk, query, query])
   const [reviews]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
     select
       r.*,
@@ -31,10 +33,11 @@ export const GET = async (request: NextRequest) => {
     from reviews r
     where
       ("" = ? or r.product_pk = ?)
+      and ("" = ? or r.user_pk = ?)
       and ("" = ? or r.contents like concat("%", ?, "%"))
     order by ${orderColumn} ${orderDirection}
     limit ?, ?
-  `, [product_pk, product_pk, query, query, page, rowsPerPage])
+  `, [product_pk, product_pk, user_pk, user_pk, query, query, page, rowsPerPage])
   for (const review of reviews) {
     // reviews_images
     const [reviews_images]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
