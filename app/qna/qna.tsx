@@ -1,14 +1,13 @@
 "use client"
 import {useState} from "react"
 
-// 고객센터 - 게시판
 const Posts = [
-  {id: 1, title: "첫 번째 게시물", content: "첫번째 게시물입니다.", writer: "작성자1", date: "2024-04-04", complete: "Y"},
-  {id: 2, title: "두 번째 게시물", content: "두번째 게시물입니다.", writer: "작성자2", date: "2024-04-04", complete: "Y"},
-  {id: 3, title: "세 번째 게시물", content: "세번째 게시물입니다.", writer: "작성자3", date: "2024-04-04", complete: "N"}
+  {id: 1, title: "첫 번째 문의", content: "첫번째 문의입니다.", writer: "작성자1", date: "2024-04-04", complete: "Y"},
+  {id: 2, title: "두 번째 문의", content: "두번째 문의입니다.", writer: "작성자2", date: "2024-04-04", complete: "Y"},
+  {id: 3, title: "세 번째 문의", content: "세번째 문의입니다.", writer: "작성자3", date: "2024-04-04", complete: "N"}
 ]
 
-export const BoardsList = () => {
+export const QnaBoard = () => {
   const [posts] = useState(Posts)
   return (
     <div className="flex flex-col py-4 mx-8 py-6">

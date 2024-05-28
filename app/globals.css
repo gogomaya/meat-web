@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 html, body {
-  font-family: "Noto Serif KR", "sans-serif";
+  font-family: Noto Serif KR, sans-serif;
   color: black;
   height: 100%;
 }
