@@ -223,7 +223,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
         ))
       ) : (
         <div style={{width: "100%", textAlign: "center", padding: "20px"}}>
-        No products available.
+          준비된 상품이 없습니다.
         </div>
       )}
     </ol>
@@ -373,17 +373,39 @@ export const ProductsDetailContent = ({product}: { product: Product }) => {
             <Typography variant="h5" gutterBottom className="flex flex-col items-end" style={{marginBottom: "1rem"}}>
                 총금액: {(Number(product.price) * quantity).toLocaleString()}원
             </Typography>
-            <div className="flex flex-col items-end md:flex-row md:items-center md:justify-end md:space-x-4">
-              <CartOrderButton product={product} quantity={quantity} type="CART">
-                <Button variant="contained" style={{backgroundColor: "#A51C30", width: "100%"}} className="btn">
-                    장바구니
-                </Button>
-              </CartOrderButton>
-              <CartOrderButton product={product} quantity={quantity} type="ORDER">
-                <Button variant="contained" style={{backgroundColor: "#271A11", width: "100%"}} className="btn">
-                    구매하기
-                </Button>
-              </CartOrderButton>
+            <div className="w-full p-4">
+              <div className="flex justify-between items-center mb-4">
+                <div className="flex w-full lg:w-1/2 gap-2">
+                  <CartOrderButton type="CART" product={product} quantity={quantity} className="flex w-1/2 pr-2">
+                    <Button style={{backgroundColor: "#A51C30", width: "290px", height: "50px", color: "white", fontSize: "1.2rem"}} className="btn">
+                      장바구니
+                    </Button>
+                  </CartOrderButton>
+                  <CartOrderButton type="ORDER" product={product} quantity={quantity} className="flex w-1/2 pl-2">
+                    <Button style={{backgroundColor: "#271A11", width: "290px", height: "50px", color: "white", fontSize: "1.2rem"}} className="btn">
+                      구매하기
+                    </Button>
+                  </CartOrderButton>
+                </div>
+              </div>
+              <div className="flex justify-end">
+                <CartOrderButton type="ORDER" product={product} quantity={quantity} className="flex w-1/2 pl-2">
+                  <div className="w-40 h-45">
+                    <Image
+                      src="/images/naver-pay-btn.png"
+                      alt=""
+                      width={150}
+                      height={150}
+                      layout="responsive"
+                      className="object-contain"
+                      style={{
+                        cursor: "pointer"
+                      }}
+                      priority
+                    />
+                  </div>
+                </CartOrderButton>
+              </div>
             </div>
           </div>
         </div>

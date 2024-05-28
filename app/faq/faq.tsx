@@ -1,30 +1,26 @@
 "use client"
 
-import React, {useState} from "react"
+import React, {useEffect, useRef, useState} from "react"
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline"
 
 const faqItems = [
   {
     category: "shipment",
     question: "주문한 상품은 얼마나 빨리 배송되나요?",
     answer: "주문한 상품은 보통 2~3일 이내에 배송됩니다. 배송일은 지역 및 상품에 따라 다를 수 있습니다."
-
   },
   {
     category: "shipment",
     question: "무료 배송 기준은 어떻게 되나요?",
-
     answer: "무료 배송 기준은 한 번에 구매하는 상품 가격이 5만원 이상일 경우에 적용됩니다."
-
   },
   {
-
     category: "shipment",
     question: "국제 배송을 제공하나요? 그 경우 배송 시간은 얼마나 걸리나요?",
     answer: "네, 국제 배송을 제공하고 있습니다. 국제 배송은 주문 후 약 7~14일 정도 소요됩니다."
   },
 
   {
-
     category: "shipment",
     question: "주문 후 배송상태를 어떻게 확인할 수 있나요?",
     answer: "주문한 상품의 배송상태는 주문 내역 페이지에서 확인하실 수 있습니다."
@@ -159,3 +155,99 @@ const FAQPage: React.FC = () => {
 }
 
 export default FAQPage
+
+// test용
+
+interface FaqItemProps {
+  question: string;
+  answer: string;
+}
+
+const FaqItem: React.FC<FaqItemProps> = ({question, answer}) => {
+  const [isOpen, setIsOpen] = useState(false)
+  const [maxHeight, setMaxHeight] = useState("0px")
+  const contentRef = useRef<HTMLDivElement>(null)
+
+  const toggleFaq = () => {
+    setIsOpen(!isOpen)
+  }
+
+  useEffect(() => {
+    if (contentRef.current) {
+      setMaxHeight(isOpen ? `${contentRef.current.scrollHeight}px` : "0px")
+    }
+  }, [isOpen])
+
+  return (
+    <div className="faq-single-wrap">
+      <div className="faq-qus-wrap" onClick={toggleFaq} style={{cursor: "pointer"}}>
+        <h5 className="faq-qustion">{question}</h5>
+        <AddCircleOutlineIcon />
+      </div>
+      <div
+        ref={contentRef}
+        style={{
+          maxHeight: maxHeight,
+          overflow: "hidden",
+          transition: "max-height 0.3s ease"
+        }}
+        className="faq-answer-wrap"
+      >
+        <p className="faq-answer">{answer}</p>
+      </div>
+    </div>
+  )
+}
+
+export const FaqSection: React.FC = () => {
+  const faqData = [
+    {
+      question: "What training resources provide for new users?",
+      answer: "Opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now us as their default model text and a search for."
+    },
+    {
+      question: "What measures do you have in place to ensure?",
+      answer: "Opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now us as their default model text and a search for."
+    },
+    {
+      question: "Can integrate platform with existing software?",
+      answer: "Opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now us as their default model text and a search for."
+    },
+    {
+      question: "How often do you update your job listings?",
+      answer: "Opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now us as their default model text and a search for."
+    },
+    {
+      question: "Do you offer any special packages for bulk hiring?",
+      answer: "Opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now us as their default model text and a search for."
+    },
+    {
+      question: "How does Zaisop stand out from competitors?",
+      answer: "Opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now us as their default model text and a search for."
+    },
+    {
+      question: "How does Zaisop ensure data privacy?",
+      answer: "Opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now us as their default model text and a search for."
+    }
+  ]
+
+  return (
+    <section className="section faq">
+      <div className="container">
+        <div className="faq-main-wrap">
+          <div className="section-top-wrap">
+            <div className="section-sub-title">faq</div>
+            <h2 className="section-title">frequently asked questions</h2>
+          </div>
+          <div className="faq-grid-wrap">
+            {faqData.map((faq, index) => (
+              <div key={index} id={`faq-${index}`} className="faq-wrapper">
+                <FaqItem question={faq.question} answer={faq.answer} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}

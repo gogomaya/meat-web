@@ -213,6 +213,14 @@ export const MegaMenu = () => {
   )
 }
 
+export const loading = () => {
+  return (
+    <div data-w-id="10b5160c-e47e-9440-7d20-e9b9b40a9855" className="preloader">
+      <div className="preloader-lottie-animation" data-w-id="10b5160c-e47e-9440-7d20-e9b9b40a9856" data-animation-type="lottie" data-src="https://assets-global.website-files.com/6564340f7b64a3bebf176e50/65704989fc28f3d8c4a2d42b_Zaisop%20Logo.json" data-loop="0" data-direction="1" data-autoplay="1" data-is-ix2-target="0" data-renderer="svg" data-default-duration="1.5833333333333333" data-duration="0"></div>
+    </div>
+  )
+}
+
 const MainSearch = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   return <>
