@@ -376,12 +376,12 @@ export const ProductsDetailContent = ({product}: { product: Product }) => {
             <div className="w-full p-4">
               <div className="flex justify-between items-center mb-4">
                 <div className="flex w-full lg:w-1/2 gap-2">
-                  <CartOrderButton type="CART" product={product} quantity={quantity} className="flex w-1/2 pr-2">
+                  <CartOrderButton type="CART" product={product} quantity={quantity}>
                     <Button style={{backgroundColor: "#A51C30", width: "290px", height: "50px", color: "white", fontSize: "1.2rem"}} className="btn">
                       장바구니
                     </Button>
                   </CartOrderButton>
-                  <CartOrderButton type="ORDER" product={product} quantity={quantity} className="flex w-1/2 pl-2">
+                  <CartOrderButton type="ORDER" product={product} quantity={quantity}>
                     <Button style={{backgroundColor: "#271A11", width: "290px", height: "50px", color: "white", fontSize: "1.2rem"}} className="btn">
                       구매하기
                     </Button>
@@ -389,7 +389,7 @@ export const ProductsDetailContent = ({product}: { product: Product }) => {
                 </div>
               </div>
               <div className="flex justify-end">
-                <CartOrderButton type="ORDER" product={product} quantity={quantity} className="flex w-1/2 pl-2">
+                <CartOrderButton type="ORDER" product={product} quantity={quantity}>
                   <div className="w-40 h-45">
                     <Image
                       src="/images/naver-pay-btn.png"
