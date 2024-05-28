@@ -135,7 +135,7 @@ export const HomeCateMenu = () => {
 
   return (
     <section className="p-12 md:p-16 mx-8">
-      <div className="flex flex-col md:flex-row gap-4">
+      <div className="contatiner flex flex-col md:flex-row gap-4">
         <div className="relative section flex-1 h-64 md:h-auto rounded-lg overflow-hidden" data-index="0">
           <div className="bg-image absolute inset-0 bg-cover bg-center bg-no-repeat" style={{backgroundImage: "linear-gradient(to bottom, #271a11, rgba(0, 0, 0, 0) 67%), url('/images/Rectangle 6.png')"}}></div>
           <div className="absolute inset-0 bg-black bg-opacity-10 hover:bg-opacity-20 transition duration-300 rounded-lg"></div>
@@ -230,7 +230,7 @@ export const HomeBestMenu = ({products}: { products: Product[] }) => {
 
   return (
     <section className="mt-5 py-10">
-      <div className="mx-auto">
+      <div className="container mx-auto">
         <div ref={elementRef} className="flex flex-col items-start mb-4 px-6" style={animationStyle}>
           <h2 className="text-lg font-semibold text-gray-600">당신의 식탁을 풍요롭게</h2>
         </div>

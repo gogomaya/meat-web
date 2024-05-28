@@ -113,44 +113,6 @@ export const OrderDetailContent = ({
     setOrderInfo({...orderInfo, paymentMethod: type})
   }
 
-  const renderPayMethodContent = () => {
-    if (orderInfo.paymentMethod === "toss") {
-      return (
-        <div className="flex justify-between items-center border-b p-2 m-2" style={{backgroundColor: "#fff"}}>
-          <Link href="/">
-            <Image
-              src="/images/logo-toss-pay.svg"
-              alt=""
-              width={200}
-              height={200}
-              sizes="100vw"
-              className="w-full"
-              priority
-            />
-          </Link>
-        </div>
-      )
-    } else if (orderInfo.paymentMethod === "naver") {
-      return (
-        <div className="flex justify-between items-center border-b p-2 m-2" style={{backgroundColor: "#fff"}}>
-          <Link href="/">
-            <Image
-              src="/images/naver-pay-btn.png"
-              alt=""
-              width={200}
-              height={200}
-              sizes="100vw"
-              className="w-full"
-              priority
-            />
-          </Link>
-        </div>
-      )
-    } else {
-      return null
-    }
-  }
-
   // 주소창 이벤트 핸들러
   const [enroll_company, setEnroll_company] = useState({
     address:""
@@ -268,16 +230,16 @@ export const OrderDetailContent = ({
         <div className="w-full md:w-1/4 pl-4 mt-8 md:mt-0 bg-white p-3">
           <h2 className="text-2xl font-semibold mb-4">결제금액</h2>
           <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
-          <div className="space-y-2">
-            <p className="text-lg mb-2">총 상품금액: {totalPrice.toLocaleString()}원</p>
-            <p className="text-lg mb-2">할인 금액: {totalDiscount.toLocaleString()}원</p>
-            <p className="text-lg mb-2">총 배송비: {totalShipFee.toLocaleString()}원</p>
-            <p className="text-lg font-semibold">최종 결제 금액: {finalPrice.toLocaleString()}원</p>
+          <div className="space-y-2 bg-gray-200 rounded-lg">
+            <p className="text-lg m-2">총 상품금액: {totalPrice.toLocaleString()}원</p>
+            <p className="text-lg m-2">할인 금액: {totalDiscount.toLocaleString()}원</p>
+            <p className="text-lg m-2">총 배송비: {totalShipFee.toLocaleString()}원</p>
+            <p className="text-lg m-2 font-semibold">최종 결제 금액: {finalPrice.toLocaleString()}원</p>
           </div>
         </div>
       </div>
       <div className="flex flex-col md:flex-row items-start md:items-start mb-8 gap-6">
-        <div className="w-full md:w-3/4 pr-4 bg-white p-3">
+        <div className="w-full md:w-3/4 pr-4 p-3">
           <h2 className="text-2xl font-semibold mb-4">배송 정보</h2>
           <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
           <div className="space-y-4">
@@ -303,7 +265,11 @@ export const OrderDetailContent = ({
                   <div className="flex flex-col">
                     <div className="flex items-center flex-grow mb-2">
                       <input type="text" id="contactNumber" required={true} name="address" onChange={handleInput} value={enroll_company.address} className="mr-2 border border-gray-300 rounded-lg p-2 flex-grow" />
-                      <button onClick={handleComplete} className="ml-2 py-2 bg-blue-500 text-white rounded-lg post-button">우편번호 찾기</button>
+                      <button
+                        onClick={handleComplete}
+                        className="ml-2 py-2 text-white rounded-lg post-button"
+                        style={{backgroundColor: "#271A11"}}
+                      >우편번호 찾기</button>
                     </div>
                     {popup && <Post company={enroll_company} setcompany={setEnroll_company}></Post>}
                     <input type="text" id="addressLine2" name="addressLine2" placeholder="상세 주소" className="border border-gray-300 rounded-lg p-2 w-full" />
@@ -313,33 +279,90 @@ export const OrderDetailContent = ({
               <Divider style={{backgroundColor: "#ddd", height: "0.1px"}} />
             </div>
           </div>
+          <div className="py-3">
+            <div className="flex">
+              <div className="w-full">
+                <h2 className="text-2xl font-semibold mb-4 p-2">결제방법</h2>
+                <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
+                <div className="flex items-center justify-between py-2">
+                  <div className="w-1/4 font-medium">결제수단</div>
+                  <div className="w-3/4">
+                    <div className="space-y-4">
+                      <div className="flex items-center space-x-4">
+                        <input
+                          type="radio"
+                          name="paymentMethod"
+                          id="toss"
+                          onClick={() => handlePayMethodChange("toss")}
+                        />
+                        <label htmlFor="toss">
+                          <Link href="/">
+                            <Image
+                              src="/images/logo-toss-pay.svg"
+                              alt="Toss Pay"
+                              width={200}
+                              height={200}
+                              sizes="100vw"
+                              className="w-34 h-auto" // Adjusted size
+                              priority
+                            />
+                          </Link>
+                        </label>
+                      </div>
+                      <div className="flex items-center space-x-4">
+                        <input
+                          type="radio"
+                          name="paymentMethod"
+                          id="naver"
+                          onClick={() => handlePayMethodChange("naver")}
+                        />
+                        <label htmlFor="naver">
+                          <Link href="/">
+                            <Image
+                              src="/images/naver-pay-btn.png"
+                              alt="Naver Pay"
+                              width={200}
+                              height={200}
+                              sizes="100vw"
+                              className="w-34 h-auto" // Adjusted size
+                              priority
+                            />
+                          </Link>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div className="w-full md:w-1/4 pl-4 mt-8 md:mt-0 bg-white p-3">
-          <h2 className="text-2xl font-semibold mb-4">결제수단</h2>
+          <h2 className="text-2xl font-semibold mb-4">결제확인</h2>
           <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
           <div className="space-y-2">
             <h5 className="text-lg text-gray-600 mb-2">위 주문내역을 확인하였으며, 결제 내역에 동의합니다.</h5>
-            <div className="border-b py-3 px-4 flex justify-between cursor-pointer" onClick={toggleOrderInfo}>
-              <h5 className="text-lg text-gray-600">주문 상품 정보 동의</h5>
+            <div className="border-b py-3 px-4 flex justify-between cursor-pointer bg-gray-100 rounded-lg" onClick={toggleOrderInfo}>
+              <h5 className="text-lg text-gray-600" >주문 상품 정보 동의</h5>
               <svg xmlns="http://www.w3.org/2000/svg" className={`h-6 w-6 transform ${isOrderInfoOpen ? "rotate-180" : ""} transition-transform`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
               </svg>
             </div>
             {isOrderInfoOpen && (
               <div className="p-4">
-                <textarea className="w-full h-40 p-2 text-sm border border-gray-300 rounded-lg mb-4">
+                <div className="w-full h-40 p-2 text-sm border border-gray-300 rounded-lg mb-4">
                     주문할 상품의 상품명, 가격, 배송정보 등을 최종 확인하였으며, 구매에 동의하십니까? (전자상거래법 제 8조 2항)
-                </textarea>
+                </div>
               </div>
             )}
-            <div className="border-b py-3 px-4 flex justify-between cursor-pointer" onClick={togglePersonalInfo}>
+            <div className="border-b py-3 px-4 flex justify-between cursor-pointer bg-gray-100 rounded-lg" onClick={togglePersonalInfo}>
               <h5 className="text-lg text-gray-600">개인정보 수집 및 이용동의</h5>
               <svg xmlns="http://www.w3.org/2000/svg" className={`h-6 w-6 transform ${isPersonalInfoOpen ? "rotate-180" : ""} transition-transform`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
               </svg>
             </div>
             {isPersonalInfoOpen && (
-              <div className="p-4">
+              <div className="w-full h-80 p-2 text-sm border border-gray-300 rounded-lg mb-4" style={{overflow:"scroll"}}>
                   수집하는 개인정보의 항목
                   ① 한솔축산는 구매, 원활한 고객상담, 각종 서비스의 제공을 위해 주문 이용 시 아래와 같은 개인정보를 수집하고 있습니다.
                   o 필수수집항목 : 이름, 휴대폰번호, 이메일, 수신자정보(성명,주소,휴대폰번호,이메일), 개인통관고유보호(해외직구상품구매시)
@@ -354,38 +377,12 @@ export const OrderDetailContent = ({
               </div>
             )}
           </div>
-          <div className="flex justify-end mt-4">
-            <button className="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-blue-600 transition-colors" onClick={handlePayment}>결제하기</button>
-          </div>
-        </div>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 relative">
-        <div>
-          <div className="py-3">
-            <div className="flex">
-              <div className="bg-white rounded-lg shadow-lg w-full">
-                <h2 className="text-2xl font-semibold mb-4 p-2">결제수단</h2>
-                <div className="p-3">
-                  <label htmlFor="" className="py-2">
-                    <input type="radio" name="paymentMethod" id="naver" onClick={() => handlePayMethodChange("naver")} /><br />
-                  </label>
-                  <label htmlFor="" className="py-2">
-                    <input type="radio" name="paymentMethod" id="toss" onClick={() => handlePayMethodChange("toss")} />단<br />
-                  </label>
-                  {renderPayMethodContent()}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="py-3">
-            <div className="py-3 bg-white rounded-lg shadow-lg p-3 w-full">
-              <h2 className="text-2xl font-semibold mb-4">현금영수증 신청</h2>
-              <div className="py-3 mr-3">
-                <input type="radio" name="receiptType" id="personal" onClick={() => handleReceiptTypeChange("personal")}/>개인소득공제 <span className="gap-6"></span>
-                <input type="radio" name="receiptType" id="business" onClick={() => handleReceiptTypeChange("business")}/>사업자지출증빙
-                {RenderReceiptContent()}
-              </div>
-            </div>
+          <div className="flex justify-center mt-4">
+            <button
+              className="text-white p-3 rounded-lg shadow-lg hover:bg-blue-600 transition-colors"
+              style={{backgroundColor: "#271A11"}}
+              onClick={handlePayment}
+            ><span>16,800원 </span>결제하기</button>
           </div>
         </div>
       </div>
