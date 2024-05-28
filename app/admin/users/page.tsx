@@ -1,6 +1,6 @@
 import {ResponseApi, SearchParams} from "@/types/commonTypes"
 import {usersServices} from "@/services/usersServices"
-import {adminCheck} from "@/app/admin/page"
+import {adminCheck} from "@/app/users/login/loginCheck"
 import AdminLayout from "@/app/admin-layout"
 import AdminUsersList from "./users"
 

@@ -1,4 +1,4 @@
-import {adminCheck} from "@/app/admin/page"
+import {adminCheck} from "@/app/users/login/loginCheck"
 import {ProductCategory} from "@/types/productsTypes"
 import AdminLayout from "@/app/admin-layout"
 import AdminProductsForm from "@/app/admin/products/[category]/products-form"

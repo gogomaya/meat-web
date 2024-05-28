@@ -1,4 +1,4 @@
-import {loginCheck} from "@/app/admin/page"
+import {loginCheck} from "@/app/users/login/loginCheck"
 import MainLayout from "@/app/main-layout"
 import {GeneralPagination} from "../reviews/reviews"
 import {BoardsList} from "./boards"

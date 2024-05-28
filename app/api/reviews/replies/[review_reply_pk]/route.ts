@@ -1,7 +1,7 @@
 import {NextRequest, NextResponse} from "next/server"
 import mysql2Pool from "@/libraries/mysql2Pool"
 import {EmptyObject} from "@/types/commonTypes"
-import {loginCheck} from "@/app/admin/page"
+import {loginCheck} from "@/app/users/login/loginCheck"
 
 export const DELETE = async (
   _request: NextRequest,

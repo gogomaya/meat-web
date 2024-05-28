@@ -152,7 +152,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
                   opacity: product.is_sold_out ? 0.3 : 1
                 }}
               />
-              {product.is_sold_out && (
+              {product.is_sold_out ? (
                 <span
                   style={{
                     position: "absolute",
@@ -166,7 +166,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
                 >
                 Sold out
                 </span>
-              )}
+              ) : null}
             </Link>
             <p style={{textAlign: "left", margin: "10px 0", fontSize: "1rem"}}>
               <Link href={`/products/${product.product_pk}`} style={{color: "#333", textDecoration: "none"}}>

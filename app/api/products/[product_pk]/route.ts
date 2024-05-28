@@ -5,7 +5,7 @@ import fs from "fs"
 import {fileUpload} from "@/app/api/ckeditor5/upload-images/route"
 import {EmptyObject} from "@/types/commonTypes"
 import {deleteNotUsedImages} from "@/app/api/products/route"
-import {adminCheck} from "@/app/admin/page"
+import {adminCheck} from "@/app/users/login/loginCheck"
 
 export const GET = async (
   _request: NextRequest,
