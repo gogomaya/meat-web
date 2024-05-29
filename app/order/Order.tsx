@@ -192,13 +192,13 @@ export const OrderDetailContent = ({
   return (
     <div className="container mx-auto p-8">
       <div className="p-3 w-full mb-5">
-        <h2 className="text-2xl font-semibold mb-4">주문상품</h2>
+        <div className="text-2xl font-semibold mb-4">주문상품</div>
         <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
         {renderOrderItems()}
       </div>
       <div className="flex flex-col md:flex-row items-start md:items-start mb-8 gap-6">
         <div className="w-full md:w-3/4 pr-4 bg-white p-3">
-          <h2 className="text-2xl font-semibold mb-4">주문자 정보</h2>
+          <div className="text-2xl font-semibold mb-4">주문자 정보</div>
           <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
           <div className="space-y-4">
             <div>
@@ -228,7 +228,7 @@ export const OrderDetailContent = ({
           </div>
         </div>
         <div className="w-full md:w-1/4 pl-4 mt-8 md:mt-0 bg-white p-3">
-          <h2 className="text-2xl font-semibold mb-4">결제금액</h2>
+          <div className="text-2xl font-semibold mb-4">결제금액</div>
           <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
           <div className="space-y-2 bg-gray-200 rounded-lg p-3">
             <p className="text-lg m-2">총 상품금액: {totalPrice.toLocaleString()}원</p>
@@ -240,7 +240,7 @@ export const OrderDetailContent = ({
       </div>
       <div className="flex flex-col md:flex-row items-start md:items-start mb-8 gap-6">
         <div className="w-full md:w-3/4 pr-4 p-3">
-          <h2 className="text-2xl font-semibold mb-4">배송 정보</h2>
+          <div className="text-2xl font-semibold mb-4">배송 정보</div>
           <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
           <div className="space-y-4">
             <div>
@@ -294,7 +294,7 @@ export const OrderDetailContent = ({
           <div className="py-3">
             <div className="flex">
               <div className="w-full">
-                <h2 className="text-2xl font-semibold mb-4 p-2">결제방법</h2>
+                <div className="text-2xl font-semibold mb-4 p-2">결제방법</div>
                 <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
                 <div className="flex items-center justify-between py-2">
                   <div className="w-1/4 font-medium">결제수단</div>
@@ -350,7 +350,7 @@ export const OrderDetailContent = ({
           </div>
         </div>
         <div className="w-full md:w-1/4 pl-4 mt-8 md:mt-0 bg-white p-3">
-          <h2 className="text-2xl font-semibold mb-4">결제확인</h2>
+          <div className="text-2xl font-semibold mb-4">결제확인</div>
           <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
           <div className="space-y-2">
             <h5 className="text-lg text-gray-600 mb-2">위 주문내역을 확인하였으며, 결제 내역에 동의합니다.</h5>

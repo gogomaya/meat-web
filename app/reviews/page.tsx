@@ -8,10 +8,10 @@ const Products = async () => {
     <MainLayout user={user}>
       {/* 이달의 베스트 리뷰 */}
       <MonthlyBestReview />
-      <h2 className="m-8 p-2 block "><strong>PHOTO REVIEW | 포토리뷰</strong></h2>
+      <div className="m-8 p-2 block "><strong>PHOTO REVIEW | 포토리뷰</strong></div>
       <PhotoReview />
       <GeneralPagination />
-      <h2 className="flex justify-left mt-8"><strong>일반 리뷰</strong></h2>
+      <div className="flex justify-left mt-8"><strong>일반 리뷰</strong></div>
       <GeneralReviews />
       <GeneralPagination />
     </MainLayout>

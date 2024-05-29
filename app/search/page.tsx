@@ -7,7 +7,7 @@ const Search = async () => {
   return (
     <MainLayout user={user}>
       <div className="w-full">
-        <h2 className="flex justify-center"><strong>검색결과</strong></h2>
+        <div className="flex justify-center"><strong>검색결과</strong></div>
         <SearchResult searchResults={[]} />
       </div>
     </MainLayout>

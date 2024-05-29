@@ -29,7 +29,7 @@ export const UserInfoForm = () => {
               </ul>
             </div>
             <div className="mt-12">
-              <h2 className="text-lg font-extrabold">가입일자</h2>
+              <div className="text-lg font-extrabold">가입일자</div>
               <span>2024.01.01</span>
             </div>
           </div>

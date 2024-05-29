@@ -14,10 +14,10 @@ export const ProductsSearch = ({products, searchParams}: {products: Product[], s
   const router = useRouter()
   return (
     <section className="flex justify-between items-center mx-8 p-2 rounded-lg">
-      <span className="text-lg font-semibold">
+      <span className="container text-lg font-semibold">
         상품이 모두 <strong>{products.length}</strong>개 있습니다.
       </span>
-      <div className="flex-1 ml-8 p-2">
+      <div className="container flex justify-end p-2">
         <FormControl className="w-48">
           <InputLabel>상품정렬</InputLabel>
           <Select
@@ -64,7 +64,7 @@ export const ProductsPagination = ({searchParams, total_rows}: {searchParams: Se
 export const ProductSubtitle = () => {
   return (
     <div>
-      <h2 className="flex justify-center text-red-100"
+      <div className="flex justify-center text-red-100"
         style={{
           backgroundImage: "url('/images/Bg.png')",
           backgroundPosition: "center calc(10% - 620px)",
@@ -75,7 +75,7 @@ export const ProductSubtitle = () => {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center"
-        }}>상품상세</h2>
+        }}>상품상세</div>
     </div>
   )
 }
@@ -106,127 +106,127 @@ export const ProductsList = ({products}: { products: Product[] }) => {
   }, [])
 
   return (
-    <ol className="m-8 p-2" style={{display: "flex", flexWrap: "wrap", gap: "30px", padding: "10px"}}>
-      {products.length > 0 ? (
-        products.map((product) => (
-          <li
-            key={product.product_pk}
-            className="product-item"
-            style={{
-              padding: "15px",
-              width: "calc(33.333% - 20px)",
-              borderRadius: "15px",
-              backgroundColor: "#f9f9f9",
-              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-              transition: "transform 0.3s, opacity 0.3s",
-              opacity: 0,
-              transform: "translateY(20px)"
-            }}
-            onMouseEnter={enlargeImage}
-            onMouseLeave={shrinkImage}
-          >
-            <Link
-              href={`/products/${product.product_pk}`}
+    <div className="container">
+      <ol className="m-8 p-2" style={{display: "flex", flexWrap: "wrap", gap: "30px", padding: "10px"}}>
+        {products.length > 0 ? (
+          products.map((product) => (
+            <li
+              key={product.product_pk}
+              className="product-item"
               style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                position: "relative"
+                padding: "15px",
+                width: "calc(33.333% - 20px)",
+                borderRadius: "15px",
+                transition: "transform 0.3s, opacity 0.3s",
+                opacity: 0,
+                transform: "translateY(20px)"
               }}
+              onMouseEnter={enlargeImage}
+              onMouseLeave={shrinkImage}
             >
-              <Image
-                src={`/upload-images/products/${product.image_file_name}`}
-                alt={product.name}
-                width={0}
-                height={0}
-                priority
-                sizes="100vw"
+              <Link
+                href={`/products/${product.product_pk}`}
                 style={{
-                  width: "100%",
-                  aspectRatio: "1/1",
-                  objectFit: "cover",
-                  borderRadius: "10px",
-                  transform: "scale(1)",
-                  transition: "transform 0.3s",
-                  opacity: product.is_sold_out ? 0.3 : 1
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  position: "relative"
                 }}
-              />
-              {product.is_sold_out ? (
-                <span
+              >
+                <Image
+                  src={`/upload-images/products/${product.image_file_name}`}
+                  alt={product.name}
+                  width={0}
+                  height={0}
+                  priority
+                  sizes="100vw"
                   style={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    transform: "translate(-50%, -50%)",
-                    fontWeight: "bold",
-                    fontSize: "1.2rem",
-                    color: "#ff0000"
+                    width: "100%",
+                    aspectRatio: "1/1",
+                    objectFit: "cover",
+                    borderRadius: "10px",
+                    transform: "scale(1)",
+                    transition: "transform 0.3s",
+                    opacity: product.is_sold_out ? 0.3 : 1
+                  }}
+                />
+                {product.is_sold_out ? (
+                  <span
+                    style={{
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                      fontWeight: "bold",
+                      fontSize: "1.2rem",
+                      color: "#ff0000"
+                    }}
+                  >
+                  Sold out
+                  </span>
+                ) : null}
+              </Link>
+              <p style={{textAlign: "left", margin: "10px 0", fontSize: "1rem"}}>
+                <Link href={`/products/${product.product_pk}`} style={{color: "#333", textDecoration: "none"}}>
+                  {product.name}
+                </Link>
+                <br />
+                <strong style={{color: "#000", fontSize: "1.1rem"}}>{product.price.toLocaleString()}원</strong>
+              </p>
+              <div style={{display: "flex", flexWrap: "wrap", gap: "10px"}}>
+                <button
+                  className="product-button"
+                  style={{
+                    padding: "5px 8px",
+                    backgroundColor: "#000",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: "20px",
+                    cursor: "pointer",
+                    fontSize: "0.8rem"
                   }}
                 >
-                Sold out
-                </span>
-              ) : null}
-            </Link>
-            <p style={{textAlign: "left", margin: "10px 0", fontSize: "1rem"}}>
-              <Link href={`/products/${product.product_pk}`} style={{color: "#333", textDecoration: "none"}}>
-                {product.name}
-              </Link>
-              <br />
-              <strong style={{color: "#000", fontSize: "1.1rem"}}>{product.price.toLocaleString()}원</strong>
-            </p>
-            <div style={{display: "flex", flexWrap: "wrap", gap: "10px"}}>
-              <button
-                className="product-button"
-                style={{
-                  padding: "5px 8px",
-                  backgroundColor: "#000",
-                  color: "#fff",
-                  border: "none",
-                  borderRadius: "20px",
-                  cursor: "pointer",
-                  fontSize: "0.8rem"
-                }}
-              >
-              당일배송
-              </button>
-              <button
-                className="product-button"
-                style={{
-                  padding: "5px 8px",
-                  backgroundColor: "#000",
-                  color: "#fff",
-                  border: "none",
-                  borderRadius: "20px",
-                  cursor: "pointer",
-                  fontSize: "0.8rem"
-                }}
-              >
-              택배배송
-              </button>
-              <button
-                className="product-button"
-                style={{
-                  padding: "5px 8px",
-                  backgroundColor: "#ffeb3b",
-                  color: "#000",
-                  border: "none",
-                  borderRadius: "20px",
-                  cursor: "pointer",
-                  fontSize: "0.8rem"
-                }}
-              >
-              카드결제
-              </button>
-            </div>
-          </li>
-        ))
-      ) : (
-        <div style={{width: "100%", textAlign: "center", padding: "20px"}}>
-          준비된 상품이 없습니다.
-        </div>
-      )}
-    </ol>
+                당일배송
+                </button>
+                <button
+                  className="product-button"
+                  style={{
+                    padding: "5px 8px",
+                    backgroundColor: "#000",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: "20px",
+                    cursor: "pointer",
+                    fontSize: "0.8rem"
+                  }}
+                >
+                택배배송
+                </button>
+                <button
+                  className="product-button"
+                  style={{
+                    padding: "5px 8px",
+                    backgroundColor: "#ffeb3b",
+                    color: "#000",
+                    border: "none",
+                    borderRadius: "20px",
+                    cursor: "pointer",
+                    fontSize: "0.8rem"
+                  }}
+                >
+                카드결제
+                </button>
+              </div>
+            </li>
+          ))
+        ) : (
+          <div style={{width: "100%", textAlign: "center", padding: "20px"}}>
+            준비된 상품이 없습니다.
+          </div>
+        )}
+      </ol>
+    </div>
   )
 }
 
@@ -259,7 +259,7 @@ export const ProductsDetailContent = ({product}: { product: Product }) => {
 
   return (
     <div className="container mx-auto py-8">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 p-4 md:p-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 p-4">
         <div className="relative">
           <Image
             src={`/upload-images/products/${product.image_file_name}`}
@@ -369,26 +369,26 @@ export const ProductsDetailContent = ({product}: { product: Product }) => {
               min="1" />
           </div>
           <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
-          <div>
+          <div className="container">
             <Typography variant="h5" gutterBottom className="flex flex-col items-end" style={{marginBottom: "1rem"}}>
                 총금액: {(Number(product.price) * quantity).toLocaleString()}원
             </Typography>
-            <div className="w-full p-4">
-              <div className="flex justify-between items-center mb-4">
+            <div className="container w-full p-4">
+              <div className="flex justify-center items-center mb-4">
                 <div className="flex w-full lg:w-1/2 gap-2">
                   <CartOrderButton type="CART" product={product} quantity={quantity}>
-                    <Button style={{backgroundColor: "#A51C30", width: "290px", height: "50px", color: "white", fontSize: "1.2rem"}} className="btn">
+                    <Button style={{backgroundColor: "#A51C30", width: "250px", height: "50px", color: "white", fontSize: "1.2rem"}} className="btn">
                       장바구니
                     </Button>
                   </CartOrderButton>
                   <CartOrderButton type="ORDER" product={product} quantity={quantity}>
-                    <Button style={{backgroundColor: "#271A11", width: "290px", height: "50px", color: "white", fontSize: "1.2rem"}} className="btn">
+                    <Button style={{backgroundColor: "#271A11", width: "250px", height: "50px", color: "white", fontSize: "1.2rem"}} className="btn">
                       구매하기
                     </Button>
                   </CartOrderButton>
                 </div>
               </div>
-              <div className="flex justify-end">
+              {/* <div className="flex justify-end">
                 <CartOrderButton type="ORDER" product={product} quantity={quantity}>
                   <div className="w-40 h-45">
                     <Image
@@ -405,7 +405,7 @@ export const ProductsDetailContent = ({product}: { product: Product }) => {
                     />
                   </div>
                 </CartOrderButton>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -511,44 +511,46 @@ export const ProductDetail = ({product}: {product: Product}) => {
 export const ShipDetail = () => {
   return (
     <>
-      <div className="p-8">
-        <strong>교환 및 환불 안내</strong>
+      <div className="container">
         <div>
-          <div>
-            <span style={{fontWeight: "bold", textDecoration: "underline"}}>1. 상품에 문제가 있는 경우</span><br />
+          <strong>교환 및 환불 안내</strong>
+          <div className="mb-4">
+            <div>
+              <span style={{fontWeight: "bold", textDecoration: "underline"}}>1. 상품에 문제가 있는 경우</span><br />
             받으신 상품이 표시/광고 내용 또는 계약 내용과 다른 경우에는 상품을 받은 날부터 3개월 이내,
-            <br />그 사실을 알게 된 날부터 30일 이내에 교환 및 환불을 요청하실 수 있습니다.
-            <br />상품의 정확한 상태를 확인할 수 있도록 사진을 함께 보내주시면 더 빠른 상담이 가능합니다.
-            <br /><span>⚠ 배송 상품에 문제가 있는 것으로 확인되면 배송비는 판매자가 부담합니다.</span>
-          </div>
-          <div>
-            <span style={{fontWeight: "bold", textDecoration: "underline"}}>2. 단순 변심, 주문착오의 경우</span><br />
+              <br />그 사실을 알게 된 날부터 30일 이내에 교환 및 환불을 요청하실 수 있습니다.
+              <br />상품의 정확한 상태를 확인할 수 있도록 사진을 함께 보내주시면 더 빠른 상담이 가능합니다.
+              <br /><span>⚠ 배송 상품에 문제가 있는 것으로 확인되면 배송비는 판매자가 부담합니다.</span>
+            </div>
+            <div>
+              <span style={{fontWeight: "bold", textDecoration: "underline"}}>2. 단순 변심, 주문착오의 경우</span><br />
             받으신 상품이 표시/광고 내용 또는 계약 내용과 다른 경우에는 상품을 받은 날부터 3개월 이내,
-            <br />그 사실을 알게 된 날부터 30일 이내에 교환 및 환불을 요청하실 수 있습니다.
-            <br />상품의 정확한 상태를 확인할 수 있도록 사진을 함께 보내주시면 더 빠른 상담이 가능합니다.
-            <br /><span>⚠ 배송 상품에 문제가 있는 것으로 확인되면 배송비는 판매자가 부담합니다.</span>
+              <br />그 사실을 알게 된 날부터 30일 이내에 교환 및 환불을 요청하실 수 있습니다.
+              <br />상품의 정확한 상태를 확인할 수 있도록 사진을 함께 보내주시면 더 빠른 상담이 가능합니다.
+              <br /><span>⚠ 배송 상품에 문제가 있는 것으로 확인되면 배송비는 판매자가 부담합니다.</span>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="p-8">
-        <strong>주문취소 안내</strong>
-        <div>
+        <div className="mb-4">
+          <strong>주문취소 안내</strong>
           <div>
-            <span style={{fontWeight: "bold", textDecoration: "underline"}}>1. 주문 취소 관련</span><br />
+            <div>
+              <span style={{fontWeight: "bold", textDecoration: "underline"}}>1. 주문 취소 관련</span><br />
             [배송준비중] 부터는 취소가 불가하니, 반품으로 진행해주세요. (상품에 따라 반품이 불가할 수 있습니다.)
-            <br />주문마감 시간에 임박할수록 취소 기능 시간이 짧아질 수 있습니다.
-            <br />비회원은 App 또는 모바일 웹사이트에서 [비회원 주문조회 페이지] 에서 취소가 가능합니다.
-            <br />일부 예약상품은 배송 3~4일 전에만 취소 가능합니다.
-            <br />주문상품의 부분취소는 불가능합니다. 전체 주문 취소 후 다시 구매 해주세요.
-            <br />미성년자 결제 시 법정대리인이 그 거래를 취소할 수 있습니다.
+              <br />주문마감 시간에 임박할수록 취소 기능 시간이 짧아질 수 있습니다.
+              <br />비회원은 App 또는 모바일 웹사이트에서 [비회원 주문조회 페이지] 에서 취소가 가능합니다.
+              <br />일부 예약상품은 배송 3~4일 전에만 취소 가능합니다.
+              <br />주문상품의 부분취소는 불가능합니다. 전체 주문 취소 후 다시 구매 해주세요.
+              <br />미성년자 결제 시 법정대리인이 그 거래를 취소할 수 있습니다.
+            </div>
           </div>
         </div>
-      </div>
-      <div className="p-8 mb-4">
-        <strong>배송관련 안내</strong>
-        <div>
+        <div className="mb-4">
+          <strong>배송관련 안내</strong>
           <div>
+            <div>
             배송 과정 중 기상 악화 및 도로교통 상황에 따라 부득이 지연배송이 발생될 수 있습니다.
+            </div>
           </div>
         </div>
       </div>
@@ -599,8 +601,8 @@ export const NavDetail = () => {
   }
 
   return (
-    <nav className={`sticky top-16 items-center w-full p-16 z-10 ${isFixed ? "visible" : "invisible md:visible"} flex-1 flex justify-center items-center nav-detail`} style={{height: "100px"}}>
-      <ul className="flex w-full h-20 items-center p-10">
+    <nav className={`container sticky top-16 items-center w-full z-10 ${isFixed ? "visible" : "invisible md:visible"} flex-1 flex justify-center items-center nav-detail`} style={{height: "100px"}}>
+      <ul className="flex w-full h-20 items-center">
         <li
           onClick={() => {
             scrollToElement("detail")

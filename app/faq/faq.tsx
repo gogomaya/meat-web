@@ -319,7 +319,7 @@ export const FaqSection: React.FC = () => {
         <div className="faq-main-wrap">
           <div className="section-top-wrap">
             <div className="section-sub-title">faq</div>
-            <h2 className="section-title">자주 묻는 질문</h2>
+            <div className="section-title">자주 묻는 질문</div>
           </div>
           <div className="faq-grid-wrap">
             {faqData.map((faq, index) => (

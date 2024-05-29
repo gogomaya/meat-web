@@ -10,7 +10,7 @@ const Order = async (props: {
   return (
     <MainLayout user={user}>
       <div>
-        <h2 className="flex justify-center text-red-100"
+        <div className="flex justify-center text-red-100"
           style={{
             backgroundImage: "url('/images/Bg.png')",
             backgroundPosition: "center calc(10% - 620px)",
@@ -21,7 +21,7 @@ const Order = async (props: {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center"
-          }}>주문서</h2>
+          }}>주문서</div>
       </div>
       <OrderDetailContent orderProducts={orderProducts} />
     </MainLayout>

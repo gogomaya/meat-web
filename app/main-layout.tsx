@@ -263,7 +263,7 @@ const MainMobileMenu = () => {
       PaperProps={{sx: {width: "100%"}}}
     >
       <Box className="p-8">
-        <nav className="gap-3">
+        <nav className="gap-2">
           <Link href="/users/login">로그인</Link>
           <Link href="/users/sign-up">회원가입</Link>
           <span className="flex-1"></span>
@@ -380,11 +380,11 @@ const MainBottom = () => {
       }}
     >
       <div className="bg-transparent p-6 md:p-12 text-white">
-        <div className="footer-menu-link space-x-4 text-lg">
-          <span className="footer-menu-content cursor-pointer hover:underline">회사소개</span><span>|</span>
-          <span className="footer-menu-content cursor-pointer hover:underline">이용안내</span><span>|</span>
-          <span className="footer-menu-content cursor-pointer hover:underline">이용약관</span><span>|</span>
-          <span className="footer-menu-content cursor-pointer hover:underline">개인정보처리방침</span>
+        <div className="flex footer-menu-link space-x-4">
+          <div className="footer-menu-content cursor-pointer hover:underline">회사소개</div><span>|</span>
+          <div className="footer-menu-content cursor-pointer hover:underline">이용안내</div><span>|</span>
+          <div className="footer-menu-content cursor-pointer hover:underline">이용약관</div><span>|</span>
+          <div className="footer-menu-content cursor-pointer hover:underline">개인정보처리방침</div>
         </div>
         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <div className="text-2xl font-bold" style={{textAlign: "left"}}>

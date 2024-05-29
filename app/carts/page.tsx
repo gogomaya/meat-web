@@ -7,7 +7,7 @@ const Cart = async () => {
   return (
     <MainLayout user={user}>
       <div>
-        <h2 className="flex justify-center text-red-100"
+        <div className="flex justify-center text-red-100"
           style={{
             backgroundImage: "url('/images/Bg.png')",
             backgroundPosition: "center calc(10% - 620px)",
@@ -18,7 +18,7 @@ const Cart = async () => {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center"
-          }}>장바구니</h2>
+          }}>장바구니</div>
       </div>
       <CartsDetailContent />
     </MainLayout>
