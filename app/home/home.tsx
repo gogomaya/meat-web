@@ -232,7 +232,7 @@ export const HomeBestMenu = ({products}: { products: Product[] }) => {
     <section className="mt-5 py-10">
       <div className="container mx-auto">
         <div ref={elementRef} className="flex flex-col items-start mb-4 px-6" style={animationStyle}>
-          <h2 className="text-lg font-semibold text-gray-600">당신의 식탁을 풍요롭게</h2>
+          <div className="text-lg font-semibold text-gray-500">당신의 식탁을 풍요롭게</div>
         </div>
         <div className="flex justify-between items-start mb-8 px-6">
           <div className="flex items-center space-x-2" style={animationStyle}>

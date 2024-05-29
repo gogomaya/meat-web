@@ -2,18 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body {
-  font-family: Noto Serif KR, sans-serif;
-  color: black;
-  height: 100%;
+@font-face {
+  font-family: "Noto Serif KR", sans-serif;
+  font-display: block;
+  src: local("Noto Serif KR"), url("/fonts/NotoSerifKR-Regular.ttf") format("truetype");
 }
 
-@font-face {
-  font-family: "Noto Serif KR", "sans-serif";
+html, body {
+  font-family: "Noto Serif KR", sans-serif;
   color: black;
   height: 100%;
-  font-display: block;
-  src: local("NotoSerifKR-Regular"), url("/fonts/NotoSerifKR-Regular.ttf") format("ttf");
 }
 
 .highlight-underline {

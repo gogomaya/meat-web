@@ -201,33 +201,115 @@ const FaqItem: React.FC<FaqItemProps> = ({question, answer}) => {
 
 export const FaqSection: React.FC = () => {
   const faqData = [
+    // 배송
     {
-      question: "What training resources provide for new users?",
-      answer: "Opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now us as their default model text and a search for."
+      category: "shipment",
+      question: "주문한 상품은 얼마나 빨리 배송되나요?",
+      answer: "주문한 상품은 보통 2~3일 이내에 배송됩니다. 배송일은 지역 및 상품에 따라 다를 수 있습니다."
     },
     {
-      question: "What measures do you have in place to ensure?",
-      answer: "Opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now us as their default model text and a search for."
+      category: "shipment",
+      question: "무료 배송 기준은 어떻게 되나요?",
+      answer: "무료 배송 기준은 한 번에 구매하는 상품 가격이 5만원 이상일 경우에 적용됩니다."
     },
     {
-      question: "Can integrate platform with existing software?",
-      answer: "Opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now us as their default model text and a search for."
+      category: "shipment",
+      question: "국제 배송을 제공하나요? 그 경우 배송 시간은 얼마나 걸리나요?",
+      answer: "네, 국제 배송을 제공하고 있습니다. 국제 배송은 주문 후 약 7~14일 정도 소요됩니다."
+    },
+
+    {
+      category: "shipment",
+      question: "주문 후 배송상태를 어떻게 확인할 수 있나요?",
+      answer: "주문한 상품의 배송상태는 주문 내역 페이지에서 확인하실 수 있습니다."
+    },
+
+    // 교환 및 환불정책
+
+    {
+      category: "policy",
+      question: "상품을 교환하거나 환불하려면 어떻게 해야 하나요?",
+      answer: "상품을 교환하거나 환불하려면 주문한 상품을 받은 후 7일 이내에 고객센터로 연락하여 신청하시면 됩니다."
+    },
+
+    {
+      category: "policy",
+      question: "교환 및 환불 정책은 어떻게 되나요?",
+      answer: "상품의 불량 또는 오배송인 경우에는 무료로 교환해드립니다. 환불은 상품 수령 후 7일 이내에 가능합니다."
+    },
+
+    // 상품에 관한 문의
+
+    {
+      category: "product",
+      question: "제품의 재고 상황은 어떻게 확인할 수 있나요?",
+      answer: "제품의 재고 상황은 각 제품 페이지에서 확인하실 수 있습니다."
     },
     {
-      question: "How often do you update your job listings?",
-      answer: "Opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now us as their default model text and a search for."
+      category: "product",
+      question: "상품의 세부 정보 및 사양은 어디에서 확인할 수 있나요?",
+      answer: "상품의 세부 정보와 사양은 각 제품 페이지에서 확인하실 수 있습니다."
     },
     {
-      question: "Do you offer any special packages for bulk hiring?",
-      answer: "Opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now us as their default model text and a search for."
+      category: "product",
+      question: "상품 리뷰를 확인할 수 있나요?",
+      answer: "네, 상품 페이지 하단에 다양한 고객 리뷰를 확인하실 수 있습니다."
+    },
+    // 계정 및 주문관리
+    {
+      category: "accountAndOrder",
+      question: "주문한 상품의 배송 상태를 어떻게 확인하나요?",
+      answer: "주문한 상품의 배송 상태는 마이 페이지에서 주문 내역을 확인하면 됩니다."
+    },
+
+    {
+      category: "accountAndOrder",
+      question: "주문 내역을 어디에서 확인할 수 있나요?",
+      answer: "주문 내역은 마이 페이지에서 확인하실 수 있습니다."
+    },
+
+    {
+      category: "accountAndOrder",
+      question: "회원 가입은 필수인가요?",
+      answer: "네, 회원 가입은 필수입니다. 회원 가입 시 다양한 혜택을 누릴 수 있습니다."
+    },
+
+    // 보안 및 개인정보보호
+    {
+      category: "security",
+      question: "개인 정보 보호 정책은 무엇인가요?",
+      answer: "저희는 고객의 개인 정보를 보호하기 위해 최선을 다하고 있습니다. 자세한 내용은 개인 정보 보호 정책을 참고해주세요."
+    },
+
+    {
+      category: "security",
+      question: "주문 및 결제 정보는 어떻게 보호되나요?",
+      answer: "주문 및 결제 정보는 안전한 암호화 기술을 통해 보호되며, 저희 사이트는 PCI DSS 준수를 위해 노력하고 있습니다."
+    },
+
+    // 결제에 관해
+    {
+      category: "pay",
+      question: "어떤 결제 수단을 제공하나요?",
+      answer: "저희는 다양한 결제 수단을 제공하고 있습니다. 신용카드, 계좌이체, 페이팔 등을 이용하실 수 있습니다."
     },
     {
-      question: "How does Zaisop stand out from competitors?",
-      answer: "Opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now us as their default model text and a search for."
+      category: "pay",
+      question: "결제가 안전하게 이루어지는지 어떻게 확인할 수 있나요?",
+      answer: "결제 과정은 안전한 SSL 프로토콜을 통해 보호되며, 고객의 개인 정보는 안전하게 암호화됩니다."
     },
+
+    // 기타
     {
-      question: "How does Zaisop ensure data privacy?",
-      answer: "Opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now us as their default model text and a search for."
+      category: "etc",
+      question: "고객 서비스에 연락하는 방법은 무엇인가요?",
+      answer: "고객 서비스에는 온라인 채팅, 이메일, 전화 등 다양한 연락 수단이 제공되고 있습니다."
+    },
+
+    {
+      category: "etc",
+      question: "제품에 대한 추가 문의가 있을 경우 어떻게 연락해야 하나요?",
+      answer: "제품에 대한 추가 문의 사항이 있으시면 고객 서비스로 연락 주시면 친절히 안내해드리겠습니다."
     }
   ]
 
@@ -237,7 +319,7 @@ export const FaqSection: React.FC = () => {
         <div className="faq-main-wrap">
           <div className="section-top-wrap">
             <div className="section-sub-title">faq</div>
-            <h2 className="section-title">frequently asked questions</h2>
+            <h2 className="section-title">자주 묻는 질문</h2>
           </div>
           <div className="faq-grid-wrap">
             {faqData.map((faq, index) => (

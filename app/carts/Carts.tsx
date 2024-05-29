@@ -102,12 +102,12 @@ export const CartsDetailContent = () => {
                                 />
                               </div>
                               <div className="ml-4">
-                                <Typography variant="body1" gutterBottom>{cartProduct.product.name}</Typography>
+                                <div>{cartProduct.product.name}</div>
                               </div>
                             </div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
-                            <Typography variant="body1" gutterBottom>{cartProduct.product.price.toLocaleString()}원</Typography>
+                            <div>{cartProduct.product.price.toLocaleString()}원</div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="flex items-center">
@@ -203,10 +203,10 @@ export const CartsDetailContent = () => {
               </div>
             </div>
           </div>
-          <div className="flex items-center p-4 ml-4">
+          <div className="flex items-center justify-center p-4">
             <Button
               variant="contained"
-              className="btn w-full"
+              className="btn w-full h-16"
               disabled={cartProducts.length === 0}
               onClick={() => {
                 router.push(`/order?orderProducts=${encodeURIComponent(JSON.stringify(cartProducts))}`)
