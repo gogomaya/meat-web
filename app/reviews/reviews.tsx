@@ -20,8 +20,7 @@ export const reviews = [
     content: "이야..이거 만족도 상당히 높습니다. 꽃삼겹 기름 정말 깨끗하고요, 비린내 누린내 잡내 정말 1도 안나요.. 너무 신기해요. 여지껏 먹어본 대패고기들 중에 1등입니다. 저희 엄마랑 언니는 비계를 싫어해서 뒷다리살을 구워먹는 사람들인데, 꽃삼겹 대패는 이게 뭐냐 너무 맛있다고 하면서 잘 먹었습니다.",
     rating: 5,
     likes: 10,
-    src: "17.jpg",
-    writer: "John"
+    src: "17.jpg"
   },
   {
     id: 2,
@@ -41,8 +40,7 @@ export const reviews = [
     content: "오랜만에 스테이크를 먹으러 갔는데 정말 맛있었습니다. 고기가 너무 부드럽고, 그릴맛이 일품이었습니다. 곁들여진 소스도 환상적이었습니다. 다음에 또 방문하고 싶은 식당이네요!",
     rating: 1,
     likes: 20,
-    src: "17.jpg",
-    writer: "John"
+    src: "17.jpg"
   },
   {
     id: 4,
@@ -52,8 +50,7 @@ export const reviews = [
     content: "오랜만에 스테이크를 먹으러 갔는데 정말 맛있었습니다. 고기가 너무 부드럽고, 그릴맛이 일품이었습니다. 곁들여진 소스도 환상적이었습니다. 다음에 또 방문하고 싶은 식당이네요!",
     rating: 11,
     likes: 11,
-    src: "17.jpg",
-    writer: "John"
+    src: "17.jpg"
   },
   {
     id: 5,
@@ -63,8 +60,7 @@ export const reviews = [
     content: "점심으로 스시를 시켰는데, 롤이 정말 맛있었습니다. 신선한 재료와 조화로운 맛이 인상적이었습니다. 포장도 깔끔하게 되어있어서 가져다 먹기에 편리했습니다. 다음에 또 주문하려고요!",
     rating: 7,
     likes: 5,
-    src: "17.jpg",
-    writer: "John"
+    src: "17.jpg"
   }
 ]
 
@@ -144,7 +140,6 @@ export const ReviewCard = ({reviews}: {reviews: any[]}) => {
               action={<IconButton aria-label="settings">
                 <MoreVertIcon />
               </IconButton>}
-              writer={review.writer}
               title={review.title}
               subheader={review.date}
               onClick={() => openDialogHandler(review)}
@@ -361,7 +356,7 @@ export const PhotoReview = () => {
   )
 }
 
-export const GeneralReview = ({title, content, likes, rating, writer}: {title: string, content: string, likes: number, rating: number, writer:string}) => {
+export const GeneralReview = ({title, content, likes, rating}: {title: string, content: string, likes: number, rating: number}) => {
 
   const [liked, setLiked] = React.useState(false)
   const [disliked, setDisliked] = React.useState(false)
@@ -385,7 +380,7 @@ export const GeneralReview = ({title, content, likes, rating, writer}: {title: s
     <div className="my-4 bg-white shadow overflow-hidden sm:rounded-lg mt-4">
       <div className="px-4 py-5 sm:px-6">
         <h3 className="text-lg font-medium text-gray-900">{title}</h3>
-        <p className="mt-1 max-w-2xl text-sm text-gray-500">{writer} - {new Date().toLocaleDateString()}</p>
+        <p className="mt-1 max-w-2xl text-sm text-gray-500">작성자 - {new Date().toLocaleDateString()}</p>
         <div className="mt-4 flex items-center">
           {/* 별점 표시 */}
           <div className="flex">
