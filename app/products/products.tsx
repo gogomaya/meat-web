@@ -116,7 +116,8 @@ export const ProductsList = ({products}: { products: Product[] }) => {
               style={{
                 padding: "15px",
                 width: "calc(33.333% - 20px)",
-                borderRadius: "15px",
+                borderRadius: "5px",
+                border: "2px solid #271A11",
                 transition: "transform 0.3s, opacity 0.3s",
                 opacity: 0,
                 transform: "translateY(20px)"
@@ -163,7 +164,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
                       color: "#ff0000"
                     }}
                   >
-                  Sold out
+                    Sold out
                   </span>
                 ) : null}
               </Link>
@@ -187,7 +188,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
                     fontSize: "0.8rem"
                   }}
                 >
-                당일배송
+                  당일배송
                 </button>
                 <button
                   className="product-button"
@@ -201,7 +202,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
                     fontSize: "0.8rem"
                   }}
                 >
-                택배배송
+                  택배배송
                 </button>
                 <button
                   className="product-button"
@@ -215,7 +216,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
                     fontSize: "0.8rem"
                   }}
                 >
-                카드결제
+                  카드결제
                 </button>
               </div>
             </li>
@@ -277,12 +278,8 @@ export const ProductsDetailContent = ({product}: { product: Product }) => {
             }} />
         </div>
         <div>
-          <Typography variant="h4" gutterBottom style={{fontWeight: "bold", fontSize: "2.6rem"}}>
-            {product.name}
-          </Typography>
-          <Typography variant="body1" paragraph style={{marginBottom: "1rem"}}>
-            {product.description}
-          </Typography>
+          <div className="py-2" style={{fontWeight: "bold", fontSize: "2.6rem"}}>{product.name}</div>
+          <div className="py-8">{product.description}</div>
           <div style={{marginBottom: "1rem"}}>
             <span style={{marginRight: "10px", color: "#A51C30", fontWeight: "bold", fontSize: "2.6rem"}}>{product.price.toLocaleString()}원</span>
             <div className="py-3" style={{display: "flex", flexWrap: "wrap", gap: "10px"}}>
@@ -545,7 +542,7 @@ export const ShipDetail = () => {
             </div>
           </div>
         </div>
-        <div className="mb-4">
+        <div className="mb-12 py-4">
           <strong>배송관련 안내</strong>
           <div>
             <div>

@@ -86,23 +86,30 @@ export const OrderDetailContent = ({
           </tr>
         </thead>
         <tbody>
-          {orderProducts.map((orderProduct) => (
-            <tr key={orderProduct.product.product_pk}>
-              <td className="flex justify-center">
-                <Image
-                  src={`/${process.env.NEXT_PUBLIC_UPLOAD_IMAGES}/products/${encodeURIComponent(String(orderProduct.product.image_file_name))}`}
-                  alt=""
-                  width={100}
-                  height={50}
-                  sizes="100vw"
-                  priority
-                />
-              </td>
-              <td className="p-3 text-center">{orderProduct.product.name}</td>
-              <td className="p-3 text-center">{orderProduct.product.price.toLocaleString()}원</td>
-              <td className="p-3 text-center">{orderProduct.quantity}</td>
-              <td className="p-3 text-center">{(Number(orderProduct.product.price) * orderProduct.quantity).toLocaleString()}원</td>
-            </tr>
+          {orderProducts.map((orderProduct, index) => (
+            <React.Fragment key={orderProduct.product.product_pk}>
+              <tr>
+                <td className="flex justify-center p-3">
+                  <Image
+                    src={`/${process.env.NEXT_PUBLIC_UPLOAD_IMAGES}/products/${encodeURIComponent(String(orderProduct.product.image_file_name))}`}
+                    alt=""
+                    width={100}
+                    height={50}
+                    sizes="100vw"
+                    priority
+                  />
+                </td>
+                <td className="p-3 text-center">{orderProduct.product.name}</td>
+                <td className="p-3 text-center">{orderProduct.product.price.toLocaleString()}원</td>
+                <td className="p-3 text-center">{orderProduct.quantity}</td>
+                <td className="p-3 text-center">{(Number(orderProduct.product.price) * orderProduct.quantity).toLocaleString()}원</td>
+              </tr>
+              {/* {index < orderProducts.length - 1 && (
+                <td colSpan={5} className="p-0">
+                  <div style={{height: "1px", backgroundColor: "#ddd", width: "100%"}} />
+                </td>
+              )} */}
+            </React.Fragment>
           ))}
         </tbody>
       </table>

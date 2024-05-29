@@ -49,7 +49,7 @@ const Users = ({user}: {user: User}) => {
                     backgroundColor: activeTab === "member" ? "#271A11" : "#FFFFFF",
                     color: activeTab === "member" ? "#FFFFFF" : "#271A11",
                     transition: "color 0.3s ease, background-color 0.3s ease",
-                    minWidth: "150px",
+                    minWidth: "200px",
                     textAlign: "center"
                   }}
                   onClick={() => handleTabClick("member")}
@@ -65,7 +65,7 @@ const Users = ({user}: {user: User}) => {
                     backgroundColor: activeTab === "nonMember" ? "#271A11" : "#FFFFFF",
                     color: activeTab === "nonMember" ? "#FFFFFF" : "#271A11",
                     transition: "color 0.3s ease, background-color 0.3s ease",
-                    minWidth: "150px",
+                    minWidth: "190px",
                     textAlign: "center"
                   }}
                   onClick={() => handleTabClick("nonMember")}
@@ -90,7 +90,7 @@ const Users = ({user}: {user: User}) => {
                     <Image
                       src="/images/naver-login-btn.png"
                       alt="naver-login-btn"
-                      width={300}
+                      width={360}
                       height={100}
                       sizes="100vw"
                       priority
@@ -111,7 +111,7 @@ const Users = ({user}: {user: User}) => {
                     <Image
                       src="/images/kakao-login-btn.png"
                       alt="naver-login-btn"
-                      width={300}
+                      width={360}
                       height={100}
                       sizes="100vw"
                       priority
@@ -151,7 +151,7 @@ const Users = ({user}: {user: User}) => {
                       placeholder="전화번호"
                     />
                   </div>
-                  <button style={{backgroundColor: "#4a5568", color: "#fff", border: "none", padding: "15px 30px", borderRadius: "4px", cursor: "pointer", transition: "background-color 0.3s ease", height: "110px"}}>조회</button>
+                  <button style={{backgroundColor: "#271A11", color: "#FFFFFF", border: "none", padding: "15px 30px", borderRadius: "4px", cursor: "pointer", transition: "background-color 0.3s ease", height: "110px"}}>조회</button>
                 </div>
               )}
               <div className="container" style={{textAlign: "center", marginTop: "20px"}}>
