@@ -88,7 +88,7 @@ const GeneralReviewsForm = ({
     backdrop.close()
   }
   return (
-    <div>
+    <div className="container">
       <Button
         variant="contained"
         color="primary"

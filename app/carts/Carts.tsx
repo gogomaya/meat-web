@@ -147,7 +147,7 @@ export const CartsDetailContent = () => {
                             </div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
-                            <Typography variant="body1" gutterBottom>{(Number(cartProduct.product.price) * cartProduct.quantity).toLocaleString()}원</Typography>
+                            <div>{(Number(cartProduct.product.price) * cartProduct.quantity).toLocaleString()}원</div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <IconButton
@@ -174,11 +174,11 @@ export const CartsDetailContent = () => {
           </div>
           <Divider className="my-4" sx={{border: "1px solid secondary"}} />
           <div className="flex flex-col items-end space-y-4">
-            <Typography variant="h5" gutterBottom>
+            <div>
               총금액: {_.sumBy(cartProducts, (cartProduct) => {
                 return Number(cartProduct.product.price) * cartProduct.quantity
               }).toLocaleString()}원
-            </Typography>
+            </div>
           </div>
         </div>
         <div className="w-full md:w-1/3 pr-8 ml-4">
@@ -231,7 +231,7 @@ export const CartsDetailContent = () => {
           }}
           style={{backgroundColor: "#A51C30"}}
         >
-          선택상품만 결제하기
+          <span>선택상품만 결제하기</span>
         </Button>
         <div>
           <Button

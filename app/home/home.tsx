@@ -230,7 +230,7 @@ export const HomeBestMenu = ({products}: { products: Product[] }) => {
 
   return (
     <section className="mt-5 py-10">
-      <div className="container mx-auto">
+      <div className="container">
         <div ref={elementRef} className="flex flex-col items-start mb-4 px-6" style={animationStyle}>
           <div className="text-lg font-semibold text-gray-500">당신의 식탁을 풍요롭게</div>
         </div>

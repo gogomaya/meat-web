@@ -40,7 +40,7 @@ export const MyPageBanner: React.FC<MyPageBannerProps> = ({title,titleKor}) => {
         justifyContent: "center",
         alignItems: "center"
       }}>
-      <h2 className="text-red-100">마이 페이지</h2>
+      <div className="text-red-100">마이 페이지</div>
       <p>
         <span className="text-white">{title}</span> / <span style={{color:"#A51C30",textDecoration:"underline"}}>{titleKor}</span>
       </p>

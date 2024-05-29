@@ -29,7 +29,7 @@ const Home = async () => {
         {products_best.length ? (
           <HomeBestMenu products={products_best} />
         ) : null}
-        <FaqSection />
+        {/* <FaqSection /> */}
       </div>
     </MainLayout>
   )

@@ -6,7 +6,7 @@ const BoardsCreate = async () => {
   return (
     <MainLayout user={user}>
       <div className="mx-4">
-        <h2>게시판 글쓰기</h2>
+        <div>게시판 글쓰기</div>
       </div>
     </MainLayout>
   )
