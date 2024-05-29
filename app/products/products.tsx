@@ -511,7 +511,7 @@ export const ProductDetail = ({product}: {product: Product}) => {
 export const ShipDetail = () => {
   return (
     <>
-      <div className="p-8 mb-4">
+      <div className="p-8">
         <strong>교환 및 환불 안내</strong>
         <div>
           <div>
@@ -530,7 +530,7 @@ export const ShipDetail = () => {
           </div>
         </div>
       </div>
-      <div className="p-8 mb-4">
+      <div className="p-8">
         <strong>주문취소 안내</strong>
         <div>
           <div>
@@ -561,7 +561,7 @@ export const NavDetail = () => {
   const [isFixed, setIsFixed] = React.useState(false)
   React.useEffect(() => {
     const handleScroll = () => {
-      const scrollY = window.scrollY
+      const scrollY = window.scrollY - 240
       const navElement = document.querySelector(".nav-detail") as HTMLElement
 
       if (scrollY > navElement.offsetTop) {
@@ -570,9 +570,7 @@ export const NavDetail = () => {
         setIsFixed(false)
       }
     }
-
     window.addEventListener("scroll", handleScroll)
-
     return () => {
       window.removeEventListener("scroll", handleScroll)
     }
@@ -593,15 +591,12 @@ export const NavDetail = () => {
   const [isHovered, setIsHovered] = React.useState(false)
   const [isClicked, setIsClicked] = React.useState<boolean | string>(false)
 
-
-
   const handleMouseHover = () => {
     setIsHovered(true)
   }
 
   const handleMouseClick = (menu: string | boolean | ((prevState: boolean) => boolean)) => {
   }
-
 
   return (
     <nav className={`sticky top-16 items-center w-full p-16 z-10 ${isFixed ? "visible" : "invisible md:visible"} flex-1 flex justify-center items-center nav-detail`} style={{height: "100px"}}>

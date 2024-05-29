@@ -243,7 +243,7 @@ export const ProductDetailReview = () => {
             <Typography variant="body1" className="w-24">
               {key.replace("Stars", " Stars")}
             </Typography>
-            <LinearProgress variant="determinate" value={val} style={{width: "50%"}} className="mx-2" />
+            <LinearProgress variant="determinate" value={val} sx={{width: "50%", backgroundColor: "#271A11", "& .MuiLinearProgress-bar": {backgroundColor: "#FACC15"}}} className="mx-2" />
             <Typography variant="body2">{val}%</Typography>
           </div>
         ))}
