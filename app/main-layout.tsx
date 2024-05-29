@@ -12,6 +12,7 @@ import Users from "@/components/users/users"
 import {User} from "@/types/usersTypes"
 import {commonServices} from "@/services/commonServices"
 import ExpandLessIcon from "@mui/icons-material/ExpandLess"
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"
 
 const MainLayout = ({
   children,
@@ -69,13 +70,15 @@ const MainLayout = ({
           />
         </Link>
         <MegaMenu />
-        <MainSearch />
-        <Users user={user} />
-        <Link href="/carts" className="text-red-100">
-          <Badge badgeContent={cartProductsLength} color="primary">
-            <WorkOutlineIcon className="md:w-8 md:h-8" />
-          </Badge>
-        </Link>
+        <div className="flex gap-4">
+          <MainSearch />
+          <Users user={user} />
+          <Link href="/carts" className="text-red-100">
+            <Badge badgeContent={cartProductsLength} color="primary">
+              <ShoppingCartIcon className="md:w-8 md:h-8" />
+            </Badge>
+          </Link>
+        </div>
       </header>
       <main>{children}</main>
       <CsIcon />

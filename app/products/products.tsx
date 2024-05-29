@@ -510,21 +510,49 @@ export const ProductDetail = ({product}: {product: Product}) => {
 
 export const ShipDetail = () => {
   return (
-    <div className="py-2 px-4 mt-4">
-      <strong>배송/주문/환불 정보</strong>
-      <div><Typography>CJ 대한통운으로 배송됩니다</Typography>
-        <div>- 배송지역은 제주도 지역을 포함한 도서 산간 지역의 경우 계절에 따라 발송 가능여부가 달라지기 때문에 상세 페이지 참고 부탁드립니다</div>
-        <div>- 배송비는 총 결제 금액 50,000원 미만일 경우 3,000원이 추가됩니다</div>
-        <div>- 배송일정은 각 상품별로 상이합니다</div>
-        <div>- 입금자명이나 입금액이 다를 경우, 고객센터로 연락주시기 바랍니다.</div>
-        <div>- 신선제품 특성상 단순 변심에 의한 교환 및 환불은 불가합니다.</div>
-        <div>(네이버 페이로 교환/반품을 접수하시더라도 자동 수거가 어렵습니다)</div>
-        <div>- 주소와 번호 오류, 부재중으로 인한 미수령 시 교환 반품 불가합니다</div>
-        <div>- 상품에 이상이 있을 시 사진이나 영상 보내주시면 빠른 처리 도와드리겠습니다</div>
-        <div>- 사용된 쿠폰은 반품, 교환, 환불 등 어떠한 사유에도 재발행이 불가합니다</div>
-        <div> 불편한 사항은 언제든지 고객센터로 연락주시면 성심성의껏 답변드리겠습니다.</div>
+    <>
+      <div className="p-8 mb-4">
+        <strong>교환 및 환불 안내</strong>
+        <div>
+          <div>
+            <span style={{fontWeight: "bold", textDecoration: "underline"}}>1. 상품에 문제가 있는 경우</span><br />
+            받으신 상품이 표시/광고 내용 또는 계약 내용과 다른 경우에는 상품을 받은 날부터 3개월 이내,
+            <br />그 사실을 알게 된 날부터 30일 이내에 교환 및 환불을 요청하실 수 있습니다.
+            <br />상품의 정확한 상태를 확인할 수 있도록 사진을 함께 보내주시면 더 빠른 상담이 가능합니다.
+            <br /><span>⚠ 배송 상품에 문제가 있는 것으로 확인되면 배송비는 판매자가 부담합니다.</span>
+          </div>
+          <div>
+            <span style={{fontWeight: "bold", textDecoration: "underline"}}>2. 단순 변심, 주문착오의 경우</span><br />
+            받으신 상품이 표시/광고 내용 또는 계약 내용과 다른 경우에는 상품을 받은 날부터 3개월 이내,
+            <br />그 사실을 알게 된 날부터 30일 이내에 교환 및 환불을 요청하실 수 있습니다.
+            <br />상품의 정확한 상태를 확인할 수 있도록 사진을 함께 보내주시면 더 빠른 상담이 가능합니다.
+            <br /><span>⚠ 배송 상품에 문제가 있는 것으로 확인되면 배송비는 판매자가 부담합니다.</span>
+          </div>
+        </div>
       </div>
-    </div>
+      <div className="p-8 mb-4">
+        <strong>주문취소 안내</strong>
+        <div>
+          <div>
+            <span style={{fontWeight: "bold", textDecoration: "underline"}}>1. 주문 취소 관련</span><br />
+            [배송준비중] 부터는 취소가 불가하니, 반품으로 진행해주세요. (상품에 따라 반품이 불가할 수 있습니다.)
+            <br />주문마감 시간에 임박할수록 취소 기능 시간이 짧아질 수 있습니다.
+            <br />비회원은 App 또는 모바일 웹사이트에서 [비회원 주문조회 페이지] 에서 취소가 가능합니다.
+            <br />일부 예약상품은 배송 3~4일 전에만 취소 가능합니다.
+            <br />주문상품의 부분취소는 불가능합니다. 전체 주문 취소 후 다시 구매 해주세요.
+            <br />미성년자 결제 시 법정대리인이 그 거래를 취소할 수 있습니다.
+          </div>
+        </div>
+      </div>
+      <div className="p-8 mb-4">
+        <strong>배송관련 안내</strong>
+        <div>
+          <div>
+            배송 과정 중 기상 악화 및 도로교통 상황에 따라 부득이 지연배송이 발생될 수 있습니다.
+          </div>
+        </div>
+      </div>
+    </>
   )
 }
 
@@ -552,7 +580,7 @@ export const NavDetail = () => {
   const scrollToElement = (id: string) => {
     const element = document.getElementById(id)
     if (element) {
-      const offset = 140
+      const offset = 240
       const elementTop = element.getBoundingClientRect().top
       const bodyRect = document.body.getBoundingClientRect().top
       const scrollTo = elementTop - bodyRect - offset
@@ -576,15 +604,67 @@ export const NavDetail = () => {
 
 
   return (
-    <nav className={`sticky top-16 w-full z-10 ${isFixed ? "visible" : "invisible md:visible"} flex-1 flex justify-center items-center nav-detail`} style={{height: "80px"}}>
-      <ul className="flex gap-3">
-        <li onClick={() => { scrollToElement("detail"); handleMouseHover(); handleMouseClick("detail") }} className={[isHovered ? "highlight-underline" : "", isClicked === "detail"  ? "text-red-500" : ""].join(" ")}><button>상품상세</button></li>
-        <li onClick={() => { scrollToElement("review2"); handleMouseHover(); handleMouseClick("review2") }} className={[isHovered ? "highlight-underline" : "", isClicked === "review2"  ? "text-red-500" : ""].join(" ")}><button>리뷰</button></li>
-        <li onClick={() => { scrollToElement("qna"); handleMouseHover(); handleMouseClick("qna") }} className={[isHovered ? "highlight-underline" : "", isClicked === "qna"  ? "text-red-500" : ""].join(" ")}><button>문의</button></li>
-        <li onClick={() => { scrollToElement("ship"); handleMouseHover(); handleMouseClick("ship") }} className={[isHovered ? "highlight-underline" : "", isClicked === "ship"  ? "text-red-500" : ""].join(" ")}><button>주문정보 </button></li>
+    <nav className={`sticky top-16 items-center w-full p-16 z-10 ${isFixed ? "visible" : "invisible md:visible"} flex-1 flex justify-center items-center nav-detail`} style={{height: "100px"}}>
+      <ul className="flex w-full h-20 items-center p-10">
+        <li
+          onClick={() => {
+            scrollToElement("detail")
+            handleMouseHover()
+            handleMouseClick("detail")
+          }}
+          className={`p-2 flex-1 text-center ${isHovered ? "highlight-underline" : ""} ${isClicked === "detail" ? "text-red-500" : ""}`}
+          style={{
+            border: "3px solid #271A11",
+            marginLeft: "8px"
+          }}
+        >
+          <button style={{fontSize: "1.55rem"}}>상품상세</button>
+        </li>
+        <li
+          onClick={() => {
+            scrollToElement("review2")
+            handleMouseHover()
+            handleMouseClick("review2")
+          }}
+          className={`p-2 flex-1 text-center ${isHovered ? "highlight-underline" : ""} ${isClicked === "review2" ? "text-red-500" : ""}`}
+          style={{
+            borderTop: "3px solid #271A11",
+            borderBottom: "3px solid #271A11"
+          }}
+        >
+          <button style={{fontSize: "1.55rem"}}>리뷰</button>
+        </li>
+        <li
+          onClick={() => {
+            scrollToElement("qna")
+            handleMouseHover()
+            handleMouseClick("qna")
+          }}
+          className={`p-2 flex-1 text-center ${isHovered ? "highlight-underline" : ""} ${isClicked === "qna" ? "text-red-500" : ""}`}
+          style={{
+            border: "3px solid #271A11"
+          }}
+        >
+          <button style={{fontSize: "1.55rem"}}>문의</button>
+        </li>
+        <li
+          onClick={() => {
+            scrollToElement("ship")
+            handleMouseHover()
+            handleMouseClick("ship")
+          }}
+          className={`p-2 flex-1 text-center ${isHovered ? "highlight-underline" : ""} ${isClicked === "ship" ? "text-red-500" : ""}`}
+          style={{
+            borderTop: "3px solid #271A11",
+            borderBottom: "3px solid #271A11",
+            borderRight: "3px solid #271A11",
+            marginRight: "8px"
+          }}
+        >
+          <button style={{fontSize: "1.55rem"}}>주문정보</button>
+        </li>
       </ul>
     </nav>
-
   )
 }
 

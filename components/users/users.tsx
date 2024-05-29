@@ -9,6 +9,7 @@ import {Dialog, DialogContent, DialogActions} from "@mui/material"
 import {v4 as uuidv4} from "uuid"
 import {User} from "@/types/usersTypes"
 import {usersServices} from "@/services/usersServices"
+import AccountCircleIcon from "@mui/icons-material/AccountCircle"
 
 const Users = ({user}: {user: User}) => {
   const router = useRouter()
@@ -30,7 +31,8 @@ const Users = ({user}: {user: User}) => {
   return (
     <div style={{display: "flex", alignItems: "center"}}>
       <Link className="text-red-100" href="" onClick={() => setOpen(user && user.user_pk ? "logout" : "login")}>
-        <PersonOutlineIcon style={{width: "32px", height: "32px", cursor: "pointer"}} />
+        <AccountCircleIcon style={{width: "32px", height: "32px", cursor: "pointer"}}/>
+        {/* <PersonOutlineIcon style={{width: "32px", height: "32px", cursor: "pointer"}}/> */}
       </Link>
       <Dialog open={open === "login"} onClose={() => setOpen("close")} maxWidth="sm" fullWidth>
         <DialogContent>

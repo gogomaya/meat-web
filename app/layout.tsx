@@ -4,6 +4,7 @@ import Backdrop from "@/components/common/Backdrop"
 import Toast from "@/components/common/Toast"
 import {Noto_Serif_KR} from "next/font/google"
 
+
 const notoSerifKr = Noto_Serif_KR({
   weight: ["500"],
   subsets: ["latin"]
