@@ -3,7 +3,6 @@ import {useRouter} from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
 import {Box, Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, FormControl, InputLabel, MenuItem, Pagination, Select, Typography} from "@mui/material"
-import CheckRoundedIcon from "@mui/icons-material/CheckRounded"
 import * as React from "react"
 import ProductSwiper from "./[product_pk]/swiper"
 import {CartProduct, Product} from "@/types/productsTypes"
@@ -13,7 +12,7 @@ import _ from "lodash"
 export const ProductsSearch = ({products, searchParams}: {products: Product[], searchParams: SearchParams}) => {
   const router = useRouter()
   return (
-    <section className="flex justify-between items-center mx-8 p-2 rounded-lg">
+    <section className="flex justify-between items-center py-4 rounded-lg">
       <span className="container text-lg font-semibold">
         상품이 모두 <strong>{products.length}</strong>개 있습니다.
       </span>
@@ -64,7 +63,7 @@ export const ProductsPagination = ({searchParams, total_rows}: {searchParams: Se
 export const ProductSubtitle = () => {
   return (
     <div>
-      <div className="flex justify-center text-red-100"
+      <div className="flex justify-center text-red-100 text-4xl"
         style={{
           backgroundImage: "url('/images/Bg.png')",
           backgroundPosition: "center calc(10% - 620px)",
@@ -107,7 +106,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
 
   return (
     <div className="container">
-      <ol className="m-8 p-2" style={{display: "flex", flexWrap: "wrap", gap: "30px", padding: "10px"}}>
+      <ol style={{display: "flex", flexWrap: "wrap", gap: "30px", padding: "10px"}}>
         {products.length > 0 ? (
           products.map((product) => (
             <li
@@ -168,7 +167,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
                   </span>
                 ) : null}
               </Link>
-              <p style={{textAlign: "left", margin: "10px 0", fontSize: "1rem"}}>
+              <p className="py-4" style={{textAlign: "left", margin: "10px 0", fontSize: "1rem"}}>
                 <Link href={`/products/${product.product_pk}`} style={{color: "#333", textDecoration: "none"}}>
                   {product.name}
                 </Link>
@@ -326,7 +325,7 @@ export const ProductsDetailContent = ({product}: { product: Product }) => {
                   카드결제
               </button>
             </div>
-            <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
+            <Divider style={{backgroundColor: "#4A4A4A", height: "2px", marginBottom: "1rem"}} />
             {product.origin && (
               <>
                 <div className="flex items-center" style={{marginBottom: "0.5rem"}}>
@@ -365,11 +364,11 @@ export const ProductsDetailContent = ({product}: { product: Product }) => {
               style={{width: "5rem", height: "2rem", padding: "0.5rem", border: "1px solid #ccc", borderRadius: "5px"}}
               min="1" />
           </div>
-          <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
+          <Divider style={{backgroundColor: "#4A4A4A", height: "2px", marginBottom: "1rem"}} />
           <div className="container">
-            <Typography variant="h5" gutterBottom className="flex flex-col items-end" style={{marginBottom: "1rem"}}>
-                총금액: {(Number(product.price) * quantity).toLocaleString()}원
-            </Typography>
+            <div className="flex flex-col items-end mb-4">
+              <strong className="text-2xl">총금액: {(Number(product.price) * quantity).toLocaleString()}원</strong>
+            </div>
             <div className="container w-full p-4">
               <div className="flex justify-center items-center mb-4">
                 <div className="flex w-full lg:w-1/2 gap-2">
@@ -463,7 +462,7 @@ const CartOrderButton = ({
           <DialogContentText>
             {type === "CART" ?
               "장바구니에 추가하였습니다. 장바구니로 이동하시겠습니까?" :
-              "장바구니에 있는 상품과 함께 주문하시겠습니까? 취소를 클릭하시면 선택하신 상품만 주문됩니다."
+              "장바구니에 있는 상품과 함께 주문하시겠습니까? 아니오를 클릭하시면 선택하신 상품만 주문됩니다."
             }
           </DialogContentText>
         </DialogContent>

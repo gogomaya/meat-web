@@ -10,7 +10,7 @@ const Order = async (props: {
   return (
     <MainLayout user={user}>
       <div>
-        <div className="flex justify-center text-red-100"
+        <div className="flex justify-center text-red-100 text-4xl"
           style={{
             backgroundImage: "url('/images/Bg.png')",
             backgroundPosition: "center calc(10% - 620px)",
