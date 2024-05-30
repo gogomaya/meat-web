@@ -115,7 +115,7 @@ export const CsIcon = () => {
   }
 
   return (
-    <div className={`fixed bottom-8 z-1000 right-8 gap-2 flex flex-col justify-center item-center ${isVisible ? "visible" : "hidden"}`}>
+    <div className={`fixed bottom-28 z-1000 right-6 gap-2 flex flex-col justify-center item-center ${isVisible ? "visible" : "hidden"}`}>
       <button onClick={scrollToTop} className="p-1 rounded-full flex items-center justify-center w-16 h-16">
         <ExpandLessIcon style={{fontSize: "32px"}} />
       </button>
@@ -130,7 +130,7 @@ export const CsIcon = () => {
           priority
         />
       </Link>
-      <Link href="https://www.cjlogistics.com/ko/tool/parcel/tracking">
+      <Link href="https://www.ilogen.com/web/personal/tkSearch">
         <Image
           src="/images/quick_shipping.png"
           alt=""
