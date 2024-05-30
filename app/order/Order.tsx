@@ -369,7 +369,7 @@ export const OrderDetailContent = ({
             </div>
             {isOrderInfoOpen && (
               <div className="p-4">
-                <div className="w-full h-40 p-2 text-sm border border-gray-300 rounded-lg mb-4">
+                <div className="w-full h-30 text-sm rounded-lg mb-4">
                     주문할 상품의 상품명, 가격, 배송정보 등을 최종 확인하였으며, 구매에 동의하십니까? (전자상거래법 제 8조 2항)
                 </div>
               </div>
@@ -381,7 +381,7 @@ export const OrderDetailContent = ({
               </svg>
             </div>
             {isPersonalInfoOpen && (
-              <div className="w-full h-80 p-2 text-sm border border-gray-300 rounded-lg mb-4" style={{overflow:"scroll"}}>
+              <div className="w-full h-80 p-4 text-sm mb-4" style={{overflow:"scroll"}}>
                   수집하는 개인정보의 항목
                   ① 한솔축산는 구매, 원활한 고객상담, 각종 서비스의 제공을 위해 주문 이용 시 아래와 같은 개인정보를 수집하고 있습니다.
                   o 필수수집항목 : 이름, 휴대폰번호, 이메일, 수신자정보(성명,주소,휴대폰번호,이메일), 개인통관고유보호(해외직구상품구매시)
