@@ -66,8 +66,8 @@ export function CheckoutPage({pay}) {
         customerName: pay.customerName,
         customerEmail: pay.customerEmail,
         customerMobilePhone: pay.customerMobilePhone,
-        successUrl: `${window.location.origin}/success`,
-        failUrl: `${window.location.origin}/fail`
+        successUrl: `${window.location.origin}/order/success`,
+        failUrl: `${window.location.origin}/order/fail`
       })
     } catch (error) {
       console.error("Error requesting payment:", error)

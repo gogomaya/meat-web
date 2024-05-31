@@ -1,8 +1,5 @@
 import {loginCheck} from "@/app/users/login/loginCheck"
-import ErrorPage from "@/app/error"
 import MainLayout from "@/app/main-layout"
-import {productsServices} from "@/services/productsServices"
-import {ResponseApi} from "@/types/commonTypes"
 import {MyPageBanner, Side, SideButton} from "../../mypage"
 
 const Home = async () => {
