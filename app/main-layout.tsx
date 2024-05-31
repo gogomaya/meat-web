@@ -54,8 +54,8 @@ const MainLayout = ({
     <div className="mx-auto">
       <header
         id="header"
-        className="sticky top-0 z-20 bg-cover bg-center bg-opacity-90 w-full flex justify-center items-center px-4 py-4 md:py-4 md:px-12 text-white transition-opacity duration-300"
-        style={{backgroundImage: "url('/images/Bg.png')", backgroundPosition: "center calc(50% - 235px)", opacity: headerOpacity}}
+        className="sticky top-0 z-20 bg-cover bg-center bg-opacity-90 w-full flex justify-center items-center px-4 py-4 md:py-4 md:px-12 text-white transition-opacity duration-300 border-b border-white"
+        style={{backgroundImage: "url('/images/Bg.png')", backgroundPosition: "center calc(50% - 185px)", opacity: headerOpacity}}
       >
         <MainMobileMenu />
         <Link href="/">
@@ -70,6 +70,7 @@ const MainLayout = ({
           />
         </Link>
         <MegaMenu />
+        {/* <TestSubMenu /> */}
         <div className="flex gap-3">
           <MainSearch />
           <Users user={user} />
@@ -175,40 +176,40 @@ export const MegaMenu = () => {
         </li>
         <li id="cow" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
           <Link href="/products?category=cow" className="text-red-100">소고기🐮</Link>
-          <ol id="submenu" className={`w-20 absolute border border-black ${menu.cow ? "block" : "hidden"} bg-white py-2 rounded-lg shadow-md text-sm font-semibold`}>
+          <ol id="submenu" className={`flex w-30 absolute border border-[#FACC15] ${menu.cow ? "block" : "hidden"} py-2 rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
             {categoriesMenu.cow.map((category_menu) => (
-              <li key={category_menu}><Link href={`/products?category=cow&category_menu=${category_menu}`}>{category_menu}</Link></li>
+              <li key={category_menu}><Link href={`/products?category=cow&category_menu=${category_menu}`} className="text-white px-2">{category_menu}</Link></li>
             ))}
           </ol>
         </li>
         <li id="pork" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
           <Link href="/products?category=pork" className="text-red-100">돼지고기🐷</Link>
-          <ol id="submenu" className={`w-20 absolute border border-black ${menu.pork ? "block" : "hidden"} bg-white py-2 rounded-lg shadow-md text-sm font-semibold`}>
+          <ol id="submenu" className={`w-18 absolute border border-[#FACC15] ${menu.pork ? "block" : "hidden"} py-2 rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
             {categoriesMenu.pork.map((category_menu) => (
-              <li key={category_menu}><Link href={`/products?category=pork&category_menu=${category_menu}`}>{category_menu}</Link></li>
+              <li key={category_menu}><Link href={`/products?category=pork&category_menu=${category_menu}`} className="text-white">{category_menu}</Link></li>
             ))}
           </ol>
         </li>
         <li id="simple" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
           <Link href="/products?category=simple" className="text-red-100">간편식</Link>
-          <ol id="submenu" className={`w-20 absolute border border-black ${menu.simple ? "block" : "hidden"} bg-white py-2 rounded-lg shadow-md text-sm font-semibold`}>
+          <ol id="submenu" className={`w-18 absolute border border-[#FACC15] ${menu.simple ? "block" : "hidden"} py-2 rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
             {categoriesMenu.simple.map((category_menu) => (
-              <li key={category_menu}><Link href={`/products?category=simple&category_menu=${category_menu}`}>{category_menu}</Link></li>
+              <li key={category_menu}><Link href={`/products?category=simple&category_menu=${category_menu}`} className="text-white">{category_menu}</Link></li>
             ))}
           </ol>
         </li>
         <li id="review" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
           <Link href="/reviews" className="text-red-100">리뷰</Link>
-          <ol id="submenu" className={`w-20 absolute border border-black ${menu.review ? "block" : "hidden"} bg-white py-2 rounded-lg shadow-md text-sm font-semibold`}>
-            <li><Link href="#">고객 리뷰</Link></li>
-            <li><Link href="#">전문가 리뷰</Link></li>
+          <ol id="submenu" className={`w-18 absolute border border-[#FACC15] ${menu.review ? "block" : "hidden"} py-2 rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
+            <li><Link href="#" className="text-white">고객 리뷰</Link></li>
+            <li><Link href="#" className="text-white">전문가 리뷰</Link></li>
           </ol>
         </li>
         <li id="board" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
           <Link href="/boards" className="text-red-100">고객센터</Link>
-          <ol id="submenu" className={`w- absolute border border-black ${menu.board ? "block" : "hidden"} bg-white py-2 rounded-lg shadow-md text-sm font-semibold`}>
-            <li><Link href="#">공지사항</Link></li>
-            <li><Link href="/faq">자주하는질문</Link></li>
+          <ol id="submenu" className={`w-18 absolute border border-[#FACC15] ${menu.board ? "block" : "hidden"} py-2 rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
+            <li><Link href="#" className="text-white">공지사항</Link></li>
+            <li><Link href="/faq" className="text-white">자주하는질문</Link></li>
           </ol>
         </li>
       </ul>
@@ -253,7 +254,7 @@ const MainMobileMenu = () => {
   const [open, setOpen] = useState(false)
   const categoriesMenu = commonServices.categoriesMenu()
   return <>
-    <IconButton style={{display: "none"}} className="!block md:!hidden" onClick={() => setOpen(true)}>
+    <IconButton style={{display: "none", color:"white"}} className="!block md:!hidden" onClick={() => setOpen(true)}>
       <MenuIcon />
     </IconButton>
     <Drawer
