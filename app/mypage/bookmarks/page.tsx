@@ -18,7 +18,7 @@ const Home = async () => {
   return (
     <MainLayout user={user}>
       <div className="w-full">
-        <MyPageBanner title="Wish List" titleKor="찜 리스트" />
+        <MyPageBanner title="Wish List" subTitle="찜 리스트" />
         <SideButton />
         <div className="flex">
           <Side></Side>
@@ -60,7 +60,7 @@ const Home = async () => {
                   <div className="h-full flex flex-col justify-between">
                     <div className="item">
                       <button className="w-full px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
-                        배송조회
+                        주문하기
                       </button>
                     </div>
                     <div className="item">
@@ -111,7 +111,7 @@ const Home = async () => {
                   <div className="h-full flex flex-col justify-between">
                     <div className="item">
                       <button className="w-full px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
-                        배송조회
+                        주문하기
                       </button>
                     </div>
                     <div className="item">
@@ -162,7 +162,7 @@ const Home = async () => {
                   <div className="h-full flex flex-col justify-between">
                     <div className="item">
                       <button className="w-full px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
-                        배송조회
+                        주문하기
                       </button>
                     </div>
                     <div className="item">
@@ -213,7 +213,7 @@ const Home = async () => {
                   <div className="h-full flex flex-col justify-between">
                     <div className="item">
                       <button className="w-full px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
-                        배송조회
+                        주문하기
                       </button>
                     </div>
                     <div className="item">
@@ -264,7 +264,7 @@ const Home = async () => {
                   <div className="h-full flex flex-col justify-between">
                     <div className="item">
                       <button className="w-full px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
-                        배송조회
+                        주문하기
                       </button>
                     </div>
                     <div className="item">

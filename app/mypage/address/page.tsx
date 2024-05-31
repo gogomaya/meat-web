@@ -5,6 +5,7 @@ import {productsServices} from "@/services/productsServices"
 import {ResponseApi} from "@/types/commonTypes"
 import {MyPageBanner, Side, SideButton} from "../mypage"
 import Image from "next/image"
+import Link from "next/link"
 
 const Home = async () => {
   const {user} = await loginCheck(false)
@@ -18,7 +19,7 @@ const Home = async () => {
   return (
     <MainLayout user={user}>
       <div className="w-full">
-        <MyPageBanner title="Address" titleKor="배송지 관리" />
+        <MyPageBanner title="Address" subTitle="배송지 관리" />
         <SideButton />
         <div className="flex">
           <Side></Side>
@@ -27,12 +28,15 @@ const Home = async () => {
             <div className="flex flex-col items-center gap-10 my-2 mx-4 md:mx-0">
               {/* 버튼 */}
               <div className="w-full flex gap-6 max-w-4xl">
-                <button className="w-full flex justify-center items-center gap-2 px-4 py-2 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
+                <Link
+                  href={"/mypage/address/create"}
+                  className="w-full flex justify-center items-center gap-2 px-4 py-2 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200"
+                >
                   <svg className="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 7.757v8.486M7.757 12h8.486M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                   </svg>
                   <span>배송지 추가</span>
-                </button>
+                </Link>
               </div>
               {/* 카드 */}
               <div className="w-full flex flex-col gap-2 max-w-4xl bg-white rounded-lg shadow-md p-6">
@@ -60,9 +64,12 @@ const Home = async () => {
                 </div>
                 <div className="item">
                   <div className="flex justify-end items-center">
-                    <button className="px-16 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
-                      수정하기
-                    </button>
+                    <Link
+                      href={"/mypage/address/update"}
+                      className="px-16 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200"
+                    >
+                    수정하기
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -86,9 +93,12 @@ const Home = async () => {
                 </div>
                 <div className="item">
                   <div className="flex justify-end items-center">
-                    <button className="px-16 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
-                      수정하기
-                    </button>
+                    <Link
+                      href={"/mypage/address/update"}
+                      className="px-16 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200"
+                    >
+                    수정하기
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -112,9 +122,12 @@ const Home = async () => {
                 </div>
                 <div className="item">
                   <div className="flex justify-end items-center">
-                    <button className="px-16 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
-                      수정하기
-                    </button>
+                    <Link
+                      href={"/mypage/address/update"}
+                      className="px-16 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200"
+                    >
+                    수정하기
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -138,9 +151,12 @@ const Home = async () => {
                 </div>
                 <div className="item">
                   <div className="flex justify-end items-center">
-                    <button className="px-16 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
-                      수정하기
-                    </button>
+                    <Link
+                      href={"/mypage/address/update"}
+                      className="px-16 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200"
+                    >
+                    수정하기
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -164,9 +180,12 @@ const Home = async () => {
                 </div>
                 <div className="item">
                   <div className="flex justify-end items-center">
-                    <button className="px-16 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
-                      수정하기
-                    </button>
+                    <Link
+                      href={"/mypage/address/update"}
+                      className="px-16 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200"
+                    >
+                    수정하기
+                    </Link>
                   </div>
                 </div>
               </div>

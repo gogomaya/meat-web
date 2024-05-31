@@ -22,11 +22,11 @@ export const OrderList = () => {
 
 
 interface MyPageBannerProps {
-  title: string, titleKor: string;
+  title: string, subTitle: string;
 }
 
 // 마이 페이지 배너
-export const MyPageBanner: React.FC<MyPageBannerProps> = ({title,titleKor}) => {
+export const MyPageBanner: React.FC<MyPageBannerProps> = ({title,subTitle}) => {
   return (
     <div className="flex justify-center py-8"
       style={{
@@ -42,7 +42,7 @@ export const MyPageBanner: React.FC<MyPageBannerProps> = ({title,titleKor}) => {
       }}>
       <div className="text-red-100">마이 페이지</div>
       <p>
-        <span className="text-white">{title}</span> / <span style={{color:"#A51C30",textDecoration:"underline"}}>{titleKor}</span>
+        <span className="text-white">{title}</span> / <span style={{color:"#A51C30",textDecoration:"underline"}}>{subTitle}</span>
       </p>
     </div>
   )
@@ -79,7 +79,7 @@ export const Side = () => {
               <svg className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 21">
                 <path d="M15 12a1 1 0 0 0 .962-.726l2-7A1 1 0 0 0 17 3H3.77L3.175.745A1 1 0 0 0 2.208 0H1a1 1 0 0 0 0 2h.438l.6 2.255v.019l2 7 .746 2.986A3 3 0 1 0 9 17a2.966 2.966 0 0 0-.184-1h2.368c-.118.32-.18.659-.184 1a3 3 0 1 0 3-3H6.78l-.5-2H15Z"/>
               </svg>
-              <span className="ms-3 text-base">주문목록</span>
+              <span className="ms-3 text-base">주문 목록</span>
             </a>
           </li>
           <li>
@@ -121,7 +121,7 @@ export const Side = () => {
               <svg className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z"/>
               </svg>
-              <span className="ms-3 text-base">리뷰관리</span>
+              <span className="ms-3 text-base">리뷰 관리</span>
             </a>
           </li>
           {/* <li>
