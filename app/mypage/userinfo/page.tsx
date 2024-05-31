@@ -18,7 +18,7 @@ const Home = async () => {
   return (
     <MainLayout user={user}>
       <div className="w-full">
-        <MyPageBanner title="User Information" titleKor="회원정보 수정" />
+        <MyPageBanner title="User Information" subTitle="회원정보 수정" />
         <SideButton/>
         <div className="flex">
           <Side />

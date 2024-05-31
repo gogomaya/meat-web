@@ -1,24 +1,16 @@
 import {loginCheck} from "@/app/users/login/loginCheck"
-import ErrorPage from "@/app/error"
 import MainLayout from "@/app/main-layout"
-import {productsServices} from "@/services/productsServices"
-import {ResponseApi} from "@/types/commonTypes"
 import {MyPageBanner, Side, SideButton} from "../mypage"
 import Image from "next/image"
+import Link from "next/link"
+import {CancelButton} from "./orders"
 
 const Home = async () => {
   const {user} = await loginCheck(false)
-  let productsHomeResponse: ResponseApi = {}
-  try {
-    productsHomeResponse = await productsServices.productsHome()
-  } catch (error) {
-    console.error(error)
-    return <ErrorPage />
-  }
   return (
     <MainLayout user={user}>
       <div className="w-full">
-        <MyPageBanner title="Orders" titleKor="주문내역" />
+        <MyPageBanner title="Orders" subTitle="주문내역" />
         <SideButton />
         <div className="flex">
           <Side />
@@ -33,12 +25,15 @@ const Home = async () => {
                     <span>2025.01.01</span> 주문
                   </div>
                   <div className="item">
-                    <a href="#" className="flex justify-between items-center">
+                    <Link
+                      href={"/mypage/orders/detail"}
+                      className="flex justify-between items-center"
+                    >
                       <span>상세보기</span>
                       <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m9 5 7 7-7 7"/>
                       </svg>
-                    </a>
+                    </Link>
                   </div>
                 </div>
                 {/* 주문카드 */}
@@ -79,7 +74,12 @@ const Home = async () => {
                       <div className="item flex-[2]">
                         <div className="flex flex-col items-between gap-3">
                           <div className="item">
-                            <button type="button" className="text-white bg-[#A51C30] hover:bg-[#8B0A1D] font-semibold rounded-md text-sm px-6 py-1 w-full">장바구니</button>
+                            <button
+                              type="button"
+                              className="text-white bg-[#A51C30] hover:bg-[#8B0A1D] font-semibold rounded-md text-sm px-6 py-1 w-full active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200"
+                            >
+                              장바구니
+                            </button>
                           </div>
                           {/* 총 가격 */}
                           <div className="item text-center">
@@ -90,17 +90,18 @@ const Home = async () => {
                         </div>
                       </div>
                     </div>
-
                   </div>
                   {/* 버튼 */}
                   <div className="item flex-1">
                     <div className="flex flex-col flex-wrap items-center gap-4 px-8 py-2">
-                      <button className="w-full px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
+                      <Link
+                        href={"/mypage/orders/shipments"}
+                        className="w-full px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-center text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200"
+                      >
                         배송조회
-                      </button>
-                      <button className="w-full px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
-                        주문/배송 취소
-                      </button>
+                      </Link>
+                      {/* 주문/배송취소 버튼 */}
+                      <CancelButton />
                     </div>
                   </div>
                 </div>
@@ -113,12 +114,15 @@ const Home = async () => {
                     <span>2025.01.01</span> 주문
                   </div>
                   <div className="item">
-                    <a href="#" className="flex justify-between items-center">
+                    <Link
+                      href={"/mypage/orders/detail"}
+                      className="flex justify-between items-center"
+                    >
                       <span>상세보기</span>
                       <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m9 5 7 7-7 7"/>
                       </svg>
-                    </a>
+                    </Link>
                   </div>
                 </div>
                 {/* 주문카드 */}
@@ -159,7 +163,12 @@ const Home = async () => {
                       <div className="item flex-[2]">
                         <div className="flex flex-col items-between gap-3">
                           <div className="item">
-                            <button type="button" className="text-white bg-[#A51C30] hover:bg-[#8B0A1D] font-semibold rounded-md text-sm px-6 py-1 w-full">장바구니</button>
+                            <button
+                              type="button"
+                              className="text-white bg-[#A51C30] hover:bg-[#8B0A1D] font-semibold rounded-md text-sm px-6 py-1 w-full active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200"
+                            >
+                              장바구니
+                            </button>
                           </div>
                           {/* 총 가격 */}
                           <div className="item text-center">
@@ -170,17 +179,18 @@ const Home = async () => {
                         </div>
                       </div>
                     </div>
-
                   </div>
                   {/* 버튼 */}
                   <div className="item flex-1">
                     <div className="flex flex-col flex-wrap items-center gap-4 px-8 py-2">
-                      <button className="w-full px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
+                      <Link
+                        href={"/mypage/orders/shipments"}
+                        className="w-full px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-center text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200"
+                      >
                         배송조회
-                      </button>
-                      <button className="w-full px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
-                        주문/배송 취소
-                      </button>
+                      </Link>
+                      {/* 주문/배송취소 버튼 */}
+                      <CancelButton />
                     </div>
                   </div>
                 </div>
@@ -193,12 +203,15 @@ const Home = async () => {
                     <span>2025.01.01</span> 주문
                   </div>
                   <div className="item">
-                    <a href="#" className="flex justify-between items-center">
+                    <Link
+                      href={"/mypage/orders/detail"}
+                      className="flex justify-between items-center"
+                    >
                       <span>상세보기</span>
                       <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m9 5 7 7-7 7"/>
                       </svg>
-                    </a>
+                    </Link>
                   </div>
                 </div>
                 {/* 주문카드 */}
@@ -239,7 +252,12 @@ const Home = async () => {
                       <div className="item flex-[2]">
                         <div className="flex flex-col items-between gap-3">
                           <div className="item">
-                            <button type="button" className="text-white bg-[#A51C30] hover:bg-[#8B0A1D] font-semibold rounded-md text-sm px-6 py-1 w-full">장바구니</button>
+                            <button
+                              type="button"
+                              className="text-white bg-[#A51C30] hover:bg-[#8B0A1D] font-semibold rounded-md text-sm px-6 py-1 w-full active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200"
+                            >
+                              장바구니
+                            </button>
                           </div>
                           {/* 총 가격 */}
                           <div className="item text-center">
@@ -250,17 +268,18 @@ const Home = async () => {
                         </div>
                       </div>
                     </div>
-
                   </div>
                   {/* 버튼 */}
                   <div className="item flex-1">
                     <div className="flex flex-col flex-wrap items-center gap-4 px-8 py-2">
-                      <button className="w-full px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
+                      <Link
+                        href={"/mypage/orders/shipments"}
+                        className="w-full px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-center text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200"
+                      >
                         배송조회
-                      </button>
-                      <button className="w-full px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
-                        주문/배송 취소
-                      </button>
+                      </Link>
+                      {/* 주문/배송취소 버튼 */}
+                      <CancelButton />
                     </div>
                   </div>
                 </div>
@@ -273,12 +292,15 @@ const Home = async () => {
                     <span>2025.01.01</span> 주문
                   </div>
                   <div className="item">
-                    <a href="#" className="flex justify-between items-center">
+                    <Link
+                      href={"/mypage/orders/detail"}
+                      className="flex justify-between items-center"
+                    >
                       <span>상세보기</span>
                       <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m9 5 7 7-7 7"/>
                       </svg>
-                    </a>
+                    </Link>
                   </div>
                 </div>
                 {/* 주문카드 */}
@@ -319,7 +341,12 @@ const Home = async () => {
                       <div className="item flex-[2]">
                         <div className="flex flex-col items-between gap-3">
                           <div className="item">
-                            <button type="button" className="text-white bg-[#A51C30] hover:bg-[#8B0A1D] font-semibold rounded-md text-sm px-6 py-1 w-full">장바구니</button>
+                            <button
+                              type="button"
+                              className="text-white bg-[#A51C30] hover:bg-[#8B0A1D] font-semibold rounded-md text-sm px-6 py-1 w-full active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200"
+                            >
+                              장바구니
+                            </button>
                           </div>
                           {/* 총 가격 */}
                           <div className="item text-center">
@@ -330,17 +357,18 @@ const Home = async () => {
                         </div>
                       </div>
                     </div>
-
                   </div>
                   {/* 버튼 */}
                   <div className="item flex-1">
                     <div className="flex flex-col flex-wrap items-center gap-4 px-8 py-2">
-                      <button className="w-full px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
+                      <Link
+                        href={"/mypage/orders/shipments"}
+                        className="w-full px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-center text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200"
+                      >
                         배송조회
-                      </button>
-                      <button className="w-full px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
-                        주문/배송 취소
-                      </button>
+                      </Link>
+                      {/* 주문/배송취소 버튼 */}
+                      <CancelButton />
                     </div>
                   </div>
                 </div>
@@ -353,12 +381,15 @@ const Home = async () => {
                     <span>2025.01.01</span> 주문
                   </div>
                   <div className="item">
-                    <a href="#" className="flex justify-between items-center">
+                    <Link
+                      href={"/mypage/orders/detail"}
+                      className="flex justify-between items-center"
+                    >
                       <span>상세보기</span>
                       <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m9 5 7 7-7 7"/>
                       </svg>
-                    </a>
+                    </Link>
                   </div>
                 </div>
                 {/* 주문카드 */}
@@ -399,7 +430,12 @@ const Home = async () => {
                       <div className="item flex-[2]">
                         <div className="flex flex-col items-between gap-3">
                           <div className="item">
-                            <button type="button" className="text-white bg-[#A51C30] hover:bg-[#8B0A1D] font-semibold rounded-md text-sm px-6 py-1 w-full">장바구니</button>
+                            <button
+                              type="button"
+                              className="text-white bg-[#A51C30] hover:bg-[#8B0A1D] font-semibold rounded-md text-sm px-6 py-1 w-full active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200"
+                            >
+                              장바구니
+                            </button>
                           </div>
                           {/* 총 가격 */}
                           <div className="item text-center">
@@ -410,17 +446,18 @@ const Home = async () => {
                         </div>
                       </div>
                     </div>
-
                   </div>
                   {/* 버튼 */}
                   <div className="item flex-1">
                     <div className="flex flex-col flex-wrap items-center gap-4 px-8 py-2">
-                      <button className="w-full px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
+                      <Link
+                        href={"/mypage/orders/shipments"}
+                        className="w-full px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-center text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200"
+                      >
                         배송조회
-                      </button>
-                      <button className="w-full px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
-                        주문/배송 취소
-                      </button>
+                      </Link>
+                      {/* 주문/배송취소 버튼 */}
+                      <CancelButton />
                     </div>
                   </div>
                 </div>

@@ -5,6 +5,7 @@ import {productsServices} from "@/services/productsServices"
 import {ResponseApi} from "@/types/commonTypes"
 import {MyPageBanner, Side, SideButton} from "../mypage"
 import Image from "next/image"
+import Link from "next/link"
 
 const Home = async () => {
   const {user} = await loginCheck(false)
@@ -18,7 +19,7 @@ const Home = async () => {
   return (
     <MainLayout user={user}>
       <div className="w-full">
-        <MyPageBanner title="Withdraw Order" titleKor="취소/반품/환불" />
+        <MyPageBanner title="Withdraw Order" subTitle="취소/반품/환불" />
         <SideButton />
         <div className="flex">
           <Side></Side>
@@ -81,9 +82,12 @@ const Home = async () => {
                     </div>
                     <div className="item flex-1">
                       <div className="inner">
-                        <button className="w-full px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
+                        <Link
+                          href={"/mypage/cancellations/detail"}
+                          className="w-full px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-center text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200"
+                        >
                           취소 상세
-                        </button>
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -131,9 +135,12 @@ const Home = async () => {
                     </div>
                     <div className="item flex-1">
                       <div className="inner">
-                        <button className="w-full px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
+                        <Link
+                          href={"/mypage/cancellations/detail"}
+                          className="w-full px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-center text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200"
+                        >
                           취소 상세
-                        </button>
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -181,9 +188,12 @@ const Home = async () => {
                     </div>
                     <div className="item flex-1">
                       <div className="inner">
-                        <button className="w-full px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
+                        <Link
+                          href={"/mypage/cancellations/detail"}
+                          className="w-full px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-center text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200"
+                        >
                           취소 상세
-                        </button>
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -231,9 +241,12 @@ const Home = async () => {
                     </div>
                     <div className="item flex-1">
                       <div className="inner">
-                        <button className="w-full px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
+                        <Link
+                          href={"/mypage/cancellations/detail"}
+                          className="w-full px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-center text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200"
+                        >
                           취소 상세
-                        </button>
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -281,9 +294,12 @@ const Home = async () => {
                     </div>
                     <div className="item flex-1">
                       <div className="inner">
-                        <button className="w-full px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
+                        <Link
+                          href={"/mypage/cancellations/detail"}
+                          className="w-full px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-center text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200"
+                        >
                           취소 상세
-                        </button>
+                        </Link>
                       </div>
                     </div>
                   </div>

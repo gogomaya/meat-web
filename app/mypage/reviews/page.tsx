@@ -21,7 +21,7 @@ const Home = async (props: {
   return (
     <MainLayout user={user}>
       <div className="w-full">
-        <MyPageBanner title="Review" titleKor="리뷰관리" />
+        <MyPageBanner title="Review" subTitle="리뷰 관리" />
         <SideButton />
         <div className="flex">
           <Side />
