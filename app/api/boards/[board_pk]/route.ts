@@ -13,10 +13,9 @@ export const GET = async (
   const mysql = await mysql2Pool()
   const [rows]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
     select
-      b.*, (
-        select nickname from users u
-        where u.user_pk = b.user_pk
-      ) as nickname
+      b.*,
+      (select ifnull(u.name, u.nickname) from users u where u.user_pk = b.user_pk) as user_name,
+      (select name from products p where p.product_pk = b.product_pk) as product_name
     from boards b
     where
       b.board_pk = ?
@@ -26,12 +25,19 @@ export const GET = async (
       message: "해당 글이 없습니다."
     }, {status: 500})
   }
+  const board = rows[0]
+  const [boards_replies]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
+    select
+      br.*,
+      (select ifnull(u.name, u.nickname) from users u where u.user_pk = br.user_pk) as user_name
+    from boards_replies br
+    where
+      board_pk = ?
+    order by board_reply_pk desc
+  `, [board.board_pk])
+  board.boards_replies = boards_replies
   return NextResponse.json({
-    board: {
-      ...rows[0],
-      is_main: !!rows[0].is_main,
-      is_best: !!rows[0].is_best
-    }
+    board
   })
 }
 

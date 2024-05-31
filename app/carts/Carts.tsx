@@ -67,7 +67,7 @@ export const CartsDetailContent = () => {
                   {cartProducts.length === 0 ? (
                     <tbody className="bg-white divide-y divide-gray-200">
                       <tr>
-                        <td colSpan={7} className="px-6 py-12 whitespace-nowrap">
+                        <td colSpan={9999999} className="px-6 py-12 whitespace-nowrap">
                           <div className="flex justify-center items-center">장바구니가 비었습니다.</div>
                         </td>
                       </tr>

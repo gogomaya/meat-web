@@ -1,13 +1,14 @@
 import {loginCheck} from "../users/login/loginCheck"
 import MainLayout from "@/app/main-layout"
-import {QnaBoard} from "./qna"
+import {QnaBoards} from "./qna"
 
 
 const Qna = async () => {
   const {user} = await loginCheck(false)
   return (
     <MainLayout user={user}>
-      <QnaBoard />
+      {/* <QnaBoards /> */}
+      <div></div>
     </MainLayout>
   )
 }

@@ -1,5 +1,5 @@
 import {ResponseApi, SearchParams} from "@/types/commonTypes"
-import {Board, BoardReply} from "@/types/boardsTypes"
+import {Board, BoardsReply} from "@/types/boardsTypes"
 import {commonServices} from "./commonServices"
 
 export const boardsServices = {
@@ -20,11 +20,10 @@ export const boardsServices = {
       return {error}
     }
   },
-  boardsRead: async (searchParams: SearchParams, category: string): Promise<ResponseApi> => {
+  boardsRead: async (searchParams: SearchParams): Promise<ResponseApi> => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/boards?` + new URLSearchParams({
-        ...searchParams,
-        category
+        ...searchParams
       }))
       return await commonServices.responseJson(response)
     } catch (error) {
@@ -75,40 +74,50 @@ export const boardsServices = {
       return {error}
     }
   },
-  boardsRepliesRead: async (board_pk: number): Promise<ResponseApi> => {
+  // boardsRepliesRead: async (searchParams: SearchParams): Promise<ResponseApi> => {
+  //   try {
+  //     const response = await fetch(`${commonServices.ssrCsr()}/api/boards/replies?` + new URLSearchParams({
+  //       ...searchParams
+  //     }))
+  //     return await commonServices.responseJson(response)
+  //   } catch (error) {
+  //     throw error
+  //   }
+  // },
+  boardsRepliesCreate: async (boards_Reply: BoardsReply): Promise<ResponseApi> => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/boards/replies/${board_pk}`)
-      return await commonServices.responseJson(response)
-    } catch (error) {
-      throw error
-    }
-  },
-  boardsRepliesCreate: async (boardReply: BoardReply): Promise<ResponseApi> => {
-    try {
-      const response = await fetch(`/api/boards/replies/${boardReply.board_pk}`, {
+      const formData = new FormData()
+      Object.entries(boards_Reply).forEach(([key, value]) => {
+        formData.append(key, value)
+      })
+      const response = await fetch("/api/boards/replies", {
         method: "POST",
-        body: JSON.stringify(boardReply)
+        body: formData
       })
       return await commonServices.responseJson(response)
     } catch (error) {
       return {error}
     }
   },
-  boardsRepliesUpdate: async (boardReply: BoardReply): Promise<ResponseApi> => {
+  boardsRepliesDelete: async (board_reply_pk: number): Promise<ResponseApi> => {
     try {
-      const response = await fetch(`/api/boards/replies/${boardReply.board_pk}/${boardReply.board_reply_pk}`, {
-        method: "PATCH",
-        body: JSON.stringify(boardReply)
-      })
-      return await commonServices.responseJson(response)
-    } catch (error) {
-      return {error}
-    }
-  },
-  boardsRepliesDelete: async (board_pk: number, board_reply_pk: number): Promise<ResponseApi> => {
-    try {
-      const response = await fetch(`/api/boards/replies/${board_pk}/${board_reply_pk}`, {
+      const response = await fetch(`/api/boards/replies/${board_reply_pk}`, {
         method: "DELETE"
+      })
+      return await commonServices.responseJson(response)
+    } catch (error) {
+      return {error}
+    }
+  },
+  boardsRepliesUpdate: async (boards_Reply: BoardsReply): Promise<ResponseApi> => {
+    try {
+      const formData = new FormData()
+      Object.entries(boards_Reply).forEach(([key, value]) => {
+        formData.append(key, value)
+      })
+      const response = await fetch(`/api/boards/replies/${boards_Reply.board_reply_pk}`, {
+        method: "PATCH",
+        body: formData
       })
       return await commonServices.responseJson(response)
     } catch (error) {
