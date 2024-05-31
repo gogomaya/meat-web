@@ -50,6 +50,10 @@ export const POST = async (request: NextRequest) => {
   const board = {} as EmptyObject
   const formData = await request.formData()
   for (const [key, value] of formData.entries()) {
+    if (key === "product_pk" && !Number(value)) {
+      board[key] = null
+      continue
+    }
     board[key] = value
   }
   board.user_pk = user.user_pk
@@ -67,7 +71,7 @@ export const POST = async (request: NextRequest) => {
     ) values (
       ${columns.map(() => "?").join(", ")}
     )
-  `, columns.map((column) => board[column] ? board[column] : null))
+  `, columns.map((column) => board[column]))
 
   await deleteNotUsedImages(result.insertId, uuid, board.contents)
 

@@ -7,7 +7,8 @@ const Boards = async () => {
   const {user} = await loginCheck(false)
   return (
     <MainLayout user={user}>
-      <h2 className="flex justify-center text-red-100 py-8"
+      <h2
+        className="flex justify-center text-red-100 py-8"
         style={{
           backgroundImage: "url('/images/Bg.png')",
           backgroundPosition: "center calc(10% - 220px)",
@@ -18,7 +19,8 @@ const Boards = async () => {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center"
-        }}>게시판</h2>
+        }}
+      >게시판</h2>
       <BoardsList />
       <GeneralPagination />
     </MainLayout>

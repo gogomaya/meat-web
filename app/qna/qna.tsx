@@ -1,4 +1,5 @@
 "use client"
+import Link from "next/link"
 import {User} from "@/types/usersTypes"
 import {Board, BoardsReply, BoardsSearchParams} from "@/types/boardsTypes"
 import {Product} from "@/types/productsTypes"
@@ -20,13 +21,11 @@ interface BoardControl extends Board {
 
 export const QnaBoards = ({
   user,
-  product,
   boards,
   total_rows,
   boardsSearchParams
 }: {
   user: User
-  product?: Product
   boards: Board[]
   total_rows: number
   boardsSearchParams: BoardsSearchParams
@@ -107,9 +106,19 @@ export const QnaBoards = ({
                   <tbody key={board.board_pk} className="bg-white divide-y divide-gray-200">
                     <tr className="transition-all hover:bg-gray-50">
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">{board.board_pk}</div>
+                        <div className="text-sm text-gray-900">
+                          <span
+                            className="cursor-pointer"
+                            onClick={() => boardsDetail(board, index)}
+                          >{board.board_pk}</span>
+                        </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
+                        {!boardsSearchParams.product_pk && board.product_pk ? (
+                          <div className="mb-2 text-sm text-gray-900">
+                            <Link href={`/products/${board.product_pk}`}>{board.product_name}</Link>
+                          </div>
+                        ) : null}
                         <div className="text-sm text-gray-900">
                           <span
                             className="cursor-pointer"
@@ -334,7 +343,7 @@ const QnaBoardsForm = ({
           backdrop.open()
         }}
       >
-        {board.board_pk === 0 ? "글쓰기" : "글수정"}
+        {board.board_pk === 0 ? "문의하기" : "문의수정"}
       </button>
       <Dialog open={open} onClose={() => setOpen(false)} maxWidth="lg" fullWidth
         TransitionProps={{onEntered: () => {
@@ -358,7 +367,7 @@ const QnaBoardsForm = ({
             }).finally(() => backdrop.close())
         }}}
       >
-        <DialogTitle>1:1 문의{board.board_pk === 0 ? "하기" : "수정"}</DialogTitle>
+        <DialogTitle>{board.board_pk === 0 ? "문의하기" : "문의수정"}</DialogTitle>
         <DialogContent>
           <FormControl variant="standard" error={!!errors.title} className="w-40">
             <InputLabel shrink>제목을 선택해 주세요.</InputLabel>

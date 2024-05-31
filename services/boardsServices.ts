@@ -7,9 +7,7 @@ export const boardsServices = {
     try {
       const formData = new FormData()
       Object.entries(board).forEach(([key, value]) => {
-        formData.append(key,
-          key === "image" ? value[0] : value
-        )
+        formData.append(key, value)
       })
       const response = await fetch(`/api/boards?uuid=${uuid}`, {
         method: "POST",
@@ -61,9 +59,7 @@ export const boardsServices = {
     try {
       const formData = new FormData()
       Object.entries(board).forEach(([key, value]) => {
-        formData.append(key,
-          key === "image" ? (value[0] || "") : value
-        )
+        formData.append(key, value)
       })
       const response = await fetch(`/api/boards/${board.board_pk}?uuid=${uuid}`, {
         method: "PATCH",

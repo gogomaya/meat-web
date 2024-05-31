@@ -59,7 +59,6 @@ const Products = async (props: {
         <div id="qna" className="mx-16 px-2">
           <QnaBoards
             user={user}
-            product={product}
             boards={boards}
             total_rows={boards_total_rows}
             boardsSearchParams={boardsSearchParams}
