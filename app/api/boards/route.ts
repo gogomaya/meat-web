@@ -25,10 +25,10 @@ export const GET = async (request: NextRequest) => {
 `, [category, query, query])
   const [rows]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
     select
-      b.*, (
-        select nickname from users u
-        where u.user_pk = b.user_pk
-      ) as nickname
+      b.board_pk, b.category, b.user_pk, b.product_pk, b.title, b.created_at,
+      (select ifnull(u.name, u.nickname) from users u where u.user_pk = b.user_pk) as user_name,
+      (select name from products p where p.product_pk = b.product_pk) as product_name,
+      (select count(*) from boards_replies br where br.board_pk = b.board_pk) as replies_count
     from boards b
     where
       b.category = ? and
@@ -50,6 +50,10 @@ export const POST = async (request: NextRequest) => {
   const board = {} as EmptyObject
   const formData = await request.formData()
   for (const [key, value] of formData.entries()) {
+    if (key === "product_pk" && !Number(value)) {
+      board[key] = null
+      continue
+    }
     board[key] = value
   }
   board.user_pk = user.user_pk
@@ -57,6 +61,7 @@ export const POST = async (request: NextRequest) => {
   const columns = [
     "category",
     "user_pk",
+    "product_pk",
     "title",
     "contents"
   ]

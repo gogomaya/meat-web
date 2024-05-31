@@ -271,15 +271,20 @@ export const GeneralReviews = ({
   total_rows: number
   reviewsSearchParams: ReviewsSearchParams
 }) => {
-  const reviewForm = useForm<{reviews: Review[]}>({
+  const reviewsForm = useForm<{
+    reviews: Review[]
+    total_rows: number
+  }>({
     defaultValues: {
-      reviews
+      reviews,
+      total_rows
     }
   })
-  reviewForm.watch("reviews")
+  reviewsForm.watch("reviews")
   const reviewsRead = async () => {
     const reviewsResponse: ResponseApi = await reviewsServices.reviewsRead(reviewsSearchParams)
-    reviewForm.setValue("reviews", reviewsResponse.data.reviews)
+    reviewsForm.setValue("reviews", reviewsResponse.data.reviews)
+    reviewsForm.setValue("total_rows", reviewsResponse.data.total_rows)
   }
   return (
     <div>
@@ -296,7 +301,7 @@ export const GeneralReviews = ({
           reviewsRead={reviewsRead}
         />
       ) : null}
-      {reviewForm.getValues("reviews").map((review: Review) => (
+      {reviewsForm.getValues("reviews").map((review: Review) => (
         <GeneralReview
           key={review.review_pk}
           user={user}
@@ -305,10 +310,10 @@ export const GeneralReviews = ({
           reviewsRead={reviewsRead}
         />
       ))}
-      {reviewForm.getValues("reviews").length ? (
+      {reviewsForm.getValues("reviews").length ? (
         <GeneralReviewsPagination
           searchParams={reviewsSearchParams}
-          total_rows={total_rows}
+          total_rows={reviewsForm.getValues("total_rows")}
           reviewsRead={reviewsRead}
         />
       ) : null}

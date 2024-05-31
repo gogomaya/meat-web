@@ -41,31 +41,31 @@ export const GET = async (request: NextRequest) => {
   for (const review of reviews) {
     // reviews_images
     const [reviews_images]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
-    select
-      review_image_pk, file_name
-    from reviews_images
-    where
-      review_pk = ?
-    order by review_image_pk asc
+      select
+        review_image_pk, file_name
+      from reviews_images
+      where
+        review_pk = ?
+      order by review_image_pk asc
     `, [review.review_pk])
     review.reviews_images = reviews_images
     // reviews_replies
     const [reviews_replies]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
-    select
-      rr.*,
-      (select ifnull(u.name, u.nickname) from users u where u.user_pk = rr.user_pk) as user_name
-    from reviews_replies rr
-    where
-      review_pk = ?
-    order by review_reply_pk desc
+      select
+        rr.*,
+        (select ifnull(u.name, u.nickname) from users u where u.user_pk = rr.user_pk) as user_name
+      from reviews_replies rr
+      where
+        review_pk = ?
+      order by review_reply_pk desc
     `, [review.review_pk])
     review.reviews_replies = reviews_replies
     // reviews_likes
     const [reviews_likes]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
-    select
-      user_pk, is_like
-    from reviews_likes
-    where
+      select
+        user_pk, is_like
+      from reviews_likes
+      where
       review_pk = ?
     `, [review.review_pk])
     review.reviews_likes = reviews_likes

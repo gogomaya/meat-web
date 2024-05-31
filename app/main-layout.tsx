@@ -210,6 +210,7 @@ export const MegaMenu = () => {
           <ol id="submenu" className={`w-18 absolute border border-[#FACC15] ${menu.board ? "block" : "hidden"} py-2 rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
             <li><Link href="#" className="text-white">공지사항</Link></li>
             <li><Link href="/faq" className="text-white">자주하는질문</Link></li>
+            <li><Link href="/qna" className="text-white">1:1문의하기</Link></li>
           </ol>
         </li>
       </ul>
@@ -340,6 +341,7 @@ const MainMobileMenu = () => {
                   <ol>
                     <li><Link href="#">공지사항</Link></li>
                     <li><Link href="/faq">자주하는질문</Link></li>
+                    <li><Link href="/qna">1:1문의하기</Link></li>
                   </ol>
                 </AccordionDetails>
               </Accordion>

@@ -84,7 +84,7 @@ const GeneralReviewsRepliesForm = ({
             return
           }
         }}
-      ></TextareaAutosize>
+      />
       <div className={`flex justify-end ${open ? "" : "hidden"}`}>
         {reviews_reply.review_reply_pk === 0 ? (
           <Button
