@@ -10,7 +10,7 @@ export const UserInfoForm = () => {
             <h1 className="text-3xl font-extrabold">회원정보 수정</h1>
             <p className="text-sm text-gray-400 mt-3"></p>
             <div className="mt-12">
-              <h2 className="text-lg font-extrabold">소셜 계정</h2>
+              <div className="text-lg font-extrabold">소셜 계정</div>
               <ul className="mt-3">
                 <li className="flex items-center">
                   <div className="bg-[#e6e6e6cf] h-10 w-10 rounded-full flex items-center justify-center shrink-0">
@@ -29,7 +29,7 @@ export const UserInfoForm = () => {
               </ul>
             </div>
             <div className="mt-12">
-              <h2 className="text-lg font-extrabold">가입일자</h2>
+              <div className="text-lg font-extrabold">가입일자</div>
               <span>2024.01.01</span>
             </div>
           </div>

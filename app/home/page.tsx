@@ -6,6 +6,7 @@ import {HomeBanner, HomeBestMenu, HomeCateMenu, HomeWhyUs} from "./home"
 import {productsServices} from "@/services/productsServices"
 import ErrorPage from "@/app/error"
 import {FaqSection} from "../faq/faq"
+import {GeneralPagination} from "../reviews/reviews"
 
 const Home = async () => {
   const {user} = await loginCheck(false)
@@ -29,7 +30,8 @@ const Home = async () => {
         {products_best.length ? (
           <HomeBestMenu products={products_best} />
         ) : null}
-        <FaqSection />
+        {/* <FaqSection /> */}
+        <GeneralPagination />
       </div>
     </MainLayout>
   )

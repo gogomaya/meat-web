@@ -136,13 +136,22 @@ export const HomeCateMenu = () => {
   return (
     <section className="p-12 md:p-16 mx-8">
       <div className="contatiner flex flex-col md:flex-row gap-4">
-        <div className="relative section flex-1 h-64 md:h-auto rounded-lg overflow-hidden" data-index="0">
+        <div className="contatiner relative section flex-1 h-64 md:h-auto rounded-lg overflow-hidden" data-index="0">
           <div className="bg-image absolute inset-0 bg-cover bg-center bg-no-repeat" style={{backgroundImage: "linear-gradient(to bottom, #271a11, rgba(0, 0, 0, 0) 67%), url('/images/Rectangle 6.png')"}}></div>
           <div className="absolute inset-0 bg-black bg-opacity-10 hover:bg-opacity-20 transition duration-300 rounded-lg"></div>
           <div className="relative flex flex-col justify-center items-center h-full text-white p-2">
-            <div className="text-xl md:text-4xl font-bold mb-16 text-center">한우 투뿔 꽃등심 <br />부채살</div>
+            <div className="text-xl md:text-4xl font-bold mb-24 text-center">한우 투뿔 꽃등심 <br />부채살</div>
             <Link href="/products?category=cow">
-              <button className="py-1 px-2 md:py-2 md:px-4 bg-black text-yellow-500 rounded hover:bg-gray-800 transition duration-300">소고기 바로가기</button>
+              <button className="flex items-center justify-between gap-2 w-full p-2 md:py-2 md:px-4 bg-black text-white rounded hover:bg-gray-800 transition duration-300">
+                <span>&apos;소고기&apos; 바로가기</span>
+                <Image
+                  src="/images/Icon Right.png"
+                  alt="Ddun Dun Rice"
+                  width={30}
+                  height={30}
+                  className="text-white"
+                />
+              </button>
             </Link>
           </div>
         </div>
@@ -152,10 +161,19 @@ export const HomeCateMenu = () => {
               <div className="bg-image absolute inset-0 bg-cover bg-center bg-no-repeat" style={{backgroundImage: "linear-gradient(to left, #271a11, rgba(217, 217, 217, 0) 100%), url('/images/Rectangle 10.png')"}}></div>
               <div className="absolute inset-0 bg-black bg-opacity-10 hover:bg-opacity-20 transition duration-300 rounded-lg"></div>
               <div className="relative flex flex-col justify-center items-center h-full text-white p-2">
-                <div className="text-md md:text-lg mb-8 font-bold text-center text-yellow-400">한돈 국내산</div>
+                <div className="text-md md:text-lg font-bold text-center text-yellow-400">한돈 국내산</div>
                 <div className="text-xl md:text-2xl font-bold mb-12 text-center">🐷 생삼겹살 목살</div>
                 <Link href="/products?category=pork">
-                  <button className="py-1 px-2 md:py-2 md:px-4 bg-black text-yellow-500 rounded hover:bg-gray-800 transition duration-300">돼지고기 바로가기</button>
+                  <button className="flex items-center justify-between gap-2 w-full p-2 md:py-2 md:px-4 bg-black text-white rounded hover:bg-gray-800 transition duration-300">
+                    <span>&apos;돼지고기&apos; 바로가기</span>
+                    <Image
+                      src="/images/Icon Right.png"
+                      alt="Ddun Dun Rice"
+                      width={30}
+                      height={30}
+                      className="text-white"
+                    />
+                  </button>
                 </Link>
               </div>
             </div>
@@ -163,10 +181,19 @@ export const HomeCateMenu = () => {
               <div className="bg-image absolute inset-0 bg-cover bg-center bg-no-repeat" style={{backgroundImage: "linear-gradient(to left, #271a11, rgba(217, 217, 217, 0) 100%), url('/images/Rectangle 8.png')"}}></div>
               <div className="absolute inset-0 bg-black bg-opacity-10 hover:bg-opacity-20 transition duration-300 rounded-lg"></div>
               <div className="relative flex flex-col justify-center items-center h-full text-white p-2">
-                <div className="text-md md:text-lg mb-8 font-bold text-center text-yellow-400">가장 신선한</div>
-                <div className="text-xl md:text-2xl font-bold mb-12 text-center">🥩 육회 & 육사시미</div>
+                <div className="text-md md:text-lg font-bold text-left text-yellow-400">가장 신선한</div>
+                <div className="text-xl md:text-2xl font-bold mb-12 text-left">🥩 육회 & 육사시미</div>
                 <Link href="/products?category=cow&category_menu=육회/사시미">
-                  <button className="py-1 px-2 md:py-2 md:px-4 bg-black text-yellow-500 rounded hover:bg-gray-800 transition duration-300">육회 바로가기</button>
+                  <button className="flex items-center justify-between gap-2 w-full p-2 md:py-2 md:px-4 bg-black text-white rounded hover:bg-gray-800 transition duration-300">
+                    <span>&apos;육회&apos; 바로가기</span>
+                    <Image
+                      src="/images/Icon Right.png"
+                      alt="Ddun Dun Rice"
+                      width={30}
+                      height={30}
+                      className="text-white"
+                    />
+                  </button>
                 </Link>
               </div>
             </div>
@@ -177,7 +204,16 @@ export const HomeCateMenu = () => {
             <div className="relative flex flex-col justify-center items-center h-full text-white p-2">
               <div className="text-xl md:text-2xl font-bold mb-12 text-center">🍲 고추장불고기 & 간장불고기 <br />제육볶음 주물럭 밀키트</div>
               <Link href="/products?category=simple">
-                <button className="py-1 px-2 md:py-2 md:px-4 bg-black text-yellow-500 rounded hover:bg-gray-800 transition duration-300">밀키트 바로가기</button>
+                <button className="flex items-center justify-between gap-2 w-full p-2 md:py-2 md:px-4 bg-black text-white rounded hover:bg-gray-800 transition duration-300">
+                  <span>&apos;밀키트&apos; 바로가기</span>
+                  <Image
+                    src="/images/Icon Right.png"
+                    alt="Ddun Dun Rice"
+                    width={30}
+                    height={30}
+                    className="text-white"
+                  />
+                </button>
               </Link>
             </div>
           </div>
@@ -230,7 +266,7 @@ export const HomeBestMenu = ({products}: { products: Product[] }) => {
 
   return (
     <section className="mt-5 py-10">
-      <div className="container mx-auto">
+      <div className="container">
         <div ref={elementRef} className="flex flex-col items-start mb-4 px-6" style={animationStyle}>
           <div className="text-lg font-semibold text-gray-500">당신의 식탁을 풍요롭게</div>
         </div>
@@ -272,10 +308,10 @@ export const HomeWhyUs = () => {
         backgroundImage: "url(\"/images/Bg.png\")"
       }}
     >
-      <div className="flex flex-col md:flex-row justify-between items-center mx-12">
+      <div className="container flex flex-col md:flex-row justify-between items-center">
         <div className="flex flex-col space-y-4 md:w-1/2">
           <div className="why-inner text-xl font-extrabold text-yellow-400">WHY US?</div>
-          <div className="why-inner text-4xl font-bold text-white">왜<span className="text-yellow-400">&apos;한솔축산&apos;</span>인가?</div>
+          <div className="why-inner text-4xl font-bold text-white">왜 <span className="text-yellow-400">&apos;한솔축산&apos;</span> 인가?</div>
           <div className="why-inner text-lg text-gray-300">
             <span className="text-yellow-400">&lsquo;신선함을 잇다&rsquo;</span>는 바로 고객과의
             <br />

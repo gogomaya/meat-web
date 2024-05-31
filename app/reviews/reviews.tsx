@@ -111,7 +111,7 @@ export const ReviewCard = ({reviews}: {reviews: any[]}) => {
                   className="rounded"
                   style={{marginRight: "20px"}} />
                 <div style={{flex: 1}}>
-                  <h2 style={{margin: "0", fontSize: "1.2em"}}>{selectedReview.title}</h2>
+                  <div style={{margin: "0", fontSize: "1.2em"}}>{selectedReview.title}</div>
                   <p style={{margin: "5px 0", lineHeight: "1.5"}}>{selectedReview.date}</p>
                   <p style={{margin: "5px 0", lineHeight: "1.5"}}>{selectedReview.content}</p>
                 </div>
@@ -126,6 +126,13 @@ export const ReviewCard = ({reviews}: {reviews: any[]}) => {
       <div>
         {reviews.map((review) => (
           <Card key={review.id} sx={{maxWidth: 345, height: "100%", marginBottom: "16px"}}>
+            <Image
+              src="/images/7.jpg"
+              alt="상품 이미지"
+              width={400}
+              height={100}
+              className="rounded"
+              style={{marginRight: "20px"}} />
             <CardHeader
               avatar={<Avatar sx={{bgcolor: red[500]}} aria-label="recipe">
                 R
@@ -235,7 +242,7 @@ export const ProductDetailReview = () => {
   }
 
   return (
-    <div className="p-4 bg-white">
+    <div className="container p-4 bg-white">
       <div className="py-4" style={{fontSize: "30px"}}><strong>고객리뷰</strong></div>
       <div className="mb-6">
         {Object.entries(reviewStats).slice(1).map(([key, val], index) => (
@@ -412,6 +419,7 @@ export const GeneralReview = ({title, content, likes, rating}: {title: string, c
   )
 }
 
+// 일반리뷰
 export const GeneralReviews = () => {
   return (
     <div>

@@ -42,9 +42,9 @@ const Products = async (props: {
         <ProductsDetailContent product={product} />
         <NavDetail />
         {/* 상품 상세 정보 */}
-        <div id="detail" className="mx-16 px-2"><ProductDetail product={product} /></div>
+        <div id="detail" className="container"><ProductDetail product={product} /></div>
         {/* 리뷰 */}
-        <div id="review2" className="mx-16 px-2">
+        <div id="review2" className="container">
           <GeneralReviews
             user={user}
             product={product}
@@ -54,7 +54,7 @@ const Products = async (props: {
           />
           <ProductDetailReview />
         </div>
-        <Divider className="mt-8 mx-16 px-2" style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
+        <Divider className="container mt-8 mx-16 px-2" style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
         {/* 문의 */}
         <div id="qna" className="mx-16 px-2">
           <QnaBoards

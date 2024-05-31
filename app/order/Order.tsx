@@ -86,23 +86,29 @@ export const OrderDetailContent = ({
           </tr>
         </thead>
         <tbody>
-          {orderProducts.map((orderProduct) => (
-            <tr key={orderProduct.product.product_pk}>
-              <td className="flex justify-center">
-                <Image
-                  src={`/${process.env.NEXT_PUBLIC_UPLOAD_IMAGES}/products/${encodeURIComponent(String(orderProduct.product.image_file_name))}`}
-                  alt=""
-                  width={100}
-                  height={50}
-                  sizes="100vw"
-                  priority
-                />
-              </td>
-              <td className="p-3 text-center">{orderProduct.product.name}</td>
-              <td className="p-3 text-center">{orderProduct.product.price.toLocaleString()}원</td>
-              <td className="p-3 text-center">{orderProduct.quantity}</td>
-              <td className="p-3 text-center">{(Number(orderProduct.product.price) * orderProduct.quantity).toLocaleString()}원</td>
-            </tr>
+          {orderProducts.map((orderProduct, index) => (
+            <><React.Fragment key={orderProduct.product.product_pk}>
+              <tr>
+                <td className="flex justify-center p-3">
+                  <Image
+                    src={`/${process.env.NEXT_PUBLIC_UPLOAD_IMAGES}/products/${encodeURIComponent(String(orderProduct.product.image_file_name))}`}
+                    alt=""
+                    width={100}
+                    height={30}
+                    sizes="100vw"
+                    priority />
+                </td>
+                <td className="p-3 text-center">{orderProduct.product.name}</td>
+                <td className="p-3 text-center">{orderProduct.product.price.toLocaleString()}원</td>
+                <td className="p-3 text-center">{orderProduct.quantity}</td>
+                <td className="p-3 text-center">{(Number(orderProduct.product.price) * orderProduct.quantity).toLocaleString()}원</td>
+              </tr>
+              {/* {index < orderProducts.length - 1 && (
+                <td colSpan={5} className="p-0">
+                <div style={{height: "1px", backgroundColor: "#ddd", width: "100%"}} />
+                </td>
+              )} */}
+            </React.Fragment></>
           ))}
         </tbody>
       </table>
@@ -192,13 +198,13 @@ export const OrderDetailContent = ({
   return (
     <div className="container mx-auto p-8">
       <div className="p-3 w-full mb-5">
-        <h2 className="text-2xl font-semibold mb-4">주문상품</h2>
+        <div className="text-2xl font-semibold mb-4">주문상품</div>
         <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
         {renderOrderItems()}
       </div>
       <div className="flex flex-col md:flex-row items-start md:items-start mb-8 gap-6">
         <div className="w-full md:w-3/4 pr-4 bg-white p-3">
-          <h2 className="text-2xl font-semibold mb-4">주문자 정보</h2>
+          <div className="text-2xl font-semibold mb-4">주문자 정보</div>
           <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
           <div className="space-y-4">
             <div>
@@ -228,19 +234,19 @@ export const OrderDetailContent = ({
           </div>
         </div>
         <div className="w-full md:w-1/4 pl-4 mt-8 md:mt-0 bg-white p-3">
-          <h2 className="text-2xl font-semibold mb-4">결제금액</h2>
+          <div className="text-2xl font-semibold mb-4">결제금액</div>
           <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
           <div className="space-y-2 bg-gray-200 rounded-lg p-3">
-            <p className="text-lg m-2">총 상품금액: {totalPrice.toLocaleString()}원</p>
-            <p className="text-lg m-2">할인 금액: {totalDiscount.toLocaleString()}원</p>
-            <p className="text-lg m-2">총 배송비: {totalShipFee.toLocaleString()}원</p>
-            <p className="text-lg m-2 font-semibold">최종 결제 금액: {finalPrice.toLocaleString()}원</p>
+            <p className="text-lg m-2 text-black">총 상품금액: {totalPrice.toLocaleString()}원</p>
+            <p className="text-lg m-2 text-black">할인 금액: {totalDiscount.toLocaleString()}원</p>
+            <p className="text-lg m-2 text-black">총 배송비: {totalShipFee.toLocaleString()}원</p>
+            <p className="text-lg m-2 font-semibold text-black">최종 결제 금액: {finalPrice.toLocaleString()}원</p>
           </div>
         </div>
       </div>
       <div className="flex flex-col md:flex-row items-start md:items-start mb-8 gap-6">
         <div className="w-full md:w-3/4 pr-4 p-3">
-          <h2 className="text-2xl font-semibold mb-4">배송 정보</h2>
+          <div className="text-2xl font-semibold mb-4">배송 정보</div>
           <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
           <div className="space-y-4">
             <div>
@@ -276,7 +282,7 @@ export const OrderDetailContent = ({
                   {/* 기본 배송지 나오도록 */}
                   <div className="flex flex-col">
                     <div className="flex items-center flex-grow mb-2">
-                      <input type="text" id="contactNumber" required={true} name="address" onChange={handleInput} value={enroll_company.address} className="mr-2 border border-gray-300 rounded-lg p-2 flex-grow" />
+                      <input type="text" placeholder="우편번호 찾기 버튼을 눌러 배송지 주소를 검색해주세요" id="contactNumber" required={true} name="address" onChange={handleInput} value={enroll_company.address} className="mr-2 border border-gray-300 rounded-lg p-2 flex-grow" />
                       <button
                         onClick={handleComplete}
                         className="ml-2 py-2 text-white rounded-lg post-button"
@@ -294,7 +300,7 @@ export const OrderDetailContent = ({
           <div className="py-3">
             <div className="flex">
               <div className="w-full">
-                <h2 className="text-2xl font-semibold mb-4 p-2">결제방법</h2>
+                <div className="text-2xl font-semibold mb-4 p-2">결제방법</div>
                 <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
                 <div className="flex items-center justify-between py-2">
                   <div className="w-1/4 font-medium">결제수단</div>
@@ -350,7 +356,7 @@ export const OrderDetailContent = ({
           </div>
         </div>
         <div className="w-full md:w-1/4 pl-4 mt-8 md:mt-0 bg-white p-3">
-          <h2 className="text-2xl font-semibold mb-4">결제확인</h2>
+          <div className="text-2xl font-semibold mb-4">결제확인</div>
           <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
           <div className="space-y-2">
             <h5 className="text-lg text-gray-600 mb-2">위 주문내역을 확인하였으며, 결제 내역에 동의합니다.</h5>
@@ -362,7 +368,7 @@ export const OrderDetailContent = ({
             </div>
             {isOrderInfoOpen && (
               <div className="p-4">
-                <div className="w-full h-40 p-2 text-sm border border-gray-300 rounded-lg mb-4">
+                <div className="w-full h-30 text-sm rounded-lg mb-4">
                     주문할 상품의 상품명, 가격, 배송정보 등을 최종 확인하였으며, 구매에 동의하십니까? (전자상거래법 제 8조 2항)
                 </div>
               </div>
@@ -374,7 +380,7 @@ export const OrderDetailContent = ({
               </svg>
             </div>
             {isPersonalInfoOpen && (
-              <div className="w-full h-80 p-2 text-sm border border-gray-300 rounded-lg mb-4" style={{overflow:"scroll"}}>
+              <div className="w-full h-80 p-4 text-sm mb-4" style={{overflow:"scroll"}}>
                   수집하는 개인정보의 항목
                   ① 한솔축산는 구매, 원활한 고객상담, 각종 서비스의 제공을 위해 주문 이용 시 아래와 같은 개인정보를 수집하고 있습니다.
                   o 필수수집항목 : 이름, 휴대폰번호, 이메일, 수신자정보(성명,주소,휴대폰번호,이메일), 개인통관고유보호(해외직구상품구매시)

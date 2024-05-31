@@ -54,8 +54,8 @@ const MainLayout = ({
     <div className="mx-auto">
       <header
         id="header"
-        className="sticky top-0 z-20 bg-cover bg-center bg-opacity-90 w-full flex justify-center items-center px-4 py-4 md:py-4 md:px-12 text-white transition-opacity duration-300"
-        style={{backgroundImage: "url('/images/Bg.png')", backgroundPosition: "center calc(50% - 235px)", opacity: headerOpacity}}
+        className="sticky top-0 z-20 bg-cover bg-center bg-opacity-90 w-full flex justify-center items-center px-4 py-4 md:py-4 md:px-12 text-white transition-opacity duration-300 border-b border-white"
+        style={{backgroundImage: "url('/images/Bg.png')", backgroundPosition: "center calc(50% - 185px)", opacity: headerOpacity}}
       >
         <MainMobileMenu />
         <Link href="/">
@@ -70,7 +70,8 @@ const MainLayout = ({
           />
         </Link>
         <MegaMenu />
-        <div className="flex gap-4">
+        {/* <TestSubMenu /> */}
+        <div className="flex gap-3">
           <MainSearch />
           <Users user={user} />
           <Link href="/carts" className="text-red-100">
@@ -115,7 +116,7 @@ export const CsIcon = () => {
   }
 
   return (
-    <div className={`fixed bottom-8 z-1000 right-8 gap-2 flex flex-col justify-center item-center ${isVisible ? "visible" : "hidden"}`}>
+    <div className={`fixed bottom-28 z-1000 right-6 gap-2 flex flex-col justify-center item-center ${isVisible ? "visible" : "hidden"}`}>
       <button onClick={scrollToTop} className="p-1 rounded-full flex items-center justify-center w-16 h-16">
         <ExpandLessIcon style={{fontSize: "32px"}} />
       </button>
@@ -130,7 +131,7 @@ export const CsIcon = () => {
           priority
         />
       </Link>
-      <Link href="https://www.cjlogistics.com/ko/tool/parcel/tracking">
+      <Link href="https://www.ilogen.com/web/personal/tkSearch">
         <Image
           src="/images/quick_shipping.png"
           alt=""
@@ -174,42 +175,42 @@ export const MegaMenu = () => {
           <Link href="/products?is_today=true" className="text-red-600">오늘의 메뉴</Link>
         </li>
         <li id="cow" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
-          <Link href="/products?category=cow" className="text-red-100">소고기</Link>
-          <ol id="submenu" className={`w-20 absolute border border-black ${menu.cow ? "block" : "hidden"} bg-white py-2 rounded-lg shadow-md text-sm font-semibold`}>
+          <Link href="/products?category=cow" className="text-red-100">소고기🐮</Link>
+          <ol id="submenu" className={`flex w-30 absolute border border-[#FACC15] ${menu.cow ? "block" : "hidden"} py-2 rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
             {categoriesMenu.cow.map((category_menu) => (
-              <li key={category_menu}><Link href={`/products?category=cow&category_menu=${category_menu}`}>{category_menu}</Link></li>
+              <li key={category_menu}><Link href={`/products?category=cow&category_menu=${category_menu}`} className="text-white px-2">{category_menu}</Link></li>
             ))}
           </ol>
         </li>
         <li id="pork" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
-          <Link href="/products?category=pork" className="text-red-100">돼지고기</Link>
-          <ol id="submenu" className={`w-20 absolute border border-black ${menu.pork ? "block" : "hidden"} bg-white py-2 rounded-lg shadow-md text-sm font-semibold`}>
+          <Link href="/products?category=pork" className="text-red-100">돼지고기🐷</Link>
+          <ol id="submenu" className={`w-18 absolute border border-[#FACC15] ${menu.pork ? "block" : "hidden"} py-2 rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
             {categoriesMenu.pork.map((category_menu) => (
-              <li key={category_menu}><Link href={`/products?category=pork&category_menu=${category_menu}`}>{category_menu}</Link></li>
+              <li key={category_menu}><Link href={`/products?category=pork&category_menu=${category_menu}`} className="text-white">{category_menu}</Link></li>
             ))}
           </ol>
         </li>
         <li id="simple" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
           <Link href="/products?category=simple" className="text-red-100">간편식</Link>
-          <ol id="submenu" className={`w-20 absolute border border-black ${menu.simple ? "block" : "hidden"} bg-white py-2 rounded-lg shadow-md text-sm font-semibold`}>
+          <ol id="submenu" className={`w-18 absolute border border-[#FACC15] ${menu.simple ? "block" : "hidden"} py-2 rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
             {categoriesMenu.simple.map((category_menu) => (
-              <li key={category_menu}><Link href={`/products?category=simple&category_menu=${category_menu}`}>{category_menu}</Link></li>
+              <li key={category_menu}><Link href={`/products?category=simple&category_menu=${category_menu}`} className="text-white">{category_menu}</Link></li>
             ))}
           </ol>
         </li>
         <li id="review" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
           <Link href="/reviews" className="text-red-100">리뷰</Link>
-          <ol id="submenu" className={`w-20 absolute border border-black ${menu.review ? "block" : "hidden"} bg-white py-2 rounded-lg shadow-md text-sm font-semibold`}>
-            <li><Link href="#">고객 리뷰</Link></li>
-            <li><Link href="#">전문가 리뷰</Link></li>
+          <ol id="submenu" className={`w-18 absolute border border-[#FACC15] ${menu.review ? "block" : "hidden"} py-2 rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
+            <li><Link href="#" className="text-white">고객 리뷰</Link></li>
+            <li><Link href="#" className="text-white">전문가 리뷰</Link></li>
           </ol>
         </li>
         <li id="board" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
           <Link href="/boards" className="text-red-100">고객센터</Link>
-          <ol id="submenu" className={`w- absolute border border-black ${menu.board ? "block" : "hidden"} bg-white py-2 rounded-lg shadow-md text-sm font-semibold`}>
-            <li><Link href="#">공지사항</Link></li>
-            <li><Link href="/faq">자주하는질문</Link></li>
-            <li><Link href="/qna">1:1문의하기</Link></li>
+          <ol id="submenu" className={`w-18 absolute border border-[#FACC15] ${menu.board ? "block" : "hidden"} py-2 rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
+            <li><Link href="#" className="text-white">공지사항</Link></li>
+            <li><Link href="/faq" className="text-white">자주하는질문</Link></li>
+            <li><Link href="/qna" className="text-white">1:1문의하기</Link></li>
           </ol>
         </li>
       </ul>
@@ -254,7 +255,7 @@ const MainMobileMenu = () => {
   const [open, setOpen] = useState(false)
   const categoriesMenu = commonServices.categoriesMenu()
   return <>
-    <IconButton style={{display: "none"}} className="!block md:!hidden" onClick={() => setOpen(true)}>
+    <IconButton style={{display: "none", color:"white"}} className="!block md:!hidden" onClick={() => setOpen(true)}>
       <MenuIcon />
     </IconButton>
     <Drawer
@@ -264,7 +265,7 @@ const MainMobileMenu = () => {
       PaperProps={{sx: {width: "100%"}}}
     >
       <Box className="p-8">
-        <nav className="gap-3">
+        <nav className="gap-2">
           <Link href="/users/login">로그인</Link>
           <Link href="/users/sign-up">회원가입</Link>
           <span className="flex-1"></span>
@@ -382,11 +383,11 @@ const MainBottom = () => {
       }}
     >
       <div className="bg-transparent p-6 md:p-12 text-white">
-        <div className="footer-menu-link space-x-4 text-lg">
-          <span className="footer-menu-content cursor-pointer hover:underline">회사소개</span><span>|</span>
-          <span className="footer-menu-content cursor-pointer hover:underline">이용안내</span><span>|</span>
-          <span className="footer-menu-content cursor-pointer hover:underline">이용약관</span><span>|</span>
-          <span className="footer-menu-content cursor-pointer hover:underline">개인정보처리방침</span>
+        <div className="flex footer-menu-link space-x-4">
+          <div className="footer-menu-content cursor-pointer hover:underline">회사소개</div><span>|</span>
+          <div className="footer-menu-content cursor-pointer hover:underline">이용안내</div><span>|</span>
+          <div className="footer-menu-content cursor-pointer hover:underline">이용약관</div><span>|</span>
+          <div className="footer-menu-content cursor-pointer hover:underline">개인정보처리방침</div>
         </div>
         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <div className="text-2xl font-bold" style={{textAlign: "left"}}>

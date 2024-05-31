@@ -46,7 +46,7 @@ const Products = async (props: {
   return (
     <MainLayout user={user}>
       <div className="pb-16">
-        <h2 className="flex justify-center text-red-100 py-8"
+        <div className="flex justify-center text-red-100 py-8"
           style={{
             backgroundImage: "url('/images/Bg.png')",
             backgroundPosition: "center calc(10% - 620px)",
@@ -57,12 +57,14 @@ const Products = async (props: {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center"
-          }}>{titleName()}</h2>
-        <ProductsSearch products={products} searchParams={searchParams} />
-        <ProductsList products={products} />
-        {total_rows ? (
-          <ProductsPagination searchParams={searchParams} total_rows={total_rows} />
-        ) : null}
+          }}>{titleName()}</div>
+        <div className="container">
+          <ProductsSearch products={products} searchParams={searchParams} />
+          <ProductsList products={products} />
+          {total_rows ? (
+            <ProductsPagination searchParams={searchParams} total_rows={total_rows} />
+          ) : null}
+        </div>
       </div>
     </MainLayout>
   )

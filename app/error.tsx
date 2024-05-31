@@ -10,10 +10,10 @@ const ErrorPage = ({
   return (
     <div className="h-full flex flex-col justify-center items-center">
       {message ? (
-        <h2 className="text-2xl font-bold">{message}</h2>
+        <div className="text-2xl font-bold">{message}</div>
       ) : (
         <>
-          <h2 className="text-2xl font-bold">서버 런타임 오류가 발생하였습니다.</h2>
+          <div className="text-2xl font-bold">서버 런타임 오류가 발생하였습니다.</div>
           <p className="text-lg font-bold">오류 코드: {error?.digest}</p>
         </>
       )}

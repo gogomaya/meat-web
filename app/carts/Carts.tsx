@@ -38,28 +38,28 @@ export const CartsDetailContent = () => {
           <div className="my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 py-4">
             <div className="py-4 align-middle inline-block min-w-full sm:px-6 lg:px-8">
               <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead style={{backgroundColor: "#271A11"}} className="text-white">
+                <table className="min-w-full divide-y divide-gray-200 text-center">
+                  <thead style={{backgroundColor: "#271A11"}} className="text-white text-center">
                     <tr>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-center">
                         선택
                       </th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-center">
                         번호
                       </th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-center">
                         상품명
                       </th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-center">
                         가격
                       </th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider">
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider text-center">
                         수량
                       </th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-center">
                         총금액
                       </th>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
+                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-center">
                         삭제
                       </th>
                     </tr>
@@ -109,8 +109,8 @@ export const CartsDetailContent = () => {
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div>{cartProduct.product.price.toLocaleString()}원</div>
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="flex items-center">
+                          <td className="px-6 py-4 whitespace-nowrap text-center">
+                            <div className="flex items-center text-center">
                               <button
                                 type="button"
                                 className="px-2 py-1 border border-gray-300 rounded-l-md"
@@ -147,7 +147,7 @@ export const CartsDetailContent = () => {
                             </div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
-                            <Typography variant="body1" gutterBottom>{(Number(cartProduct.product.price) * cartProduct.quantity).toLocaleString()}원</Typography>
+                            <div>{(Number(cartProduct.product.price) * cartProduct.quantity).toLocaleString()}원</div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <IconButton
@@ -170,15 +170,60 @@ export const CartsDetailContent = () => {
                   )}
                 </table>
               </div>
+              <div className="flex flex-col md:flex-row md:items-center justify-start space-y-4 py-4 md:space-y-0 md:space-x-2">
+                <Button
+                  variant="contained"
+                  className="btn h-12 w-full md:w-1/6 text-lg md:ml-4"
+                  disabled={!cartProducts.find((cartProduct) => cartProduct.checked)}
+                  onClick={() => {
+                    router.push(`/order?orderProducts=${encodeURIComponent(
+                      JSON.stringify(cartProducts.filter((cartProduct) => cartProduct.checked))
+                    )}`)
+                  }}
+                  style={{backgroundColor: "#A51C30"}}
+                >
+                  <span>선택상품만 결제하기</span>
+                </Button>
+                <div className="w-full md:w-auto">
+                  <Button
+                    variant="contained"
+                    className="btn h-12 w-full md:w-auto text-lg"
+                    disabled={cartProducts.length === 0}
+                    onClick={() => setOpen(true)}
+                    style={{backgroundColor: "#4F3623"}}
+                  >
+                    장바구니 비우기
+                  </Button>
+                  <Dialog
+                    open={open}
+                    onClose={() => setOpen(false)}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                  >
+                    <DialogTitle id="alert-dialog-title">
+                      {"정말 장바구니를 비우시겠습니까?"}
+                    </DialogTitle>
+                    <DialogActions>
+                      <Button onClick={() => setOpen(false)} color="primary">
+                        아니오
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          localStorage.setItem("cartProducts", "[]")
+                          cartProductsForm.setValue("cartProducts", [])
+                          window.postMessage({cartProductsLength: "on"}, "*")
+                          setOpen(false)
+                        }}
+                        color="secondary"
+                        autoFocus
+                      >
+                        네
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
+                </div>
+              </div>
             </div>
-          </div>
-          <Divider className="my-4" sx={{border: "1px solid secondary"}} />
-          <div className="flex flex-col items-end space-y-4">
-            <Typography variant="h5" gutterBottom>
-              총금액: {_.sumBy(cartProducts, (cartProduct) => {
-                return Number(cartProduct.product.price) * cartProduct.quantity
-              }).toLocaleString()}원
-            </Typography>
           </div>
         </div>
         <div className="w-full md:w-1/3 pr-8 ml-4">
@@ -187,7 +232,9 @@ export const CartsDetailContent = () => {
             <div className="mb-4">
               <div className="flex justify-between mb-2">
                 <span>총 상품 금액</span>
-                <span>{totalAmount.toLocaleString()}원</span>
+                <span>{_.sumBy(cartProducts, (cartProduct) => {
+                  return Number(cartProduct.product.price) * cartProduct.quantity
+                }).toLocaleString()}원</span>
               </div>
               <div className="flex justify-between mb-2">
                 <span>할인 금액</span>
@@ -199,14 +246,16 @@ export const CartsDetailContent = () => {
               </div>
               <div className="flex justify-between">
                 <span className="font-bold text-lg">최종 결제 금액</span>
-                <span className="font-bold text-lg">{(totalAmount - discountAmount + shippingFee).toLocaleString()}원</span>
+                <span className="font-bold text-lg">{(_.sumBy(cartProducts, (cartProduct) => {
+                  return Number(cartProduct.product.price) * cartProduct.quantity
+                }) - discountAmount + shippingFee).toLocaleString()}원</span>
               </div>
             </div>
           </div>
-          <div className="flex items-center justify-center p-4">
+          <div className="flex items-center justify-center pl-4 py-2">
             <Button
               variant="contained"
-              className="btn w-full h-16"
+              className="btn w-full h-16 text-2xl"
               disabled={cartProducts.length === 0}
               onClick={() => {
                 router.push(`/order?orderProducts=${encodeURIComponent(JSON.stringify(cartProducts))}`)
@@ -217,59 +266,6 @@ export const CartsDetailContent = () => {
             </Button>
           </div>
 
-        </div>
-      </div>
-      <div className="flex flex-col md:flex-row md:items-center justify-start m-8 px-2 space-y-4 md:space-y-0 md:space-x-4">
-        <Button
-          variant="contained"
-          className="btn md:w-1/6"
-          disabled={!cartProducts.find((cartProduct) => cartProduct.checked)}
-          onClick={() => {
-            router.push(`/order?orderProducts=${encodeURIComponent(
-              JSON.stringify(cartProducts.filter((cartProduct) => cartProduct.checked))
-            )}`)
-          }}
-          style={{backgroundColor: "#A51C30"}}
-        >
-          선택상품만 결제하기
-        </Button>
-        <div>
-          <Button
-            variant="contained"
-            className="btn"
-            disabled={cartProducts.length === 0}
-            onClick={() => setOpen(true)}
-            style={{backgroundColor: "#4F3623"}}
-          >
-            장바구니 비우기
-          </Button>
-          <Dialog
-            open={open}
-            onClose={() => setOpen(false)}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-          >
-            <DialogTitle id="alert-dialog-title">
-              {"정말 장바구니를 비우시겠습니까?"}
-            </DialogTitle>
-            <DialogActions>
-              <Button onClick={() => setOpen(false)} color="primary">
-                아니오
-              </Button>
-              <Button
-                onClick={() => {
-                  localStorage.setItem("cartProducts", "[]")
-                  cartProductsForm.setValue("cartProducts", [])
-                  window.postMessage({cartProductsLength: "on"}, "*")
-                  setOpen(false)
-                }}
-                color="secondary"
-                autoFocus
-              >
-                네
-              </Button>
-            </DialogActions>
-          </Dialog>
         </div>
       </div>
     </>

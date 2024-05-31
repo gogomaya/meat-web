@@ -18,8 +18,8 @@ const Qna = async (props: {
   const {boards, total_rows} = boardsResponse.data
   return (
     <MainLayout user={user}>
-      <h2
-        className="flex justify-center text-red-100 py-8"
+      <div
+        className="flex justify-center text-red-100 py-8 text-4xl"
         style={{
           backgroundImage: "url('/images/Bg.png')",
           backgroundPosition: "center calc(10% - 220px)",
@@ -31,7 +31,7 @@ const Qna = async (props: {
           justifyContent: "center",
           alignItems: "center"
         }}
-      >1:1문의하기</h2>
+      >1:1문의하기</div>
       <QnaBoards
         user={user}
         boards={boards}
