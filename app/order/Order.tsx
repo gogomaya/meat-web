@@ -1,12 +1,12 @@
 "use client"
 import {SetStateAction, useState} from "react"
 import {Divider, Typography} from "@mui/material"
-import Link from "next/link"
 import Image from "next/image"
 import React from "react"
 import DaumPostcode from "react-daum-postcode"
 import {CartProduct} from "@/types/productsTypes"
 import _ from "lodash"
+import {CheckoutPage} from "./toss"
 
 // 배송지
 export const Post = (props: { setcompany: (arg0: any) => void; company: any }) => {
@@ -72,6 +72,20 @@ export const OrderDetailContent = ({
   const totalDiscount = orderInfo.discount
   const totalShipFee = orderInfo.shipfee
   const finalPrice = totalPrice - totalDiscount + totalShipFee
+
+  // TODO : 결제 정보 받아오기
+  const orderName = "기본 상품 외 3건"
+  const customerName = "김"
+  const customerEmail = ""
+  const customerMobilePhone = "01012341234"
+
+  const pay = {
+    finalPrice : finalPrice,
+    orderName : orderName,
+    customerName : customerName,
+    customerEmail : customerEmail,
+    customerMobilePhone : customerMobilePhone
+  }
 
   const renderOrderItems = () => {
     return (
@@ -302,7 +316,9 @@ export const OrderDetailContent = ({
               <div className="w-full">
                 <div className="text-2xl font-semibold mb-4 p-2">결제방법</div>
                 <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
-                <div className="flex items-center justify-between py-2">
+                {/* 토스 결제 위젯 */}
+                <CheckoutPage pay={pay} />
+                {/* <div className="flex items-center justify-between py-2">
                   <div className="w-1/4 font-medium">결제수단</div>
                   <div className="w-3/4">
                     <div className="space-y-4">
@@ -350,7 +366,7 @@ export const OrderDetailContent = ({
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -395,13 +411,13 @@ export const OrderDetailContent = ({
               </div>
             )}
           </div>
-          <div className="flex justify-center mt-4">
+          {/* <div className="flex justify-center mt-4">
             <button
               className="text-white p-3 rounded-lg shadow-lg hover:bg-blue-600 transition-colors"
               style={{backgroundColor: "#271A11"}}
               onClick={handlePayment}
             ><span>16,800원 </span>결제하기</button>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
