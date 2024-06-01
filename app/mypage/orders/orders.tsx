@@ -1,4 +1,7 @@
 "use client"
+import {Order, OrderStatus} from "@/types/ordersTypes"
+import Image from "next/image"
+import Link from "next/link"
 import {useState} from "react"
 
 interface ModalProps {
@@ -60,5 +63,109 @@ export const CancelButton = () => {
         onConfirm={handleConfirm}
       />
     </>
+  )
+}
+
+
+interface OrderListProps {
+  orders: Order[]
+}
+
+export const OrderList = ({orders}: OrderListProps) => {
+  console.log(orders)
+  return (
+    <div className="flex flex-col items-center gap-10 my-2 mx-4 md:mx-0">
+      {orders.map((order) => (
+        <div key={order.order_pk} className="w-full flex flex-col gap-6 max-w-4xl bg-white rounded-lg shadow-md p-6">
+          {/* 주문일자, 상세보기 */}
+          <div className="flex justify-between">
+            <div className="item">
+              <span>{new Date(order.created_at).toLocaleDateString()}</span> 주문
+            </div>
+            <div className="item">
+              <Link
+                href={`/mypage/orders/detail/${order.order_pk}`}
+                className="flex justify-between items-center"
+              >
+                <span>상세보기</span>
+                <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m9 5 7 7-7 7" />
+                </svg>
+              </Link>
+            </div>
+          </div>
+          {/* 주문카드 */}
+          <div className="w-full flex flex-wrap flex-col md:flex-row justify-between bg-white rounded-md shadow-md p-2">
+            {/* 주문정보 */}
+            <div className="item flex-[2]">
+              {/* 타이틀 */}
+              <div className="w-full flex justify-between items-center px-4 py-2">
+                <div className="item"><span className="text-[#A51C30] font-bold">{order.status}</span></div>
+                <div className="item">
+                  <button>
+                    <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                      <path fillRule="evenodd" d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z" clipRule="evenodd" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              {/* 내용 */}
+              <div className="w-full flex flex-wrap justify-between items-center  px-4 py-2">
+                <div className="item flex-1">
+                  <Image
+                    src="/images/logo.png"
+                    alt=""
+                    width={32}
+                    height={32}
+                    sizes="100vw"
+                    className="md:w-16"
+                    priority
+                  />
+                </div>
+                <div className="item flex-[3]">
+                  <div className="flex flex-col items-between">
+                    <div className="item"><span>{order.title}</span></div>
+                    <div className="item"><span>{order.total_price}</span>원</div>
+                    <div className="item"><span>{order.total_quantity}</span>개</div>
+                  </div>
+                </div>
+                <div className="item flex-[2]">
+                  <div className="flex flex-col items-between gap-3">
+                    <div className="item">
+                      <button
+                        type="button"
+                        className="text-white bg-[#A51C30] hover:bg-[#8B0A1D] font-semibold rounded-md text-sm px-6 py-1 w-full active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200"
+                      >
+                        장바구니
+                      </button>
+                    </div>
+                    {/* 총 가격 */}
+                    <div className="item text-center">
+                      <p className="font-bold">
+                        <span>{order.total_price}</span>원
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* 버튼 */}
+            <div className="item flex-1">
+              <div className="flex flex-col flex-wrap items-center gap-4 px-8 py-2">
+                <Link
+                  href={`/mypage/orders/shipments/${order.order_pk}`}
+                  className="w-full px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-center text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200"
+                >
+                  배송조회
+                </Link>
+                {/* 주문/배송취소 버튼 */}
+                {/* <CancelButton orderPk={order.order_pk} /> */}
+                <CancelButton />
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
   )
 }
