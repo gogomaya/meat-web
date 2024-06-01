@@ -9,9 +9,8 @@ const Home = async () => {
     <MainLayout user={user}>
       <div className="w-full">
         <MyPageBanner title="Orders" subTitle="주문내역" />
-        <SideButton />
         <div className="flex">
-          <Side></Side>
+          <Side />
           <div className="container py-16">
             <div className="flex flex-col items-center gap-10 my-2 mx-4 md:mx-0">
               <div className="w-full flex flex-col gap-6 max-w-4xl bg-white rounded-lg shadow-md p-6">
