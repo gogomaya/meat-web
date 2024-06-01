@@ -22,7 +22,6 @@ const Home = async (props: {
     <MainLayout user={user}>
       <div className="w-full">
         <MyPageBanner title="Review" subTitle="리뷰 관리" />
-        <SideButton />
         <div className="flex">
           <Side />
           {total_rows === 0 ? (

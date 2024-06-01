@@ -8,7 +8,6 @@ const Home = async () => {
     <MainLayout user={user}>
       <div className="w-full">
         <MyPageBanner title="Address / 배송지 관리" subTitle="배송지 등록" />
-        <SideButton />
         <div className="flex">
           <Side></Side>
           <div className="container py-16">

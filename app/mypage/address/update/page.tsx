@@ -7,8 +7,7 @@ const Home = async () => {
   return (
     <MainLayout user={user}>
       <div className="w-full">
-        <MyPageBanner title="Address / 배송지 관리" subTitle="배송지 등록" />
-        <SideButton />
+        <MyPageBanner title="Address / 배송지 관리" subTitle="배송지 수정" />
         <div className="flex">
           <Side></Side>
           <div className="container py-16">
@@ -20,6 +19,18 @@ const Home = async () => {
                   <input type="text" placeholder="주소" className="w-full rounded-md py-2.5 px-4 border text-sm outline-[#007bff]" />
                   <input type="text" placeholder="상세 주소" className="w-full rounded-md py-2.5 px-4 border text-sm outline-[#007bff]" />
                   <input type="text" placeholder="전화번호 (010-0000-0000)" className="w-full rounded-md py-2.5 px-4 border text-sm outline-[#007bff]" />
+                  <label htmlFor="default-checkbox" className="w-full flex justify-center items-center p-2 border border-solid" style={{userSelect: "none", cursor: "pointer"}}>
+                    <input
+                      id="default-checkbox"
+                      type="checkbox"
+                      // checked={checked}
+                      // onChange={(e) => onChange(e.target.checked)}
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
+                    />
+                    <span className="px-3" style={{userSelect: "none", cursor: "pointer"}}>
+                      기본 배송지
+                    </span>
+                  </label>
                   <button
                     className="w-full px-4 py-2 py-1 bg-[#A51C30] border-2 border-solid border-white rounded-lg text-center text-white font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200"
                   >

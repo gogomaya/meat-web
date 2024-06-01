@@ -9,7 +9,6 @@ const Home = async () => {
     <MainLayout user={user}>
       <div className="w-full">
         <MyPageBanner title="Wish List" subTitle="찜 리스트" />
-        <SideButton />
         <div className="flex">
           <Side></Side>
           <div className="container py-16">

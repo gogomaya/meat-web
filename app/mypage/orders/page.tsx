@@ -11,7 +11,6 @@ const Home = async () => {
     <MainLayout user={user}>
       <div className="w-full">
         <MyPageBanner title="Orders" subTitle="주문내역" />
-        <SideButton />
         <div className="flex">
           <Side />
           <div className="container py-16">
