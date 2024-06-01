@@ -100,7 +100,7 @@ const Home = async (props: {
                     </div>
                   </div>
                 </div>
-
+                {/* TODO: order_items 목록 조회부터~ */}
                 <p className="text-xl font-bold py-3">상세 정보</p>
                 {/* 주문카드 */}
                 <div className="w-full flex flex-col gap-6 max-w-4xl bg-white rounded-lg shadow-md p-6">
