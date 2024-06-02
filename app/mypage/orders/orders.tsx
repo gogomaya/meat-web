@@ -3,6 +3,7 @@ import {Order, OrderStatus} from "@/types/ordersTypes"
 import Image from "next/image"
 import Link from "next/link"
 import {useState} from "react"
+import {getOrderStatusMeaning} from "./ordersUtils"
 
 interface ModalProps {
     title: string;
@@ -100,7 +101,7 @@ export const OrderList = ({orders}: OrderListProps) => {
             <div className="item flex-[2]">
               {/* 타이틀 */}
               <div className="w-full flex justify-between items-center px-4 py-2">
-                <div className="item"><span className="text-[#A51C30] font-bold">{order.status}</span></div>
+                <div className="item"><span className="text-[#A51C30] font-bold">{getOrderStatusMeaning(order.status)}</span></div>
                 <div className="item">
                   <button>
                     <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
@@ -125,7 +126,7 @@ export const OrderList = ({orders}: OrderListProps) => {
                 <div className="item flex-[3]">
                   <div className="flex flex-col items-between">
                     <div className="item"><span>{order.title}</span></div>
-                    <div className="item"><span>{order.total_price}</span>원</div>
+                    <div className="item"><span>{order.total_price?.toLocaleString()}</span>원</div>
                     <div className="item"><span>{order.total_quantity}</span>개</div>
                   </div>
                 </div>
@@ -142,7 +143,7 @@ export const OrderList = ({orders}: OrderListProps) => {
                     {/* 총 가격 */}
                     <div className="item text-center">
                       <p className="font-bold">
-                        <span>{order.total_price}</span>원
+                        <span>{order.total_price?.toLocaleString()}</span>원
                       </p>
                     </div>
                   </div>
@@ -167,5 +168,21 @@ export const OrderList = ({orders}: OrderListProps) => {
         </div>
       ))}
     </div>
+  )
+}
+
+/**
+ * 주문 내역 없을 때
+ * @returns
+ */
+export const OrderEmpty = () => {
+  return (
+    <>
+      <div className="flex flex-col items-center gap-10 my-2 mx-4 md:mx-0">
+        <div className="w-full flex flex-col gap-6 max-w-4xl bg-white rounded-lg shadow-md p-6">
+          <p className="text-center p-4">조회된 내역이 없습니다.</p>
+        </div>
+      </div>
+    </>
   )
 }

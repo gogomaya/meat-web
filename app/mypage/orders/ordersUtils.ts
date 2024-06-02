@@ -1,5 +1,10 @@
 import {OrderStatus} from "@/types/ordersTypes"
 
+/**
+ * 주문 상태 변환 함수
+ * @param status 주문상태
+ * @returns
+ */
 export function getOrderStatusMeaning(status: OrderStatus): string {
   switch (status) {
   case "pending":return "결제대기"

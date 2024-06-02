@@ -1,13 +1,18 @@
-import {loginCheck} from "@/app/users/login/loginCheck"
 import MainLayout from "@/app/main-layout"
 import {MyPageBanner, Side} from "../mypage"
-import {OrderList} from "./orders"
+import {OrderEmpty, OrderList} from "./orders"
 import {OrderSearchParams} from "@/types/ordersTypes"
 import {ResponseApi} from "@/types/commonTypes"
 import {ordersServices} from "@/services/ordersServices"
 import ErrorPage from "@/app/error"
 import Link from "next/link"
+import {loginCheck} from "@/app/users/login/loginCheck"
 
+/**
+ * 마이페이지>주문목록
+ * @param props
+ * @returns
+ */
 const Home = async (props: {
   searchParams: OrderSearchParams
 }) => {
@@ -28,6 +33,7 @@ const Home = async (props: {
     orders = ordersResponse.data.orders
     lastPage = Math.floor(ordersResponse.data.total_rows / searchParams.rowsPerPage)
     console.log("lastPage :" + lastPage)
+    console.log(`주문목록 없음 : ${orders == null || orders.length == 0}`)
   } catch (error) {
     console.error(error)
     return <ErrorPage />
@@ -43,26 +49,38 @@ const Home = async (props: {
         <div className="flex">
           <Side />
           <div className="container py-16">
-            {/* 주문목록 */}
-            <OrderList orders={orders} />
-            {/* 주문목록 끝 */}
-            {/* 페이지네이션 */}
-            <div className="flex justify-center gap-6 my-4">
-              <Link href={`/mypage/orders?page=${prev}`} className="flex items-center px-10 py-4 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200" >
-                <svg className="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m15 19-7-7 7-7" />
-                </svg>
-                <span className="mr-2">이전</span>
-              </Link>
-              {next > lastPage ? <></> : (
-                <Link href={`/mypage/orders?page=${next}`} className="flex items-center px-10 py-4 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
-                  <span className="ml-2">다음</span>
-                  <svg className="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m9 5 7 7-7 7" />
-                  </svg>
-                </Link>
-              )}
-            </div>
+            {orders == null || orders.length == 0
+              ?
+              <>
+                <OrderEmpty />
+                <div className="flex justify-center gap-6 my-6">
+                  <Link href={"/products"} className="flex items-center px-10 py-4 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200" >
+                    <span className="mr-2">쇼핑하러 가기</span>
+                  </Link>
+                </div>
+              </>
+              :
+              <>
+                <OrderList orders={orders} />
+                {/* 페이지네이션 */}
+                <div className="flex justify-center gap-6 my-4">
+                  <Link href={`/mypage/orders?page=${prev}`} className="flex items-center px-10 py-4 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200" >
+                    <svg className="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                      <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m15 19-7-7 7-7" />
+                    </svg>
+                    <span className="mr-2">이전</span>
+                  </Link>
+                  {next > lastPage ? <></> : (
+                    <Link href={`/mypage/orders?page=${next}`} className="flex items-center px-10 py-4 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
+                      <span className="ml-2">다음</span>
+                      <svg className="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m9 5 7 7-7 7" />
+                      </svg>
+                    </Link>
+                  )}
+                </div>
+              </>
+            }
           </div>
         </div>
       </div>

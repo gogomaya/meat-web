@@ -231,8 +231,10 @@ export const ProductsList = ({products}: { products: Product[] }) => {
 }
 
 export const ProductsDetailContent = ({product}: { product: Product }) => {
+  console.log(":::::::::: ProductsDetailContent Component ::::::::::")
+  console.log(":::::::::: product ::::::::::")
+  console.log(product)
   const [quantity, setQuantity] = React.useState(1)
-
   const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newQuantity = parseInt(event.target.value)
     if (!isNaN(newQuantity) && newQuantity > 0) {
