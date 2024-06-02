@@ -283,7 +283,7 @@ export const ProductDetailReview = () => {
           </Grid>
         ))}
       </Grid>
-      <Button variant="outlined" className="mt-4">
+      <Button variant="outlined" style={{color: "#A51C30", borderColor: "#FACC15"}} className="mt-4">
         상품 리뷰 작성하기
       </Button>
     </div>
