@@ -41,10 +41,15 @@ export const MyPageBanner: React.FC<MyPageBannerProps> = ({title,subTitle}) => {
         justifyContent: "center",
         alignItems: "center"
       }}>
-      <div className="text-white">마이 페이지</div>
-      <p>
-        <span className="text-white">{title}</span> / <span style={{color:"#A51C30",textDecoration:"underline"}}>{subTitle}</span>
-      </p>
+      <div className="text-red-100">마이 페이지</div>
+      { title != ""
+        ?
+        <p>
+          <span className="text-white">{title}</span> / <span style={{color:"#A51C30",textDecoration:"underline"}}>{subTitle}</span>
+        </p>
+        :
+        <></>
+      }
     </div>
   )
 }
@@ -175,3 +180,19 @@ export const Side = () => {
   )
 }
 
+
+/**
+ * 조회 내역 없을 때
+ * @returns
+ */
+export const ListEmpty = () => {
+  return (
+    <>
+      <div className="flex flex-col items-center gap-10 my-2 mx-4 md:mx-0">
+        <div className="w-full flex flex-col gap-6 max-w-4xl bg-white rounded-lg shadow-md p-6">
+          <p className="text-center p-4">조회된 내역이 없습니다.</p>
+        </div>
+      </div>
+    </>
+  )
+}

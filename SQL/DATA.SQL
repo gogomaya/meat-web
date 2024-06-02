@@ -223,6 +223,7 @@ VALUES
 -- product_pk : 1~39 중 하나
 -- user_pk : 7
 -- 샘플 insert 문 15개 만들어줘
+TRUNCATE bookmarks;
 INSERT INTO bookmarks (product_pk, user_pk) 
 VALUES 
 (5, 7), (12, 7), (18, 7), (24, 7), (31, 7), 
