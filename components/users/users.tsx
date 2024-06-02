@@ -30,9 +30,8 @@ const Users = ({user}: {user: User}) => {
   }, [])
   return (
     <div style={{display: "flex", alignItems: "center"}}>
-      <Link className="text-red-100" href="" onClick={() => setOpen(user && user.user_pk ? "logout" : "login")}>
+      <Link className="text-white" href="" onClick={() => setOpen(user && user.user_pk ? "logout" : "login")}>
         <AccountCircleIcon style={{width: "32px", height: "32px", cursor: "pointer"}}/>
-        {/* <PersonOutlineIcon style={{width: "32px", height: "32px", cursor: "pointer"}}/> */}
       </Link>
       <Dialog open={open === "login"} onClose={() => setOpen("close")} maxWidth="sm" fullWidth>
         <DialogContent>

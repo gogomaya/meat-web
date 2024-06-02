@@ -296,7 +296,7 @@ export const OrderDetailContent = ({
                   {/* 기본 배송지 나오도록 */}
                   <div className="flex flex-col">
                     <div className="flex items-center flex-grow mb-2">
-                      <input type="text" placeholder="우편번호 찾기 버튼을 눌러 배송지 주소를 검색해주세요" id="contactNumber" required={true} name="address" onChange={handleInput} value={enroll_company.address} className="mr-2 border border-gray-300 rounded-lg p-2 flex-grow" />
+                      <input type="text" placeholder="우편번호 찾기 버튼을 눌러 배송지 주소를 검색해주세요." id="contactNumber" required={true} name="address" onChange={handleInput} value={enroll_company.address} className="mr-2 border border-gray-300 rounded-lg p-2 flex-grow" />
                       <button
                         onClick={handleComplete}
                         className="ml-2 py-2 text-white rounded-lg post-button"

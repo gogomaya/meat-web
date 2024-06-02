@@ -91,7 +91,6 @@ const GeneralReviewsForm = ({
     <div className="container">
       <Button
         variant="contained"
-        color="primary"
         className={`${review.review_pk === 0 ? "btn" : "!bg-[#ed6c02] hover:!bg-[#e65100]"}`}
         onClick={() => {
           if (!user.user_pk) {
@@ -102,6 +101,7 @@ const GeneralReviewsForm = ({
           }
           setOpen(true)
         }}
+        style={{color: "#FFFFFF", backgroundColor: "#FACC15"}}
       >
         {review.review_pk === 0 ? "상품 리뷰 작성하기" : "수정하기"}
       </Button>

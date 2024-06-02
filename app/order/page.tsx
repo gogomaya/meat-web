@@ -19,6 +19,7 @@ const Order = async (props: {
   searchParams: {productPks: string, quantityList: string}
 }) => {
   const {user} = await loginCheck(false)
+
   console.log("::::::::::: productPks :::::::::::")
   let productPks = props.searchParams.productPks
   console.log(productPks)
