@@ -19,7 +19,7 @@ const Qna = async (props: {
   return (
     <MainLayout user={user}>
       <div
-        className="flex justify-center text-red-100 py-8 text-4xl"
+        className="flex justify-center text-white py-8 text-4xl"
         style={{
           backgroundImage: "url('/images/Bg.png')",
           backgroundPosition: "center calc(10% - 220px)",

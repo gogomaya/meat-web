@@ -54,7 +54,7 @@ const Products = async (props: {
           />
           <ProductDetailReview />
         </div>
-        <Divider className="container mt-8 mx-16 px-2" style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
+        <Divider className="container mt-8" style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
         {/* 문의 */}
         <div id="qna" className="mx-16 px-2">
           <QnaBoards

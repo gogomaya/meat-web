@@ -63,7 +63,7 @@ export const ProductsPagination = ({searchParams, total_rows}: {searchParams: Se
 export const ProductSubtitle = () => {
   return (
     <div>
-      <div className="flex justify-center text-red-100 text-4xl"
+      <div className="flex justify-center text-white text-4xl"
         style={{
           backgroundImage: "url('/images/Bg.png')",
           backgroundPosition: "center calc(10% - 620px)",
