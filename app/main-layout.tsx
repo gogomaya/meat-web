@@ -231,7 +231,7 @@ const MainSearch = () => {
   return <>
     <Link
       href=""
-      className="hidden md:block p-0 text-red-100"
+      className="hidden md:block p-0 text-white"
       onClick={(event: React.MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault()
         setAnchorEl(event.currentTarget)
