@@ -39,7 +39,7 @@ export const ShipNoCopyButton = () => {
       const textToCopy = shipNoElement.innerText
       navigator.clipboard.writeText(textToCopy)
         .then(() => {
-          alert("운송장 번호가 클립보드에 복사되었습니다.")
+          alert("운송장 번호가 클립보드에 복사되었습니다. [" + textToCopy + "]")
         })
         .catch((err) => {
           console.error("클립보드 복사에 실패했습니다.", err)

@@ -67,11 +67,17 @@ export const CancelButton = () => {
   )
 }
 
-
+// -----------------------------------------------------------------
 interface OrderListProps {
   orders: Order[]
 }
 
+/**
+ * ✅ TODO
+ * - 주문삭제(휴지통) 클릭 시, 주문내역 삭제 --> CONFIRM [확인] [취소]
+ * @param param0
+ * @returns
+ */
 export const OrderList = ({orders}: OrderListProps) => {
   console.log(orders)
   return (
@@ -153,36 +159,47 @@ export const OrderList = ({orders}: OrderListProps) => {
             {/* 버튼 */}
             <div className="item flex-1">
               <div className="flex flex-col flex-wrap items-center gap-4 px-8 py-2">
-                <Link
-                  href={`/mypage/orders/shipments/${order.order_pk}`}
-                  className="w-full px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-center text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200"
-                >
-                  배송조회
-                </Link>
-                {/* 주문/배송취소 버튼 */}
-                {/* <CancelButton orderPk={order.order_pk} /> */}
-                <CancelButton />
+                {/* 결제대기 */}
+                {order.status == "pending"
+                  ?
+                  <Link
+                    href={`/order/${order.order_pk}`}
+                    className="w-full px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-center text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200"
+                  >
+                    결제하기
+                  </Link>
+                  :
+                  <></>
+                }
+                {/* 결제완료, 배송중, 배송완료 */}
+                {order.status == "paid" || order.status == "shipping" || order.status == "delivered"
+                  ?
+                  <>
+                    <Link
+                      href={`/mypage/orders/shipments/${order.order_pk}`}
+                      className="w-full px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-center text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200"
+                    >
+                      배송조회
+                    </Link>
+                    {/* 주문/배송취소 버튼 */}
+                    <CancelButton />
+                  </>
+                  :
+                  <></>
+                }
+                {/* 주문취소 */}
+                {order.status == "cancelled"
+                  ?
+                  <span className="w-full px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] text-center text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
+                    취소된 주문
+                  </span>
+                  : <></>
+                }
               </div>
             </div>
           </div>
         </div>
       ))}
     </div>
-  )
-}
-
-/**
- * 주문 내역 없을 때
- * @returns
- */
-export const OrderEmpty = () => {
-  return (
-    <>
-      <div className="flex flex-col items-center gap-10 my-2 mx-4 md:mx-0">
-        <div className="w-full flex flex-col gap-6 max-w-4xl bg-white rounded-lg shadow-md p-6">
-          <p className="text-center p-4">조회된 내역이 없습니다.</p>
-        </div>
-      </div>
-    </>
   )
 }
