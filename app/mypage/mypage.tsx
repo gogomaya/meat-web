@@ -1,23 +1,24 @@
 "use client"
 import Image from "next/image"
+import Link from "next/link"
 import {useState} from "react"
 
 // 배송 리스트
-export const OrderList = () => {
-  return (
-    <section className="mx-12 p-2">
-      <Image
-        src="/images/main-pledge.jpg"
-        alt="Logo"
-        width={0}
-        height={0}
-        priority
-        sizes="100vw"
-        className="w-full py-4"
-      />
-    </section>
-  )
-}
+// export const OrderList = () => {
+//   return (
+//     <section className="mx-12 p-2">
+//       <Image
+//         src="/images/main-pledge.jpg"
+//         alt="Logo"
+//         width={0}
+//         height={0}
+//         priority
+//         sizes="100vw"
+//         className="w-full py-4"
+//       />
+//     </section>
+//   )
+// }
 
 
 
@@ -56,9 +57,9 @@ interface SideButtonProps {
 
 export const SideButton: React.FC<SideButtonProps> = ({toggleSidebar}) => {
   return (
-    <div className="fixed bottom-[25%] right-[8%]">
+    <div className="fixed bottom-[28%] right-[8%]">
       <button onClick={toggleSidebar} data-drawer-target="mypage-sidebar" data-drawer-toggle="mypage-sidebar" aria-controls="mypage-sidebar" type="button"
-        className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+        className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 bg-gray-50 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
         <span className="sr-only">Open sidebar</span>
         <svg className="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
           <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
@@ -89,7 +90,7 @@ export const Side = () => {
       ${isOpen ? "fixed top-0 left-0 translate-x-0" : "hidden -translate-x-full"} sm:translate-x-0`}
       aria-label="Sidebar" style={{zIndex: 10}}
       >
-        <div className="h-[150px] bg-gray-50 dark:bg-gray-800"></div>
+        {isOpen ? <div className="h-[150px] bg-gray-50 dark:bg-gray-800"></div> : <></> }
         <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
           <ul className="space-y-2 font-medium">
             <li>
@@ -173,3 +174,4 @@ export const Side = () => {
     </>
   )
 }
+

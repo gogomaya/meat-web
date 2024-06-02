@@ -9,7 +9,6 @@ const Home = async () => {
     <MainLayout user={user}>
       <div className="w-full">
         <MyPageBanner title="Withdraw Order / 취소/반품/환불" subTitle="상세내역" />
-        <SideButton />
         <div className="flex">
           <Side />
           <div className="container py-16">

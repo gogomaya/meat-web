@@ -10,7 +10,6 @@ const Home = async () => {
     <MainLayout user={user}>
       <div className="w-full">
         <MyPageBanner title="Orders / 주문내역" subTitle="주문상세" />
-        <SideButton />
         <div className="flex">
           <Side />
           <div className="container py-16">
@@ -18,7 +17,6 @@ const Home = async () => {
               {/* 배송 조회 컨테이너 */}
               <div className="w-full flex flex-col gap-6 max-w-4xl bg-white shadow-md p-6">
                 <span className="text-2xl">주문 상세</span>
-
                 {/* 상세 정보 박스 */}
                 <div className="box py-4">
                   <p className="text-xl font-bold py-3">주문 정보</p>
