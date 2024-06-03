@@ -8,6 +8,8 @@ import ProductSwiper from "./[product_pk]/swiper"
 import {CartProduct, Product} from "@/types/productsTypes"
 import {SearchParams} from "@/types/commonTypes"
 import _ from "lodash"
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder"
+import FavoriteIcon from "@mui/icons-material/Favorite"
 
 export const ProductsSearch = ({products, searchParams}: {products: Product[], searchParams: SearchParams}) => {
   const router = useRouter()
@@ -259,6 +261,12 @@ export const ProductsDetailContent = ({product}: { product: Product }) => {
     e.stopPropagation()
   }
 
+  const [isFavorited, setIsFavorited] = React.useState(false)
+
+  const handleFavoriteClick = () => {
+    setIsFavorited(!isFavorited)
+  }
+
   return (
     <div className="container mx-auto py-8">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 p-4">
@@ -296,7 +304,7 @@ export const ProductsDetailContent = ({product}: { product: Product }) => {
                   fontSize: "0.8rem"
                 }}
               >
-                  당일배송
+                당일배송
               </button>
               <button
                 className="product-button"
@@ -373,14 +381,42 @@ export const ProductsDetailContent = ({product}: { product: Product }) => {
             </div>
             <div className="container w-full p-4">
               <div className="flex justify-center items-center mb-4">
-                <div className="flex w-full lg:w-1/2 gap-2">
+                <div className="flex w-full lg:w-1/2 gap-2 items-center">
+                  <div
+                    onClick={handleFavoriteClick}
+                    className="flex items-center justify-center w-24 h-12 p-4 border bg-gray-800 cursor-pointer transition-colors duration-300"
+                  >
+                    {isFavorited ? (
+                      <FavoriteIcon style={{color: "red", fontSize: "24px"}} />
+                    ) : (
+                      <FavoriteBorderIcon style={{color: "white", fontSize: "24px"}} />
+                    )}
+                  </div>
                   <CartOrderButton type="CART" product={product} quantity={quantity}>
-                    <Button style={{backgroundColor: "#A51C30", width: "250px", height: "50px", color: "white", fontSize: "1.2rem"}} className="btn">
+                    <Button
+                      style={{
+                        backgroundColor: "#A51C30",
+                        width: "250px",
+                        height: "50px",
+                        color: "white",
+                        fontSize: "1.2rem"
+                      }}
+                      className="btn"
+                    >
                       장바구니
                     </Button>
                   </CartOrderButton>
                   <CartOrderButton type="ORDER" product={product} quantity={quantity}>
-                    <Button style={{backgroundColor: "#271A11", width: "250px", height: "50px", color: "white", fontSize: "1.2rem"}} className="btn">
+                    <Button
+                      style={{
+                        backgroundColor: "#271A11",
+                        width: "250px",
+                        height: "50px",
+                        color: "white",
+                        fontSize: "1.2rem"
+                      }}
+                      className="btn"
+                    >
                       구매하기
                     </Button>
                   </CartOrderButton>
