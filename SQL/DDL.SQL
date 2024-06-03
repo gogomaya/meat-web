@@ -94,9 +94,6 @@ CREATE TABLE `order_items` (
 
 
 
-
-
-
 --------------------------- [bookmarks] ---------------------------
 --------------------------- [찜 리스트] ---------------------------
 DROP TABLE IF EXISTS `bookmarks`;
@@ -107,4 +104,22 @@ CREATE TABLE `bookmarks` (
 	`user_pk`	INT(11)	NOT NULL,
 	`created_at`	DATETIME	NOT NULL	DEFAULT current_timestamp()
 );
+
+
+--------------------------- [address] ---------------------------
+--------------------------- [주소] ---------------------------
+DROP TABLE IF EXISTS `address`;
+
+CREATE TABLE `address` (
+	`address_pk`	INT(11)	NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`user_pk`	INT(11)	NULL	COMMENT '회원인 경우 사용자 ID, 비회원인 경우 NULL',
+	`mobile`	VARCHAR(20)	NULL	COMMENT '회원이든, 비회원이든 받는 사람 전화번호',
+	`recipient`	VARCHAR(100)	NOT NULL,
+	`address`	TEXT	NOT NULL,
+	`address_detail`	TEXT	NOT NULL,
+	`is_primary`	TINYINT(1)	NULL	DEFAULT 0	COMMENT '1 : 기본배송지',
+	`created_at`	DATETIME	NOT NULL	DEFAULT current_timestamp()
+);
+
+
 

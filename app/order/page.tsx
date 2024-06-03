@@ -33,7 +33,7 @@ const Order = async (props: {
   const pks = productPks.split(",").map(Number)
   const list = quantityList.split(",").map(Number)
 
-  const orderCreateResult: ResponseApi = await ordersServices.orderCreate(user_pk, "", pks, list)
+  const orderCreateResult: ResponseApi = await ordersServices.ordersCreate(user_pk, "", pks, list)
   console.log("❤❤❤❤❤❤❤❤❤❤❤❤")
   console.log(orderCreateResult)
   const order_pk = orderCreateResult.data.order_pk
