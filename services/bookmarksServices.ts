@@ -34,7 +34,6 @@ export const bookmarksServices = {
       const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/bookmarks/${bookmark_pk}`, {
         method: "DELETE"
       })
-
       return await commonServices.responseJson(response)
     } catch (error) {
       throw error

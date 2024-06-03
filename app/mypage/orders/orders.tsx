@@ -4,6 +4,8 @@ import Image from "next/image"
 import Link from "next/link"
 import {useState} from "react"
 import {getOrderStatusMeaning} from "./ordersUtils"
+import Swal from "sweetalert2"
+import withReactContent from "sweetalert2-react-content"
 
 interface ModalProps {
     title: string;
@@ -80,6 +82,31 @@ interface OrderListProps {
  */
 export const OrderList = ({orders}: OrderListProps) => {
   console.log(orders)
+
+  const MySwal = withReactContent(Swal)
+  const handleDelete = async (order_pk : number) => {
+    console.log(`order_pk : ${order_pk}`)
+    MySwal.fire({
+      title: <p>정말로 삭제하시겠습니까?</p>,
+      text: "주문 내역이 삭제되면, 되돌릴 수 없습니다.",
+      icon: "warning",
+      confirmButtonText: "삭제",
+      showCancelButton: true,
+      cancelButtonText: "취소"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        MySwal.fire({
+          title: <p>주문 내역이 삭제되었습니다.</p>,
+          didOpen: () => {
+            Swal.showLoading()
+          }
+        })
+        // TODO: 주문 삭제 요청
+        // ordersServices.ordersDelete(order_pk)
+        location.reload()
+      }
+    })
+  }
   return (
     <div className="flex flex-col items-center gap-10 my-2 mx-4 md:mx-0">
       {orders.map((order) => (
@@ -109,7 +136,7 @@ export const OrderList = ({orders}: OrderListProps) => {
               <div className="w-full flex justify-between items-center px-4 py-2">
                 <div className="item"><span className="text-[#A51C30] font-bold">{getOrderStatusMeaning(order.status)}</span></div>
                 <div className="item">
-                  <button>
+                  <button onClick={()=>handleDelete(order.order_pk)}>
                     <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                       <path fillRule="evenodd" d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z" clipRule="evenodd" />
                     </svg>

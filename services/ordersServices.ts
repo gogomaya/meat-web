@@ -6,7 +6,7 @@ import {productsServices} from "./productsServices"
 import {orderItemsService} from "./orderItemsServices"
 
 export const ordersServices = {
-  orderCreate: async (user_pk: number, guest_mobile: string, productPks: number[], quantityList: number[]): Promise<ResponseApi> => {
+  ordersCreate: async (user_pk: number, guest_mobile: string, productPks: number[], quantityList: number[]): Promise<ResponseApi> => {
     console.log(":::::::::: ordersServices.orderCreate() ::::::::::")
     console.log("productPks : " + productPks)
     console.log("quantityList : " + quantityList)
@@ -80,6 +80,16 @@ export const ordersServices = {
   ordersDetail: async (order_pk: number): Promise<ResponseApi> => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/orders/${order_pk}`)
+      return await commonServices.responseJson(response)
+    } catch (error) {
+      throw error
+    }
+  },
+  ordersDelete: async (order_pk: number): Promise<ResponseApi> => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/orders/${order_pk}`, {
+        method: "DELETE"
+      })
       return await commonServices.responseJson(response)
     } catch (error) {
       throw error
