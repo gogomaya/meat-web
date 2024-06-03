@@ -12,7 +12,7 @@ import {getOrderStatusMeaning} from "../../ordersUtils"
 import {orderItemsService} from "@/services/orderItemsServices"
 import {OrderItem, OrderItemSearchParams} from "@/types/orderItemsTypes"
 
-const Home = async (props: {
+export const Home = async (props: {
   params: { order_pk: number }
   searchParams: OrderSearchParams
   order: Order
@@ -186,4 +186,4 @@ const Home = async (props: {
   )
 }
 
-export default Home
+// export default Home
