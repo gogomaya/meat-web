@@ -1,10 +1,39 @@
 import {loginCheck} from "@/app/users/login/loginCheck"
 import MainLayout from "@/app/main-layout"
-import {GeneralPagination} from "../reviews/reviews"
+import {ResponseApi} from "@/types/commonTypes"
+import {BoardsMessage, BoardsSearchParams} from "@/types/boardsTypes"
+import {boardsServices} from "@/services/boardsServices"
 import {BoardsList} from "./boards"
 
-const Boards = async () => {
+const boardsMessages: BoardsMessage[] = [
+  {
+    title: "공지사항",
+    category: "notice",
+    buttonCreateTitle: "작성하기",
+    buttonUpdateTitle: "수정하기"
+  },
+  {
+    title: "1:1문의하기",
+    category: "qna",
+    buttonCreateTitle: "문의하기",
+    buttonUpdateTitle: "문의수정"
+  }
+]
+
+const Boards = async (props: {
+  searchParams: BoardsSearchParams
+}) => {
   const {user} = await loginCheck(false)
+  const boardsMessage = boardsMessages.find(
+    (boardsMessage) => boardsMessage.category === props.searchParams.category
+  ) || boardsMessages[0]
+  const boardsSearchParams = {
+    rowsPerPage: Number(props.searchParams.rowsPerPage) || 10,
+    page: Number(props.searchParams.page) || 0,
+    category: boardsMessage.category
+  } as BoardsSearchParams
+  const boardsResponse: ResponseApi = await boardsServices.boardsRead(boardsSearchParams)
+  const {boards, total_rows} = boardsResponse.data
   return (
     <MainLayout user={user}>
       <div
@@ -20,9 +49,14 @@ const Boards = async () => {
           justifyContent: "center",
           alignItems: "center"
         }}
-      >공지사항</div>
-      <BoardsList />
-      <GeneralPagination />
+      >{boardsMessage.title}</div>
+      <BoardsList
+        user={user}
+        boards={boards}
+        total_rows={total_rows}
+        boardsSearchParams={boardsSearchParams}
+        boardsMessage={boardsMessage}
+      />
     </MainLayout>
   )
 }

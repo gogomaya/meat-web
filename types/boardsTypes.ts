@@ -27,6 +27,13 @@ export interface BoardsReply {
 }
 
 export interface BoardsSearchParams extends SearchParams {
-  category: string
+  category: BoardCategory
   product_pk: number
+}
+
+export interface BoardsMessage {
+  title: string
+  category: BoardCategory
+  buttonCreateTitle: string
+  buttonUpdateTitle: string
 }
