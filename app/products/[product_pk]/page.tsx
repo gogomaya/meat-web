@@ -11,7 +11,7 @@ import {ResponseApi} from "@/types/commonTypes"
 import {ProductsSearchParams} from "@/types/productsTypes"
 import {ReviewsSearchParams} from "@/types/reviewsTypes"
 import {BoardsSearchParams} from "@/types/boardsTypes"
-import {QnaBoards} from "@/app/qna/qna"
+import {BoardsList} from "@/app/boards/boards"
 
 const Products = async (props: {
   params: {product_pk: number},
@@ -57,11 +57,17 @@ const Products = async (props: {
         <Divider className="container mt-8" style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
         {/* 문의 */}
         <div id="qna" className="mx-16 px-2">
-          <QnaBoards
+          <BoardsList
             user={user}
             boards={boards}
             total_rows={boards_total_rows}
             boardsSearchParams={boardsSearchParams}
+            boardsMessage={{
+              title: "1:1문의하기",
+              category: "qna",
+              buttonCreateTitle: "문의하기",
+              buttonUpdateTitle: "문의수정"
+            }}
           />
         </div>
         {/* 주문정보 */}

@@ -208,9 +208,9 @@ export const MegaMenu = () => {
         <li id="board" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
           <Link href="/boards" className="text-white">고객센터</Link>
           <ol id="submenu" className={`w-18 absolute border border-[#FACC15] ${menu.board ? "block" : "hidden"} py-2 rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
-            <li><Link href="#" className="text-white">공지사항</Link></li>
+            <li><Link href="/boards?category=notice" className="text-white">공지사항</Link></li>
             <li><Link href="/faq" className="text-white">자주하는질문</Link></li>
-            <li><Link href="/qna" className="text-white">1:1문의하기</Link></li>
+            <li><Link href="/boards?category=qna" className="text-white">1:1문의하기</Link></li>
           </ol>
         </li>
       </ul>
@@ -339,9 +339,9 @@ const MainMobileMenu = () => {
                 </AccordionSummary>
                 <AccordionDetails>
                   <ol>
-                    <li><Link href="#">공지사항</Link></li>
+                    <li><Link href="/boards?category=notice">공지사항</Link></li>
                     <li><Link href="/faq">자주하는질문</Link></li>
-                    <li><Link href="/qna">1:1문의하기</Link></li>
+                    <li><Link href="/boards?category=qna">1:1문의하기</Link></li>
                   </ol>
                 </AccordionDetails>
               </Accordion>
