@@ -1,45 +1,52 @@
 import {loginCheck} from "@/app/users/login/loginCheck"
-import MainLayout from "@/app/main-layout"
-import {OrderDetailContent} from "./Order"
+import {ordersServices} from "@/services/ordersServices"
+import {ResponseApi} from "@/types/commonTypes"
+import {redirect} from "next/navigation"
 
 /**
- * 주문서 작성
- * - /order?orderId={orderId}
- *  - orderId 로 주문 정보 조회 후 출력
- * - 이 화면에 오기전 에 이미 주문은 등록된다.
- * - [주문하기] 버튼 클릭하는 화면들에서는
- *    API 로 주문 등록 요청 후, orderId 를 응답받고
- *    여기로 (/order?orderId={orderId}) 로 리다이렉트
- * - [결제하기]
- *  - 결제 성공 ➡ /order/success
- *  - 결제 실패 ➡ /order/fail
+ * 주문서 준비
+ * - productPks : string[]
+ * - quantityList : number[]
+ * - 위의 두 파라미터 넘겨받고
+ * - let ordersResponse: ResponseApi = {} 선언
+ * - orderServices.orderCreate() 호출하면서 user_pk, guest_mobile, productPks, quantityList 전달
+ * - ordersResponse 로 받아서 ordersResponse.order_pk 를 order_pk 로 선언
+ * - /order/{order_pk} 로 리다이렉트
  * @param props
  * @returns
  */
 const Order = async (props: {
-  searchParams: {orderProducts: string}
+  searchParams: {productPks: string, quantityList: string}
 }) => {
-  const orderProducts = JSON.parse(props.searchParams.orderProducts || "[]")
   const {user} = await loginCheck(false)
-  return (
-    <MainLayout user={user}>
-      <div>
-        <div className="flex justify-center text-red-100 text-4xl"
-          style={{
-            backgroundImage: "url('/images/Bg.png')",
-            backgroundPosition: "center calc(10% - 620px)",
-            backgroundRepeat: "repeat",
-            backgroundSize: "cover",
-            textAlign: "center",
-            minHeight: "200px",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center"
-          }}>주문서</div>
-      </div>
-      <OrderDetailContent orderProducts={orderProducts} />
-    </MainLayout>
-  )
+
+  console.log("::::::::::: productPks :::::::::::")
+  let productPks = props.searchParams.productPks
+  console.log(productPks)
+  console.log("::::::::::: quantityList :::::::::::")
+  let quantityList = props.searchParams.quantityList
+  console.log(quantityList)
+  console.log("::::::::::: user_pk :::::::::::")
+  const user_pk = user.user_pk
+  console.log(user_pk)
+
+  const pks = productPks.split(",").map(Number)
+  const list = quantityList.split(",").map(Number)
+
+  const orderCreateResult: ResponseApi = await ordersServices.orderCreate(user_pk, "", pks, list)
+  console.log("❤❤❤❤❤❤❤❤❤❤❤❤")
+  console.log(orderCreateResult)
+  const order_pk = orderCreateResult.data.order_pk
+  const responseStatus = orderCreateResult.data.status
+
+  if( responseStatus == 200 ) {
+    console.log("주문 등록 성공!!")
+    redirect(`/order/${order_pk}`)
+  }
+
+  // return (
+  //   <OrderPay searchParams={{order_pk: order_pk}} />
+  // )
 }
 
 export default Order

@@ -1,8 +1,15 @@
 import {loginCheck} from "@/app/users/login/loginCheck"
 import MainLayout from "@/app/main-layout"
-import {MyPageBanner, Side, SideButton} from "../../mypage"
-import {DeliveryStatusLink, ShipNoCopyButton} from "./shipments"
+import {MyPageBanner, Side, SideButton} from "../../../mypage"
+import {DeliveryStatusLink, ShipNoCopyButton} from "../shipments"
 
+/**
+ * 마이페이지>주문목록>배송조회
+ * ✅ TODO
+ * - shipments 데이터 조회
+ * - 배송 상태에 따른 안내 메시지 처리
+ * @returns
+ */
 const Home = async () => {
   const {user} = await loginCheck(false)
   return (
