@@ -12,17 +12,24 @@ import {getOrderStatusMeaning} from "../../ordersUtils"
 import {orderItemsService} from "@/services/orderItemsServices"
 import {OrderItem, OrderItemSearchParams} from "@/types/orderItemsTypes"
 
-const Home = async (props: {
+const OrderDetail = async (props: {
   params: { order_pk: number }
   searchParams: OrderSearchParams
-  order: Order
 }) => {
   const {user} = await loginCheck(false)
   let ordersResponse: ResponseApi = {}
   let orderItemsResponse: ResponseApi = {}
   let order_pk = props.params.order_pk
-  let order = props.order
   let orderItems = []
+  let order : Order = {
+    order_pk: 0,
+    user_pk: null,
+    shipment_pk: 0,
+    title: "",
+    total_count: 0,
+    status: "pending",
+    created_at: ""
+  }
 
   const searchParams = {
     order_pk : order_pk,
@@ -186,4 +193,4 @@ const Home = async (props: {
   )
 }
 
-export default Home
+export default OrderDetail
