@@ -3,14 +3,16 @@ import MainLayout from "@/app/main-layout"
 import {ResponseApi} from "@/types/commonTypes"
 import {ReviewsSearchParams} from "@/types/reviewsTypes"
 import {reviewsServices} from "@/services/reviewsServices"
-import {MyPageBanner, Side, SideButton} from "../mypage"
+import {MyPageBanner, Side} from "../mypage"
 import {GeneralReviews} from "@/app/reviews/general-reviews"
+import {myPageData} from "../mypageData"
 
 const Home = async (props: {
   params: {product_pk: number},
   searchParams: ReviewsSearchParams
 }) => {
   const {user} = await loginCheck(true)
+  const {bookmarks, addressList, bookmarkCount,addressCount} = await myPageData(user)
   const reviewsSearchParams = {
     rowsPerPage: Number(props.searchParams.rowsPerPage) || 10,
     page: Number(props.searchParams.page) || 0,
