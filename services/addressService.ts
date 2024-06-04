@@ -23,7 +23,6 @@ export const addressServices = {
     const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/address?` + new URLSearchParams({
       ...searchParams
     }))
-    
     return await response.json()
   },
 
