@@ -6,10 +6,15 @@ import {Box, Button, Container, Dialog, DialogActions, DialogContent, DialogCont
 import * as React from "react"
 import ProductSwiper from "./[product_pk]/swiper"
 import {CartProduct, Product} from "@/types/productsTypes"
-import {SearchParams} from "@/types/commonTypes"
+import {ResponseApi, SearchParams} from "@/types/commonTypes"
 import _ from "lodash"
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder"
 import FavoriteIcon from "@mui/icons-material/Favorite"
+import { User } from "@/types/usersTypes"
+import { bookmarksServices } from "@/services/bookmarksServices"
+import { BookmarkSearchParams } from "@/types/bookmarksTypes"
+import Swal from "sweetalert2"
+import withReactContent from "sweetalert2-react-content"
 
 export const ProductsSearch = ({products, searchParams}: {products: Product[], searchParams: SearchParams}) => {
   const router = useRouter()
@@ -231,7 +236,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
   )
 }
 
-export const ProductsDetailContent = ({product}: { product: Product }) => {
+export const ProductsDetailContent = ({product, user}: { product: Product, user: User }) => {
   console.log(":::::::::: ProductsDetailContent Component ::::::::::")
   console.log(":::::::::: product ::::::::::")
   console.log(product)
@@ -260,9 +265,55 @@ export const ProductsDetailContent = ({product}: { product: Product }) => {
     e.stopPropagation()
   }
 
-  const [isFavorited, setIsFavorited] = React.useState(false)
+  const searchParams = {
+    user_pk: user.user_pk,
+    product_pk: product.product_pk
+  } as BookmarkSearchParams
 
-  const handleFavoriteClick = () => {
+  const [isFavorited, setIsFavorited] = React.useState(false)
+  const bookmark = bookmarksServices.bookmarksDetail(searchParams)
+
+  console.log("::::::::::::::::::::::::::::::::::::::::::::::::::::::")
+  bookmark.then((result) => {
+    if( !result.data.bookmark ) {
+      setIsFavorited(false)
+    }
+    else {
+      setIsFavorited(true)
+    }
+  })
+  
+  
+
+  const handleFavoriteClick = async () => {
+    console.log(`user_pk : ${user.user_pk}`)
+    console.log(`product_pk : ${product.product_pk}`)
+    const user_pk = user.user_pk
+    const product_pk = product.product_pk
+    try {
+      const response: ResponseApi = await bookmarksServices.bookmarksCreate(user_pk, product_pk)
+      console.log("message : " + response.data.message)
+      const title = response.data.message == "insert" ? "<p>찜 리스트 추가</p>" : "<p>찜 리스트 제거</p>"
+      const text = response.data.message == "insert" ? "해당 상품을 찜 리스트에 추가하였습니다." : "해당 상품을 찜 리스트에서 제거하였습니다."
+      const image = response.data.message == "insert" ? "heart.gif" : "heart2.gif"
+      const MySwal = withReactContent(Swal)
+      MySwal.fire({
+        title: title,
+        text: text,
+        imageUrl: `${process.env.NEXT_PUBLIC_URL}/images/${image}`,
+        imageWidth: 200,
+        // imageHeight: 200,
+        imageAlt: "하트",
+        timer: 2500,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading()
+        },
+      })
+    } catch (error) {
+      console.log(error)
+    }
+    
     setIsFavorited(!isFavorited)
   }
 
@@ -341,6 +392,7 @@ export const ProductsDetailContent = ({product}: { product: Product }) => {
             </div>
             <div className="flex justify-start items-center mb-4 py-4">
               <div className="flex w-full lg:w-1/2 gap-2 items-center">
+                {/* 찜 (하트) */}
                 <div
                   onClick={handleFavoriteClick}
                   className="flex items-center justify-center w-24 h-12 p-4 border bg-gray-800 cursor-pointer transition-colors duration-300"

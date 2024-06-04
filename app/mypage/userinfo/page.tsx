@@ -6,9 +6,11 @@ import {ResponseApi} from "@/types/commonTypes"
 import ErrorPage from "@/app/error"
 import {usersServices} from "@/services/usersServices"
 import {User} from "@/types/usersTypes"
+import { myPageData } from "../mypageData"
 
 const Home = async () => {
   const {user} = await loginCheck(false)
+  const {bookmarks, addressList, bookmarkCount,addressCount} = await myPageData(user)
   console.dir(user)
   const user_pk = user.user_pk
   let userResponse: ResponseApi = {}
@@ -35,7 +37,7 @@ const Home = async () => {
       <div className="w-full">
         <MyPageBanner title="User Information" subTitle="회원정보 수정" />
         <div className="flex">
-          <Side />
+          <Side bookmarkCount={bookmarkCount} addressCount={addressCount} />
           <UserInfoForm userInfo={userInfo}/>
         </div>
       </div>

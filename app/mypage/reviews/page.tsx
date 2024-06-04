@@ -23,7 +23,7 @@ const Home = async (props: {
       <div className="w-full">
         <MyPageBanner title="Review" subTitle="리뷰 관리" />
         <div className="flex">
-          <Side />
+          <Side bookmarkCount={bookmarkCount} addressCount={addressCount} />
           {total_rows === 0 ? (
             <div className="w-full h-[300px] flex justify-center items-center">
               <span>리뷰 내역이 없습니다.</span>

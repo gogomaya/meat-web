@@ -39,7 +39,7 @@ const Products = async (props: {
     <MainLayout user={user}>
       <div>
         <ProductSubtitle />
-        <ProductsDetailContent product={product} />
+        <ProductsDetailContent product={product} user={user} />
         <NavDetail />
         {/* 상품 상세 정보 */}
         <div id="detail" className="container"><ProductDetail product={product} /></div>

@@ -67,7 +67,7 @@ export const POST = async (request: NextRequest) => {
       `, [user_pk, product_pk])
 
       return NextResponse.json({
-        message: "Bookmark deleted successfully",
+        message: "delete",
         status: 200
       })
     } else {
@@ -78,7 +78,7 @@ export const POST = async (request: NextRequest) => {
       `, [product_pk, user_pk])
 
       return NextResponse.json({
-        message: "Bookmark created successfully",
+        message: "insert",
         status: 200
       })
     }

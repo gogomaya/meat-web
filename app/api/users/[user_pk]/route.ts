@@ -69,7 +69,7 @@ export const DELETE = async (
   _request: NextRequest,
   context: {params: {user_pk: number}}
 ) => {
-  await adminCheck(false)
+  // await adminCheck(false)  // 관리자 아닌 회원도 회원탈퇴로 필요함
   const mysql = await mysql2Pool()
   const [rows]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
     select

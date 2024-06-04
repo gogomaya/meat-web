@@ -8,11 +8,13 @@ import {bookmarksServices} from "@/services/bookmarksServices"
 import ErrorPage from "@/app/error"
 import Link from "next/link"
 import {BookMarkList} from "./bookmarks"
+import { myPageData } from "../mypageData"
 
 const Home = async (props: {
   searchParams: BookmarkSearchParams
 }) => {
   const {user} = await loginCheck(false)
+  const {bookmarkCount,addressCount} = await myPageData(user)
 
   const searchParams = {
     user_pk: user.user_pk,
@@ -47,7 +49,7 @@ const Home = async (props: {
       <div className="w-full">
         <MyPageBanner title="Wish List" subTitle="찜 리스트" />
         <div className="flex">
-          <Side></Side>
+          <Side bookmarkCount={bookmarkCount} addressCount={addressCount} />
           <div className="container py-16">
             {bookmarks == null || bookmarks.length == 0
               ?

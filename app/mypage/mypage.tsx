@@ -1,26 +1,13 @@
 "use client"
-import Image from "next/image"
 import Link from "next/link"
 import {useState} from "react"
-
-// 배송 리스트
-// export const OrderList = () => {
-//   return (
-//     <section className="mx-12 p-2">
-//       <Image
-//         src="/images/main-pledge.jpg"
-//         alt="Logo"
-//         width={0}
-//         height={0}
-//         priority
-//         sizes="100vw"
-//         className="w-full py-4"
-//       />
-//     </section>
-//   )
-// }
-
-
+import { Address, AddressSearchParams } from "@/types/addressTypes"
+import { ResponseApi } from "@/types/commonTypes"
+import { addressServices } from "@/services/addressService"
+import ErrorPage from "../error"
+import { User } from "@/types/usersTypes"
+import { bookmarksServices } from "@/services/bookmarksServices"
+import { Bookmark } from "@/types/bookmarksTypes"
 
 interface MyPageBannerProps {
   title: string, subTitle: string
@@ -76,18 +63,26 @@ export const SideButton: React.FC<SideButtonProps> = ({toggleSidebar}) => {
 }
 
 
+interface MypageProps {
+  // bookmarks: Bookmark[]
+  // addressList: Address[]
+  bookmarkCount: number
+  addressCount: number
+}
 
 // 마이 페이지 사이드 바
-export const Side = () => {
+export const Side: React.FC<MypageProps> = async ({ bookmarkCount, addressCount }) => {
+  
   const [isDropdownHidden, setIsDropdownHidden] = useState(true)
   const toggleDropdown = () => {
     setIsDropdownHidden(!isDropdownHidden)
   }
-  // 사이드바 토클버튼
+  // 사이드바 토버튼
   const [isOpen, setIsOpen] = useState(false)
   const toggleSidebar = () => {
     setIsOpen(!isOpen)
   }
+  
   return (
     <>
       <SideButton toggleSidebar={toggleSidebar} />
@@ -112,7 +107,9 @@ export const Side = () => {
                   <path d="m12.75 20.66 6.184-7.098c2.677-2.884 2.559-6.506.754-8.705-.898-1.095-2.206-1.816-3.72-1.855-1.293-.034-2.652.43-3.963 1.442-1.315-1.012-2.678-1.476-3.973-1.442-1.515.04-2.825.76-3.724 1.855-1.806 2.201-1.915 5.823.772 8.706l6.183 7.097c.19.216.46.34.743.34a.985.985 0 0 0 .743-.34Z"/>
                 </svg>
                 <span className="flex-1 ms-3 whitespace-nowrap text-base">찜 리스트</span>
-                <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-xs font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">3</span>
+                <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-xs font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">
+                  {bookmarkCount}
+                </span>
               </a>
             </li>
             <li>
@@ -120,7 +117,10 @@ export const Side = () => {
                 <svg className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                   <path fillRule="evenodd" d="M11.293 3.293a1 1 0 0 1 1.414 0l6 6 2 2a1 1 0 0 1-1.414 1.414L19 12.414V19a2 2 0 0 1-2 2h-3a1 1 0 0 1-1-1v-3h-2v3a1 1 0 0 1-1 1H7a2 2 0 0 1-2-2v-6.586l-.293.293a1 1 0 0 1-1.414-1.414l2-2 6-6Z" clipRule="evenodd"/>
                 </svg>
-                <span className="ms-3 text-base">배송지 관리</span>
+                <span className="flex-1 ms-3 whitespace-nowrap text-base">배송지 관리</span>
+                <span className="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-xs font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">
+                  {addressCount}
+                </span>
               </a>
             </li>
             <li>

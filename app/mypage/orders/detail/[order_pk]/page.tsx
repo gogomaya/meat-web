@@ -62,7 +62,7 @@ const OrderDetail = async (props: {
       <div className="w-full">
         <MyPageBanner title="Orders / 주문내역" subTitle="주문상세" />
         <div className="flex">
-          <Side />
+          <Side bookmarkCount={bookmarkCount} addressCount={addressCount} />
           <div className="container py-16">
             <div className="flex flex-col items-center gap-10 my-2 mx-4 md:mx-0">
               {/* 컨테이너 */}

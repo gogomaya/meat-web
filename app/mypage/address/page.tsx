@@ -7,11 +7,13 @@ import {ResponseApi} from "@/types/commonTypes"
 import ErrorPage from "@/app/error"
 import {AddressSearchParams} from "@/types/addressTypes"
 import {AddressList} from "./address"
+import { myPageData } from "../mypageData"
 
 const Home = async (props: {
   searchParams: AddressSearchParams
 }) => {
   const {user} = await loginCheck(false)
+  const {bookmarkCount,addressCount} = await myPageData(user)
   const searchParams = {
     user_pk: user.user_pk,
     rowsPerPage: Number(props.searchParams.rowsPerPage) || 5,
@@ -44,7 +46,7 @@ const Home = async (props: {
       <div className="w-full">
         <MyPageBanner title="Address" subTitle="배송지 관리" />
         <div className="flex">
-          <Side></Side>
+          <Side bookmarkCount={bookmarkCount} addressCount={addressCount} />
           <div className="container py-16">
             <div className="flex flex-col items-center gap-10 my-2 mx-4 md:mx-0">
               {/* 버튼 */}

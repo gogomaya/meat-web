@@ -20,7 +20,7 @@ interface AddressProps {
   addressInfo: Address
 }
 
-export const AddressForm = ({user}: AddressProps ) => {
+export const AddressForm = ({user, addressInfo}: AddressProps ) => {
 
   const [recipient, setRecipient] = useState("")
   const [address, setAddress] = useState("")

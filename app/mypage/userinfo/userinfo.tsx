@@ -70,6 +70,60 @@ export const UserInfoForm = ({userInfo}: UserInfoProps ) => {
       router.push("/mypage/userinfo")
     }
   }
+  // [회원탈퇴] 클릭
+  const handelDelete = async () => {
+    console.log("회원탈퇴 클릭")
+    const user_pk = userInfo.user_pk
+
+    if( user_pk ) {
+      const MySwal = withReactContent(Swal)
+      MySwal.fire({
+        title: <p className="text-xl">회원 탈퇴 확인</p>,
+        text: "회원 탈퇴 시, 저장된 회원 정보가 모두 사라집니다.",
+        icon: "error",
+        confirmButtonText: "회원 탈퇴",
+        cancelButtonText: "취소",
+        showCancelButton: true
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+            const userDeleteResult: ResponseApi = await usersServices.usersDelete(user_pk)
+            console.log("##################################################")
+            console.log(userDeleteResult.error)
+            if(!userDeleteResult.error || userDeleteResult.error.status != 500) {
+              const MySwal = withReactContent(Swal)
+              MySwal.fire({
+                title: <p className="text-xl">회원탈퇴 완료</p>,
+                text: "그동안 이용해주셔서 감사합니다.",
+                confirmButtonText: "확인"
+              }).then(async (end) => {
+                await usersServices.usersLogout()
+                router.refresh()
+                router.push("/")
+              })
+            } else if(userDeleteResult.error.message.includes("관리자")) {
+              const MySwal = withReactContent(Swal)
+              MySwal.fire({
+                title: <p className="text-xl">관리자 회원</p>,
+                text: userDeleteResult.error.message,
+                confirmButtonText: "확인"
+              })
+              return
+            }
+            
+          } catch (error) {
+            alert(error)
+          }
+        } else if (result.isDismissed) {
+          Swal.fire("회원탈퇴 취소", "계속 한솔축산을 이용해주셔서 감사합니다. ^^", "info");
+        }
+      })
+    }
+    else {
+      return
+    }
+    
+  }
   return (
     <div className="container mx-auto bg-white p-4 sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl">
       <div className="py-16">
@@ -121,8 +175,13 @@ export const UserInfoForm = ({userInfo}: UserInfoProps ) => {
           </div>
           <form className="ml-auo space-y-4">
             <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="이름" className="w-full rounded-md py-2.5 px-4 border text-sm outline-[#007bff]" />
-            <input type="text" value={mobile} onChange={(e) => setMobile(e.target.value)} placeholder="전화번호 (010-0000-0000)" className="w-full rounded-md py-2.5 px-4 border text-sm outline-[#007bff]" />
-            <button type="button" onClick={() => handelUpdate()} className="text-white bg-[#A51C30] hover:bg-[#8B0A1D] font-semibold rounded-md text-sm px-4 py-2.5 w-full">수정하기</button>
+            <input type="text" value={mobile} onChange={(e) => setMobile(e.target.value)} placeholder="전화번호 (010-0000-0000)" className="w-full rounded-md py-2.5 px-4 border outline-[#007bff]" />
+            <button type="button" onClick={() => handelUpdate()} className="text-white bg-[#A51C30] hover:bg-[#8B0A1D] font-semibold rounded-md text-sm px-4 py-2.5 w-full">
+              <span className="text-lg font-normal">수정하기</span>
+            </button>
+            <button type="button" onClick={() => handelDelete()} style={{border : "2px solid #A51C30 !important",}} className="w-full px-4 py-2 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-center text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
+              회원탈퇴
+            </button>
           </form>
         </div>
       </div>
