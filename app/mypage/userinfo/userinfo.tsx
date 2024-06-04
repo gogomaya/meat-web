@@ -110,19 +110,19 @@ export const UserInfoForm = ({userInfo}: UserInfoProps ) => {
               })
               return
             }
-            
+
           } catch (error) {
             alert(error)
           }
         } else if (result.isDismissed) {
-          Swal.fire("회원탈퇴 취소", "계속 한솔축산을 이용해주셔서 감사합니다. ^^", "info");
+          Swal.fire("회원탈퇴 취소", "계속 한솔축산을 이용해주셔서 감사합니다. ^^", "info")
         }
       })
     }
     else {
       return
     }
-    
+
   }
   return (
     <div className="container mx-auto bg-white p-4 sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl 2xl:max-w-2xl">
@@ -179,7 +179,7 @@ export const UserInfoForm = ({userInfo}: UserInfoProps ) => {
             <button type="button" onClick={() => handelUpdate()} className="text-white bg-[#A51C30] hover:bg-[#8B0A1D] font-semibold rounded-md text-sm px-4 py-2.5 w-full">
               <span className="text-lg font-normal">수정하기</span>
             </button>
-            <button type="button" onClick={() => handelDelete()} style={{border : "2px solid #A51C30 !important",}} className="w-full px-4 py-2 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-center text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
+            <button type="button" onClick={() => handelDelete()} style={{border : "2px solid #A51C30 !important"}} className="w-full px-4 py-2 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-center text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
               회원탈퇴
             </button>
           </form>

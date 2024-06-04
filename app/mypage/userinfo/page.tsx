@@ -6,7 +6,7 @@ import {ResponseApi} from "@/types/commonTypes"
 import ErrorPage from "@/app/error"
 import {usersServices} from "@/services/usersServices"
 import {User} from "@/types/usersTypes"
-import { myPageData } from "../mypageData"
+import {myPageData} from "../mypageData"
 
 const Home = async () => {
   const {user} = await loginCheck(false)

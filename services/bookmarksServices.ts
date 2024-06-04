@@ -1,6 +1,6 @@
 import {ResponseApi, SearchParams} from "@/types/commonTypes"
 import {commonServices} from "./commonServices"
-import { BookmarkSearchParams } from "@/types/bookmarksTypes"
+import {BookmarkSearchParams} from "@/types/bookmarksTypes"
 
 export const bookmarksServices = {
   bookmarksCreate: async (user_pk: number, product_pk: number): Promise<ResponseApi> => {

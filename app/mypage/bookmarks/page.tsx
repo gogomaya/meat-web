@@ -8,7 +8,7 @@ import {bookmarksServices} from "@/services/bookmarksServices"
 import ErrorPage from "@/app/error"
 import Link from "next/link"
 import {BookMarkList} from "./bookmarks"
-import { myPageData } from "../mypageData"
+import {myPageData} from "../mypageData"
 
 const Home = async (props: {
   searchParams: BookmarkSearchParams

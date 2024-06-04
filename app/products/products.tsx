@@ -10,9 +10,9 @@ import {ResponseApi, SearchParams} from "@/types/commonTypes"
 import _ from "lodash"
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder"
 import FavoriteIcon from "@mui/icons-material/Favorite"
-import { User } from "@/types/usersTypes"
-import { bookmarksServices } from "@/services/bookmarksServices"
-import { BookmarkSearchParams } from "@/types/bookmarksTypes"
+import {User} from "@/types/usersTypes"
+import {bookmarksServices} from "@/services/bookmarksServices"
+import {BookmarkSearchParams} from "@/types/bookmarksTypes"
 import Swal from "sweetalert2"
 import withReactContent from "sweetalert2-react-content"
 
@@ -282,8 +282,8 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
       setIsFavorited(true)
     }
   })
-  
-  
+
+
 
   const handleFavoriteClick = async () => {
     console.log(`user_pk : ${user.user_pk}`)
@@ -308,12 +308,12 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
         timerProgressBar: true,
         didOpen: () => {
           Swal.showLoading()
-        },
+        }
       })
     } catch (error) {
       console.log(error)
     }
-    
+
     setIsFavorited(!isFavorited)
   }
 

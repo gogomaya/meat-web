@@ -2,8 +2,8 @@ import {loginCheck} from "@/app/users/login/loginCheck"
 import MainLayout from "@/app/main-layout"
 import {MyPageBanner, Side} from "../../mypage"
 import {AddressForm} from "../address"
-import { myPageData } from "../../mypageData"
-import { Address } from "@/types/addressTypes"
+import {myPageData} from "../../mypageData"
+import {Address} from "@/types/addressTypes"
 
 const Home = async () => {
   const {user} = await loginCheck(false)

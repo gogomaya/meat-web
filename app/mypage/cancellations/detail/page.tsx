@@ -2,7 +2,7 @@ import {loginCheck} from "@/app/users/login/loginCheck"
 import MainLayout from "@/app/main-layout"
 import {MyPageBanner, Side, SideButton} from "../../mypage"
 import Image from "next/image"
-import { myPageData } from "../../mypageData"
+import {myPageData} from "../../mypageData"
 
 const Home = async () => {
   const {user} = await loginCheck(false)

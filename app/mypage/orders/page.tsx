@@ -7,7 +7,7 @@ import {ordersServices} from "@/services/ordersServices"
 import ErrorPage from "@/app/error"
 import Link from "next/link"
 import {loginCheck} from "@/app/users/login/loginCheck"
-import { myPageData } from "../mypageData"
+import {myPageData} from "../mypageData"
 
 /**
  * 마이페이지>주문목록

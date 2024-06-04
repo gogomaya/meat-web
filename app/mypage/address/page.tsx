@@ -7,7 +7,7 @@ import {ResponseApi} from "@/types/commonTypes"
 import ErrorPage from "@/app/error"
 import {AddressSearchParams} from "@/types/addressTypes"
 import {AddressList} from "./address"
-import { myPageData } from "../mypageData"
+import {myPageData} from "../mypageData"
 
 const Home = async (props: {
   searchParams: AddressSearchParams

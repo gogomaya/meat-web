@@ -6,7 +6,7 @@ import {ResponseApi} from "@/types/commonTypes"
 import {addressServices} from "@/services/addressService"
 import ErrorPage from "@/app/error"
 import {AddressUpdateForm} from "../../address"
-import { myPageData } from "@/app/mypage/mypageData"
+import {myPageData} from "@/app/mypage/mypageData"
 
 const Home = async (props: {
   params: { address_pk: number }

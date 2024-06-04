@@ -1,13 +1,13 @@
 "use client"
 import Link from "next/link"
 import {useState} from "react"
-import { Address, AddressSearchParams } from "@/types/addressTypes"
-import { ResponseApi } from "@/types/commonTypes"
-import { addressServices } from "@/services/addressService"
+import {Address, AddressSearchParams} from "@/types/addressTypes"
+import {ResponseApi} from "@/types/commonTypes"
+import {addressServices} from "@/services/addressService"
 import ErrorPage from "../error"
-import { User } from "@/types/usersTypes"
-import { bookmarksServices } from "@/services/bookmarksServices"
-import { Bookmark } from "@/types/bookmarksTypes"
+import {User} from "@/types/usersTypes"
+import {bookmarksServices} from "@/services/bookmarksServices"
+import {Bookmark} from "@/types/bookmarksTypes"
 
 interface MyPageBannerProps {
   title: string, subTitle: string
@@ -71,8 +71,8 @@ interface MypageProps {
 }
 
 // 마이 페이지 사이드 바
-export const Side: React.FC<MypageProps> = async ({ bookmarkCount, addressCount }) => {
-  
+export const Side: React.FC<MypageProps> = async ({bookmarkCount, addressCount}) => {
+
   const [isDropdownHidden, setIsDropdownHidden] = useState(true)
   const toggleDropdown = () => {
     setIsDropdownHidden(!isDropdownHidden)
@@ -82,7 +82,7 @@ export const Side: React.FC<MypageProps> = async ({ bookmarkCount, addressCount 
   const toggleSidebar = () => {
     setIsOpen(!isOpen)
   }
-  
+
   return (
     <>
       <SideButton toggleSidebar={toggleSidebar} />
