@@ -88,7 +88,7 @@ const GeneralReviewsForm = ({
     backdrop.close()
   }
   return (
-    <div className="container">
+    <div className="container py-4">
       <Button
         variant="contained"
         className={`${review.review_pk === 0 ? "btn" : "!bg-[#ed6c02] hover:!bg-[#e65100]"}`}

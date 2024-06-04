@@ -54,7 +54,7 @@ export const ChannelIOComponent: React.FC = () => {
     }
 
     w.ChannelIO("boot", {
-      pluginKey: "83e94a15-0662-40ae-b37a-5a7a27df10a1"
+      pluginKey: "a30b4854-1748-4666-94b1-a72195034c65"
     })
   }, [])
 
