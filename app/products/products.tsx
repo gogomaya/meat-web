@@ -34,8 +34,7 @@ export const ProductsSearch = ({products, searchParams}: {products: Product[], s
             }}
           >
             <MenuItem value="product_pk">신상품</MenuItem>
-            <MenuItem value="추천순">추천순</MenuItem>
-            <MenuItem value="판매량순">판매량순</MenuItem>
+            <MenuItem value="가격순">가격순</MenuItem>
           </Select>
         </FormControl>
       </div>
