@@ -27,8 +27,8 @@ export const CartsDetailContent = () => {
     return <Skeleton variant="rectangular" animation="wave" width="100%" height={300} />
   }
   // 전체 상품 금액, 할인 금액, 배송비 계산 (임시 값)
-  const totalAmount = 100000
-  const discountAmount = 10000
+  // const totalAmount = 100000
+  const discountAmount = 0
   const shippingFee = 3000
 
   return (

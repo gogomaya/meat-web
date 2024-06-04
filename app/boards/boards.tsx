@@ -415,11 +415,11 @@ const BoardsForm = ({
                 name="title"
                 render={({field}) => (
                   <Select {...field}>
-                    <MenuItem value="상품문의입니다.">상품문의입니다.</MenuItem>
-                    <MenuItem value="배송문의입니다.">배송문의입니다.</MenuItem>
-                    <MenuItem value="취소문의입니다.">취소문의입니다.</MenuItem>
-                    <MenuItem value="환불문의입니다.">환불문의입니다.</MenuItem>
-                    <MenuItem value="기타문의입니다.">기타문의입니다.</MenuItem>
+                    <MenuItem value="상품문의입니다.">상품문의</MenuItem>
+                    <MenuItem value="배송문의입니다.">배송문의</MenuItem>
+                    <MenuItem value="취소문의입니다.">취소문의</MenuItem>
+                    <MenuItem value="환불문의입니다.">환불문의</MenuItem>
+                    <MenuItem value="기타문의입니다.">기타문의</MenuItem>
                   </Select>
                 )}
               />
