@@ -65,7 +65,7 @@ const OrderDetail = async (props: {
           <Side />
           <div className="container py-16">
             <div className="flex flex-col items-center gap-10 my-2 mx-4 md:mx-0">
-              {/* 배송 조회 컨테이너 */}
+              {/* 컨테이너 */}
               <div className="w-full flex flex-col gap-6 max-w-4xl bg-white shadow-md p-6">
                 <span className="text-2xl">주문 상세</span>
                 {/* 상세 정보 박스 */}

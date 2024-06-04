@@ -1,5 +1,5 @@
 "use client"
-import {Order, OrderStatus} from "@/types/ordersTypes"
+import {Order} from "@/types/ordersTypes"
 import Image from "next/image"
 import Link from "next/link"
 import {useState} from "react"

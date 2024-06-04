@@ -11,6 +11,7 @@ import {redirect} from "next/navigation"
  * - let ordersResponse: ResponseApi = {} 선언
  * - orderServices.orderCreate() 호출하면서 user_pk, guest_mobile, productPks, quantityList 전달
  * - ordersResponse 로 받아서 ordersResponse.order_pk 를 order_pk 로 선언
+ * - /order?productPks=1,2,3&quantityList=1,1,1
  * - /order/{order_pk} 로 리다이렉트
  * @param props
  * @returns

@@ -9,6 +9,7 @@ export interface User {
   user_pk: number
   id: string
   name: string
+  nickname: string
   mobile: string
   third_party: ThirdParty
   is_admin?: boolean
