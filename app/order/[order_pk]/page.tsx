@@ -1,6 +1,6 @@
 import {loginCheck} from "@/app/users/login/loginCheck"
 import MainLayout from "@/app/main-layout"
-import {OrderDetailContent} from "../Order"
+import {OrderDetailContent, Post} from "../order"
 
 /**
  * 주문서 작성
@@ -36,6 +36,9 @@ const OrderPay = async (props: {
             alignItems: "center"
           }}>주문서</div>
       </div>
+      <Post setcompany={function (arg0: any): void {
+        throw new Error("Function not implemented.")
+      } } company={undefined} />
       {/* <OrderDetailContent orderProducts={orderProducts} /> */}
     </MainLayout>
   )

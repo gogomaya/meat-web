@@ -2,15 +2,17 @@ import {loginCheck} from "@/app/users/login/loginCheck"
 import MainLayout from "@/app/main-layout"
 import {MyPageBanner, Side, SideButton} from "../../mypage"
 import Image from "next/image"
+import {myPageData} from "../../mypageData"
 
 const Home = async () => {
   const {user} = await loginCheck(false)
+  const {bookmarks, addressList, bookmarkCount,addressCount} = await myPageData(user)
   return (
     <MainLayout user={user}>
       <div className="w-full">
         <MyPageBanner title="Withdraw Order / 취소/반품/환불" subTitle="상세내역" />
         <div className="flex">
-          <Side />
+          <Side bookmarkCount={bookmarkCount} addressCount={addressCount} />
           <div className="container py-16">
             <div className="flex flex-col items-center gap-10 my-2 mx-4 md:mx-0">
               {/* 배송 조회 컨테이너 */}

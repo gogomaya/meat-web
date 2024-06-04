@@ -1,16 +1,18 @@
 import {loginCheck} from "@/app/users/login/loginCheck"
 import MainLayout from "@/app/main-layout"
-import {MyPageBanner, Side, SideButton} from "./mypage"
+import {MyPageBanner, Side} from "./mypage"
 import Link from "next/link"
+import {myPageData} from "./mypageData"
 
 const Home = async () => {
   const {user} = await loginCheck(false)
+  const {bookmarks, addressList, bookmarkCount,addressCount} = await myPageData(user)
   return (
     <MainLayout user={user}>
       <div className="w-full">
         <MyPageBanner title="" subTitle="" />
         <div className="flex">
-          <Side />
+          <Side bookmarkCount={bookmarkCount} addressCount={addressCount} />
           <div className="container py-16">
             <div className="flex flex-col items-center gap-10 my-2 mx-4 md:mx-0">
               <div className="w-full flex flex-col gap-6 max-w-4xl bg-white rounded-lg shadow-md p-6">
@@ -22,7 +24,7 @@ const Home = async () => {
                         className="flex flex-col justify-center items-center text-[#A51C30]"
                       >
                         <svg className="w-[48px] h-[48px] text-[#A51C30] dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                          <path fill-rule="evenodd" d="M4 4a1 1 0 0 1 1-1h1.5a1 1 0 0 1 .979.796L7.939 6H19a1 1 0 0 1 .979 1.204l-1.25 6a1 1 0 0 1-.979.796H9.605l.208 1H17a3 3 0 1 1-2.83 2h-2.34a3 3 0 1 1-4.009-1.76L5.686 5H5a1 1 0 0 1-1-1Z" clip-rule="evenodd"/>
+                          <path fillRule="evenodd" d="M4 4a1 1 0 0 1 1-1h1.5a1 1 0 0 1 .979.796L7.939 6H19a1 1 0 0 1 .979 1.204l-1.25 6a1 1 0 0 1-.979.796H9.605l.208 1H17a3 3 0 1 1-2.83 2h-2.34a3 3 0 1 1-4.009-1.76L5.686 5H5a1 1 0 0 1-1-1Z" clipRule="evenodd"/>
                         </svg>
                         <span className="text-sm">주문 목록</span>
                       </div>
@@ -48,7 +50,7 @@ const Home = async () => {
                         className="flex flex-col justify-center items-center text-[#A51C30]"
                       >
                         <svg className="w-[48px] h-[48px] text-[#A51C30] dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                          <path fill-rule="evenodd" d="M4 4a1 1 0 0 1 1-1h1.5a1 1 0 0 1 .979.796L7.939 6H19a1 1 0 0 1 .979 1.204l-1.25 6a1 1 0 0 1-.979.796H9.605l.208 1H17a3 3 0 1 1-2.83 2h-2.34a3 3 0 1 1-4.009-1.76L5.686 5H5a1 1 0 0 1-1-1Z" clip-rule="evenodd"/>
+                          <path fillRule="evenodd" d="M4 4a1 1 0 0 1 1-1h1.5a1 1 0 0 1 .979.796L7.939 6H19a1 1 0 0 1 .979 1.204l-1.25 6a1 1 0 0 1-.979.796H9.605l.208 1H17a3 3 0 1 1-2.83 2h-2.34a3 3 0 1 1-4.009-1.76L5.686 5H5a1 1 0 0 1-1-1Z" clipRule="evenodd"/>
                         </svg>
                         <span className="text-sm">배송지 관리</span>
                       </div>
@@ -61,7 +63,7 @@ const Home = async () => {
                         className="flex flex-col justify-center items-center text-[#A51C30]"
                       >
                         <svg className="w-[48px] h-[48px] text-[#A51C30] dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                          <path fill-rule="evenodd" d="M20 10H4v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8ZM9 13v-1h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1Z" clip-rule="evenodd"/>
+                          <path fillRule="evenodd" d="M20 10H4v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8ZM9 13v-1h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1Z" clipRule="evenodd"/>
                           <path d="M2 6a2 2 0 0 1 2-2h16a2 2 0 1 1 0 4H4a2 2 0 0 1-2-2Z"/>
                         </svg>
                         <span className="text-xs">취소/반품/환불</span>
@@ -75,7 +77,7 @@ const Home = async () => {
                         className="flex flex-col justify-center items-center text-[#A51C30]"
                       >
                         <svg className="w-[48px] h-[48px] text-[#A51C30] dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                          <path fill-rule="evenodd" d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z" clip-rule="evenodd"/>
+                          <path fillRule="evenodd" d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z" clipRule="evenodd"/>
                         </svg>
                         <span className="text-xs">회원정보 수정</span>
                       </div>

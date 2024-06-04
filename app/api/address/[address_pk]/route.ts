@@ -7,18 +7,20 @@ export const GET = async (
   context: {params: {address_pk: number}}
 ) => {
   const {address_pk} = context.params
-
+  console.log(`/api/address - address_pk : ${address_pk}`)
   try {
     const mysql = await mysql2Pool()
-    const [rows]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
+    const [address]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
       SELECT * FROM address WHERE address_pk = ?
     `, [address_pk])
 
-    if (rows.length === 0) {
-      return NextResponse.json({message: "Address not found"}, {status: 404})
+    if (address.length === 0) {
+      return NextResponse.error()
     }
 
-    return NextResponse.json(rows[0])
+    return NextResponse.json({
+      address: address[0]
+    })
   } catch (error) {
     console.error("Error occurred while fetching address:", error)
     return NextResponse.error()
@@ -40,13 +42,24 @@ export const PUT = async (
     const address_detail = formData.get("address_detail")
     const is_primary = formData.get("is_primary") || 0
 
+    console.log(`address_pk : ${address_pk}`)
+    console.log(`user_pk : ${user_pk}`)
+    console.log(`is_primary : ${is_primary}`)
     const mysql = await mysql2Pool()
+    if( is_primary == "1" ) {
+      await  mysql.execute(`
+        UPDATE address
+        SET is_primary = 0
+        WHERE user_pk = ?
+      `, [user_pk])
+    }
 
     await mysql.execute(`
       UPDATE address
       SET user_pk = ?, mobile = ?, recipient = ?, address = ?, address_detail = ?, is_primary = ?
       WHERE address_pk = ?
     `, [user_pk, mobile, recipient, address, address_detail, is_primary, address_pk])
+
 
     return NextResponse.json({
       message: "Address updated successfully",

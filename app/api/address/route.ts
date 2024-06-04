@@ -19,15 +19,15 @@ export const GET = async (request: NextRequest) => {
       WHERE ("" = ? OR user_pk = ?)
     `, [user_pk, user_pk])
 
-    const [rows]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
+    const [addressList]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
       SELECT * FROM address
       WHERE ("" = ? OR user_pk = ?)
-      ORDER BY ${orderColumn} ${orderDirection}
+      ORDER BY is_primary desc, ${orderColumn} ${orderDirection}
       LIMIT ?, ?
     `, [user_pk, user_pk, page, rowsPerPage])
 
     return NextResponse.json({
-      addresses: rows,
+      addressList: addressList,
       total_rows: total_rows[0].total_rows
     })
   } catch (error) {
@@ -47,7 +47,7 @@ export const POST = async (request: NextRequest) => {
     const is_primary = formData.get("is_primary") || 0
 
     const mysql = await mysql2Pool()
-
+    console.log(`user_pk : ${user_pk}`)
     // 새로운 주소 추가
     await mysql.execute(`
       INSERT INTO address (user_pk, mobile, recipient, address, address_detail, is_primary)

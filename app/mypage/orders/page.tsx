@@ -7,6 +7,7 @@ import {ordersServices} from "@/services/ordersServices"
 import ErrorPage from "@/app/error"
 import Link from "next/link"
 import {loginCheck} from "@/app/users/login/loginCheck"
+import {myPageData} from "../mypageData"
 
 /**
  * 마이페이지>주문목록
@@ -17,6 +18,7 @@ const Home = async (props: {
   searchParams: OrderSearchParams
 }) => {
   const {user} = await loginCheck(false)
+  const {bookmarks, addressList, bookmarkCount,addressCount} = await myPageData(user)
   const searchParams = {
     user_pk: user.user_pk,
     rowsPerPage: Number(props.searchParams.rowsPerPage) || 5,
@@ -50,7 +52,7 @@ const Home = async (props: {
       <div className="w-full">
         <MyPageBanner title="Orders" subTitle="주문내역" />
         <div className="flex">
-          <Side />
+          <Side bookmarkCount={bookmarkCount} addressCount={addressCount} />
           <div className="container py-16">
             {orders == null || orders.length == 0
               ?
