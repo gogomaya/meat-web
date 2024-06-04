@@ -1,5 +1,5 @@
 import {Address} from "@/types/addressTypes"
-import {ResponseApi} from "@/types/commonTypes"
+import {ResponseApi, SearchParams} from "@/types/commonTypes"
 import {commonServices} from "./commonServices"
 
 export const addressServices = {
@@ -19,8 +19,11 @@ export const addressServices = {
     return result
   },
 
-  addressRead: async (user_pk: number): Promise<ResponseApi> => {
-    const response = await fetch(`/api/address?user_pk=${user_pk}`)
+  addressRead: async (searchParams: SearchParams): Promise<ResponseApi> => {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/address?` + new URLSearchParams({
+      ...searchParams
+    }))
+    
     return await response.json()
   },
 
