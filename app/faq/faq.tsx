@@ -2,6 +2,7 @@
 
 import React, {useEffect, useRef, useState} from "react"
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline"
+import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline"
 
 const faqItems = [
   {
@@ -140,8 +141,8 @@ const FAQPage: React.FC = () => {
               </strong>
             </div>
           ) : null}
-          <div onClick={() => toggleAccordion(index)} style={{padding: "10px", backgroundColor: activeIndex === index ? "#eaeaea" : "#f9f9f9", cursor: "pointer", borderRadius: "5px"}}>
-            <h3 style={{margin: 0, fontSize: "18px", color: "#555"}}>{item.question}</h3>
+          <div onClick={() => toggleAccordion(index)} style={{padding: "10px", backgroundColor: activeIndex === index ? "#eaeaea" : "#271A11", cursor: "pointer", borderRadius: "5px"}}>
+            <h1 style={{margin: 0, fontSize: "18px", color: "#fff"}}>{item.question}</h1>
           </div>
           {activeIndex === index && (
             <div style={{padding: "10px", backgroundColor: "#fff", borderTop: "1px solid #ddd", borderBottomLeftRadius: "5px", borderBottomRightRadius: "5px"}}>
@@ -180,9 +181,13 @@ const FaqItem: React.FC<FaqItemProps> = ({question, answer}) => {
 
   return (
     <div className="faq-single-wrap">
-      <div className="faq-qus-wrap" onClick={toggleFaq} style={{cursor: "pointer"}}>
-        <h5 className="faq-qustion">{question}</h5>
-        <AddCircleOutlineIcon />
+      <div
+        className="faq-qus-wrap flex justify-between items-center p-4 rounded cursor-pointer bg-opacity-10 hover:bg-opacity-99 hover:bg-[#3b2e20]"
+        onClick={toggleFaq}
+        style={{backgroundImage: "url('/images/Bg.png')", backgroundBlendMode: "overlay"}}
+      >
+        <h5 className="faq-qustion text-white text-lg font-semibold">{question}</h5>
+        <AddCircleOutlineIcon className="text-white" />
       </div>
       <div
         ref={contentRef}

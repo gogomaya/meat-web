@@ -4,6 +4,7 @@ import {Product} from "@/types/productsTypes"
 import Image from "next/image"
 import Link from "next/link"
 import {useEffect, useRef, useState} from "react"
+import {SwiperSlide} from "swiper/react"
 
 export const HomeBanner = () => {
   return (
@@ -325,7 +326,7 @@ export const HomeWhyUs = () => {
         </div>
         <div className="md:w-1/2 md:pl-6 mt-6 md:mt-0">
           <iframe
-            src="https://www.youtube.com/shorts/F66YosQsY3I"
+            src="https://smartstore.naver.com/hansolmeat1534"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             className="w-full aspect-video"
           ></iframe>
