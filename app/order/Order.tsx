@@ -1,12 +1,20 @@
 "use client"
-import {SetStateAction, useState} from "react"
-import {Divider, Typography} from "@mui/material"
+import {SetStateAction, useEffect, useState} from "react"
+import {Divider, Link, Typography} from "@mui/material"
 import Image from "next/image"
-import React from "react"
 import DaumPostcode from "react-daum-postcode"
 import {CartProduct} from "@/types/productsTypes"
 import _ from "lodash"
 import {CheckoutPage} from "./toss"
+import {ResponseApi} from "@/types/commonTypes"
+import {ordersServices} from "@/services/ordersServices"
+import React from "react"
+import MainLayout from "../main-layout"
+import {useRouter} from "next/router"
+import {Order, OrderParams, OrderSearchParams} from "@/types/ordersTypes"
+import {OrderItem} from "@/types/orderItemsTypes"
+import {User} from "@/types/usersTypes"
+import {Address} from "@/types/addressTypes"
 
 // 배송지
 export const Post = (props: { setcompany: (arg0: any) => void; company: any }) => {
@@ -40,10 +48,35 @@ export const Post = (props: { setcompany: (arg0: any) => void; company: any }) =
   )
 }
 
+// export const OrderDetailContent = ({
+//   orderProducts
+// }: {
+//   orderProducts: CartProduct[]
+// }) => {
+
+// export const OrderDetailContent = () => {
+
+
+/**
+ * 주문 상세 정보
+ * - 주문 상품
+ * - 주문자 정보
+ * - 결제금액
+ *  - 총 상품 금액 : order.total_price
+ *  - 할인 금액 : ??? (discount_amount)
+ *  - 배송비 : ??? (shipping_fee)
+ *
+ * - 배송 정보
+ * @param param0
+ * @returns
+ */
 export const OrderDetailContent = ({
-  orderProducts
+  order, orderItems, userInfo, addressList
 }: {
-  orderProducts: CartProduct[]
+  order: Order
+  orderItems: OrderItem[]
+  userInfo: User
+  addressList: Address[]
 }) => {
   const [isOrderInfoOpen, setIsOrderInfoOpen] = useState(false)
   const [isPersonalInfoOpen, setIsPersonalInfoOpen] = useState(false)
@@ -65,21 +98,34 @@ export const OrderDetailContent = ({
     receiptType: ""
   })
 
-  // 결제 정보
-  const totalPrice = _.sumBy(orderProducts, (orderProduct) => {
-    return Number(orderProduct.product.price) * orderProduct.quantity
-  })
-  const totalDiscount = orderInfo.discount
-  const totalShipFee = orderInfo.shipfee
-  const finalPrice = totalPrice - totalDiscount + totalShipFee
+  // // 결제 정보
+  // const totalPrice = _.sumBy(orderProducts, (orderProduct) => {
+  //   return Number(orderProduct.product.price) * orderProduct.quantity
+  // })
+  // const totalDiscount = orderInfo.discount
+  // const totalShipFee = orderInfo.shipfee
+  // const finalPrice = totalPrice - totalDiscount + totalShipFee
 
-  // TODO : 결제 정보 받아오기
-  const orderName = "기본 상품 외 3건"
-  const customerName = "김"
-  const customerEmail = ""
-  const customerMobilePhone = "01012341234"
+  const [addressPk, setAddressPk] = useState(addressList[0].address_pk || 0)
 
+  console.log(`addressList[0].address_pk (기본 배송지 번호) : ${addressList[0].address_pk}`)
+
+  const totalDiscount = order.discount
+  const totalShipFee = order.shipfee
+  const finalPrice = Number(order?.total_price) - totalDiscount + totalShipFee
+
+  // 결제에 필요한 정보
+  const orderId = order.order_id        // 주문 UID
+  const orderPk = order.order_pk        // 주문번호
+  const orderName = order.title         // 주문제복
+  const customerName = userInfo.name    // 결제자 이름
+  const customerEmail = ""              // TODO: 이메일 보류
+  const customerMobilePhone = userInfo.mobile   // 전화번호 (01012341234 형식, 특수문자 제외)
+
+  // 결제 요청 정보
   const pay = {
+    orderId: orderId,
+    orderPk: orderPk,
     finalPrice : finalPrice,
     orderName : orderName,
     customerName : customerName,
@@ -100,38 +146,37 @@ export const OrderDetailContent = ({
           </tr>
         </thead>
         <tbody>
-          {orderProducts.map((orderProduct, index) => (
-            <><React.Fragment key={orderProduct.product.product_pk}>
-              <tr>
+          {/*
+            Check the top-level render call using <tbody>. See https://reactjs.org/link/warning-keys for more information.
+            반복문 바로 아래 tr 에라 줘야 경고 안뜸.
+           */}
+          {
+            orderItems.map((orderItem, index) => (
+              <tr key={orderItem.order_item_pk}>
                 <td className="flex justify-center p-3">
                   <Image
-                    src={`/${process.env.NEXT_PUBLIC_UPLOAD_IMAGES}/products/${encodeURIComponent(String(orderProduct.product.image_file_name))}`}
+                    src={`/${process.env.NEXT_PUBLIC_UPLOAD_IMAGES}/products/${encodeURIComponent(String(orderItem.image_file_name))}`}
                     alt=""
                     width={100}
                     height={30}
                     sizes="100vw"
                     priority />
                 </td>
-                <td className="p-3 text-center">{orderProduct.product.name}</td>
-                <td className="p-3 text-center">{orderProduct.product.price.toLocaleString()}원</td>
-                <td className="p-3 text-center">{orderProduct.quantity}</td>
-                <td className="p-3 text-center">{(Number(orderProduct.product.price) * orderProduct.quantity).toLocaleString()}원</td>
+                <td className="p-3 text-center">{orderItem.name}</td>
+                <td className="p-3 text-center">{orderItem.price.toLocaleString()}원</td>
+                <td className="p-3 text-center">{orderItem.quantity}</td>
+                <td className="p-3 text-center">{(Number(orderItem.price)*orderItem.quantity).toLocaleString()}원</td>
               </tr>
-              {/* {index < orderProducts.length - 1 && (
-                <td colSpan={5} className="p-0">
-                <div style={{height: "1px", backgroundColor: "#ddd", width: "100%"}} />
-                </td>
-              )} */}
-            </React.Fragment></>
-          ))}
+            ))
+          }
         </tbody>
       </table>
     )
   }
 
-  const handlePayMethodChange = (type: string) => {
-    setOrderInfo({...orderInfo, paymentMethod: type})
-  }
+  // const handlePayMethodChange = (type: string) => {
+  //   setOrderInfo({...orderInfo, paymentMethod: type})
+  // }
 
   // 주소창 이벤트 핸들러
   const [enroll_company, setEnroll_company] = useState({
@@ -152,9 +197,9 @@ export const OrderDetailContent = ({
   }
 
   // 영수증 타입 변경 핸들러
-  const handleReceiptTypeChange = (type: string) => {
-    setOrderInfo({...orderInfo, receiptType: type})
-  }
+  // const handleReceiptTypeChange = (type: string) => {
+  //   setOrderInfo({...orderInfo, receiptType: type})
+  // }
 
   // 영수증 내용 렌더링 함수
   const RenderReceiptContent = () => {
@@ -173,42 +218,47 @@ export const OrderDetailContent = ({
       setEditingPhoneNumber(false)
     }
 
-    if (orderInfo.receiptType === "personal" || orderInfo.receiptType === "business") {
-      return (
-        <div className="flex justify-between items-center border-b m-2" style={{backgroundColor: "#fff"}}>
-          <h5>{orderInfo.receiptType === "personal" ? "개인소득공제용" : "사업자 지출증빙용"}</h5>
-          {editingPhoneNumber ? (
-            <input
-              type="text"
-              value={phoneNumber}
-              onChange={handlePhoneNumberChange}
-              style={{border: "1px solid black"}} // 추가된 부분
-            />
-          ) : (
-            <h5>{phoneNumber}</h5>
-          )}
-          {editingPhoneNumber ? (
-            <button className="bg-green-500 text-white font-semibold px-6 py-3 rounded-lg shadow-lg hover:bg-green-600 transition-colors" onClick={handleSaveButtonClick}>
-              저장
-            </button>
-          ) : (
-            <button className="bg-green-500 text-white font-semibold px-6 py-3 rounded-lg shadow-lg hover:bg-green-600 transition-colors" onClick={handleEditButtonClick}>
-              변경
-            </button>
-          )}
-        </div>
-      )
-    } else {
-      return null
-    }
+    // if (orderInfo.receiptType === "personal" || orderInfo.receiptType === "business") {
+    //   return (
+    //     <div className="flex justify-between items-center border-b m-2" style={{backgroundColor: "#fff"}}>
+    //       <h5>{orderInfo.receiptType === "personal" ? "개인소득공제용" : "사업자 지출증빙용"}</h5>
+    //       {editingPhoneNumber ? (
+    //         <input
+    //           type="text"
+    //           value={phoneNumber}
+    //           onChange={handlePhoneNumberChange}
+    //           style={{border: "1px solid black"}} // 추가된 부분
+    //         />
+    //       ) : (
+    //         <h5>{phoneNumber}</h5>
+    //       )}
+    //       {editingPhoneNumber ? (
+    //         <button className="bg-green-500 text-white font-semibold px-6 py-3 rounded-lg shadow-lg hover:bg-green-600 transition-colors" onClick={handleSaveButtonClick}>
+    //           저장
+    //         </button>
+    //       ) : (
+    //         <button className="bg-green-500 text-white font-semibold px-6 py-3 rounded-lg shadow-lg hover:bg-green-600 transition-colors" onClick={handleEditButtonClick}>
+    //           변경
+    //         </button>
+    //       )}
+    //     </div>
+    //   )
+    // } else {
+    //   return null
+    // }
   }
 
-  const handlePayment = () => {
-    console.log(orderProducts)
-    console.log(orderInfo)
-    alert("토스페이먼츠 호출")
-  }
+  // const handlePayment = () => {
+  //   console.log(orderProducts)
+  //   console.log(orderInfo)
+  //   alert("토스페이먼츠 호출")
+  // }
 
+  // 배송지 선택
+  const handleCheckboxChange = (address_pk: number) => {
+    console.log(`address_pk (선택한 배송지 번호) : ${address_pk}`)
+    setAddressPk(address_pk)
+  }
   return (
     <div className="container mx-auto p-8">
       <div className="p-3 w-full mb-5">
@@ -224,18 +274,19 @@ export const OrderDetailContent = ({
             <div>
               <div className="flex items-center justify-between py-2">
                 <div className="w-1/4 font-medium">보내는 분</div>
-                <div className="w-3/4">한성수</div>
+                <div className="w-3/4">{userInfo.name}</div>
               </div>
               <Divider style={{backgroundColor: "#ddd", height: "0.1px"}} />
             </div>
             <div>
               <div className="flex items-center justify-between py-2">
                 <div className="w-1/4 font-medium">휴대폰</div>
-                <div className="w-3/4">010-0000-0000</div>
+                <div className="w-3/4">{userInfo.mobile}</div>
               </div>
               <Divider style={{backgroundColor: "#ddd", height: "0.1px"}} />
             </div>
-            <div>
+            {/* TODO: DB - users 에 email 이 없음... 향후 이슈논의 */}
+            {/* <div>
               <div className="flex items-center justify-between py-2">
                 <div className="w-1/4 font-medium">이메일 주소</div>
                 <div className="w-3/4">
@@ -244,17 +295,22 @@ export const OrderDetailContent = ({
                 </div>
               </div>
               <Divider style={{backgroundColor: "#ddd", height: "0.1px"}} />
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="w-full md:w-1/4 pl-4 mt-8 md:mt-0 bg-white p-3">
           <div className="text-2xl font-semibold mb-4">결제금액</div>
           <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
           <div className="space-y-2 bg-gray-200 rounded-lg p-3">
-            <p className="text-lg m-2 text-black">총 상품금액: {totalPrice.toLocaleString()}원</p>
+            {/* <p className="text-lg m-2 text-black">총 상품금액: {totalPrice.toLocaleString()}원</p>
             <p className="text-lg m-2 text-black">할인 금액: {totalDiscount.toLocaleString()}원</p>
             <p className="text-lg m-2 text-black">총 배송비: {totalShipFee.toLocaleString()}원</p>
-            <p className="text-lg m-2 font-semibold text-black">최종 결제 금액: {finalPrice.toLocaleString()}원</p>
+            <p className="text-lg m-2 font-semibold text-black">최종 결제 금액: {finalPrice.toLocaleString()}원</p> */}
+            <p className="text-lg m-2 text-black">총 상품금액: {String(order.total_price).toLocaleString()}원</p>
+            {/* TODO: 할인금액이랑 배송비는 어디서 등록하고, 가져와야할까요? */}
+            <p className="text-lg m-2 text-black">할인 금액: {String(totalDiscount).toLocaleString()}원</p>
+            <p className="text-lg m-2 text-black">총 배송비: {String(totalShipFee).toLocaleString()}원</p>
+            <p className="text-lg m-2 font-semibold text-black">최종 결제 금액: {String(finalPrice).toLocaleString()}원</p>
           </div>
         </div>
       </div>
@@ -264,60 +320,61 @@ export const OrderDetailContent = ({
           <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
           <div className="space-y-4">
             <div>
-              <div className="flex items-center justify-between py-2">
-                <div className="w-1/4 font-medium">수령인 이름</div>
-                <div className="w-3/4">
-                  <input
-                    type="text"
-                    placeholder="이름을 입력하세요."
-                    className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
+              <div className="flex items-center py-2 px-4">
+                <div className="flex-1">분류</div>
+                <div className="flex-[2]">이름/연락처</div>
+                <div className="flex-[4]">주소</div>
+                <div className="flex-[1] text-center">선택</div>
               </div>
               <Divider style={{backgroundColor: "#ddd", height: "0.1px"}} />
             </div>
-            <div>
-              <div className="flex items-center justify-between py-2">
-                <div className="w-1/4 font-medium">연락처</div>
-                <div className="w-3/4">
-                  <input
-                    type="text"
-                    placeholder="010-1234-1234"
-                    className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-              </div>
-              <Divider style={{backgroundColor: "#ddd", height: "0.1px"}} />
-            </div>
-            <div>
-              <div className="flex items-center justify-between py-2">
-                <div className="w-1/4 font-medium">배송지 주소</div>
-                <div className="w-3/4">
-                  {/* 기본 배송지 나오도록 */}
-                  <div className="flex flex-col">
-                    <div className="flex items-center flex-grow mb-2">
-                      <input type="text" placeholder="우편번호 찾기 버튼을 눌러 배송지 주소를 검색해주세요." id="contactNumber" required={true} name="address" onChange={handleInput} value={enroll_company.address} className="mr-2 border border-gray-300 rounded-lg p-2 flex-grow" />
-                      <button
-                        onClick={handleComplete}
-                        className="ml-2 py-2 text-white rounded-lg post-button"
-                        style={{backgroundColor: "#271A11"}}
-                      >우편번호 찾기</button>
+            {
+              addressList.map((address, index) => (
+                <div key={address.address_pk}>
+                  <div className="flex items-center py-2 px-4">
+                    <div className="flex-1 ">
+                      {
+                        address.is_primary == 1
+                          ?
+                          <p className="inline-block text-center text-white bg-[#A51C30] hover:bg-[#8B0A1D] font-semibold rounded-md text-sm px-6 py-1 active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
+                              기본
+                            <br />
+                              배송지
+                          </p>
+                          :
+                          <span>-</span>
+                      }
                     </div>
-                    {popup && <Post company={enroll_company} setcompany={setEnroll_company}></Post>}
-                    <input type="text" id="addressLine2" name="addressLine2" placeholder="상세 주소" className="border border-gray-300 rounded-lg p-2 w-full" />
+                    <div className="flex-[2]">
+                      <p>{address.recipient}</p>
+                      <p>{address.mobile}</p>
+                    </div>
+                    <div className="flex-[4]">
+                      <p>{address.address}</p>
+                      <p>{address.address_detail}</p>
+                    </div>
+                    <div className="flex-[1] text-center">
+                      {
+                        <input type="radio" name="address_pk" value={address.address_pk}
+                          className="form-radio h-5 w-5 text-blue-600"
+                          checked={address.address_pk == addressPk ? true : false}
+                          onChange={(e) => handleCheckboxChange(Number(e.target.value))} />
+                      }
+                    </div>
                   </div>
+                  <Divider style={{backgroundColor: "#ddd", height: "0.1px"}} />
                 </div>
-              </div>
-              <Divider style={{backgroundColor: "#ddd", height: "0.1px"}} />
-            </div>
+              ))
+            }
           </div>
+
           <div className="py-3">
             <div className="flex">
               <div className="w-full">
                 <div className="text-2xl font-semibold mb-4 p-2">결제방법</div>
                 <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
                 {/* 토스 결제 위젯 */}
-                <CheckoutPage pay={pay} />
+                <CheckoutPage pay={pay} address_pk={addressPk} />
                 {/* <div className="flex items-center justify-between py-2">
                   <div className="w-1/4 font-medium">결제수단</div>
                   <div className="w-3/4">
@@ -423,3 +480,270 @@ export const OrderDetailContent = ({
     </div>
   )
 }
+
+
+
+
+/**
+ * 주문 성공 화면
+ * - 주문 상품
+ * - 주문자 정보
+ * - 배송 정보
+ * - 결제금액
+ *  - 총 상품 금액 : order.total_price
+ *  - 할인 금액 : ??? (discount_amount)
+ *  - 배송비 : ??? (shipping_fee)
+ *
+ * @param param0
+ * @returns
+ */
+export const OrderSuccessContent = ({
+  order, orderItems, userInfo, addressList
+}: {
+  order: Order
+  orderItems: OrderItem[]
+  userInfo: User
+  addressList: Address[]
+}) => {
+  const [isOrderInfoOpen, setIsOrderInfoOpen] = useState(false)
+  const [isPersonalInfoOpen, setIsPersonalInfoOpen] = useState(false)
+
+  const toggleOrderInfo = () => {
+    setIsOrderInfoOpen(!isOrderInfoOpen)
+  }
+
+  const togglePersonalInfo = () => {
+    setIsPersonalInfoOpen(!isPersonalInfoOpen)
+  }
+
+  const [orderInfo, setOrderInfo] = useState({
+    shippingAddress: "",
+    discount: 0,
+    shipfee: 0,
+    paymentMethod: "",
+    cashReceipt: false,
+    receiptType: ""
+  })
+
+  const [addressPk, setAddressPk] = useState(addressList[0].address_pk || 0)
+
+  console.log(`addressList[0].address_pk (기본 배송지 번호) : ${addressList[0].address_pk}`)
+
+  const totalDiscount = order.discount
+  const totalShipFee = order.shipfee
+  const finalPrice = Number(order?.total_price) - totalDiscount + totalShipFee
+
+  // 결제에 필요한 정보
+  const orderId = order.order_id        // 주문 UID
+  const orderPk = order.order_pk        // 주문번호
+  const orderName = order.title         // 주문제복
+  const customerName = userInfo.name    // 결제자 이름
+  const customerEmail = ""              // TODO: 이메일 보류
+  const customerMobilePhone = userInfo.mobile   // 전화번호 (01012341234 형식, 특수문자 제외)
+
+  // 결제 요청 정보
+  const pay = {
+    orderId: orderId,
+    orderPk: orderPk,
+    finalPrice : finalPrice,
+    orderName : orderName,
+    customerName : customerName,
+    customerEmail : customerEmail,
+    customerMobilePhone : customerMobilePhone
+  }
+
+  const renderOrderItems = () => {
+    return (
+      <table className="w-full">
+        <thead>
+          <tr>
+            <th className="py-2">상품사진</th>
+            <th className="py-2">상품명</th>
+            <th className="py-2">가격</th>
+            <th className="py-2">수량</th>
+            <th className="py-2">총금액</th>
+          </tr>
+        </thead>
+        <tbody>
+          {/*
+            Check the top-level render call using <tbody>. See https://reactjs.org/link/warning-keys for more information.
+            반복문 바로 아래 tr 에라 줘야 경고 안뜸.
+           */}
+          {
+            orderItems.map((orderItem, index) => (
+              <tr key={orderItem.order_item_pk}>
+                <td className="flex justify-center">
+                  <Image
+                    src={`/${process.env.NEXT_PUBLIC_UPLOAD_IMAGES}/products/${encodeURIComponent(String(orderItem.image_file_name))}`}
+                    alt=""
+                    width={100}
+                    height={30}
+                    sizes="100vw"
+                    priority />
+                </td>
+                <td className="p-3 text-center">{orderItem.name}</td>
+                <td className="p-3 text-center">{orderItem.price.toLocaleString()}원</td>
+                <td className="p-3 text-center">{orderItem.quantity}</td>
+                <td className="p-3 text-center">{(Number(orderItem.price)*orderItem.quantity).toLocaleString()}원</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    )
+  }
+
+  // const handlePayMethodChange = (type: string) => {
+  //   setOrderInfo({...orderInfo, paymentMethod: type})
+  // }
+
+  // 주소창 이벤트 핸들러
+  const [enroll_company, setEnroll_company] = useState({
+    address:""
+  })
+
+  const [popup, setPopup] = useState(false)
+
+  const handleInput = (e: { target: { name: any; value: any } }) => {
+    setEnroll_company({
+      ...enroll_company,
+      [e.target.name]:e.target.value
+    })
+  }
+
+  const handleComplete = (data: any) => {
+    setPopup(!popup)
+  }
+
+  // 영수증 타입 변경 핸들러
+  // const handleReceiptTypeChange = (type: string) => {
+  //   setOrderInfo({...orderInfo, receiptType: type})
+  // }
+
+  // 영수증 내용 렌더링 함수
+  const RenderReceiptContent = () => {
+    const [phoneNumber, setPhoneNumber] = useState("010-111-1111")
+    const [editingPhoneNumber, setEditingPhoneNumber] = useState(false)
+
+    const handlePhoneNumberChange = (e: { target: { value: SetStateAction<string> } }) => {
+      setPhoneNumber(e.target.value)
+    }
+
+    const handleEditButtonClick = () => {
+      setEditingPhoneNumber(true)
+    }
+
+    const handleSaveButtonClick = () => {
+      setEditingPhoneNumber(false)
+    }
+
+  }
+
+  return (
+    <div className="container mx-auto p-8">
+
+      <div className="p-3 w-full mb-5">
+        <p className="text-4xl">
+          감사합니다.
+          주문
+          <Link href={`/mypage/orders/detail/${order.order_pk}`}>
+            (#{order.order_pk})
+          </Link>
+          이 정상적으로 완료 되었습니다.
+        </p>
+        <p className="mt-5 mb-10">
+          한솔축산을 이용해 주셔서 감사합니다. <br />
+          고객님의 상품을 안전하고 신속하게 배달을 해 드리겠습니다.
+        </p>
+      </div>
+
+      <div className="p-3 w-full mb-5">
+        <div className="text-2xl font-semibold mb-4">주문상품</div>
+        <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
+        {renderOrderItems()}
+      </div>
+      {/*  */}
+      <div className="flex flex-col md:flex-row items-start md:items-start mb-8 gap-6">
+        <div className="w-full md:w-3/4 pr-4 bg-white p-3">
+          <div className="text-2xl font-semibold mb-4">주문자 정보</div>
+          <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
+          <div className="space-y-4">
+            <div>
+              <div className="flex items-center justify-between py-2">
+                <div className="w-1/4 font-medium">보내는 분</div>
+                <div className="w-3/4">{userInfo.name}</div>
+              </div>
+              <Divider style={{backgroundColor: "#ddd", height: "0.1px"}} />
+            </div>
+            <div>
+              <div className="flex items-center justify-between py-2">
+                <div className="w-1/4 font-medium">휴대폰</div>
+                <div className="w-3/4">{userInfo.mobile}</div>
+              </div>
+              <Divider style={{backgroundColor: "#ddd", height: "0.1px"}} />
+            </div>
+          </div>
+        </div>
+        <div className="w-full md:w-1/4 pl-4 mt-8 md:mt-0 bg-white p-3">
+          <div className="text-2xl font-semibold mb-4">결제금액</div>
+          <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
+          <div className="space-y-2 bg-gray-200 rounded-lg p-3">
+            <p className="text-lg m-2 text-black">할인 금액: {String(totalDiscount).toLocaleString()}원</p>
+            <p className="text-lg m-2 text-black">총 배송비: {String(totalShipFee).toLocaleString()}원</p>
+            <p className="text-lg m-2 font-semibold text-black">최종 결제 금액: {String(finalPrice).toLocaleString()}원</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex flex-col md:flex-row items-start md:items-start mb-10 gap-6">
+        <div className="w-full md:w-3/4 pr-4 p-3">
+          {/*  배송 정보 */}
+          <div className="text-2xl font-semibold mb-4">배송 정보</div>
+          <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
+          <div className="space-y-4 mb-20">
+            <div>
+              <div className="flex items-center py-2 px-4">
+                <div className="flex-1">분류</div>
+                <div className="flex-[2]">이름/연락처</div>
+                <div className="flex-[4]">주소</div>
+                <div className="flex-[1] text-center">선택</div>
+              </div>
+              <Divider style={{backgroundColor: "#ddd", height: "0.1px"}} />
+            </div>
+          </div>
+
+          {/* 결제 수단  */}
+          <div className="py-3">
+            <div className="flex">
+              <div className="w-full">
+                <div className="text-2xl font-semibold mb-4 p-2">결제 수단</div>
+                <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
+                <div className="space-y-4">
+                  <div>
+                    <div className="flex items-center justify-between py-2">
+                      <div className="w-1/4 font-medium">결제수단 선택</div>
+                      {/* TODO:  결제수단 컬럼 지정할 것 */}
+                      <div className="w-3/4">-</div>
+                    </div>
+                    <Divider style={{backgroundColor: "#ddd", height: "0.1px"}} />
+                  </div>
+                  <div>
+                    <div className="flex items-center justify-between py-2">
+                      <div className="w-1/4 font-medium">현금 영수증 신청</div>
+                      {/* TODO: 현금 영수증 신청 정보만 등로하면 될 지? */}
+                      {/* TODO: 신용/현금 분리 처리 할 것인지 그냥 무조건 입력 받을건지 */}
+                      <div className="w-3/4">-</div>
+                    </div>
+                    <Divider style={{backgroundColor: "#ddd", height: "0.1px"}} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  )
+}
+

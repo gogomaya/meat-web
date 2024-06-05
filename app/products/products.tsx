@@ -499,13 +499,15 @@ const CartOrderButton = ({
         <DialogActions>
           <Button onClick={() => {
             setOpen(false)
-            if (type === "ORDER") {
-              router.push(`/order?orderProducts=${encodeURIComponent(JSON.stringify(
-                cartProducts.filter((cartProduct) => {
-                  return cartProduct.product.product_pk === product.product_pk
-                })
-              ))}`)
-            }
+            // if (type === "ORDER") {
+            //   router.push(`/order?orderProducts=${encodeURIComponent(JSON.stringify(
+            //     cartProducts.filter((cartProduct) => {
+            //       return cartProduct.product.product_pk === product.product_pk
+            //     })
+            //   ))}`)
+            // }
+            // 구매하기 -> 알림 -> 아니오 -> 한상품만
+            router.push(`/order?productPks=${product.product_pk}&quantityList=${quantity}`)
           }} color="primary">
             아니오
           </Button>
@@ -514,7 +516,8 @@ const CartOrderButton = ({
             if (type === "CART") {
               router.push("/carts")
             } else {
-              router.push(`/order?orderProducts=${encodeURIComponent(JSON.stringify(cartProducts))}`)
+              // 구매하기 -> 알림 -> 예 -> 장바구니까지 주문
+              router.push(`/order?productPks=${product.product_pk}&quantityList=1}`)
             }
           }} color="primary" autoFocus>
             예

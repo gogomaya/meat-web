@@ -11,12 +11,14 @@ import moment from "moment"
 import {getOrderStatusMeaning} from "../../ordersUtils"
 import {orderItemsService} from "@/services/orderItemsServices"
 import {OrderItem, OrderItemSearchParams} from "@/types/orderItemsTypes"
+import {myPageData} from "@/app/mypage/mypageData"
 
 const OrderDetail = async (props: {
   params: { order_pk: number }
   searchParams: OrderSearchParams
 }) => {
   const {user} = await loginCheck(false)
+  const {bookmarks, addressList, bookmarkCount,addressCount} = await myPageData(user)
   let ordersResponse: ResponseApi = {}
   let orderItemsResponse: ResponseApi = {}
   let order_pk = props.params.order_pk

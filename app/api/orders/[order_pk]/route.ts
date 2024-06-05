@@ -10,7 +10,11 @@ export const GET = async (
 
   const mysql = await mysql2Pool()
   const [order]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
-    SELECT * FROM orders WHERE order_pk = ?
+    SELECT o.* 
+          ,0 shipfee
+          ,0 discount 
+    FROM orders o
+    WHERE order_pk = ?
   `, [order_pk])
 
   if (order.length === 0) {

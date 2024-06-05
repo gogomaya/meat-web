@@ -1,6 +1,6 @@
 import {loginCheck} from "@/app/users/login/loginCheck"
-import {ordersServices} from "@/services/ordersServices"
-import {ResponseApi} from "@/types/commonTypes"
+import {OrderParams} from "@/types/ordersTypes"
+import {orderCheckout} from "./orderCheckout"
 import {redirect} from "next/navigation"
 
 /**
@@ -17,7 +17,7 @@ import {redirect} from "next/navigation"
  * @returns
  */
 const Order = async (props: {
-  searchParams: {productPks: string, quantityList: string}
+  searchParams: { productPks: string; quantityList: string };
 }) => {
   const {user} = await loginCheck(false)
 
@@ -34,20 +34,45 @@ const Order = async (props: {
   const pks = productPks.split(",").map(Number)
   const list = quantityList.split(",").map(Number)
 
-  const orderCreateResult: ResponseApi = await ordersServices.ordersCreate(user_pk, "", pks, list)
-  console.log("❤❤❤❤❤❤❤❤❤❤❤❤")
-  console.log(orderCreateResult)
-  const order_pk = orderCreateResult.data.order_pk
-  const responseStatus = orderCreateResult.data.status
+  const params = {
+    user_pk: user_pk,
+    pks: pks,
+    list: list
+  } as OrderParams
 
-  if( responseStatus == 200 ) {
-    console.log("주문 등록 성공!!")
-    redirect(`/order/${order_pk}`)
+  const orderResult = await orderCheckout(params)
+
+  if( orderResult.result ) {
+    console.log(`result : ${orderResult.result}`)
+    console.log(`order_pk : ${orderResult.order_pk}`)
+    redirect(`/order/${orderResult.order_pk}`)
   }
 
-  // return (
-  //   <OrderPay searchParams={{order_pk: order_pk}} />
-  // )
+  // try {
+  //   const orderCreateResult: ResponseApi = await ordersServices.ordersCreate(
+  //     user_pk,
+  //     "",
+  //     pks,
+  //     list
+  //   );
+  //   console.log("❤❤❤❤❤❤❤❤❤❤❤❤");
+  //   console.log(orderCreateResult);
+
+  //   const order_pk = orderCreateResult.data.order_pk;
+  //   const responseStatus = orderCreateResult.data.status;
+
+  //   if (responseStatus == 200) {
+  //     console.log("주문 등록 성공!!");
+  //     // redirect(`/order/${order_pk}`);
+  //   }
+  // } catch (error) {
+  //   console.error("주문 생성 중 오류 발생:", error);
+  // }
+  return (
+    <>
+      <h3>로딩중</h3>
+    </>
+  )
 }
 
 export default Order

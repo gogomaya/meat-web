@@ -2,6 +2,8 @@
 import React, {useEffect, useRef, useState} from "react"
 import {loadPaymentWidget, ANONYMOUS} from "@tosspayments/payment-widget-sdk"
 import {nanoid} from "nanoid"
+import Swal from "sweetalert2"
+import withReactContent from "sweetalert2-react-content"
 
 // 구매자의 고유 아이디를 불러와서 customerKey로 설정하세요.
 // 이메일・전화번호와 같이 유추가 가능한 값은 안전하지 않습니다.
@@ -9,10 +11,12 @@ const widgetClientKey = "test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm"
 const customerKey = "N2ZORlnbt0pQTNygmDgHw"
 // const paymentWidget = PaymentWidget(widgetClientKey, PaymentWidget.ANONYMOUS) // 비회원 결제
 
-export function CheckoutPage({pay}) {
+export function CheckoutPage({pay, address_pk}) {
   const [paymentWidget, setPaymentWidget] = useState(null)
   const paymentMethodsWidgetRef = useRef(null)
   const [price, setPrice] = useState(pay.finalPrice)
+
+  console.log(`address_pk (배송지번호) : ${address_pk}`)
 
   useEffect(() => {
     const fetchPaymentWidget = async () => {
@@ -61,16 +65,23 @@ export function CheckoutPage({pay}) {
     // 결제 과정에서 악의적으로 결제 금액이 바뀌는 것을 확인하는 용도입니다.
     try {
       await paymentWidget?.requestPayment({
-        orderId: nanoid(),
+        orderId: pay.orderId,                       // 주문 번호
         orderName: pay.orderName,
         customerName: pay.customerName,
         customerEmail: pay.customerEmail,
         customerMobilePhone: pay.customerMobilePhone,
-        successUrl: `${window.location.origin}/order/success`,
+        successUrl: `${window.location.origin}/order/success?orderPk=${pay.orderPk}&addressPk=${address_pk}`,
         failUrl: `${window.location.origin}/order/fail`
       })
     } catch (error) {
-      console.error("Error requesting payment:", error)
+      console.error(error)
+      const MySwal = withReactContent(Swal)
+      MySwal.fire({
+        title: <p className="text-xl">결제 에러</p>,
+        text: error,
+        icon: "warning",
+        confirmButtonText: "확인"
+      })
     }
   }
 
