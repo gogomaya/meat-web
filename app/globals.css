@@ -1521,7 +1521,21 @@ textarea.w-input, textarea.w-select {
   }
 }
 
+.product-detail-button {
+  display: flex;
+  flex-direction: row;
+}
+
+.product-detail-button > * {
+  width: 100%!important;
+}
+
 @media screen and (max-width: 767px) {
+
+  .product-detail-button {
+    flex-direction: column;
+  }
+
   .w-hidden-main, .w-hidden-medium {
     display: inherit !important;
   }

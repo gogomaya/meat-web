@@ -391,11 +391,11 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
               <strong className="text-2xl">총금액: {(Number(product.price) * quantity).toLocaleString()}원</strong>
             </div>
             <div className="flex justify-start items-center mb-4 py-4">
-              <div className="flex w-full lg:w-1/2 gap-2 items-center">
+              <div className="product-detail-button flex w-full gap-2 items-center">
                 {/* 찜 (하트) */}
                 <div
                   onClick={handleFavoriteClick}
-                  className="flex items-center justify-center w-24 h-12 p-4 border bg-gray-800 cursor-pointer transition-colors duration-300"
+                  className="flex items-center justify-center w-12 h-12 p-4 border bg-gray-800 cursor-pointer transition-colors duration-300"
                 >
                   {isFavorited ? (
                     <FavoriteIcon style={{color: "red", fontSize: "24px"}} />
@@ -407,7 +407,7 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
                   <Button
                     style={{
                       backgroundColor: "#A51C30",
-                      width: "290px",
+                      width: "100%",
                       height: "50px",
                       color: "white",
                       fontSize: "1.2rem"
@@ -421,7 +421,7 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
                   <Button
                     style={{
                       backgroundColor: "#271A11",
-                      width: "290px",
+                      width: "100%",
                       height: "50px",
                       color: "white",
                       fontSize: "1.2rem"
