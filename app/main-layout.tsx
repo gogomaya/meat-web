@@ -198,13 +198,13 @@ export const MegaMenu = () => {
             ))}
           </ol>
         </li>
-        <li id="review" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
+        {/* <li id="review" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
           <Link href="/reviews" className="text-white">리뷰</Link>
           <ol id="submenu" className={`w-18 absolute border border-[#FACC15] ${menu.review ? "block" : "hidden"} py-2 rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
             <li><Link href="#" className="text-white">고객 리뷰</Link></li>
             <li><Link href="#" className="text-white">전문가 리뷰</Link></li>
           </ol>
-        </li>
+        </li> */}
         <li id="board" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
           <Link href="/boards" className="text-white">고객센터</Link>
           <ol id="submenu" className={`w-18 absolute border border-[#FACC15] ${menu.board ? "block" : "hidden"} py-2 rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
