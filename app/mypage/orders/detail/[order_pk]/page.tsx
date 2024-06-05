@@ -11,12 +11,15 @@ import moment from "moment"
 import {getOrderStatusMeaning} from "../../ordersUtils"
 import {orderItemsService} from "@/services/orderItemsServices"
 import {OrderItem, OrderItemSearchParams} from "@/types/orderItemsTypes"
+import {myPageData} from "@/app/mypage/mypageData"
 
 const OrderDetail = async (props: {
   params: { order_pk: number }
   searchParams: OrderSearchParams
 }) => {
   const {user} = await loginCheck(false)
+  const {bookmarkCount,addressCount} = await myPageData(user)
+
   let ordersResponse: ResponseApi = {}
   let orderItemsResponse: ResponseApi = {}
   let order_pk = props.params.order_pk
@@ -62,7 +65,7 @@ const OrderDetail = async (props: {
       <div className="w-full">
         <MyPageBanner title="Orders / 주문내역" subTitle="주문상세" />
         <div className="flex">
-          <Side bookmarkCount={0} addressCount={0} />
+          <Side bookmarkCount={bookmarkCount} addressCount={addressCount} />
           <div className="container py-16">
             <div className="flex flex-col items-center gap-10 my-2 mx-4 md:mx-0">
               {/* 컨테이너 */}

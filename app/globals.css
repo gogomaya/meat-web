@@ -8803,6 +8803,10 @@ figure {
   display: flex;
 }
 
+.category-menu-flex{
+  display: flex;
+}
+
 @media screen and (min-width: 1920px) {
   .section.banner-v2 {
     background-position: 0 121px, 0 132%, 50%;

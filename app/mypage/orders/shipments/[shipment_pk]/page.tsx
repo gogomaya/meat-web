@@ -2,6 +2,7 @@ import {loginCheck} from "@/app/users/login/loginCheck"
 import MainLayout from "@/app/main-layout"
 import {MyPageBanner, Side, SideButton} from "../../../mypage"
 import {DeliveryStatusLink, ShipNoCopyButton} from "../shipments"
+import {myPageData} from "@/app/mypage/mypageData"
 
 /**
  * 마이페이지>주문목록>배송조회
@@ -12,6 +13,8 @@ import {DeliveryStatusLink, ShipNoCopyButton} from "../shipments"
  */
 const Home = async () => {
   const {user} = await loginCheck(false)
+  const {bookmarkCount,addressCount} = await myPageData(user)
+
   return (
     <MainLayout user={user}>
       <div className="w-full">

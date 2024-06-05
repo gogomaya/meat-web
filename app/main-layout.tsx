@@ -176,9 +176,12 @@ export const MegaMenu = () => {
         </li>
         <li id="cow" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
           <Link href="/products?category=cow" className="text-white">소고기🐮</Link>
-          <ol id="submenu" className={`flex w-30 absolute border border-[#FACC15] ${menu.cow ? "block" : "hidden"} py-2 rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
+          <ol id="submenu" className={`category-menu-flex flex w-30 absolute border border-[#FACC15] ${menu.cow ? "block" : "hidden"} py-2 rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
             {categoriesMenu.cow.map((category_menu) => (
               <li key={category_menu}><Link href={`/products?category=cow&category_menu=${category_menu}`} className="text-white px-2">{category_menu}</Link></li>
+            ))}
+            {categoriesMenu.pork.map((category_menu) => (
+              <li key={category_menu}><Link href={`/products?category=pork&category_menu=${category_menu}`} className="text-white">{category_menu}</Link></li>
             ))}
           </ol>
         </li>
