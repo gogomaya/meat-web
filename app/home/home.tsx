@@ -326,7 +326,7 @@ export const HomeWhyUs = () => {
         </div>
         <div className="md:w-1/2 md:pl-6 mt-6 md:mt-0">
           <iframe
-            src="https://smartstore.naver.com/hansolmeat1534"
+            src="https://www.youtube.com/embed/GSwEU2vT9LI?si=3Ub8EckRz6lTQJMQ"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             className="w-full aspect-video"
           ></iframe>
