@@ -1,5 +1,5 @@
 "use client"
-import {ProductsList} from "@/app/products/products"
+import {ProductsList, ProductsPagination} from "@/app/products/products"
 import {Product} from "@/types/productsTypes"
 import Image from "next/image"
 import Link from "next/link"
