@@ -1,6 +1,6 @@
 import {loginCheck} from "@/app/users/login/loginCheck"
 import MainLayout from "@/app/main-layout"
-import {OrderDetailContent, Post} from "../order"
+import {OrderDetailContent, Post} from "@/app/order/Order"
 
 /**
  * 주문서 작성
