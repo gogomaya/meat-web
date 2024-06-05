@@ -33,7 +33,7 @@ export const CartsDetailContent = () => {
 
   return (
     <>
-      <div className="flex items-center justify-around">
+      <div className="cart-mobile flex items-center justify-around">
         <div className="w-full md:w-2/3 flex flex-col p-4 m-8">
           <div className="my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 py-4">
             <div className="py-4 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -170,7 +170,7 @@ export const CartsDetailContent = () => {
                   )}
                 </table>
               </div>
-              <div className="flex flex-col md:flex-row md:items-center justify-start space-y-4 py-4 md:space-y-0 md:space-x-2">
+              <div className="cart-mobile flex flex-col md:flex-row md:items-center justify-start space-y-4 py-4 md:space-y-0 md:space-x-2">
                 <Button
                   variant="contained"
                   className="btn h-12 w-full md:w-1/6 text-lg md:ml-4"

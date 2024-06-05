@@ -1531,6 +1531,9 @@ textarea.w-input, textarea.w-select {
 }
 
 @media screen and (max-width: 767px) {
+  .cart-mobile {
+    flex-direction: column;
+  }
 
   .product-detail-button {
     flex-direction: column;
