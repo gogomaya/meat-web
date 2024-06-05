@@ -100,7 +100,7 @@ const AdminProductsForm = ({
       })
   }, [uuid, product.product_pk])
   return (
-    <form onSubmit={(event) => event.preventDefault()}>
+    <form className="container" onSubmit={(event) => event.preventDefault()}>
       <Paper className="p-4">
         <FormControl variant="standard" error={!!errors.category_menu}>
           <InputLabel shrink>메뉴</InputLabel>
@@ -119,132 +119,138 @@ const AdminProductsForm = ({
             <FormHelperText>{errors.category_menu.message}</FormHelperText>
           )}
         </FormControl>
-        <TextField
-          className="!mt-8"
-          autoFocus
-          label="* 이름"
-          fullWidth
-          variant="standard"
-          InputLabelProps={{
-            shrink: true
-          }}
-          {...register("name")}
-          error={!!errors.name}
-          helperText={errors.name && errors.name.message}
-        />
-        <TextField
-          className="!mt-8"
-          label="* 금액"
-          placeholder="금액"
-          fullWidth
-          type="number"
-          variant="standard"
-          InputLabelProps={{
-            shrink: true
-          }}
-          {...register("price")}
-          error={!!errors.price}
-          helperText={errors.price && errors.price.message}
-        />
-        <TextField
-          className="!mt-8"
-          label="간단한 설명"
-          placeholder="간단한 설명"
-          fullWidth
-          variant="standard"
-          InputLabelProps={{
-            shrink: true
-          }}
-          {...register("description")}
-        />
-        <TextField
-          className="!mt-8"
-          label="배송관련 비고"
-          placeholder="배송관련 비고"
-          fullWidth
-          variant="standard"
-          InputLabelProps={{
-            shrink: true
-          }}
-          {...register("etc")}
-        />
-        <TextField
-          className="!mt-8"
-          label="원산지"
-          placeholder="원산지"
-          fullWidth
-          variant="standard"
-          InputLabelProps={{
-            shrink: true
-          }}
-          {...register("origin")}
-        />
-        <TextField
-          className="!mt-8"
-          label="제품중량"
-          placeholder="제품중량"
-          fullWidth
-          variant="standard"
-          InputLabelProps={{
-            shrink: true
-          }}
-          {...register("weight")}
-        />
-        <TextField
-          className="!mt-8"
-          label="식품유형"
-          placeholder="식품유형"
-          fullWidth
-          variant="standard"
-          InputLabelProps={{
-            shrink: true
-          }}
-          {...register("type")}
-        />
-        <TextField
-          className="!mt-8"
-          label="부위"
-          placeholder="부위"
-          fullWidth
-          variant="standard"
-          InputLabelProps={{
-            shrink: true
-          }}
-          {...register("part")}
-        />
-        <TextField
-          className="!mt-8"
-          label="100g당"
-          placeholder="100g당"
-          fullWidth
-          variant="standard"
-          InputLabelProps={{
-            shrink: true
-          }}
-          {...register("per100g")}
-        />
-        <TextField
-          className="!mt-8"
-          label="등급"
-          placeholder="등급"
-          fullWidth
-          variant="standard"
-          InputLabelProps={{
-            shrink: true
-          }}
-          {...register("grade")}
-        />
-        <TextField
-          className="!mt-8"
-          label="포장방법"
-          placeholder="포장방법"
-          fullWidth
-          variant="standard"
-          InputLabelProps={{
-            shrink: true
-          }}
-          {...register("package")}
-        />
+        <div className="flex items-center gap-2">
+          <TextField
+            className="!mt-8"
+            autoFocus
+            label="* 이름"
+            fullWidth
+            variant="standard"
+            InputLabelProps={{
+              shrink: true
+            }}
+            {...register("name")}
+            error={!!errors.name}
+            helperText={errors.name && errors.name.message}
+          />
+          <TextField
+            className="!mt-8"
+            label="* 금액"
+            placeholder="금액"
+            fullWidth
+            type="number"
+            variant="standard"
+            InputLabelProps={{
+              shrink: true
+            }}
+            {...register("price")}
+            error={!!errors.price}
+            helperText={errors.price && errors.price.message}
+          />
+          <TextField
+            className="!mt-8"
+            label="간단한 설명"
+            placeholder="간단한 설명"
+            fullWidth
+            variant="standard"
+            InputLabelProps={{
+              shrink: true
+            }}
+            {...register("description")}
+          />
+          <TextField
+            className="!mt-8"
+            label="배송관련 비고"
+            placeholder="배송관련 비고"
+            fullWidth
+            variant="standard"
+            InputLabelProps={{
+              shrink: true
+            }}
+            {...register("etc")}
+          />
+        </div>
+        <div className="flex items-center gap-2">
+          <TextField
+            className="!mt-8"
+            label="원산지"
+            placeholder="원산지"
+            fullWidth
+            variant="standard"
+            InputLabelProps={{
+              shrink: true
+            }}
+            {...register("origin")}
+          />
+          <TextField
+            className="!mt-8"
+            label="제품중량"
+            placeholder="제품중량"
+            fullWidth
+            variant="standard"
+            InputLabelProps={{
+              shrink: true
+            }}
+            {...register("weight")}
+          />
+          <TextField
+            className="!mt-8"
+            label="식품유형"
+            placeholder="식품유형"
+            fullWidth
+            variant="standard"
+            InputLabelProps={{
+              shrink: true
+            }}
+            {...register("type")}
+          />
+          <TextField
+            className="!mt-8"
+            label="부위"
+            placeholder="부위"
+            fullWidth
+            variant="standard"
+            InputLabelProps={{
+              shrink: true
+            }}
+            {...register("part")}
+          />
+        </div>
+        <div className="flex items-center gap-2">
+          <TextField
+            className="!mt-8"
+            label="100g당"
+            placeholder="100g당"
+            fullWidth
+            variant="standard"
+            InputLabelProps={{
+              shrink: true
+            }}
+            {...register("per100g")}
+          />
+          <TextField
+            className="!mt-8"
+            label="등급"
+            placeholder="등급"
+            fullWidth
+            variant="standard"
+            InputLabelProps={{
+              shrink: true
+            }}
+            {...register("grade")}
+          />
+          <TextField
+            className="!mt-8"
+            label="포장방법"
+            placeholder="포장방법"
+            fullWidth
+            variant="standard"
+            InputLabelProps={{
+              shrink: true
+            }}
+            {...register("package")}
+          />
+        </div>
         <TextField
           className="!mt-8"
           label="* 메인 이미지"
@@ -297,7 +303,7 @@ const AdminProductsForm = ({
           dangerouslySetInnerHTML={{__html: productForm.getValues("contents")}}
         ></div>
       </Paper>
-      <div className="mt-4 flex justify-end">
+      <div className="mt-4 flex justify-start">
         {product.product_pk === 0 ? (
           <Button
             className="!bg-[#1976d2] hover:!bg-[#1565c0]"

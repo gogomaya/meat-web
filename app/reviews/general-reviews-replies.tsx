@@ -197,7 +197,7 @@ export const GeneralReviewsReplies = ({
           <KeyboardArrowDownIcon className="cursor-pointer" onClick={() => setOpen(true)} />
         }
       </div>
-      <div className={open ? "border-t border-gray-200 px-4 py-5 sm:p-0" : "hidden"}>
+      <div className={open ? "border-t border-gray-200 px-4 sm:p-0" : "hidden"}>
         {reviewsReplyForm.getValues("reviews_replies").map((reviews_reply: ReviewsReply) => (
           <GeneralReviewsReply
             key={reviews_reply.review_reply_pk}

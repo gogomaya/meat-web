@@ -7,8 +7,24 @@ import {productsServices} from "@/services/productsServices"
 import ErrorPage from "@/app/error"
 import {FaqSection} from "../faq/faq"
 import {GeneralPagination} from "../reviews/reviews"
+import {ProductsPagination} from "../products/products"
+import {ProductsSearchParams} from "@/types/productsTypes"
 
-const Home = async () => {
+
+const Home = async (props: {
+  searchParams: ProductsSearchParams
+}) => {
+  const searchParams = {
+    rowsPerPage: Number(props.searchParams.rowsPerPage) || 16,
+    page: Number(props.searchParams.page) || 0,
+    orderColumn: props.searchParams.orderColumn || "product_pk",
+    orderDirection: props.searchParams.orderDirection || "desc",
+    query: props.searchParams.query || "",
+    category: props.searchParams.category || "",
+    category_menu: props.searchParams.category_menu || "",
+    is_today: String(props.searchParams.is_today) === "true"
+  } as ProductsSearchParams
+
   const {user} = await loginCheck(false)
   let productsHomeResponse: ResponseApi = {}
   try {
@@ -17,7 +33,7 @@ const Home = async () => {
     console.error(error)
     return <ErrorPage />
   }
-  const {products_best} = productsHomeResponse.data
+  const {products_best, total_rows} = productsHomeResponse.data
 
   return (
     <MainLayout user={user}>
@@ -27,11 +43,14 @@ const Home = async () => {
         {/* <HomeSwiper /> */}
         <HomeWhyUs />
         {/* <ProductList /> */}
-        {products_best.length ? (
-          <HomeBestMenu products={products_best} />
-        ) : null}
-        {/* <FaqSection /> */}
-        <GeneralPagination />
+        <div>
+          {products_best.length ? (
+            <HomeBestMenu products={products_best} />
+          ) : null}
+          {total_rows ? (
+            <ProductsPagination searchParams={searchParams} total_rows={total_rows} />
+          ) : null}
+        </div>
       </div>
     </MainLayout>
   )

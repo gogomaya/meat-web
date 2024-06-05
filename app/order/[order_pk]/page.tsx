@@ -1,5 +1,6 @@
 import {loginCheck} from "@/app/users/login/loginCheck"
 import MainLayout from "@/app/main-layout"
+
 import {OrderDetailContent, Post} from "../order"
 import {Order} from "@/types/ordersTypes"
 import {ResponseApi} from "@/types/commonTypes"

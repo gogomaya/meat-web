@@ -1521,7 +1521,24 @@ textarea.w-input, textarea.w-select {
   }
 }
 
+.product-detail-button {
+  display: flex;
+  flex-direction: row;
+}
+
+.product-detail-button > * {
+  width: 100%!important;
+}
+
 @media screen and (max-width: 767px) {
+  .cart-mobile {
+    flex-direction: column;
+  }
+
+  .product-detail-button {
+    flex-direction: column;
+  }
+
   .w-hidden-main, .w-hidden-medium {
     display: inherit !important;
   }
@@ -8786,6 +8803,10 @@ figure {
   grid-column-gap: 15px;
   grid-row-gap: 15px;
   margin-left: 10px;
+  display: flex;
+}
+
+.category-menu-flex{
   display: flex;
 }
 
