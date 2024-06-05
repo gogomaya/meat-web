@@ -1,6 +1,6 @@
 "use client"
 import React, {useState} from "react"
-import {Button, Dialog, DialogActions, DialogContent, Pagination, Rating, TextField, TextareaAutosize} from "@mui/material"
+import {Button, Card, CardContent, Dialog, DialogActions, DialogContent, Grid, LinearProgress, Pagination, Rating, TextField, TextareaAutosize, Typography} from "@mui/material"
 import CancelIcon from "@mui/icons-material/Cancel"
 import Image from "next/image"
 import {GeneralReviewsReplies} from "./general-reviews-replies"
@@ -16,6 +16,8 @@ import {reviewsServices} from "@/services/reviewsServices"
 import moment from "moment"
 import {backdrop} from "@/components/common/Backdrop"
 import {toastError, toastSuccess} from "@/components/common/Toast"
+import StarIcon from "@mui/icons-material/Star"
+
 
 const GeneralReviewsForm = ({
   user,
@@ -90,7 +92,7 @@ const GeneralReviewsForm = ({
   return (
     <div className="container py-4">
       <Button
-        variant="contained"
+        variant="outlined"
         className={`${review.review_pk === 0 ? "btn" : "!bg-[#ed6c02] hover:!bg-[#e65100]"}`}
         onClick={() => {
           if (!user.user_pk) {
@@ -101,7 +103,7 @@ const GeneralReviewsForm = ({
           }
           setOpen(true)
         }}
-        style={{color: "#FFFFFF", backgroundColor: "#FACC15"}}
+        style={{color: "#A51C30", borderColor: "#FACC15"}}
       >
         {review.review_pk === 0 ? "상품 리뷰 작성하기" : "수정하기"}
       </Button>
@@ -194,67 +196,97 @@ export const GeneralReview = ({
   reviewsRead: Function
 }) => {
   return (
-    <div className="my-4 bg-white shadow overflow-hidden sm:rounded-lg mt-4">
-      <div className="px-4 py-5 sm:px-6">
-        {!product ? (
-          <h3 className="text-lg font-medium text-gray-900">{review.product_name}</h3>
-        ) : null}
-        <div className="flex justify-between items-center">
-          <p className="mt-1 max-w-2xl text-sm text-gray-500">
-            {review.user_name} - {moment(review.created_at).format("YYYY. MM. DD")}
-          </p>
-          {review.user_pk === user.user_pk ? (
-            <GeneralReviewsForm user={user} review={review} reviewsRead={reviewsRead} />
-          ) : null}
+    // <div className="my-4 bg-white shadow overflow-hidden sm:rounded-lg mt-4">
+    //   <div className="flex px-4 py-5 sm:px-6 gap-4">
+    //     {!product ? (
+    //       <h3 className="text-lg font-medium text-gray-900">{review.product_name}</h3>
+    //     ) : null}
+    //     <div className="flex justify-around items-center">
+    //       <div className="mt-1 max-w-2xl text-sm text-gray-500">
+    //         {review.user_name} - {moment(review.created_at).format("YYYY. MM. DD")}
+    //       </div>
+    //       <div className="mt-4 flex items-center">
+    //       {/* 별점 표시 */}
+    //         <div className="flex">
+    //           {[...Array(review.grade)].map((_, index) => (
+    //             <svg key={index} className="h-5 w-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+    //               <path fillRule="evenodd" d="M10 2a.75.75 0 0 1 .67.41l1.69 3.429 3.775.549a.75.75 0 0 1 .416 1.279l-2.732 2.67.645 3.758a.75.75 0 0 1-1.088.791L10 14.729l-3.385 1.782a.75.75 0 0 1-1.088-.791l.645-3.758-2.732-2.67a.75.75 0 0 1 .416-1.28l3.775-.548 1.69-3.429A.75.75 0 0 1 10 2z" clipRule="evenodd" />
+    //             </svg>
+    //           ))}
+    //           <p className="ml-2 text-sm text-gray-500">{review.grade}점</p>
+    //         </div>
+    //       </div>
+    //       <div>
+    //         {review.user_pk === user.user_pk ? (
+    //           <GeneralReviewsForm user={user} review={review} reviewsRead={reviewsRead} />
+    //         ) : null}
+    //       </div>
+    //     </div>
+    //   </div>
+    //   <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
+    //     <dl className="sm:divide-y sm:divide-gray-200">
+    //       <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+    //         <div
+    //           className="mt-1 text-sm text-gray-900 sm:col-span-2"
+    //           dangerouslySetInnerHTML={{__html: review.contents.replaceAll("\n", "<br />")}}
+    //         />
+    //       </div>
+    //     </dl>
+    //   </div>
+    //   <div className="px-2">
+    //     {review.reviews_images?.map((review_image) => (
+    //       <span
+    //         key={review_image.review_image_pk}
+    //         className="p-2 inline-block h-[166px]"
+    //       >
+    //         <Image
+    //           src={`/upload-images/reviews/${review_image.file_name}`}
+    //           alt={review_image.file_name}
+    //           width={150}
+    //           height={150}
+    //           priority
+    //           sizes="100vw"
+    //           style={{
+    //             aspectRatio: "1/1",
+    //             borderRadius: "4px"
+    //           }}
+    //         />
+    //       </span>
+    //     ))}
+    //   </div>
+    //   <div className="px-6 py-3 flex justify-between items-center">
+    //     <GeneralReviewsLikes  user={user} review={review} />
+    //   </div>
+    //   <GeneralReviewsReplies user={user} review={review} />
+    // </div>
+    <Card>
+      <CardContent>
+        <Image
+          src="/images/7.jpg"
+          alt="상품 이미지"
+          width={400}
+          height={100}
+          className="rounded"
+          style={{marginRight: "20px"}} />
+        <Typography variant="h5" component="h3" className="font-bold mt-2">
+          {review.user_name}
+        </Typography>
+        <div className="flex items-center mt-1">
+          {[...Array(review.grade)].map((_, index) => (
+            <StarIcon key={index} className="text-yellow-400" />
+          ))}
         </div>
-        <div className="mt-4 flex items-center">
-          {/* 별점 표시 */}
-          <div className="flex">
-            {[...Array(review.grade)].map((_, index) => (
-              <svg key={index} className="h-5 w-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10 2a.75.75 0 0 1 .67.41l1.69 3.429 3.775.549a.75.75 0 0 1 .416 1.279l-2.732 2.67.645 3.758a.75.75 0 0 1-1.088.791L10 14.729l-3.385 1.782a.75.75 0 0 1-1.088-.791l.645-3.758-2.732-2.67a.75.75 0 0 1 .416-1.28l3.775-.548 1.69-3.429A.75.75 0 0 1 10 2z" clipRule="evenodd" />
-              </svg>
-            ))}
-          </div>
-          <p className="ml-2 text-sm text-gray-500">{review.grade}점</p>
+        <Typography variant="body2" className="mt-2">
+          {review.contents}
+        </Typography>
+        <div className="py-4">
+          <GeneralReviewsLikes  user={user} review={review} />
         </div>
-      </div>
-      <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
-        <dl className="sm:divide-y sm:divide-gray-200">
-          <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
-            <div
-              className="mt-1 text-sm text-gray-900 sm:col-span-2"
-              dangerouslySetInnerHTML={{__html: review.contents.replaceAll("\n", "<br />")}}
-            />
-          </div>
-        </dl>
-      </div>
-      <div className="px-2">
-        {review.reviews_images?.map((review_image) => (
-          <span
-            key={review_image.review_image_pk}
-            className="p-2 inline-block h-[166px]"
-          >
-            <Image
-              src={`/upload-images/reviews/${review_image.file_name}`}
-              alt={review_image.file_name}
-              width={150}
-              height={150}
-              priority
-              sizes="100vw"
-              style={{
-                aspectRatio: "1/1",
-                borderRadius: "4px"
-              }}
-            />
-          </span>
-        ))}
-      </div>
-      <div className="px-6 py-3 flex justify-between items-center">
-        <GeneralReviewsLikes  user={user} review={review} />
-      </div>
-      <GeneralReviewsReplies user={user} review={review} />
-    </div>
+        <div>
+          <GeneralReviewsReplies user={user} review={review} />
+        </div>
+      </CardContent>
+    </Card>
   )
 }
 
@@ -286,8 +318,28 @@ export const GeneralReviews = ({
     reviewsForm.setValue("reviews", reviewsResponse.data.reviews)
     reviewsForm.setValue("total_rows", reviewsResponse.data.total_rows)
   }
+  const reviewStats = {
+    total: total_rows,
+    fiveStars: reviews.filter((review) => review.grade === 5).length,
+    fourStars: reviews.filter((review) => review.grade === 4).length,
+    threeStars: reviews.filter((review) => review.grade === 3).length,
+    twoStars: reviews.filter((review) => review.grade === 2).length,
+    oneStar: reviews.filter((review) => review.grade === 1).length
+  }
   return (
     <div>
+      <div className="py-4" style={{fontSize: "30px"}}><strong>고객리뷰</strong></div>
+      <div className="mb-6">
+        {Object.entries(reviewStats).slice(1).map(([key, val], index) => (
+          <div key={index} className="flex items-center">
+            <Typography variant="body1" className="w-24">
+              {key.replace("Stars", " Stars")}
+            </Typography>
+            <LinearProgress variant="determinate" value={val * 100 /total_rows} sx={{width: val * 100 /total_rows, backgroundColor: "#271A11", "& .MuiLinearProgress-bar": {backgroundColor: "#FACC15"}}} className="mx-2" />
+            <Typography variant="body2">{val * 100 /total_rows}%</Typography>
+          </div>
+        ))}
+      </div>
       {product ? (
         <GeneralReviewsForm
           user={user}
@@ -301,7 +353,20 @@ export const GeneralReviews = ({
           reviewsRead={reviewsRead}
         />
       ) : null}
-      {reviewsForm.getValues("reviews").map((review: Review) => (
+      <Grid container spacing={2}>
+        {reviews.map((review, index) => (
+          <Grid item xs={12} sm={6} md={3} key={index}>
+            <GeneralReview
+              key={review.review_pk}
+              user={user}
+              product={product}
+              review={review}
+              reviewsRead={reviewsRead}
+            />
+          </Grid>
+        ))}
+      </Grid>
+      {/* {reviewsForm.getValues("reviews").map((review: Review) => (
         <GeneralReview
           key={review.review_pk}
           user={user}
@@ -309,7 +374,7 @@ export const GeneralReviews = ({
           review={review}
           reviewsRead={reviewsRead}
         />
-      ))}
+      ))} */}
       {reviewsForm.getValues("reviews").length ? (
         <GeneralReviewsPagination
           searchParams={reviewsSearchParams}
@@ -336,7 +401,7 @@ export const GeneralReviewsPagination = ({
       color="primary"
       count={Math.ceil(total_rows / searchParams.rowsPerPage)}
       page={searchParams.page + 1}
-      className="flex justify-center"
+      className="flex justify-center py-4"
       onChange={(_, value) => {
         window.history.pushState({}, "", window.location.pathname + "?" + new URLSearchParams({
           ...searchParams,

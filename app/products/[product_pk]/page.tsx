@@ -52,7 +52,7 @@ const Products = async (props: {
             total_rows={reviews_total_rows}
             reviewsSearchParams={reviewsSearchParams}
           />
-          <ProductDetailReview />
+          {/* <ProductDetailReview /> */}
         </div>
         {/* <Divider className="container mt-8" style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} /> */}
         {/* 문의 */}

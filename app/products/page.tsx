@@ -56,10 +56,11 @@ const Products = async (props: {
             minHeight: "200px",
             flexDirection: "column",
             justifyContent: "center",
-            alignItems: "center"
+            alignItems: "center",
+            fontSize: "32px"
           }}>{titleName()}</div>
         <div className="container">
-          <ProductsSearch products={products} searchParams={searchParams} />
+          {/* <ProductsSearch products={products} searchParams={searchParams} /> */}
           <ProductsList products={products} />
           {total_rows ? (
             <ProductsPagination searchParams={searchParams} total_rows={total_rows} />

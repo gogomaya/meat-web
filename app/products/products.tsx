@@ -111,7 +111,31 @@ export const ProductsList = ({products}: { products: Product[] }) => {
   }, [])
 
   return (
-    <div className="container">
+    <><section className="flex justify-between items-center py-4 rounded-lg">
+      <span className="container text-lg font-semibold">
+        상품이 모두 <strong>{products.length}</strong>개 있습니다.
+      </span>
+      <div className="container flex justify-end p-2">
+        <FormControl className="w-48">
+          <InputLabel>상품정렬</InputLabel>
+          <Select
+            label="상품정렬"
+            className="w-full bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
+            // value={searchParams.orderColumn}
+            // onChange={(event) => {
+            //   router.push("?" + new URLSearchParams({
+            //     ...searchParams,
+            //     page: "0",
+            //     orderColumn: String(event.target.value)
+            //   }))
+            // } }
+          >
+            <MenuItem value="product_pk">신상품</MenuItem>
+            <MenuItem value="가격순">가격순</MenuItem>
+          </Select>
+        </FormControl>
+      </div>
+    </section><div className="container">
       <ol style={{display: "flex", flexWrap: "wrap", gap: "30px", padding: "10px"}}>
         {products.length > 0 ? (
           products.map((product) => (
@@ -155,8 +179,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
                     transform: "scale(1)",
                     transition: "transform 0.3s",
                     opacity: product.is_sold_out ? 0.3 : 1
-                  }}
-                />
+                  }} />
                 {product.is_sold_out ? (
                   <span
                     style={{
@@ -169,7 +192,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
                       color: "#ff0000"
                     }}
                   >
-                    Sold out
+                      Sold out
                   </span>
                 ) : null}
               </Link>
@@ -193,46 +216,18 @@ export const ProductsList = ({products}: { products: Product[] }) => {
                     fontSize: "0.8rem"
                   }}
                 >
-                  당일배송
-                </button>
-                <button
-                  className="product-button"
-                  style={{
-                    padding: "5px 8px",
-                    backgroundColor: "#000",
-                    color: "#fff",
-                    border: "none",
-                    borderRadius: "20px",
-                    cursor: "pointer",
-                    fontSize: "0.8rem"
-                  }}
-                >
-                  택배배송
-                </button>
-                <button
-                  className="product-button"
-                  style={{
-                    padding: "5px 8px",
-                    backgroundColor: "#ffeb3b",
-                    color: "#000",
-                    border: "none",
-                    borderRadius: "20px",
-                    cursor: "pointer",
-                    fontSize: "0.8rem"
-                  }}
-                >
-                  카드결제
+                  {product.etc}
                 </button>
               </div>
             </li>
           ))
         ) : (
           <div style={{width: "100%", textAlign: "center", padding: "20px"}}>
-            준비된 상품이 없습니다.
+              준비된 상품이 없습니다.
           </div>
         )}
       </ol>
-    </div>
+    </div></>
   )
 }
 
@@ -342,9 +337,20 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
           <div className="mb-4">
             <span className="mr-2 text-red-700 font-bold text-4xl">{product.price.toLocaleString()}원</span>
             <div className="py-3 flex flex-wrap gap-2">
-              <button className="product-button px-2 py-1 bg-black text-white rounded-full text-sm cursor-pointer">당일배송</button>
-              <button className="product-button px-2 py-1 bg-black text-white rounded-full text-sm cursor-pointer">택배배송</button>
-              <button className="product-button px-2 py-1 bg-yellow-400 text-black rounded-full text-sm cursor-pointer">카드결제</button>
+              <button
+                className="product-button"
+                style={{
+                  padding: "5px 8px",
+                  backgroundColor: "#FACC15",
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: "20px",
+                  cursor: "pointer",
+                  fontSize: "0.8rem"
+                }}
+              >
+                {product.etc}
+              </button>
             </div>
             <Divider className="bg-gray-800 h-0.5 mb-4" />
             {product.origin && (
