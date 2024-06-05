@@ -328,18 +328,22 @@ export const GeneralReviews = ({
   }
   return (
     <div>
-      <div className="py-4" style={{fontSize: "30px"}}><strong>고객리뷰</strong></div>
-      <div className="mb-6">
-        {Object.entries(reviewStats).slice(1).map(([key, val], index) => (
-          <div key={index} className="flex items-center">
-            <Typography variant="body1" className="w-24">
-              {key.replace("Stars", " Stars")}
-            </Typography>
-            <LinearProgress variant="determinate" value={val * 100 /total_rows} sx={{width: val * 100 /total_rows, backgroundColor: "#271A11", "& .MuiLinearProgress-bar": {backgroundColor: "#FACC15"}}} className="mx-2" />
-            <Typography variant="body2">{val * 100 /total_rows}%</Typography>
-          </div>
-        ))}
-      </div>
+      <div className="py-8" style={{fontSize: "30px"}}><strong>고객리뷰</strong></div>
+      {total_rows === 0 ? (
+        <div className="mb-6">등록된 리뷰가 없습니다.</div>
+      ) : (
+        <div className="mb-6">
+          {Object.entries(reviewStats).slice(1).map(([key, val], index) => (
+            <div key={index} className="flex items-center">
+              <Typography variant="body1" className="w-24">
+                {key.replace("Stars", " Stars")}
+              </Typography>
+              <LinearProgress variant="determinate" value={val * 100 / total_rows} sx={{width: val * 100 / total_rows, backgroundColor: "#271A11", "& .MuiLinearProgress-bar": {backgroundColor: "#FACC15"}}} className="mx-2" />
+              <Typography variant="body2">{val * 100 / total_rows}%</Typography>
+            </div>
+          ))}
+        </div>
+      )}
       {product ? (
         <GeneralReviewsForm
           user={user}
@@ -366,15 +370,6 @@ export const GeneralReviews = ({
           </Grid>
         ))}
       </Grid>
-      {/* {reviewsForm.getValues("reviews").map((review: Review) => (
-        <GeneralReview
-          key={review.review_pk}
-          user={user}
-          product={product}
-          review={review}
-          reviewsRead={reviewsRead}
-        />
-      ))} */}
       {reviewsForm.getValues("reviews").length ? (
         <GeneralReviewsPagination
           searchParams={reviewsSearchParams}
