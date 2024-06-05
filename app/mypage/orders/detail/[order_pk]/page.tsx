@@ -18,7 +18,8 @@ const OrderDetail = async (props: {
   searchParams: OrderSearchParams
 }) => {
   const {user} = await loginCheck(false)
-  const {bookmarkCount,addressCount} = await myPageData(user)
+
+  const {bookmarks, addressList, bookmarkCount,addressCount} = await myPageData(user)
 
   let ordersResponse: ResponseApi = {}
   let orderItemsResponse: ResponseApi = {}

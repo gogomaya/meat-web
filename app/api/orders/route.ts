@@ -21,7 +21,10 @@ export const GET = async (request: NextRequest) => {
   `, [user_pk, user_pk])
 
   const [rows]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
-    SELECT * FROM orders
+    SELECT o.* 
+          ,0 shipfee
+          ,0 discount 
+    FROM orders o
     WHERE user_pk IS NOT NULL
     AND ("" = ? OR user_pk = ?)
     ORDER BY ${orderColumn} ${orderDirection}

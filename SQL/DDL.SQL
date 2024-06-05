@@ -64,7 +64,9 @@ DROP TABLE IF EXISTS `orders`;
 
 CREATE TABLE `orders` (
 	`order_pk`	INT(11)	NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `order_id` CHAR(36) NOT NULL DEFAULT UUID(),
 	`user_pk`	INT(11)	NULL	COMMENT '회원인 경우 사용자 ID, 비회원인 경우 NULL',
+	`adress_pk`	INT(11)	NOT NULL,
 	`shipment_pk`	INT(11)	NOT NULL,
 	`title`	VARCHAR(100)	NOT NULL	COMMENT '한우 소고기 외 3건',
 	`guest_mobile`	VARCHAR(20)	NULL	COMMENT '비회원인 경우 전화번호',
@@ -122,4 +124,35 @@ CREATE TABLE `address` (
 );
 
 
+
+--------------------------- [shipments] ---------------------------
+--------------------------- [배송] ---------------------------
+DROP TABLE IF EXISTS `shipments`;
+
+CREATE TABLE `shipments` (
+	`shipment_pk`	INT(11)	NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`address_pk`	INT(11)	NOT NULL,
+	`recipient`	VARCHAR(100)	NOT NULL,
+	`recipient_mobile`	VARCHAR(20)	NOT NULL,
+	`delivery_request`	VARCHAR(100)	NULL,
+	`delivery_method`	VARCHAR(100)	NULL,
+	`tracking_no`	VARCHAR(20)	NULL	COMMENT '송장번호 14자리',
+	`ship_company`	VARCHAR(100)	NULL,
+	`status`	ENUM('pending','start','shipping','delivered','cancelled')	NULL	DEFAULT 'pending'	COMMENT '배송준비중, 배송시작, 배송중, 배송완료, 주문취소',
+	`created_at`	DATETIME	NOT NULL	DEFAULT current_timestamp()
+);
+
+
+--------------------------- [payments] ---------------------------
+--------------------------- [결제] ---------------------------
+DROP TABLE IF EXISTS `payments`;
+
+CREATE TABLE `payments` (
+	`payment_pk`	INT(11)	NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`order_pk`	INT(11)	NOT NULL,
+	`payment_method`	VARCHAR(100)	NULL,
+	`status`	ENUM('pending','completed','failed')	NOT NULL	COMMENT '결제대기, 결제완료, 결제실패',
+	`pay_id`	VARCHAR(100)	NULL	COMMENT '토스페이먼츠 결제ID',
+	`created_at`	DATETIME	NOT NULL	DEFAULT current_timestamp()
+);
 

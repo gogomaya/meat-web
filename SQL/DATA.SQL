@@ -1,4 +1,4 @@
--- Active: 1717429630666@@125.176.102.143@23306@meat_web
+-- Active: 1717380497972@@125.176.102.143@23306@meat_web
 
 
 -- 상품 데이터 39건
@@ -294,3 +294,26 @@ VALUES
 (10, '박한솔', '창원시 마산합포구 해운동', '해운아파트 1003동 303호', 0),
 (10, '황한솔', '창원시 진해구 여좌동', '여좌아파트 1004동 404호', 0),
 (10, '권한솔', '창원시 진해구 태백동', '태백아파트 1005동 505호', 0);
+
+
+
+-- 배송e
+INSERT INTO `shipments` (
+    `address_pk`,
+    `recipient`,
+    `recipient_mobile`,
+    `delivery_request`,
+    `delivery_method`,
+    `tracking_no`,
+    `ship_company`,
+    `status`
+) VALUES (
+    5,                          -- address_pk
+    '김한솔',                   -- recipient
+    '010-1234-1234',            -- recipient_mobile
+    '배송요청사항',               -- delivery_request
+    '수령방법',                 -- delivery_method
+    '송장번호',                 -- tracking_no
+    '로젠택배',                 -- ship_company
+    'pending'                   -- status
+);

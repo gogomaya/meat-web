@@ -11,6 +11,7 @@ export const addressServices = {
     formData.append("address", address.address)
     formData.append("address_detail", address.address_detail)
     formData.append("mobile", address.mobile)
+    formData.append("is_primary", String(address.is_primary))
 
     const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/address`, {
       method: "POST",

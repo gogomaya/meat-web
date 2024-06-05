@@ -18,29 +18,30 @@ import withReactContent from "sweetalert2-react-content"
 interface AddressProps {
   user: User
   addressInfo: Address
+  firstAddress: boolean
 }
 
-export const AddressForm = ({user, addressInfo}: AddressProps ) => {
+export const AddressForm = ({user, addressInfo, firstAddress}: AddressProps ) => {
 
   const [recipient, setRecipient] = useState("")
   const [address, setAddress] = useState("")
   const [addressDetail, setAddressDetail] = useState("")
   const [mobile, setMobile] = useState("")
-
+  const [first, setFirstAddress] = useState(firstAddress)
   const router = useRouter()
 
   // [등록하기] 클릭
   const handelCreate = async () => {
     console.log("주소 등록하기 클릭")
-    const updatedAddress: Omit<Address, "address_pk" | "created_at"> = {
+    const newAddress: Omit<Address, "address_pk" | "created_at"> = {
       user_pk: user.user_pk,
       recipient,
       address,
       address_detail: addressDetail,
       mobile,
-      is_primary: 0
+      is_primary: firstAddress ? 1 : 0
     }
-
+    console.log(`is_primary : ${newAddress.is_primary}`)
     if( recipient == "" || address == "" || addressDetail == "" || mobile == "" ) {
       const MySwal = withReactContent(Swal)
       MySwal.fire({
@@ -52,7 +53,7 @@ export const AddressForm = ({user, addressInfo}: AddressProps ) => {
       return
     }
 
-    const addressCreateResult: ResponseApi = await addressServices.addressCreate(updatedAddress)
+    const addressCreateResult: ResponseApi = await addressServices.addressCreate(newAddress)
 
     if(addressCreateResult.data.status == 200) {
       const MySwal = withReactContent(Swal)
@@ -64,6 +65,17 @@ export const AddressForm = ({user, addressInfo}: AddressProps ) => {
       router.refresh()
       router.push("/mypage/address")
     }
+  }
+
+  if(first) {
+    const MySwal = withReactContent(Swal)
+    MySwal.fire({
+      title: <span>새 배송지를 등록합니다.</span>,
+      text: "등록된 배송지 가 없어 새 배송지를 등록합니다.",
+      icon: "warning",
+      confirmButtonText: "확인"
+    })
+    setFirstAddress(false)
   }
   return (
     <>
@@ -205,6 +217,7 @@ interface AddressListProps {
 }
 
 export const AddressList = ({addressList}: AddressListProps) => {
+
   const MySwal = withReactContent(Swal)
   const handleDelete = async (address_pk : number) => {
     console.log(`address_pk : ${address_pk}`)

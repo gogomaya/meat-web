@@ -24,6 +24,7 @@ export interface OrderItem {
   is_best: boolean
   is_sold_out: boolean
   contents: string
+  image_file_name: any
 }
 
 export interface OrderItemWithProductInfo extends OrderItem {

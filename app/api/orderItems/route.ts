@@ -21,10 +21,30 @@ export const GET = async (request: NextRequest) => {
       WHERE ("" = ? OR order_pk = ?)
     `, [order_pk, order_pk])
 
+    // const [rows]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
+    //   SELECT *
+    //   FROM order_items item JOIN products p ON item.product_pk = p.product_pk
+    //   WHERE ("" = ? OR order_pk = ?)
+    //   ORDER BY ${orderColumn} ${orderDirection}
+    //   LIMIT ?, ?
+    // `, [order_pk, order_pk, page, rowsPerPage])
     const [rows]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
-      SELECT * 
-      FROM order_items item JOIN products p ON item.product_pk = p.product_pk
-      WHERE ("" = ? OR order_pk = ?)
+          SELECT 
+          oi.order_item_pk,
+          oi.order_pk,
+          oi.product_pk,
+          oi.quantity,
+          oi.price,
+          oi.created_at AS order_item_created_at,
+          p.*, 
+          pi.file_name AS image_file_name
+      FROM 
+          order_items oi
+          LEFT OUTER JOIN 
+              products p ON oi.product_pk = p.product_pk
+          LEFT OUTER JOIN 
+              products_images pi ON p.product_pk = pi.product_pk AND ISNULL(pi.uuid)
+      WHERE  ("" = ? OR order_pk = ?)
       ORDER BY ${orderColumn} ${orderDirection}
       LIMIT ?, ?
     `, [order_pk, order_pk, page, rowsPerPage])
