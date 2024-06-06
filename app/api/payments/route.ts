@@ -42,19 +42,25 @@ export const POST = async (request: NextRequest) => {
     const order_pk = formData.get("order_pk")
     const payment_method = formData.get("payment_method") || null
     const status = formData.get("status")
-    const pay_id = formData.get("pay_id") || null
+    const payment_key = formData.get("payment_key")
 
     const mysql = await mysql2Pool()
 
     // Add a new payment
     await mysql.execute(`
-      INSERT INTO payments (order_pk, payment_method, status, pay_id)
+      INSERT INTO payments (order_pk, payment_method, status, payment_key)
       VALUES (?, ?, ?, ?)
-    `, [order_pk, payment_method, status, pay_id])
+    `, [order_pk, payment_method, status, payment_key])
+
+    // 마지막으로 삽입된 레코드의 AUTO_INCREMENT 값 가져오기
+    const [pk]: [RowDataPacket[], FieldPacket[]] = await mysql.execute("SELECT LAST_INSERT_ID() payment_pk FROM dual")
+    const payment_pk = pk[0]["payment_pk"]
+    console.log(`등록된 결제번호 - payment_pk : ${payment_pk}`)
 
     return NextResponse.json({
       message: "Payment created successfully",
-      status: 200
+      status: 200,
+      payment_pk: payment_pk
     })
   } catch (error) {
     console.error("Error occurred while creating payment:", error)

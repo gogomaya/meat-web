@@ -31,8 +31,10 @@ export interface OrderSearchParams extends SearchParams {
 
 export interface OrderParams  {
   user_pk: number
+  mobile: string
   order_pk: number
   address_pk: number
+  payment_key: string
   pks: number[]
   list: number[]
 }

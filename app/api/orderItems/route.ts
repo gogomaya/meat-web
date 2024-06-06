@@ -49,6 +49,8 @@ export const GET = async (request: NextRequest) => {
       LIMIT ?, ?
     `, [order_pk, order_pk, page, rowsPerPage])
     return NextResponse.json({
+      message: "[API] /api/orderItems - 주문 항목 리스트 조회 성공",
+      status: 200,
       orderItems: rows,
       total_rows: total_rows[0].total_rows
     })
@@ -76,6 +78,8 @@ export const POST = async (request: NextRequest) => {
     `, values)
 
     return NextResponse.json({
+      message: "주문 항목 등록 성공",
+      status: 200,
       result: "Order item created successfully"
     })
   } catch (error) {

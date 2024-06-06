@@ -1,4 +1,5 @@
 import {OrderStatus} from "@/types/ordersTypes"
+import { ShipmentStatus } from "@/types/shipmentsTypes"
 
 /**
  * 주문 상태 변환 함수
@@ -12,6 +13,39 @@ export function getOrderStatusMeaning(status: OrderStatus): string {
   case "shipping":return "배송중"
   case "delivered":return "배송완료"
   case "cancelled":return "주문취소"
+  default:return ""
+  }
+
+}
+
+
+/**
+ * 배송 상태 변환 함수
+ * @param status 배송상태
+ * @returns
+ */
+export function getShipmentStatusMeaning(status: ShipmentStatus): string {
+  switch (status) {
+  case "pending":return "배송준비"
+  case "start":return "배송시작"
+  case "shipping":return "배송중"
+  case "delivered":return "배송완료"
+  case "cancelled":return "배송취소"
+  default:return ""
+  }
+}
+/**
+ * 배송 상태별 메시지
+ * @param status 배송상태
+ * @returns
+ */
+export function getShipmentMessage(status: ShipmentStatus): string {
+  switch (status) {
+  case "pending":return "배송준비 중 입니다."
+  case "start":return "배송시작되었습니다."
+  case "shipping":return "배송중입니다."
+  case "delivered":return "배송완료 되었습니다."
+  case "cancelled":return "배송취소 되었습니다. "
   default:return ""
   }
 }

@@ -31,8 +31,24 @@ const Order = async (props: {
   const user_pk = user.user_pk
   console.log(user_pk)
 
-  const pks = productPks.split(",").map(Number)
-  const list = quantityList.split(",").map(Number)
+  // 유효성 검사 함수
+  const isValidInput = (arr: number[]) => arr?.every((num) => !isNaN(num) && num >= 0);
+  const pks = productPks?.split(",").map(Number)
+  const list = quantityList?.split(",").map(Number)
+
+  // ================= [에러 리다이렉트] =================
+  let title = "주문 요청 실패"
+  let text = "잘못된 상품번호 또는 수량입니다."
+  let errorCode = "400"
+  let redirectUrl = "/"
+  title = encodeURIComponent(title)
+  text = encodeURIComponent(text)
+  if( !isValidInput(pks) || !isValidInput(list) ) {
+    let url = `/redirect?errorCode=${errorCode}&redirectUrl=${redirectUrl}&title=${title}&text=${text}&icon=warning`
+    redirect(url)
+  }
+  // ================= [에러 리다이렉트] =================
+  
 
   const params = {
     user_pk: user_pk,
@@ -41,33 +57,17 @@ const Order = async (props: {
   } as OrderParams
 
   const orderResult = await orderCheckout(params)
-
+  console.log(`orderResult : ${orderResult}`);
+  
   if( orderResult.result ) {
     console.log(`result : ${orderResult.result}`)
     console.log(`order_pk : ${orderResult.order_pk}`)
     redirect(`/order/${orderResult.order_pk}`)
   }
 
-  // try {
-  //   const orderCreateResult: ResponseApi = await ordersServices.ordersCreate(
-  //     user_pk,
-  //     "",
-  //     pks,
-  //     list
-  //   );
-  //   console.log("❤❤❤❤❤❤❤❤❤❤❤❤");
-  //   console.log(orderCreateResult);
+  // TODO:  에러 리다이렉트 경로 바꾸기
+  redirect("/error")
 
-  //   const order_pk = orderCreateResult.data.order_pk;
-  //   const responseStatus = orderCreateResult.data.status;
-
-  //   if (responseStatus == 200) {
-  //     console.log("주문 등록 성공!!");
-  //     // redirect(`/order/${order_pk}`);
-  //   }
-  // } catch (error) {
-  //   console.error("주문 생성 중 오류 발생:", error);
-  // }
   return (
     <>
       <h3>로딩중</h3>

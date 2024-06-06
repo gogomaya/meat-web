@@ -1,3 +1,4 @@
+-- Active: 1717429630666@@125.176.102.143@23306@meat_web
 SELECT * FROM orders;
 SELECT * FROM orders ORDER BY created_at desc;
 SELECT * FROM order_items;
@@ -43,21 +44,3 @@ DELETE FROM address WHERE user_pk = 7;
 
 
 ------------------------------------------------------------------------------
-SELECT *
-FROM address
-
-;
-
-
-
-
-
-
-
-
-
-
-
-
-
-

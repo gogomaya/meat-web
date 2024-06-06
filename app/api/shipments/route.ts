@@ -40,25 +40,25 @@ export const POST = async (request: NextRequest) => {
   try {
     const formData = await request.formData()
     const address_pk = formData.get("address_pk")
-    const recipient = formData.get("recipient")
-    const recipient_mobile = formData.get("recipient_mobile")
-    const delivery_request = formData.get("delivery_request") || null
-    const delivery_method = formData.get("delivery_method") || null
-    const tracking_no = formData.get("tracking_no") || null
-    const ship_company = formData.get("ship_company") || null
     const status = formData.get("status") || "pending"
 
     const mysql = await mysql2Pool()
 
     // Add a new shipment
     await mysql.execute(`
-      INSERT INTO shipments (address_pk, recipient, recipient_mobile, delivery_request, delivery_method, tracking_no, ship_company, status)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-    `, [address_pk, recipient, recipient_mobile, delivery_request, delivery_method, tracking_no, ship_company, status])
+      INSERT INTO shipments (address_pk, status)
+      VALUES (?, ?)
+    `, [address_pk, status])
+
+    // 마지막으로 삽입된 레코드의 AUTO_INCREMENT 값 가져오기
+    const [pk]: [RowDataPacket[], FieldPacket[]] = await mysql.execute("SELECT LAST_INSERT_ID() shipment_pk FROM dual")
+    const shipment_pk = pk[0]["shipment_pk"]
+    console.log(`등록된 배송번호 - shipment_pk : ${shipment_pk}`)
 
     return NextResponse.json({
       message: "Shipment created successfully",
-      status: 200
+      status: 200,
+      shipment_pk: shipment_pk
     })
   } catch (error) {
     console.error("Error occurred while creating shipment:", error)
