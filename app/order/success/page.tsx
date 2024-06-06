@@ -8,18 +8,22 @@ import {usersServices} from "@/services/usersServices"
 import {AddressSearchParams} from "@/types/addressTypes"
 import {ResponseApi} from "@/types/commonTypes"
 import {OrderItemSearchParams} from "@/types/orderItemsTypes"
-import {Order} from "@/types/ordersTypes"
+import {Order, OrderParams} from "@/types/ordersTypes"
 import {User} from "@/types/usersTypes"
 import {redirect} from "next/navigation"
-import {OrderDetailContent, OrderSuccessContent} from "../order"
+import { OrderSuccessContent } from "../Order"
+import { orderSuccess } from "../orderSuccess"
 
 /**
  * 결제 성공
  * TODO:
- * - 결제 성공 UI
  * - 토스에 결제 승인 요청
- * - 주문 테이블에 상태 PAID
- * - 결제 테이블 등록(INSERT)
+ * COMPLETE:
+ * - 배송 등록 ✅
+ * - 주문 업데이트 ✅
+ * - 결제 등록 ✅
+ * - 결제 성공 UI ✅
+ * 
  * @param props
  * @returns
  */
@@ -40,7 +44,7 @@ const OrderSuccess = async (props: {
   const order_id = props.searchParams.orderId
   const address_pk = props.searchParams.addressPk
   const paymentType = props.searchParams.paymentType
-  const paymentKey = props.searchParams.paymentKey
+  const payment_key = props.searchParams.paymentKey
   const amount = props.searchParams.amount
 
   console.log(":::::::::: 결제 완료 데이터 ::::::::::")
@@ -48,29 +52,29 @@ const OrderSuccess = async (props: {
   console.log(`orderId : ${order_id}`)
   console.log(`addressPk : ${address_pk}`)
   console.log(`paymentType : ${paymentType}`)
-  console.log(`paymentKey : ${paymentKey}`)
+  console.log(`paymentKey : ${payment_key}`)
   console.log(`amount : ${amount}`)
   console.log("::::::::::::::::::::::::::::::::::::")
 
+  const params = {
+    order_pk : order_pk,
+    address_pk : address_pk,
+    payment_key : payment_key
+
+  } as OrderParams
+  const paySuccessResult = await orderSuccess(params)
+
+  if( paySuccessResult.result ) {
+    console.log("결제 성공!")
+    console.log(`result : ${paySuccessResult.result}`)
+    console.log(`payment_pk : ${paySuccessResult.payment_pk}`)
+    redirect(`/payments/${paySuccessResult.payment_pk}`)
+  }
 
   return (
-    <MainLayout user={user}>
-      <div>
-        <div className="flex justify-center text-red-100 text-4xl"
-          style={{
-            backgroundImage: "url('/images/Bg.png')",
-            backgroundPosition: "center calc(10% - 620px)",
-            backgroundRepeat: "repeat",
-            backgroundSize: "cover",
-            textAlign: "center",
-            minHeight: "200px",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center"
-          }}>주문 완료</div>
-      </div>
-      {/* <OrderSuccessContent order={order} orderItems={orderItems} userInfo={userInfo} addressList={addressList} /> */}
-    </MainLayout>
+    <>
+      <h3>로딩중</h3>
+    </>
   )
 }
 

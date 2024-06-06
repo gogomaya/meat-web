@@ -59,6 +59,7 @@ export const POST = async (request: NextRequest) => {
     const order_pk = pk[0]["order_pk"]
     console.log(`등록된 주문번호 - order_pk : ${order_pk}`)
     return NextResponse.json({
+      reslut: true,
       message: "Order created successfully",
       status: 200,
       order_pk: order_pk

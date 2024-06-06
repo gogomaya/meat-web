@@ -7,12 +7,6 @@ export const shipmentsServices = {
     console.log(`address_pk : ${String(shipment.address_pk)}`)
     const formData = new FormData()
     formData.append("address_pk", String(shipment.address_pk))
-    formData.append("recipient", shipment.recipient)
-    formData.append("recipient_mobile", shipment.recipient_mobile)
-    if (shipment.delivery_request) formData.append("delivery_request", shipment.delivery_request)
-    if (shipment.delivery_method) formData.append("delivery_method", shipment.delivery_method)
-    if (shipment.tracking_no) formData.append("tracking_no", shipment.tracking_no)
-    if (shipment.ship_company) formData.append("ship_company", shipment.ship_company)
     if (shipment.status) formData.append("status", shipment.status)
 
     const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/shipments`, {

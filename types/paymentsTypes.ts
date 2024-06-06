@@ -5,7 +5,7 @@ export interface Payment {
   order_pk: number
   payment_method?: string
   status: "pending" | "completed" | "failed"
-  pay_id?: string
+  payment_key?: string
   created_at: string
 }
 
@@ -14,7 +14,7 @@ export interface PaymentSearchParams extends SearchParams {
   order_pk: number
   payment_method?: string
   status?: "pending" | "completed" | "failed"
-  pay_id?: string
-  fromDate?: string // ISO 8601 format (e.g., "2024-06-01")
-  toDate?: string // ISO 8601 format (e.g., "2024-06-02")
+  payment_key?: string
+  fromDate?: string 
+  toDate?: string 
 }

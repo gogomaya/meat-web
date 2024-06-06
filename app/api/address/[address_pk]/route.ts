@@ -17,8 +17,9 @@ export const GET = async (
     if (address.length === 0) {
       return NextResponse.error()
     }
-
     return NextResponse.json({
+      status: 200,
+      message: "[API] - /api/address/{address_pk} - 배송지 조회 성공",
       address: address[0]
     })
   } catch (error) {

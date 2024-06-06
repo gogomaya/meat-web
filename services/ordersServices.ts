@@ -4,6 +4,8 @@ import {Order, OrderSearchParams} from "@/types/ordersTypes"
 import {Product} from "@/types/productsTypes"
 import {productsServices} from "./productsServices"
 import {orderItemsService} from "./orderItemsServices"
+import { dir } from "console"
+import { NextResponse } from "next/server"
 
 export const ordersServices = {
   ordersCreate: async (user_pk: number, guest_mobile: string, productPks: number[], quantityList: number[]): Promise<ResponseApi> => {
@@ -57,17 +59,27 @@ export const ordersServices = {
         method: "POST",
         body: formData
       })
-      const result = await commonServices.responseJson(response)
-      const order_pk = result.data.order_pk
 
+      const orderPkResponse = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/orders/max`, {})
+      const data = await orderPkResponse.json()
+      const order_pk = data.order_pk
+
+      console.log(`::::::::::::::::: 주문 항목 등록 - order_pk : ${order_pk} :::::::::::::::::`);
+      
       for (let i = 0; i < productList.length; i++) {
         const product_pk = productList[i].product_pk
         const quantity = quantityList[i]
-        const itemResult = orderItemsService.orderItemsCreate(product_pk, order_pk, quantity)
+        console.log(`등록 상품 번호 : ${product_pk}, 수량 : ${quantity}`);
+        
+        const itemResult = await orderItemsService.orderItemsCreate(product_pk, order_pk, quantity)
+        console.log(`itemResult : ${itemResult}`);
+        
       }
-      return result
+
+      return await commonServices.responseJson(response)
     } catch (error) {
-      throw error
+      console.log(`주문서 등록 프로세스 중 에러 : orderCreate`);
+      return {error}
     }
   },
   ordersRead: async (searchParams: SearchParams): Promise<ResponseApi> => {
@@ -77,7 +89,7 @@ export const ordersServices = {
       }))
       return await commonServices.responseJson(response)
     } catch (error) {
-      throw error
+      return {error}
     }
   },
   ordersDetail: async (order_pk: number): Promise<ResponseApi> => {
@@ -85,7 +97,7 @@ export const ordersServices = {
       const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/orders/${order_pk}`)
       return await commonServices.responseJson(response)
     } catch (error) {
-      throw error
+      return {error}
     }
   },
   ordersUpdate: async (updatedOrderData: Order): Promise<ResponseApi> => {
@@ -110,7 +122,7 @@ export const ordersServices = {
       })
       return await commonServices.responseJson(response)
     } catch (error) {
-      throw error
+      return {error}
     }
   },
   ordersDelete: async (order_pk: number): Promise<ResponseApi> => {
@@ -120,7 +132,7 @@ export const ordersServices = {
       })
       return await commonServices.responseJson(response)
     } catch (error) {
-      throw error
+      return {error}
     }
   }
 }

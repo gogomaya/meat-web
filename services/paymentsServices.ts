@@ -7,9 +7,8 @@ export const paymentsServices = {
     console.log(`order_pk : ${String(payment.order_pk)}`)
     const formData = new FormData()
     formData.append("order_pk", String(payment.order_pk))
-    if (payment.payment_method) formData.append("payment_method", payment.payment_method)
+    formData.append("payment_key", String(payment.payment_key))
     formData.append("status", payment.status)
-    if (payment.pay_id) formData.append("pay_id", payment.pay_id)
 
     const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/payments`, {
       method: "POST",
@@ -47,7 +46,7 @@ export const paymentsServices = {
     formData.append("order_pk", String(payment.order_pk))
     if (payment.payment_method) formData.append("payment_method", payment.payment_method)
     formData.append("status", payment.status)
-    if (payment.pay_id) formData.append("pay_id", payment.pay_id)
+    if (payment.payment_key) formData.append("payment_key", payment.payment_key)
     const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/payments/${payment_pk}`, {
       method: "PUT",
       body: formData

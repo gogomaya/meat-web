@@ -1,4 +1,13 @@
--- Active: 1717380497972@@125.176.102.143@23306@meat_web
+-- Active: 1717429630666@@125.176.102.143@23306@meat_web
+
+-- TRUNCATE
+TRUNCATE bookmarks;
+TRUNCATE orders;
+TRUNCATE order_items;
+TRUNCATE address;
+TRUNCATE shipments;
+TRUNCATE payments;
+
 
 
 -- 상품 데이터 39건

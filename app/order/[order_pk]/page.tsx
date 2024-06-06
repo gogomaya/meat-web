@@ -1,7 +1,6 @@
 import {loginCheck} from "@/app/users/login/loginCheck"
 import MainLayout from "@/app/main-layout"
 
-import {OrderDetailContent, Post} from "../order"
 import {Order} from "@/types/ordersTypes"
 import {ResponseApi} from "@/types/commonTypes"
 import {ordersServices} from "@/services/ordersServices"
@@ -13,6 +12,7 @@ import {usersServices} from "@/services/usersServices"
 import {AddressSearchParams} from "@/types/addressTypes"
 import {addressServices} from "@/services/addressService"
 import {redirect} from "next/navigation"
+import { OrderDetailContent } from "../Order"
 
 /**
  * 주문서 작성
@@ -34,7 +34,22 @@ const OrderPay = async (props: {
 }) => {
   const {user} = await loginCheck(false)
   const order_pk = props.params.order_pk
+  console.log(`주문 등록 완료 후`);
+  console.log(`:::::::::::::::::: [주문서 작성]:::::::::::::::::: `)
+  console.log ("/ordre/{order_pk}")
   console.log(`order_pk : ${order_pk}`)
+
+  let title = "주문서 조회 실패"
+  let text = "잘못된 주문 번호입니다."
+  let redirectUrl = "/"
+  // ✅ 한글을 url 에 담을 때 인코딩 필수
+  title = encodeURIComponent(title)
+  text = encodeURIComponent(text)
+
+  if( !order_pk || isNaN(order_pk) ) {
+    let url = `/redirect?redirectUrl=${redirectUrl}&title=${title}&text=${text}&icon=warning`
+    redirect(url)
+  }
 
 
   // 배송지 조회
@@ -49,12 +64,14 @@ const OrderPay = async (props: {
   let noAddress = false
   try {
     addressResponse = await addressServices.addressRead(addressParams)
-    addressList = addressResponse.data.addressList
+    addressList = await addressResponse.data.addressList
     lastPage = Math.floor(addressResponse.data.total_rows / addressParams.rowsPerPage)
     console.log(addressList)
     console.log(addressList.length)
-    if( addressList.length == 0 ) noAddress = true      // 배송지 없음
-    console.log("배송지가 없으므로, 신규 등록해야합니다.")
+    if( addressList.length == 0 ) {
+      noAddress = true 
+      console.log("배송지가 없으므로, 신규 등록해야합니다.")
+    }      // 배송지 없음
   } catch (error) {
     console.error(error)
     return <ErrorPage />
@@ -73,6 +90,7 @@ const OrderPay = async (props: {
   let order : Order = {
     order_pk: order_pk || 0,
     order_id: "",
+    address_pk: 0,
     user_pk: user.user_pk || 0,
     shipment_pk: 0,
     title: "",
@@ -80,7 +98,7 @@ const OrderPay = async (props: {
     status: "pending",
     created_at: "",
     shipfee: 0,
-    discount: 0
+    discount: 0,
   }
   const searchParams = {
     order_pk : order_pk,

@@ -22,6 +22,8 @@ export const GET = async (
     }
 
     return NextResponse.json({
+      message: "[API] /api/user/{user_pk} - 회원 조회 성공...",
+      status: 200,
       user: users[0]
     })
   } catch (error) {

@@ -20,6 +20,8 @@ export const GET = async (
     }
 
     return NextResponse.json({
+      status: 200,
+      message: "[API] - /api/shipments/{shipment_pk} - 배송 정보 조회 성공",
       shipment: shipment[0]
     })
   } catch (error) {

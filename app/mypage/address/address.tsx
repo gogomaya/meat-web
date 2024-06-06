@@ -97,7 +97,7 @@ export const AddressForm = ({user, addressInfo, firstAddress}: AddressProps ) =>
         />
         <input className="w-full rounded-md py-2.5 px-4 border text-sm outline-[#007bff]"
           value={mobile}
-          type="text" id="mobile" placeholder="전화번호 (010-0000-0000)"
+          type="text" id="mobile" placeholder="전화번호 (01012341234) 기호없이"
           onChange={(e) => setMobile(e.target.value)}
         />
         <button type="button" onClick={() => handelCreate()} className="text-white bg-[#A51C30] hover:bg-[#8B0A1D] font-semibold rounded-md text-sm px-4 py-2.5 w-full">
@@ -184,7 +184,7 @@ export const AddressUpdateForm = ({user, addressInfo}: AddressProps ) => {
         />
         <input className="w-full rounded-md py-2.5 px-4 border text-sm outline-[#007bff]"
           value={mobile}
-          type="text" id="mobile" placeholder="전화번호 (010-0000-0000)"
+          type="text" id="mobile" placeholder="전화번호 (01012341234) 기호없이"
           onChange={(e) => setMobile(e.target.value)}
         />
         { addressInfo.is_primary == 1 ?

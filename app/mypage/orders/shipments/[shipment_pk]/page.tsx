@@ -3,6 +3,12 @@ import MainLayout from "@/app/main-layout"
 import {MyPageBanner, Side, SideButton} from "../../../mypage"
 import {DeliveryStatusLink, ShipNoCopyButton} from "../shipments"
 import {myPageData} from "@/app/mypage/mypageData"
+import { addressServices } from "@/services/addressService"
+import { shipmentsServices } from "@/services/shipmentsServices"
+import { Shipment } from "@/types/shipmentsTypes"
+import { Address } from "@/types/addressTypes"
+import ErrorPage from "@/app/error"
+import { getShipmentMessage, getShipmentStatusMeaning } from "../../ordersUtils"
 
 /**
  * 마이페이지>주문목록>배송조회
@@ -11,9 +17,57 @@ import {myPageData} from "@/app/mypage/mypageData"
  * - 배송 상태에 따른 안내 메시지 처리
  * @returns
  */
-const Home = async () => {
+const AdressDetail = async (props: {
+  params: {shipment_pk: number},   // 경로 변수
+  searchParams: {}              // 쿼리 스트링 파라미터
+}) => {
   const {user} = await loginCheck(false)
   const {bookmarkCount,addressCount} = await myPageData(user)
+  let shipment : Shipment = {
+    status: "pending"
+  } as Shipment
+  let address : Address = {} as Address
+  let address_pk = 0
+
+  const shipment_pk =  props.params.shipment_pk
+  console.log(`shipment_pk: ${shipment_pk}`);
+  
+
+  // 배송 정보 조회
+  try {
+    const shipmentResponse = await shipmentsServices.shipmentDetail(shipment_pk)
+    if( shipmentResponse.data.status == 200 ) {
+      console.log(`배송 정보 조회 성공`);
+      shipment = shipmentResponse.data.shipment
+      address_pk = shipment.address_pk
+      console.log(`shipment : ${shipment}`);
+      console.dir(shipment)
+      console.log(`address_pk : ${address_pk}`);
+      
+    }
+  } catch (error) {
+    return <ErrorPage />
+  }
+
+  // 배송지 정보 조회
+  try {
+    const addressResponse = await addressServices.addressDetail(address_pk)
+
+    if( addressResponse.data.status == 200 ) {
+      console.log(`배송지 정보 조회 성공!!`)
+      address = addressResponse.data.address
+      console.log(`address : ${address}`);
+      console.dir(address)
+    }
+  } catch (error) {
+    return <ErrorPage />
+  }
+
+  let shipmentStatus = getShipmentStatusMeaning(shipment.status)
+  let shipmentStatusMessage = getShipmentMessage(shipment.status)
+  console.log(`배송 상태 : ${shipmentStatus}`);
+  
+  
 
   return (
     <MainLayout user={user}>
@@ -29,8 +83,8 @@ const Home = async () => {
                 {/* 배송 상태 박스 */}
                 <div className="w-full flex flex-col gap-6 max-w-4xl bg-white shadow-md p-6">
                   <div className="text-center">
-                    <p className="text-xl font-bold p-4">배송완료</p> {/* TODO: 배송 상태 state 로 변경 */}
-                    <p className="text-lg">고객님이 주문하신 상품이 배송완료 되었습니다.</p> {/* TODO: 배송 상태메시지 state 로 변경 */}
+                    <p className="text-xl font-bold p-4">{shipmentStatus}</p> 
+                    <p className="text-lg">고객님이 주문하신 상품이 {shipmentStatusMessage}</p> 
                   </div>
                 </div>
                 {/* 배송 상태 확인 박스 */}
@@ -50,7 +104,7 @@ const Home = async () => {
                     </div>
                     <div className="item flex-[3]">
                       <div className="inner p-1">
-                        <span className="px-3" id="shipNo">121650564531</span>
+                        <span className="px-3" id="shipNo">{shipment.tracking_no}</span>
                       </div>
                     </div>
                   </div>
@@ -63,7 +117,7 @@ const Home = async () => {
                     </div>
                     <div className="item flex-[3]">
                       <div className="inner p-1">
-                        <span className="px-3">김한솔</span>
+                        <span className="px-3">{address.recipient}</span>
                       </div>
                     </div>
                   </div>
@@ -76,7 +130,7 @@ const Home = async () => {
                     </div>
                     <div className="item flex-[3]">
                       <div className="inner p-1">
-                        <span className="px-3">010-1234-1234</span>
+                        <span className="px-3">{address.mobile}</span>
                       </div>
                     </div>
                   </div>
@@ -89,8 +143,8 @@ const Home = async () => {
                     </div>
                     <div className="item flex-[3]">
                       <div className="inner p-1">
-                        <span className="px-3">대전광역시 서구 둔산3동 1862번지</span>
-                        <span className="px-3">103동 1801호</span>
+                        <span className="px-3">{address.address}</span>
+                        <span className="px-3">{address.address_detail}</span>
                       </div>
                     </div>
                   </div>
@@ -103,7 +157,7 @@ const Home = async () => {
                     </div>
                     <div className="item flex-[3]">
                       <div className="inner p-1">
-                        <span className="px-3">문앞 현관 비밀번호 1234종</span>
+                        <span className="px-3">{address.delivery_request}</span>
                       </div>
                     </div>
                   </div>
@@ -116,7 +170,7 @@ const Home = async () => {
                     </div>
                     <div className="item flex-[3]">
                       <div className="inner p-1">
-                        <span className="px-3">문앞</span>
+                        <span className="px-3">{address.delivery_method}</span>
                       </div>
                     </div>
                   </div>
@@ -131,4 +185,4 @@ const Home = async () => {
   )
 }
 
-export default Home
+export default AdressDetail

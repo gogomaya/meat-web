@@ -1,27 +1,30 @@
 import {NextRequest, NextResponse} from "next/server"
 import mysql2Pool from "@/libraries/mysql2Pool"
 import {RowDataPacket, FieldPacket} from "mysql2/promise"
+import { stat } from "fs"
 
 export const GET = async (
   request: NextRequest,
   context: {params: {order_pk: number}}
 ) => {
   const {order_pk} = context.params
-
+  console.log(`order_pk : ${order_pk}`)
+  
   const mysql = await mysql2Pool()
   const [order]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
     SELECT o.* 
-          ,0 shipfee
-          ,0 discount 
     FROM orders o
     WHERE order_pk = ?
   `, [order_pk])
 
   if (order.length === 0) {
+    console.log(`주문 정보 조회 시 에러..`);
     return NextResponse.error()
   }
 
   return NextResponse.json({
+    message: "Payment created successfully",
+    status: 200,
     order: order[0]
   })
 }
@@ -33,19 +36,22 @@ export const PUT = async (
 ) => {
   const {order_pk} = context.params
   const formData = await request.formData()
-  const {status} = Object.fromEntries(formData.entries())
+  const {address_pk, status} = Object.fromEntries(formData.entries())
 
   const mysql = await mysql2Pool()
   const [result]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
     UPDATE orders
-    SET status = ?
+    SET 
+        address_pk = ?
+       ,status = ?
     WHERE order_pk = ?
-  `, [status, order_pk])
+  `, [address_pk, status, order_pk])
 
   console.log("result : " + result)
 
   return NextResponse.json({
-    result: "Order updated successfully"
+    result: "Order updated successfully",
+    status: 200
   })
 }
 

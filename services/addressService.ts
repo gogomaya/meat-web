@@ -17,7 +17,6 @@ export const addressServices = {
       method: "POST",
       body: formData
     })
-
     const result = await commonServices.responseJson(response)
     return result
   },

@@ -175,7 +175,7 @@ export const UserInfoForm = ({userInfo}: UserInfoProps ) => {
           </div>
           <form className="ml-auo space-y-4">
             <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="이름" className="w-full rounded-md py-2.5 px-4 border text-sm outline-[#007bff]" />
-            <input type="text" value={mobile} onChange={(e) => setMobile(e.target.value)} placeholder="전화번호 (010-0000-0000)" className="w-full rounded-md py-2.5 px-4 border outline-[#007bff]" />
+            <input type="text" value={mobile} onChange={(e) => setMobile(e.target.value)} placeholder="전화번호 (01012341234) 기호없이" className="w-full rounded-md py-2.5 px-4 border outline-[#007bff]" />
             <button type="button" onClick={() => handelUpdate()} className="text-white bg-[#A51C30] hover:bg-[#8B0A1D] font-semibold rounded-md text-sm px-4 py-2.5 w-full">
               <span className="text-lg font-normal">수정하기</span>
             </button>
