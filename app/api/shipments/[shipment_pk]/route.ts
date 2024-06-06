@@ -14,8 +14,9 @@ export const GET = async (
     const [shipment]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
       SELECT * FROM shipments WHERE shipment_pk = ?
     `, [shipment_pk])
+    console.log(`shipment 배송 정보 조회 : ${shipment}`)
 
-    if (shipment.length === 0) {
+    if (!shipment || shipment.length === 0) {
       return NextResponse.error()
     }
 

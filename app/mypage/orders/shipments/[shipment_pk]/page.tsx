@@ -9,6 +9,7 @@ import {Shipment} from "@/types/shipmentsTypes"
 import {Address} from "@/types/addressTypes"
 import ErrorPage from "@/app/error"
 import {getShipmentMessage, getShipmentStatusMeaning} from "../../ordersUtils"
+import {redirect} from "next/navigation"
 
 /**
  * 마이페이지>주문목록>배송조회
@@ -32,10 +33,10 @@ const AdressDetail = async (props: {
   const shipment_pk =  props.params.shipment_pk
   console.log(`shipment_pk: ${shipment_pk}`)
 
-
   // 배송 정보 조회
   try {
     const shipmentResponse = await shipmentsServices.shipmentDetail(shipment_pk)
+    console.dir(shipmentResponse.data)
     if( shipmentResponse.data.status == 200 ) {
       console.log("배송 정보 조회 성공")
       shipment = shipmentResponse.data.shipment
@@ -46,7 +47,19 @@ const AdressDetail = async (props: {
 
     }
   } catch (error) {
-    return <ErrorPage />
+    console.log("배송 정보 조회 실패!")
+    console.log(`error : ${error}`)
+    // ================= [에러 리다이렉트] =================
+    let title = "배송 정보 조회 실패"
+    let text = "존재하지 않는 배송 정보입니다."
+    let errorCode = "400"
+    let redirectUrl = "/mypage/orders"
+    title = encodeURIComponent(title)
+    text = encodeURIComponent(text)
+    let url = `/redirect?errorCode=${errorCode}&redirectUrl=${redirectUrl}&title=${title}&text=${text}&icon=warning`
+    redirect(url)
+    // ================= [에러 리다이렉트] =================
+    return <></>
   }
 
   // 배송지 정보 조회
@@ -60,7 +73,7 @@ const AdressDetail = async (props: {
       console.dir(address)
     }
   } catch (error) {
-    return <ErrorPage />
+    return <></>
   }
 
   let shipmentStatus = getShipmentStatusMeaning(shipment.status)
@@ -186,3 +199,7 @@ const AdressDetail = async (props: {
 }
 
 export default AdressDetail
+function isValidInput(pks: any) {
+  throw new Error("Function not implemented.")
+}
+
