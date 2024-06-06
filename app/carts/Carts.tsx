@@ -31,6 +31,22 @@ export const CartsDetailContent = () => {
   const discountAmount = 0
   const shippingFee = 3000
 
+
+  const handleOrderClick = () => {
+    // product_pk와 quantity 추출
+    const productPks = cartProducts.map((cartProduct) => cartProduct.product.product_pk).join(",")
+    const quantityList = cartProducts.map((cartProduct) => cartProduct.quantity).join(",")
+
+    // URL 생성
+    const orderUrl = `/order?productPks=${productPks}&quantityList=${quantityList}`
+    console.log(`productPks : ${productPks}`)
+    console.log(`quantityList : ${quantityList}`)
+    console.log(`orderUrl : ${orderUrl}`)
+
+    // 이동
+    router.push(orderUrl)
+  }
+
   return (
     <>
       <div className="cart-mobile flex items-center justify-around">
@@ -257,9 +273,10 @@ export const CartsDetailContent = () => {
               variant="contained"
               className="btn w-full h-16 text-2xl"
               disabled={cartProducts.length === 0}
-              onClick={() => {
-                router.push(`/order?orderProducts=${encodeURIComponent(JSON.stringify(cartProducts))}`)
-              }}
+              // onClick={() => {
+              //   router.push(`/order?orderProducts=${encodeURIComponent(JSON.stringify(cartProducts))}`)
+              // }}
+              onClick={handleOrderClick}
               style={{backgroundColor: "#A51C30"}}
             >
               주문하기

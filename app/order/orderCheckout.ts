@@ -50,6 +50,7 @@ export const orderCheckout = async (searchParams: OrderParams): Promise<OrderRes
       orderResult.order_pk = order_pk
     }
   } catch (error) {
+    //
     console.error("주문 생성 중 오류 발생:", error)
   }
   return orderResult
