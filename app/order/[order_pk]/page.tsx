@@ -73,8 +73,9 @@ const OrderPay = async (props: {
       console.log("배송지가 없으므로, 신규 등록해야합니다.")
     }      // 배송지 없음
   } catch (error) {
-    console.error(error)
-    return <ErrorPage />
+    console.log(":::::::::::::::::::::::::::::::::::::: 배송지 없음")
+    console.error(`error : ${error}`)
+    return <></>
   }
   if( noAddress ) {
     // ?firstAddress=true 를 붙여주변 기본 배송지로 세팅해서 주소등록
