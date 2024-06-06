@@ -4,8 +4,8 @@ import {Order, OrderSearchParams} from "@/types/ordersTypes"
 import {Product} from "@/types/productsTypes"
 import {productsServices} from "./productsServices"
 import {orderItemsService} from "./orderItemsServices"
-import { dir } from "console"
-import { NextResponse } from "next/server"
+import {dir} from "console"
+import {NextResponse} from "next/server"
 
 export const ordersServices = {
   ordersCreate: async (user_pk: number, guest_mobile: string, productPks: number[], quantityList: number[]): Promise<ResponseApi> => {
@@ -64,21 +64,21 @@ export const ordersServices = {
       const data = await orderPkResponse.json()
       const order_pk = data.order_pk
 
-      console.log(`::::::::::::::::: 주문 항목 등록 - order_pk : ${order_pk} :::::::::::::::::`);
-      
+      console.log(`::::::::::::::::: 주문 항목 등록 - order_pk : ${order_pk} :::::::::::::::::`)
+
       for (let i = 0; i < productList.length; i++) {
         const product_pk = productList[i].product_pk
         const quantity = quantityList[i]
-        console.log(`등록 상품 번호 : ${product_pk}, 수량 : ${quantity}`);
-        
+        console.log(`등록 상품 번호 : ${product_pk}, 수량 : ${quantity}`)
+
         const itemResult = await orderItemsService.orderItemsCreate(product_pk, order_pk, quantity)
-        console.log(`itemResult : ${itemResult}`);
-        
+        console.log(`itemResult : ${itemResult}`)
+
       }
 
       return await commonServices.responseJson(response)
     } catch (error) {
-      console.log(`주문서 등록 프로세스 중 에러 : orderCreate`);
+      console.log("주문서 등록 프로세스 중 에러 : orderCreate")
       return {error}
     }
   },

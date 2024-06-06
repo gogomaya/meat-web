@@ -15,6 +15,6 @@ export interface PaymentSearchParams extends SearchParams {
   payment_method?: string
   status?: "pending" | "completed" | "failed"
   payment_key?: string
-  fromDate?: string 
-  toDate?: string 
+  fromDate?: string
+  toDate?: string
 }

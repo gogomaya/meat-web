@@ -1,5 +1,5 @@
 import {OrderStatus} from "@/types/ordersTypes"
-import { ShipmentStatus } from "@/types/shipmentsTypes"
+import {ShipmentStatus} from "@/types/shipmentsTypes"
 
 /**
  * 주문 상태 변환 함수

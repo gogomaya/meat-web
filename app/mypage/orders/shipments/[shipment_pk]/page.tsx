@@ -3,12 +3,12 @@ import MainLayout from "@/app/main-layout"
 import {MyPageBanner, Side, SideButton} from "../../../mypage"
 import {DeliveryStatusLink, ShipNoCopyButton} from "../shipments"
 import {myPageData} from "@/app/mypage/mypageData"
-import { addressServices } from "@/services/addressService"
-import { shipmentsServices } from "@/services/shipmentsServices"
-import { Shipment } from "@/types/shipmentsTypes"
-import { Address } from "@/types/addressTypes"
+import {addressServices} from "@/services/addressService"
+import {shipmentsServices} from "@/services/shipmentsServices"
+import {Shipment} from "@/types/shipmentsTypes"
+import {Address} from "@/types/addressTypes"
 import ErrorPage from "@/app/error"
-import { getShipmentMessage, getShipmentStatusMeaning } from "../../ordersUtils"
+import {getShipmentMessage, getShipmentStatusMeaning} from "../../ordersUtils"
 
 /**
  * 마이페이지>주문목록>배송조회
@@ -30,20 +30,20 @@ const AdressDetail = async (props: {
   let address_pk = 0
 
   const shipment_pk =  props.params.shipment_pk
-  console.log(`shipment_pk: ${shipment_pk}`);
-  
+  console.log(`shipment_pk: ${shipment_pk}`)
+
 
   // 배송 정보 조회
   try {
     const shipmentResponse = await shipmentsServices.shipmentDetail(shipment_pk)
     if( shipmentResponse.data.status == 200 ) {
-      console.log(`배송 정보 조회 성공`);
+      console.log("배송 정보 조회 성공")
       shipment = shipmentResponse.data.shipment
       address_pk = shipment.address_pk
-      console.log(`shipment : ${shipment}`);
+      console.log(`shipment : ${shipment}`)
       console.dir(shipment)
-      console.log(`address_pk : ${address_pk}`);
-      
+      console.log(`address_pk : ${address_pk}`)
+
     }
   } catch (error) {
     return <ErrorPage />
@@ -54,9 +54,9 @@ const AdressDetail = async (props: {
     const addressResponse = await addressServices.addressDetail(address_pk)
 
     if( addressResponse.data.status == 200 ) {
-      console.log(`배송지 정보 조회 성공!!`)
+      console.log("배송지 정보 조회 성공!!")
       address = addressResponse.data.address
-      console.log(`address : ${address}`);
+      console.log(`address : ${address}`)
       console.dir(address)
     }
   } catch (error) {
@@ -65,9 +65,9 @@ const AdressDetail = async (props: {
 
   let shipmentStatus = getShipmentStatusMeaning(shipment.status)
   let shipmentStatusMessage = getShipmentMessage(shipment.status)
-  console.log(`배송 상태 : ${shipmentStatus}`);
-  
-  
+  console.log(`배송 상태 : ${shipmentStatus}`)
+
+
 
   return (
     <MainLayout user={user}>
@@ -83,8 +83,8 @@ const AdressDetail = async (props: {
                 {/* 배송 상태 박스 */}
                 <div className="w-full flex flex-col gap-6 max-w-4xl bg-white shadow-md p-6">
                   <div className="text-center">
-                    <p className="text-xl font-bold p-4">{shipmentStatus}</p> 
-                    <p className="text-lg">고객님이 주문하신 상품이 {shipmentStatusMessage}</p> 
+                    <p className="text-xl font-bold p-4">{shipmentStatus}</p>
+                    <p className="text-lg">고객님이 주문하신 상품이 {shipmentStatusMessage}</p>
                   </div>
                 </div>
                 {/* 배송 상태 확인 박스 */}
