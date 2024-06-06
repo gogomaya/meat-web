@@ -1,7 +1,7 @@
 import {NextRequest, NextResponse} from "next/server"
 import mysql2Pool from "@/libraries/mysql2Pool"
 import {RowDataPacket, FieldPacket} from "mysql2/promise"
-import { stat } from "fs"
+import {stat} from "fs"
 
 export const GET = async (
   request: NextRequest,
@@ -9,7 +9,7 @@ export const GET = async (
 ) => {
   const {order_pk} = context.params
   console.log(`order_pk : ${order_pk}`)
-  
+
   const mysql = await mysql2Pool()
   const [order]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
     SELECT o.* 
@@ -18,7 +18,7 @@ export const GET = async (
   `, [order_pk])
 
   if (order.length === 0) {
-    console.log(`주문 정보 조회 시 에러..`);
+    console.log("주문 정보 조회 시 에러..")
     return NextResponse.error()
   }
 

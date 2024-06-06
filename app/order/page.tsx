@@ -32,7 +32,7 @@ const Order = async (props: {
   console.log(user_pk)
 
   // 유효성 검사 함수
-  const isValidInput = (arr: number[]) => arr?.every((num) => !isNaN(num) && num >= 0);
+  const isValidInput = (arr: number[]) => arr?.every((num) => !isNaN(num) && num >= 0)
   const pks = productPks?.split(",").map(Number)
   const list = quantityList?.split(",").map(Number)
 
@@ -48,7 +48,7 @@ const Order = async (props: {
     redirect(url)
   }
   // ================= [에러 리다이렉트] =================
-  
+
 
   const params = {
     user_pk: user_pk,
@@ -57,8 +57,8 @@ const Order = async (props: {
   } as OrderParams
 
   const orderResult = await orderCheckout(params)
-  console.log(`orderResult : ${orderResult}`);
-  
+  console.log(`orderResult : ${orderResult}`)
+
   if( orderResult.result ) {
     console.log(`result : ${orderResult.result}`)
     console.log(`order_pk : ${orderResult.order_pk}`)

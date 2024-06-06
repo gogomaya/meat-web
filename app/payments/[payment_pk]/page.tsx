@@ -1,17 +1,17 @@
 import ErrorPage from "@/app/error"
 import MainLayout from "@/app/main-layout"
-import { OrderSuccessContent } from "@/app/order/Order"
+import {OrderSuccessContent} from "@/app/order/Order"
 import {loginCheck} from "@/app/users/login/loginCheck"
 import {addressServices} from "@/services/addressService"
 import {orderItemsService} from "@/services/orderItemsServices"
 import {ordersServices} from "@/services/ordersServices"
-import { paymentsServices } from "@/services/paymentsServices"
+import {paymentsServices} from "@/services/paymentsServices"
 import {usersServices} from "@/services/usersServices"
 import {Address, AddressSearchParams} from "@/types/addressTypes"
 import {ResponseApi} from "@/types/commonTypes"
 import {OrderItem, OrderItemSearchParams} from "@/types/orderItemsTypes"
 import {Order, OrderParams} from "@/types/ordersTypes"
-import { Payment } from "@/types/paymentsTypes"
+import {Payment} from "@/types/paymentsTypes"
 import {User} from "@/types/usersTypes"
 import {redirect} from "next/navigation"
 // import { OrderSuccessContent } from "../Order"
@@ -46,21 +46,21 @@ const PaymentSuccess = async (props: {
   // 결제 정보 조회
   const payment_pk = props.params.payment_pk
   console.log(`payment_pk : ${payment_pk}`)
-  
+
   if( !payment_pk || isNaN(payment_pk) ) {
     console.log(`payment_pk : ${payment_pk}`)
-    console.log(`잘못된 접급입니다.`);
+    console.log("잘못된 접급입니다.")
     return <ErrorPage/>
   }
-  
+
   try {
     const paymentResponse = await paymentsServices.paymentDetail(payment_pk)
-    console.log(paymentResponse.data);
+    console.log(paymentResponse.data)
     if( paymentResponse.data.status == 200 ) {
-      console.log(`[결제 완료] - 결제 정보 조회 성공!`);
+      console.log("[결제 완료] - 결제 정보 조회 성공!")
       payment = paymentResponse.data.payment
-      console.log(`:::::::::::::::: payment ::::::::::::::::`);
-      console.log(payment);
+      console.log(":::::::::::::::: payment ::::::::::::::::")
+      console.log(payment)
     }
   } catch (error) {
     return <ErrorPage/>
@@ -71,14 +71,14 @@ const PaymentSuccess = async (props: {
     order_pk = payment.order_pk
     const orderResponse = await ordersServices.ordersDetail(order_pk)
     if( orderResponse.data.status == 200 ) {
-      console.log(`[결제 완료] - 주문 정보 조회 성공!`)
+      console.log("[결제 완료] - 주문 정보 조회 성공!")
       order = orderResponse.data.order
       console.dir(order)
     }
     OrderItemSearchParams.order_pk = order_pk
     const orderItemsResponse = await orderItemsService.orderItemsRead(OrderItemSearchParams)
     if( orderItemsResponse.data.status == 200 ) {
-      console.log(`[결제 완료] - 주문 항목 리스트 조회 성공!`)
+      console.log("[결제 완료] - 주문 항목 리스트 조회 성공!")
       orderItems = orderResponse.data.orderItems
       console.dir(orderItems)
     }
@@ -91,20 +91,20 @@ const PaymentSuccess = async (props: {
     address_pk = order.address_pk
     const addressResponse = await addressServices.addressDetail(address_pk)
     if( addressResponse.data.status == 200 ) {
-      console.log(`배송지 조회 성공!`);
+      console.log("배송지 조회 성공!")
       address = addressResponse.data.address
       console.dir(address)
     }
   } catch (error) {
     return <ErrorPage />
   }
-  
+
   // 주문자 정보 조회
   try {
     const user_pk = order.user_pk || 0
     let userResponse = await usersServices.usersDetail(user_pk)
     if( userResponse.data.status == 200 ) {
-      console.log(`주문자 정보 조회 성공!`);
+      console.log("주문자 정보 조회 성공!")
       userInfo = userResponse.data.user
       console.dir(userInfo)
     }

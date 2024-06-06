@@ -11,8 +11,8 @@ import {OrderItemSearchParams} from "@/types/orderItemsTypes"
 import {Order, OrderParams} from "@/types/ordersTypes"
 import {User} from "@/types/usersTypes"
 import {redirect} from "next/navigation"
-import { OrderSuccessContent } from "../Order"
-import { orderSuccess } from "../orderSuccess"
+import {OrderSuccessContent} from "../Order"
+import {orderSuccess} from "../orderSuccess"
 
 /**
  * 결제 성공
@@ -23,7 +23,7 @@ import { orderSuccess } from "../orderSuccess"
  * - 주문 업데이트 ✅
  * - 결제 등록 ✅
  * - 결제 성공 UI ✅
- * 
+ *
  * @param props
  * @returns
  */

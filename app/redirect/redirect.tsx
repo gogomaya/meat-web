@@ -1,5 +1,5 @@
 "use client"
-import { redirect } from "next/navigation"
+import {redirect} from "next/navigation"
 import Swal from "sweetalert2"
 import withReactContent from "sweetalert2-react-content"
 
@@ -11,22 +11,22 @@ interface ErrorProps {
 }
 
 const RedirectErrorPage = ({title, text, errorCode, icon}: ErrorProps  ) => {
-    
-    const MySwal = withReactContent(Swal)
-    MySwal.fire({
-        title: <p className="text-xl">{title}</p>,
-        text: `${text} [에러코드] : ${errorCode}`,
-        icon: icon || "info",
-        timer: 3000,
-        timerProgressBar: true,
-        confirmButtonText: "확인"
-    })
 
-    return (
-        <>
-            
-        </>
-    )
+  const MySwal = withReactContent(Swal)
+  MySwal.fire({
+    title: <p className="text-xl">{title}</p>,
+    text: `${text} [에러코드] : ${errorCode}`,
+    icon: icon || "info",
+    timer: 3000,
+    timerProgressBar: true,
+    confirmButtonText: "확인"
+  })
+
+  return (
+    <>
+
+    </>
+  )
 
 }
 

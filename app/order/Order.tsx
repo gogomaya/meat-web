@@ -705,31 +705,31 @@ export const OrderSuccessContent = ({
               </div>
               <Divider style={{backgroundColor: "#ddd", height: "0.1px"}} />
               <div key={address.address_pk}>
-                  <div className="flex items-center py-2 px-4">
-                    <div className="flex-1 ">
-                      {
-                        address.is_primary == 1
-                          ?
-                          <p className="inline-block text-center text-white bg-[#A51C30] hover:bg-[#8B0A1D] font-semibold rounded-md text-sm px-6 py-1 active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
+                <div className="flex items-center py-2 px-4">
+                  <div className="flex-1 ">
+                    {
+                      address.is_primary == 1
+                        ?
+                        <p className="inline-block text-center text-white bg-[#A51C30] hover:bg-[#8B0A1D] font-semibold rounded-md text-sm px-6 py-1 active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
                               기본
-                            <br />
+                          <br />
                               배송지
-                          </p>
-                          :
-                          <span>-</span>
-                      }
-                    </div>
-                    <div className="flex-[2]">
-                      <p>{address.recipient}</p>
-                      <p>{address.mobile}</p>
-                    </div>
-                    <div className="flex-[4]">
-                      <p>{address.address}</p>
-                      <p>{address.address_detail}</p>
-                    </div>
+                        </p>
+                        :
+                        <span>-</span>
+                    }
                   </div>
-                  <Divider style={{backgroundColor: "#ddd", height: "0.1px"}} />
+                  <div className="flex-[2]">
+                    <p>{address.recipient}</p>
+                    <p>{address.mobile}</p>
+                  </div>
+                  <div className="flex-[4]">
+                    <p>{address.address}</p>
+                    <p>{address.address_detail}</p>
+                  </div>
                 </div>
+                <Divider style={{backgroundColor: "#ddd", height: "0.1px"}} />
+              </div>
             </div>
           </div>
 

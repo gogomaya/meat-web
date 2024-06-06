@@ -12,7 +12,7 @@ import {usersServices} from "@/services/usersServices"
 import {AddressSearchParams} from "@/types/addressTypes"
 import {addressServices} from "@/services/addressService"
 import {redirect} from "next/navigation"
-import { OrderDetailContent } from "../Order"
+import {OrderDetailContent} from "../Order"
 
 /**
  * 주문서 작성
@@ -34,8 +34,8 @@ const OrderPay = async (props: {
 }) => {
   const {user} = await loginCheck(false)
   const order_pk = props.params.order_pk
-  console.log(`주문 등록 완료 후`);
-  console.log(`:::::::::::::::::: [주문서 작성]:::::::::::::::::: `)
+  console.log("주문 등록 완료 후")
+  console.log(":::::::::::::::::: [주문서 작성]:::::::::::::::::: ")
   console.log ("/ordre/{order_pk}")
   console.log(`order_pk : ${order_pk}`)
 
@@ -69,7 +69,7 @@ const OrderPay = async (props: {
     console.log(addressList)
     console.log(addressList.length)
     if( addressList.length == 0 ) {
-      noAddress = true 
+      noAddress = true
       console.log("배송지가 없으므로, 신규 등록해야합니다.")
     }      // 배송지 없음
   } catch (error) {
@@ -98,7 +98,7 @@ const OrderPay = async (props: {
     status: "pending",
     created_at: "",
     shipfee: 0,
-    discount: 0,
+    discount: 0
   }
   const searchParams = {
     order_pk : order_pk,

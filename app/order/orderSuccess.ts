@@ -1,10 +1,10 @@
 import {ordersServices} from "@/services/ordersServices"
-import { paymentsServices } from "@/services/paymentsServices"
-import { shipmentsServices } from "@/services/shipmentsServices"
+import {paymentsServices} from "@/services/paymentsServices"
+import {shipmentsServices} from "@/services/shipmentsServices"
 import {ResponseApi} from "@/types/commonTypes"
 import {Order, OrderParams} from "@/types/ordersTypes"
-import { Payment } from "@/types/paymentsTypes"
-import { Shipment } from "@/types/shipmentsTypes"
+import {Payment} from "@/types/paymentsTypes"
+import {Shipment} from "@/types/shipmentsTypes"
 
 
 /**
@@ -49,11 +49,11 @@ export const orderSuccess = async (searchParams: OrderParams): Promise<PaySucces
 
 
   // 주문 업데이트
-  console.log("::::::::::::::: 주문 업데이트 ::::::::::::::");
-  console.log(`order_pk : ${order_pk}`);
-  console.log(`address_pk : ${address_pk}`);
-  
-  
+  console.log("::::::::::::::: 주문 업데이트 ::::::::::::::")
+  console.log(`order_pk : ${order_pk}`)
+  console.log(`address_pk : ${address_pk}`)
+
+
   try {
     const order = {
       order_pk: order_pk,
