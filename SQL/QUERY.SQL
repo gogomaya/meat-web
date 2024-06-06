@@ -44,3 +44,44 @@ DELETE FROM address WHERE user_pk = 7;
 
 
 ------------------------------------------------------------------------------
+
+
+
+SELECT 
+          oi.order_item_pk,
+          oi.order_pk,
+          oi.product_pk,
+          oi.quantity,
+          oi.price,
+          oi.created_at AS order_item_created_at,
+          p.*, 
+          pi.file_name AS image_file_name
+      FROM 
+          order_items oi
+          LEFT OUTER JOIN 
+              products p ON oi.product_pk = p.product_pk
+          LEFT OUTER JOIN 
+              products_images pi ON p.product_pk = pi.product_pk AND ISNULL(pi.uuid)
+      WHERE  order_pk = 13
+      ;
+
+-----------------------------------------------------------
+SELECT o.* 
+          ,0 shipfee
+          ,0 discount 
+         ,
+         (SELECT file_name
+         FROM products_images
+         WHERE product_pk = (
+                            SELECT product_pk
+                            FROM order_items
+                            WHERE order_item_pk = (SELECT MIN(order_item_pk) FROM order_items oi WHERE oi.order_pk = o.order_pk ) 
+                            )
+         ) file_name
+    FROM orders o
+    WHERE user_pk IS NOT NULL
+    AND user_pk = 7
+;
+
+
+

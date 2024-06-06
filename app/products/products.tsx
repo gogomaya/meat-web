@@ -460,36 +460,68 @@ const CartOrderButton = ({
 }) => {
   const router = useRouter()
   const [open, setOpen] = React.useState(false)
+  // 장바구니 추가
   const addCartOrderList = async (product: Product, quantity: number) => {
     try {
-      cartProducts = JSON.parse(localStorage.getItem("cartProducts") || "[]")
-      const cartProduct = _.find(cartProducts, (cartProduct) => {
+      // 로컬 스토리지에서 장바구니 데이터를 가져오기
+      let cartProducts: CartProduct[] = JSON.parse(localStorage.getItem("cartProducts") || "[]")
+
+      // 장바구니에서 동일한 product_pk가 있는지 찾기
+      const cartProduct = _.find(cartProducts, (cartProduct: CartProduct) => {
         return cartProduct.product.product_pk === product.product_pk
       })
+
       if (cartProduct) {
-        cartProduct.product = product
-        cartProduct.quantity = quantity
+        // 동일한 product_pk가 있으면 수량을 1 증가시키기
+        cartProduct.quantity += 1
       } else {
+        // 동일한 product_pk가 없으면 새로운 상품 추가
         cartProducts.push({
           product,
           quantity,
           checked: true
         })
       }
+
+      // 로컬 스토리지에 장바구니 데이터 저장
       localStorage.setItem("cartProducts", JSON.stringify(cartProducts))
+
+      // 장바구니 항목 수 업데이트
       window.postMessage({cartProductsLength: cartProducts.length}, "*")
-      setOpen(true)
     } catch (error) {
+      // 오류 발생 시 경고 메시지 표시 및 로컬 스토리지 초기화
       alert("알 수 없는 오류가 발생하였습니다. 다시 시도 해주세요.")
       localStorage.setItem("cartProducts", "")
     }
+  }
+
+
+  // 장바구니 포함 주문
+  const orderWithCart = async () => {
+    // 구매하기 -> 알림 -> 예 -> 장바구니까지 주문
+    // 로컬 스토리지에서 cartProducts 가져오기
+    const storedCartProducts = JSON.parse(localStorage.getItem("cartProducts") || "[]")
+
+    // 빈 배열인지 확인
+    if (storedCartProducts.length === 0) {
+      alert("장바구니가 비어 있습니다.")
+      return
+    }
+    // product_pk와 quantity 추출 및 문자열 병합
+    const productPks = storedCartProducts.map((cartProduct : CartProduct ) => cartProduct.product.product_pk).join(",")
+    const quantityList = storedCartProducts.map((cartProduct: CartProduct ) => cartProduct.quantity).join(",")
+    console.log(`productPks : ${productPks}`)
+    console.log(`quantityList : ${quantityList}`)
+    console.log(`/order?productPks=${productPks}&quantityList=${quantityList}`)
+
+    router.push(`/order?productPks=${productPks}&quantityList=${quantityList}`)
   }
   return (
     <div>
       {React.cloneElement(children, {
         onClick: () => {
           children.props.onClick?.()
-          addCartOrderList(product, quantity)
+          setOpen(true)
         }
       })}
       <Dialog open={open} onClose={() => setOpen(false)}>
@@ -503,27 +535,30 @@ const CartOrderButton = ({
           </DialogContentText>
         </DialogContent>
         <DialogActions>
+          {/* [아니오] */}
           <Button onClick={() => {
             setOpen(false)
-            // if (type === "ORDER") {
-            //   router.push(`/order?orderProducts=${encodeURIComponent(JSON.stringify(
-            //     cartProducts.filter((cartProduct) => {
-            //       return cartProduct.product.product_pk === product.product_pk
-            //     })
-            //   ))}`)
-            // }
-            // 구매하기 -> 알림 -> 아니오 -> 한상품만
-            router.push(`/order?productPks=${product.product_pk}&quantityList=${quantity}`)
+            if( type === "CART" ) {
+              addCartOrderList(product, quantity)
+            }
+            if (type === "ORDER") {
+              // 구매하기 -> 알림 -> 아니오 -> 한상품만
+              router.push(`/order?productPks=${product.product_pk}&quantityList=${quantity}`)
+            }
           }} color="primary">
             아니오
           </Button>
+          {/* [예] */}
           <Button onClick={() => {
             setOpen(false)
             if (type === "CART") {
+              addCartOrderList(product, quantity)
+              // 장바구니로 이동
               router.push("/carts")
-            } else {
-              // 구매하기 -> 알림 -> 예 -> 장바구니까지 주문
-              router.push(`/order?productPks=${product.product_pk}&quantityList=1}`)
+            }
+            if( type === "ORDER") {
+              addCartOrderList(product, quantity)
+              orderWithCart()
             }
           }} color="primary" autoFocus>
             예

@@ -53,9 +53,11 @@ li {
 #submenu {
   display: none;
   position: absolute;
-  top: 100%;
+  top: 62px;
+  /* top: 100%; */
+  left: calc(-20px - 140px);
+  
   width: max-content;
-  left: 0;
   white-space: nowrap; 
 }
 

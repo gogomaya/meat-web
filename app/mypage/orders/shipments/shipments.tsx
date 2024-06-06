@@ -1,6 +1,8 @@
 "use client"
 import React, {useEffect,useState} from "react"
 import Link from "next/link"
+import Swal from "sweetalert2"
+import withReactContent from "sweetalert2-react-content"
 
 /**
 * 로젝백배 운송장 번호
@@ -39,7 +41,14 @@ export const ShipNoCopyButton = () => {
       const textToCopy = shipNoElement.innerText
       navigator.clipboard.writeText(textToCopy)
         .then(() => {
-          alert("운송장 번호가 클립보드에 복사되었습니다. [" + textToCopy + "]")
+          const MySwal = withReactContent(Swal)
+          MySwal.fire({
+            title: <p className="text-xl">송장번호 복사</p>,
+            text: "운송장 번호가 클립보드에 복사되었습니다. [" + textToCopy + "]",
+            icon: "info",
+            confirmButtonText: "확인"
+          })
+          // alert("운송장 번호가 클립보드에 복사되었습니다. [" + textToCopy + "]")
         })
         .catch((err) => {
           console.error("클립보드 복사에 실패했습니다.", err)

@@ -32,7 +32,12 @@ const OrderDetail = async (props: {
     title: "",
     total_count: 0,
     status: "pending",
-    created_at: ""
+    created_at: "",
+    file_name: undefined,
+    order_id: "",
+    address_pk: 0,
+    shipfee: 0,
+    discount: 0
   }
 
   const searchParams = {
@@ -146,14 +151,14 @@ const OrderDetail = async (props: {
                           <div className="w-full flex flex-wrap justify-between items-center  px-4 py-2">
                             <div className="item flex-1">
                               <Image
-                                src="/images/logo.png"
+                                src={`/${process.env.NEXT_PUBLIC_UPLOAD_IMAGES}/products/${encodeURIComponent(String(item.image_file_name))}`}
                                 alt=""
                                 width={32}
                                 height={32}
                                 sizes="100vw"
                                 className="md:w-16"
-                                priority
-                              />
+                                style={{height: "128px", objectFit: "contain"}}
+                                priority />
                             </div>
                             <div className="item flex-[3]">
                               <div className="flex flex-col items-between">

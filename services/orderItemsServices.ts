@@ -39,6 +39,8 @@ export const orderItemsService = {
           queryParams.append(key, String(value))
         }
       })
+      console.log(`queryParams : ${queryParams}`)
+
       const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/orderItems?${queryParams}`)
       return await commonServices.responseJson(response)
     } catch (error) {

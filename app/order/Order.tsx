@@ -308,9 +308,9 @@ export const OrderDetailContent = ({
             <p className="text-lg m-2 font-semibold text-black">최종 결제 금액: {finalPrice.toLocaleString()}원</p> */}
             <p className="text-lg m-2 text-black">총 상품금액: {String(order.total_price).toLocaleString()}원</p>
             {/* TODO: 할인금액이랑 배송비는 어디서 등록하고, 가져와야할까요? */}
-            <p className="text-lg m-2 text-black">할인 금액: {String(totalDiscount).toLocaleString()}원</p>
-            <p className="text-lg m-2 text-black">총 배송비: {String(totalShipFee).toLocaleString()}원</p>
-            <p className="text-lg m-2 font-semibold text-black">최종 결제 금액: {String(finalPrice).toLocaleString()}원</p>
+            <p className="text-lg m-2 text-black">할인 금액: {totalDiscount.toLocaleString()}원</p>
+            <p className="text-lg m-2 text-black">총 배송비: {totalShipFee.toLocaleString()}원</p>
+            <p className="text-lg m-2 font-semibold text-black">최종 결제 금액: {finalPrice.toLocaleString()}원</p>
           </div>
         </div>
       </div>
@@ -342,7 +342,7 @@ export const OrderDetailContent = ({
                               배송지
                           </p>
                           :
-                          <span>-</span>
+                          <span></span>
                       }
                     </div>
                     <div className="flex-[2]">
@@ -547,6 +547,9 @@ export const OrderSuccessContent = ({
     customerEmail : customerEmail,
     customerMobilePhone : customerMobilePhone
   }
+  console.log(":::::::::::::::::: 주문 항목 리스트 확인 ::::::::::::::::::::::")
+
+  console.log(`orderItems : ${orderItems}`)
 
   const renderOrderItems = () => {
     return (
@@ -684,9 +687,9 @@ export const OrderSuccessContent = ({
           <div className="text-2xl font-semibold mb-4">결제금액</div>
           <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
           <div className="space-y-2 bg-gray-200 rounded-lg p-3">
-            <p className="text-lg m-2 text-black">할인 금액: {String(totalDiscount).toLocaleString()}원</p>
-            <p className="text-lg m-2 text-black">총 배송비: {String(totalShipFee).toLocaleString()}원</p>
-            <p className="text-lg m-2 font-semibold text-black">최종 결제 금액: {String(finalPrice).toLocaleString()}원</p>
+            <p className="text-lg m-2 text-black">할인 금액: {totalDiscount.toLocaleString()}원</p>
+            <p className="text-lg m-2 text-black">총 배송비: {totalShipFee.toLocaleString()}원</p>
+            <p className="text-lg m-2 font-semibold text-black">최종 결제 금액: {finalPrice.toLocaleString()}원</p>
           </div>
         </div>
       </div>
