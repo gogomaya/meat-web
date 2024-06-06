@@ -4,6 +4,7 @@ export type OrderStatus = "pending" | "paid" | "shipping" | "delivered" | "cance
 //결제대기, 결제완료, 배송중,배송완료,주문취소
 
 export interface Order {
+  file_name: any
   order_pk: number
   order_id: string
   user_pk: number | null              // 회원인 경우 사용자 ID, 비회원인 경우 null

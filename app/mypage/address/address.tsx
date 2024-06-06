@@ -8,6 +8,7 @@ import {useRouter} from "next/navigation"
 import {useEffect, useState} from "react"
 import Swal from "sweetalert2"
 import withReactContent from "sweetalert2-react-content"
+import DaumPostcode from "react-daum-postcode"
 
 
 
@@ -39,7 +40,9 @@ export const AddressForm = ({user, addressInfo, firstAddress}: AddressProps ) =>
       address,
       address_detail: addressDetail,
       mobile,
-      is_primary: firstAddress ? 1 : 0
+      is_primary: firstAddress ? 1 : 0,
+      delivery_request: "",
+      delivery_method: ""
     }
     console.log(`is_primary : ${newAddress.is_primary}`)
     if( recipient == "" || address == "" || addressDetail == "" || mobile == "" ) {
@@ -77,6 +80,16 @@ export const AddressForm = ({user, addressInfo, firstAddress}: AddressProps ) =>
     })
     setFirstAddress(false)
   }
+
+  // TODO: 주소 API 이어서 완성
+  const complete = (data: { address: any; addressType: string; bname: string; buildingName: string }) => {
+    console.log(`address : ${data.address}`)
+    console.log(`addressType : ${data.addressType}`)
+    console.log(`bname : ${data.bname}`)
+    console.log(`buildingName : ${data.buildingName}`)
+
+    setAddress(data.address)
+  }
   return (
     <>
       <form className="ml-auo space-y-4">
@@ -90,6 +103,11 @@ export const AddressForm = ({user, addressInfo, firstAddress}: AddressProps ) =>
           value={address}
           onChange={(e) => setAddress(e.target.value)}
         />
+        <DaumPostcode
+          className="postmodal"
+          autoClose
+          onComplete={complete} />
+
         <input className="w-full rounded-md py-2.5 px-4 border text-sm outline-[#007bff]"
           type="text" id="address_detail" placeholder="상세 주소"
           value={addressDetail}
@@ -133,7 +151,9 @@ export const AddressUpdateForm = ({user, addressInfo}: AddressProps ) => {
       address,
       address_detail: addressDetail,
       mobile,
-      is_primary: isPrimary
+      is_primary: isPrimary,
+      delivery_request: "",
+      delivery_method: ""
     }
     console.dir("pdatedAddress.is_primary : " + updatedAddress.is_primary)
 

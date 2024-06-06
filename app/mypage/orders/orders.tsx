@@ -147,6 +147,14 @@ export const OrderList = ({orders}: OrderListProps) => {
               <div className="w-full flex flex-wrap justify-between items-center  px-4 py-2">
                 <div className="item flex-1">
                   <Image
+                    src={`/${process.env.NEXT_PUBLIC_UPLOAD_IMAGES}/products/${encodeURIComponent(String(order.file_name))}`}
+                    alt=""
+                    width={32}
+                    height={32}
+                    sizes="100vw"
+                    className="md:w-16"
+                    priority />
+                  {/* <Image
                     src="/images/logo.png"
                     alt=""
                     width={32}
@@ -154,7 +162,7 @@ export const OrderList = ({orders}: OrderListProps) => {
                     sizes="100vw"
                     className="md:w-16"
                     priority
-                  />
+                  /> */}
                 </div>
                 <div className="item flex-[3]">
                   <div className="flex flex-col items-between">

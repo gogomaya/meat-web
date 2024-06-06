@@ -33,6 +33,7 @@ export interface ProductsSearchParams extends SearchParams {
 }
 
 export interface CartProduct {
+  product_pk?: number
   product: Product
   quantity: number
   checked: boolean

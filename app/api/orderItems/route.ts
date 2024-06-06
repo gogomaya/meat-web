@@ -6,8 +6,8 @@ import {OrderItemSearchParams} from "@/types/orderItemsTypes"
 export const GET = async (request: NextRequest) => {
   try {
     const searchParams = request.nextUrl.searchParams
-    let rowsPerPage = Number(searchParams.get("rowsPerPage")) || 1000         // 주문항목은 페이징 할 이유가 거의 없을 듯
-    const page = (Number(searchParams.get("page")) - 1) * rowsPerPage || 0
+    const rowsPerPage = Number(searchParams.get("rowsPerPage")) || 1000
+    const page = (Number(searchParams.get("page")) * rowsPerPage) || 0
     const orderColumn = searchParams.get("orderColumn") || "order_item_pk"
     const orderDirection = searchParams.get("orderDirection") || "desc"
     const query = searchParams.get("query") || ""
@@ -29,7 +29,7 @@ export const GET = async (request: NextRequest) => {
     //   LIMIT ?, ?
     // `, [order_pk, order_pk, page, rowsPerPage])
     const [rows]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
-          SELECT 
+      SELECT 
           oi.order_item_pk,
           oi.order_pk,
           oi.product_pk,
@@ -46,8 +46,11 @@ export const GET = async (request: NextRequest) => {
               products_images pi ON p.product_pk = pi.product_pk AND ISNULL(pi.uuid)
       WHERE  ("" = ? OR order_pk = ?)
       ORDER BY ${orderColumn} ${orderDirection}
-      LIMIT ?, ?
-    `, [order_pk, order_pk, page, rowsPerPage])
+    `, [order_pk, order_pk])
+
+    console.log(`orderItems : ${rows}`)
+    console.log(`total_rows : ${total_rows}`)
+
     return NextResponse.json({
       message: "[API] /api/orderItems - 주문 항목 리스트 조회 성공",
       status: 200,

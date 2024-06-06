@@ -40,7 +40,7 @@ const PaymentSuccess = async (props: {
   let orderItems : OrderItem[] = {} as OrderItem[]
   let address : Address = {} as Address
   let userInfo : User = {} as User
-  let OrderItemSearchParams : OrderItemSearchParams = {} as OrderItemSearchParams
+  let orderItemSearchParams : OrderItemSearchParams = {rowsPerPage: 1000, page: 0} as OrderItemSearchParams
 
 
   // 결제 정보 조회
@@ -75,11 +75,13 @@ const PaymentSuccess = async (props: {
       order = orderResponse.data.order
       console.dir(order)
     }
-    OrderItemSearchParams.order_pk = order_pk
-    const orderItemsResponse = await orderItemsService.orderItemsRead(OrderItemSearchParams)
+    orderItemSearchParams.order_pk = order_pk
+    console.log(`orderItemSearchParams :  ${orderItemSearchParams}`)
+
+    const orderItemsResponse = await orderItemsService.orderItemsRead(orderItemSearchParams)
     if( orderItemsResponse.data.status == 200 ) {
       console.log("[결제 완료] - 주문 항목 리스트 조회 성공!")
-      orderItems = orderResponse.data.orderItems
+      orderItems = orderItemsResponse.data.orderItems
       console.dir(orderItems)
     }
   } catch (error) {

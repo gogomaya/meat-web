@@ -24,6 +24,14 @@ export const GET = async (request: NextRequest) => {
     SELECT o.* 
           ,0 shipfee
           ,0 discount 
+          ,(SELECT file_name
+          FROM products_images
+          WHERE product_pk = (
+                            SELECT product_pk
+                            FROM order_items
+                            WHERE order_item_pk = (SELECT MIN(order_item_pk) FROM order_items oi WHERE oi.order_pk = o.order_pk ) 
+                            )
+          ) file_name
     FROM orders o
     WHERE user_pk IS NOT NULL
     AND ("" = ? OR user_pk = ?)

@@ -18,7 +18,9 @@ const Home = async (props: {
     recipient: "",
     address: "",
     address_detail: "",
-    created_at: ""
+    created_at: "",
+    delivery_request: "",
+    delivery_method: ""
   }
   const firstAddress = props.searchParams.firstAddress
   console.log(`firstAddress : ${firstAddress}`)

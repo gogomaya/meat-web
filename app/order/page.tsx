@@ -2,6 +2,8 @@ import {loginCheck} from "@/app/users/login/loginCheck"
 import {OrderParams} from "@/types/ordersTypes"
 import {orderCheckout} from "./orderCheckout"
 import {redirect} from "next/navigation"
+import MainLayout from "../main-layout"
+import RedirectErrorPage from "../redirect/redirect"
 
 /**
  * 주문서 준비
@@ -65,13 +67,28 @@ const Order = async (props: {
     redirect(`/order/${orderResult.order_pk}`)
   }
 
-  // TODO:  에러 리다이렉트 경로 바꾸기
-  redirect("/error")
+  text = "주문 정보 저장에 실패하였습니다."
+  let url = `/redirect?errorCode=${errorCode}&redirectUrl=${redirectUrl}&title=${title}&text=${text}&icon=warning`
+  redirect(url)
 
   return (
-    <>
-      <h3>로딩중</h3>
-    </>
+    <MainLayout user={user}>
+      <div>
+        <div className="flex justify-center text-white text-4xl"
+          style={{
+            backgroundImage: "url('/images/Bg.png')",
+            backgroundPosition: "center calc(10% - 620px)",
+            backgroundRepeat: "repeat",
+            backgroundSize: "cover",
+            textAlign: "center",
+            minHeight: "200px",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center"
+          }}>주문 요청 중</div>
+      </div>
+      <RedirectErrorPage title={"주문 요청 중"} text={"고객님이 요청하신 주문을 처리하고있습니다."} errorCode={""} icon={"success"} />
+    </MainLayout>
   )
 }
 

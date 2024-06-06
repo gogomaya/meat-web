@@ -150,6 +150,7 @@ export const MegaMenu = () => {
   const getMenu = () => {
     return {
       todayMenu: false,
+      megaMenu: false,
       cow: false,
       pork: false,
       simple: false,
@@ -171,35 +172,85 @@ export const MegaMenu = () => {
   return (
     <nav id="header" className="invisible md:visible flex-1 flex justify-center items-center">
       <ul className="flex">
-        <li id="todayMenu" className={`relative mx-3 ${menu.todayMenu ? "text-red-500" : ""}`} onMouseOver={overMenu} onMouseOut={outMenu}>
+        {/* <li id="megaMenu" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
+          <Link href="/products?is_today=true" className="text-red-600">오늘의 메뉴</Link>
+          <ol id="submenu" className={`w-full px-2 py-2 border border-[#FACC15] ${menu.megaMenu ? "block" : "hidden"}  rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
+            <div className="flex">
+              <div className="item">
+                {categoriesMenu.cow.map((category_menu) => (
+                  <li key={category_menu}><Link href={`/products?category=cow&category_menu=${category_menu}`} className="text-white px-2">{category_menu}</Link></li>
+                ))}
+              </div>
+              <div className="item">
+                {categoriesMenu.pork.map((category_menu) => (
+                  <li key={category_menu}><Link href={`/products?category=pork&category_menu=${category_menu}`} className="text-white">{category_menu}</Link></li>
+                ))}
+              </div>
+              <div className="item">
+                {categoriesMenu.simple.map((category_menu) => (
+                  <li key={category_menu}><Link href={`/products?category=simple&category_menu=${category_menu}`} className="text-white">{category_menu}</Link></li>
+                ))}
+              </div>
+              <div className="item">
+                <li><Link href="/boards?category=notice" className="text-white">공지사항</Link></li>
+                <li><Link href="/faq" className="text-white">자주하는질문</Link></li>
+                <li><Link href="/boards?category=qna" className="text-white">1:1문의하기</Link></li>
+              </div>
+            </div>
+          </ol>
+        </li> */}
+        <li style={{width: "140px"}} id="todayMenu" className={`relative ${menu.todayMenu ? "text-red-500" : ""}`} onMouseOver={overMenu} onMouseOut={outMenu}>
           <Link href="/products?is_today=true" className="text-red-600">오늘의 메뉴</Link>
         </li>
-        <li id="cow" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
+        <li style={{width: "140px"}} id="cow" className="relative" onMouseOver={overMenu} >
           <Link href="/products?category=cow" className="text-white">소고기🐮</Link>
-          <ol id="submenu" className={`category-menu-flex flex w-30 absolute border border-[#FACC15] ${menu.cow ? "block" : "hidden"} py-2 rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
+          {/* <ol id="submenu" className={`category-menu-flex flex w-30 absolute border border-[#FACC15] ${menu.cow ? "block" : "hidden"} py-2 rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
             {categoriesMenu.cow.map((category_menu) => (
               <li key={category_menu}><Link href={`/products?category=cow&category_menu=${category_menu}`} className="text-white px-2">{category_menu}</Link></li>
             ))}
-            {categoriesMenu.pork.map((category_menu) => (
-              <li key={category_menu}><Link href={`/products?category=pork&category_menu=${category_menu}`} className="text-white">{category_menu}</Link></li>
-            ))}
+          </ol> */}
+          <ol id="submenu" onMouseOut={outMenu} className={`w-full px-4 py-2 border border-[#FACC15] ${menu.cow || menu.pork || menu.simple || menu.board ? "block" : "hidden"}  rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
+            <div className="flex">
+              <div className="item" style={{width: "120px"}}>
+              </div>
+              <div className="item" style={{width: "140px"}}>
+                {categoriesMenu.cow.map((category_menu) => (
+                  <li key={category_menu}><Link href={`/products?category=cow&category_menu=${category_menu}`} className="text-white px-2">{category_menu}</Link></li>
+                ))}
+              </div>
+              <div className="item" style={{width: "140px"}}>
+                {categoriesMenu.pork.map((category_menu) => (
+                  <li key={category_menu}><Link href={`/products?category=pork&category_menu=${category_menu}`} className="text-white">{category_menu}</Link></li>
+                ))}
+              </div>
+              <div className="item" style={{width: "140px"}}>
+                {categoriesMenu.simple.map((category_menu) => (
+                  <li key={category_menu}><Link href={`/products?category=simple&category_menu=${category_menu}`} className="text-white">{category_menu}</Link></li>
+                ))}
+              </div>
+              <div className="item" style={{width: "140px"}}>
+                <li><Link href="/boards?category=notice" className="text-white">공지사항</Link></li>
+                <li><Link href="/faq" className="text-white">자주하는질문</Link></li>
+                <li><Link href="/boards?category=qna" className="text-white">1:1문의하기</Link></li>
+              </div>
+            </div>
           </ol>
         </li>
-        <li id="pork" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
+        <li style={{width: "140px"}} id="pork" className="relative" onMouseOver={overMenu} >
           <Link href="/products?category=pork" className="text-white">돼지고기🐷</Link>
-          <ol id="submenu" className={`w-18 absolute border border-[#FACC15] ${menu.pork ? "block" : "hidden"} py-2 rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
+          {/* <ol id="submenu" className={`w-18 absolute border border-[#FACC15] ${menu.pork ? "block" : "hidden"} py-2 rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
             {categoriesMenu.pork.map((category_menu) => (
               <li key={category_menu}><Link href={`/products?category=pork&category_menu=${category_menu}`} className="text-white">{category_menu}</Link></li>
             ))}
-          </ol>
+          </ol> */}
         </li>
-        <li id="simple" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
+        <li style={{width: "140px"}} id="simple" className="relative" onMouseOver={overMenu} >
           <Link href="/products?category=simple" className="text-white">간편식</Link>
-          <ol id="submenu" className={`w-18 absolute border border-[#FACC15] ${menu.simple ? "block" : "hidden"} py-2 rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
+          {/* <ol id="submenu" className={`w-18 absolute border border-[#FACC15] ${menu.simple ? "block" : "hidden"} py-2 rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
             {categoriesMenu.simple.map((category_menu) => (
               <li key={category_menu}><Link href={`/products?category=simple&category_menu=${category_menu}`} className="text-white">{category_menu}</Link></li>
             ))}
-          </ol>
+          </ol> */}
         </li>
         {/* <li id="review" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
           <Link href="/reviews" className="text-white">리뷰</Link>
@@ -208,13 +259,13 @@ export const MegaMenu = () => {
             <li><Link href="#" className="text-white">전문가 리뷰</Link></li>
           </ol>
         </li> */}
-        <li id="board" className="relative mx-3" onMouseOver={overMenu} onMouseOut={outMenu}>
+        <li style={{width: "140px"}} id="board" className="relative" onMouseOver={overMenu} >
           <Link href="/boards" className="text-white">고객센터</Link>
-          <ol id="submenu" className={`w-18 absolute border border-[#FACC15] ${menu.board ? "block" : "hidden"} py-2 rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
+          {/* <ol id="submenu" className={`w-18 absolute border border-[#FACC15] ${menu.board ? "block" : "hidden"} py-2 rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
             <li><Link href="/boards?category=notice" className="text-white">공지사항</Link></li>
             <li><Link href="/faq" className="text-white">자주하는질문</Link></li>
             <li><Link href="/boards?category=qna" className="text-white">1:1문의하기</Link></li>
-          </ol>
+          </ol> */}
         </li>
       </ul>
     </nav>
