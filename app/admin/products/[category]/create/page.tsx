@@ -16,6 +16,7 @@ const AdminProductsCreate = async (props: {
           category_menu: "",
           name: "",
           price: "",
+          discounted_price: "",
           is_today: false,
           is_best: false,
           is_sold_out: false,

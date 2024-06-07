@@ -189,7 +189,7 @@ export const CartsDetailContent = () => {
               <div className="cart-mobile flex flex-col md:flex-row md:items-center justify-start space-y-4 py-4 md:space-y-0 md:space-x-2">
                 <Button
                   variant="contained"
-                  className="btn h-12 w-full md:w-1/6 text-lg md:ml-4"
+                  className="btn h-12 w-full md:w-[220px] text-lg md:ml-4"
                   disabled={!cartProducts.find((cartProduct) => cartProduct.checked)}
                   onClick={() => {
                     router.push(`/order?orderProducts=${encodeURIComponent(

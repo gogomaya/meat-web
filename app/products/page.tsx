@@ -11,7 +11,7 @@ const Products = async (props: {
 }) => {
   const {user} = await loginCheck(false)
   const searchParams = {
-    rowsPerPage: Number(props.searchParams.rowsPerPage) || 16,
+    rowsPerPage: Number(props.searchParams.rowsPerPage) || 6,
     page: Number(props.searchParams.page) || 0,
     orderColumn: props.searchParams.orderColumn || "product_pk",
     orderDirection: props.searchParams.orderDirection || "desc",
@@ -32,7 +32,7 @@ const Products = async (props: {
     const categoryName = {
       cow: "소고기",
       pork: "돼지고기",
-      profit: "수익육",
+      imported: "수입육",
       simple: "간편식"
     }
     if (searchParams.is_today) {

@@ -369,8 +369,24 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
               aspectRatio: "1/1",
               objectFit: "cover",
               border: "3px solid #4A4A4A",
-              borderRadius: "10px"
+              borderRadius: "10px",
+              opacity: product.is_sold_out ? 0.3 : 1
             }} />
+          {product.is_sold_out ? (
+            <span
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                fontWeight: "bold",
+                fontSize: "1.2rem",
+                color: "#ff0000"
+              }}
+            >
+                  Sold out
+            </span>
+          ) : null}
         </div>
         <div>
           <div className="py-2 font-bold text-4xl">{product.name}</div>
@@ -449,7 +465,7 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
                 style={{
                   display: "flex",
                   alignItems: "flex-end",
-                  marginBottom: "8px", // Adjust margin-bottom to take up less space
+                  marginBottom: "8px",
                   width: "100%",
                   maxWidth: "50%"
                 }}
@@ -461,12 +477,12 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
                     fontWeight: "bold",
                     color: "#ff69b4",
                     backgroundColor: "#fff0f6",
-                    padding: "5px 10px", // Reduce padding to take up less height
+                    padding: "5px 10px",
                     borderRadius: "10px",
                     boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
                     textAlign: "center",
                     border: "2px dashed #ff69b4",
-                    whiteSpace: "nowrap" // Ensure text stays on one line
+                    whiteSpace: "nowrap"
                   }}
                 >
                   150,000원 이상 구매 시 무료배송
@@ -499,9 +515,11 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
                       width: "100%",
                       height: "50px",
                       color: "white",
-                      fontSize: "1.2rem"
+                      fontSize: "1.2rem",
+                      opacity: product.is_sold_out ? 0.3 : 1
                     }}
                     className="btn"
+                    disabled={product.is_sold_out}
                   >
                     장바구니
                   </Button>
@@ -513,9 +531,11 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
                       width: "100%",
                       height: "50px",
                       color: "white",
-                      fontSize: "1.2rem"
+                      fontSize: "1.2rem",
+                      opacity: product.is_sold_out ? 0.3 : 1
                     }}
                     className="btn"
+                    disabled={product.is_sold_out}
                   >
                     구매하기
                   </Button>

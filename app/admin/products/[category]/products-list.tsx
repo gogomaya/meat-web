@@ -138,7 +138,7 @@ const AdminProductsList = ({
           <EnhancedTablePagination total_rows={total_rows} searchParams={searchParams} />
         </TableContainer>
       </Paper>
-      <div className="text-right">
+      <div className="text-left">
         <Button
           className="!mt-4 !bg-[#1976d2] hover:!bg-[#1565c0]"
           variant="contained"
