@@ -10,6 +10,8 @@ import {FaRegThumbsUp, FaRegThumbsDown} from "react-icons/fa"
 import Image from "next/image"
 import CheckCircleIcon from "@mui/icons-material/CheckCircle"
 import StarIcon from "@mui/icons-material/Star"
+import PaginationItem from "@mui/material/PaginationItem"
+
 
 export const reviews = [
   {
@@ -441,9 +443,24 @@ export const GeneralPagination = () => {
     <Pagination
       variant="outlined"
       color="primary"
+      shape="rounded"
+      showFirstButton
+      showLastButton
       count={5}
       page={1}
       className="flex justify-center my-4"
+      sx={{
+        "& .MuiPaginationItem-root": {
+          color: "black"
+        },
+        "& .Mui-selected": {
+          backgroundColor: "black",
+          color: "white",
+          "&:hover": {
+            backgroundColor: "black"
+          }
+        }
+      }}
     />
   )
 }

@@ -147,6 +147,20 @@ const AdminProductsForm = ({
             error={!!errors.price}
             helperText={errors.price && errors.price.message}
           />
+          {/* <TextField
+            className="!mt-8"
+            label="할인된 최종 금액"
+            placeholder="할인이 없어도 금액을 입력해주세요"
+            fullWidth
+            type="number"
+            variant="standard"
+            InputLabelProps={{
+              shrink: true
+            }}
+            {...register("discounted_price")}
+            // error={!!errors.discounted_price}
+            // helperText={errors.discounted_price && errors.discounted_price.message}
+          /> */}
           <TextField
             className="!mt-8"
             label="간단한 설명"

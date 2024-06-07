@@ -11,6 +11,7 @@ export interface OrderItem {
   category: ProductCategory
   category_menu: string
   price: number | string
+  // discounted_price: number | string
   description?: string
   etc?: string
   origin?: string

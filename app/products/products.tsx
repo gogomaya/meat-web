@@ -2,7 +2,7 @@
 import {useRouter} from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
-import {Box, Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, FormControl, InputLabel, MenuItem, Pagination, Select, Typography} from "@mui/material"
+import {Box, Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, FormControl, InputLabel, MenuItem, Pagination, PaginationItem, Select, Typography} from "@mui/material"
 import * as React from "react"
 import ProductSwiper from "./[product_pk]/swiper"
 import {CartProduct, Product} from "@/types/productsTypes"
@@ -53,6 +53,9 @@ export const ProductsPagination = ({searchParams, total_rows}: {searchParams: Se
     <Pagination
       variant="outlined"
       color="primary"
+      showFirstButton
+      showLastButton
+      shape="rounded"
       count={Math.ceil(total_rows / searchParams.rowsPerPage)}
       page={searchParams.page + 1}
       className="flex justify-center"
@@ -62,6 +65,20 @@ export const ProductsPagination = ({searchParams, total_rows}: {searchParams: Se
           page: String(value - 1)
         }))
       }}
+      renderItem={(item) => (
+        <PaginationItem
+          {...item}
+          sx={{
+            "&.Mui-selected": {
+              backgroundColor: "black",
+              color: "white",
+              "&:hover": {
+                backgroundColor: "black"
+              }
+            }
+          }}
+        />
+      )}
     />
   )
 }
@@ -112,7 +129,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
 
   return (
     <><section className="flex justify-between items-center py-4 rounded-lg">
-      <span className="container text-lg font-semibold">
+      {/* <span className="container text-lg font-semibold">
         상품이 모두 <strong>{products.length}</strong>개 있습니다.
       </span>
       <div className="container flex justify-end p-2">
@@ -134,9 +151,10 @@ export const ProductsList = ({products}: { products: Product[] }) => {
             <MenuItem value="가격순">가격순</MenuItem>
           </Select>
         </FormControl>
-      </div>
-    </section><div className="container">
-      <ol style={{display: "flex", flexWrap: "wrap", gap: "30px", padding: "10px"}}>
+      </div> */}
+    </section>
+    <div className="container">
+      <ol className="product-list-mobile" style={{display: "flex", flexWrap: "wrap", gap: "30px", padding: "10px"}}>
         {products.length > 0 ? (
           products.map((product) => (
             <li
@@ -279,8 +297,30 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
   })
 
 
-
   const handleFavoriteClick = async () => {
+
+    alert("사용자확인")
+    if (!user) {
+      Swal.fire({
+        title: "로그인이 필요한 서비스입니다.",
+        text: "",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "로그인하러 가기"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: "네",
+            text: "Your file has been deleted.",
+            icon: "success"
+          })
+        }
+      })
+      return
+    }
+
     console.log(`user_pk : ${user.user_pk}`)
     console.log(`product_pk : ${product.product_pk}`)
     const user_pk = user.user_pk
@@ -311,6 +351,7 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
 
     setIsFavorited(!isFavorited)
   }
+
 
   return (
     <div className="container mx-auto py-8">
@@ -382,18 +423,60 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
               </>
             )}
           </div>
-          <div className="mb-4 flex items-center gap-4 pb-5">
+          <div className="mb-4 flex items-center gap-4">
             <div className="w-24">수량</div>
             <input
               type="number"
               value={quantity}
               onChange={handleQuantityChange}
               className="w-20 h-8 p-2 border border-gray-300 rounded"
-              min="1" />
+              min="1"
+            />
+            <div>
+              <style>
+                {`
+                  @keyframes blink {
+                    0% { opacity: 1; }
+                    50% { opacity: 0; }
+                    100% { opacity: 1; }
+                  }
+                  .blink {
+                    animation: blink 1.5s infinite;
+                  }
+                `}
+              </style>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "flex-end",
+                  marginBottom: "8px", // Adjust margin-bottom to take up less space
+                  width: "100%",
+                  maxWidth: "50%"
+                }}
+              >
+                <strong
+                  className="blink"
+                  style={{
+                    fontSize: "0.8rem",
+                    fontWeight: "bold",
+                    color: "#ff69b4",
+                    backgroundColor: "#fff0f6",
+                    padding: "5px 10px", // Reduce padding to take up less height
+                    borderRadius: "10px",
+                    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                    textAlign: "center",
+                    border: "2px dashed #ff69b4",
+                    whiteSpace: "nowrap" // Ensure text stays on one line
+                  }}
+                >
+                  150,000원 이상 구매 시 무료배송
+                </strong>
+              </div>
+            </div>
           </div>
           <Divider className="bg-gray-800 h-0.5 mb-4" />
-          <div className="container">
-            <div className="flex flex-col items-end mb-4 lg:w-1/2 ml-auto">
+          <div>
+            <div className="flex flex-col items-end mb-4 lg:w-1/2 ml-auto py-2">
               <strong className="text-2xl">총금액: {(Number(product.price) * quantity).toLocaleString()}원</strong>
             </div>
             <div className="flex justify-start items-center mb-4 py-4">

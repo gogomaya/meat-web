@@ -1,6 +1,6 @@
 "use client"
 import React, {useState} from "react"
-import {Button, Card, CardContent, Dialog, DialogActions, DialogContent, Grid, LinearProgress, Pagination, Rating, TextField, TextareaAutosize, Typography} from "@mui/material"
+import {Button, Card, CardContent, Dialog, DialogActions, DialogContent, Grid, LinearProgress, Pagination, PaginationItem, Rating, TextField, TextareaAutosize, Typography} from "@mui/material"
 import CancelIcon from "@mui/icons-material/Cancel"
 import Image from "next/image"
 import {GeneralReviewsReplies} from "./general-reviews-replies"
@@ -327,19 +327,30 @@ export const GeneralReviews = ({
     oneStar: reviews.filter((review) => review.grade === 1).length
   }
   return (
-    <div>
+    <div className="container">
       <div className="py-8" style={{fontSize: "30px"}}><strong>고객리뷰</strong></div>
       {total_rows === 0 ? (
-        <div className="mb-6">등록된 리뷰가 없습니다.</div>
+        <div className="mb-6 p-4">등록된 리뷰가 없습니다.</div>
       ) : (
-        <div className="mb-6">
+        <div className="mb-6 p-4">
           {Object.entries(reviewStats).slice(1).map(([key, val], index) => (
             <div key={index} className="flex items-center">
               <Typography variant="body1" className="w-24">
                 {key.replace("Stars", " Stars")}
               </Typography>
-              <LinearProgress variant="determinate" value={val * 100 / total_rows} sx={{width: val * 100 / total_rows, backgroundColor: "#271A11", "& .MuiLinearProgress-bar": {backgroundColor: "#FACC15"}}} className="mx-2" />
-              <Typography variant="body2">{val * 100 / total_rows}%</Typography>
+              <LinearProgress
+                variant="determinate"
+                value={parseFloat((val * 100 / total_rows).toFixed(1))}
+                sx={{
+                  width: `${(val * 100 / total_rows).toFixed(1)}%`,
+                  backgroundColor: "#271A11",
+                  "& .MuiLinearProgress-bar": {
+                    backgroundColor: "#FACC15"
+                  }
+                }}
+                className="mx-2"
+              />
+              <Typography variant="body2">{(val * 100 / total_rows).toFixed(1)}%</Typography>
             </div>
           ))}
         </div>
@@ -394,6 +405,9 @@ export const GeneralReviewsPagination = ({
     <Pagination
       variant="outlined"
       color="primary"
+      showFirstButton
+      showLastButton
+      shape="rounded"
       count={Math.ceil(total_rows / searchParams.rowsPerPage)}
       page={searchParams.page + 1}
       className="flex justify-center py-4"
@@ -405,6 +419,20 @@ export const GeneralReviewsPagination = ({
         searchParams.page = Number(value - 1) as never
         reviewsRead()
       }}
+      renderItem={(item) => (
+        <PaginationItem
+          {...item}
+          sx={{
+            "&.Mui-selected": {
+              backgroundColor: "black",
+              color: "white",
+              "&:hover": {
+                backgroundColor: "black"
+              }
+            }
+          }}
+        />
+      )}
     />
   )
 }
