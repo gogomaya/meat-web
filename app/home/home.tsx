@@ -330,7 +330,7 @@ export const HomeWhyUs = () => {
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             className="w-full aspect-video"
           ></iframe> */}
-          <CounterSection />
+          {/* <CounterSection /> */}
         </div>
       </div>
     </section>
