@@ -24,7 +24,9 @@ const Home = async (props: {
     recipient: "",
     address: "",
     address_detail: "",
-    created_at: ""
+    created_at: "",
+    delivery_request: "",
+    delivery_method: ""
   }
   try {
     addressResponse = await addressServices.addressDetail(address_pk)
@@ -45,7 +47,7 @@ const Home = async (props: {
             <div className="flex flex-col items-center gap-10 my-2 mx-4 md:mx-0">
               <div className="w-full flex flex-col gap-2 max-w-4xl bg-white rounded-lg shadow-md p-6">
                 {/* TODO: 주소API 적용하기  */}
-                <AddressUpdateForm user={user} addressInfo={address} />
+                <AddressUpdateForm user={user} addressInfo={address} firstAddress={false} />
               </div>
             </div>
           </div>
