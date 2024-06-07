@@ -72,6 +72,7 @@ export const POST = async (request: NextRequest) => {
     "category",
     "category_menu",
     "price",
+    // "discounted_price",
     "description",
     "etc",
     "origin",

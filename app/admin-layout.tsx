@@ -41,6 +41,9 @@ const AdminLayout = ({
                   {pathname.includes("/admin/products/pork") && (
                     <Link href={"/admin/products/pork"}>돼지고기</Link>
                   )}
+                  {pathname.includes("/admin/products/profit") && (
+                    <Link href={"/admin/products/profit"}>수익육</Link>
+                  )}
                   {pathname.includes("/admin/products/simple") && (
                     <Link href={"/admin/products/simple"}>간편식</Link>
                   )}
@@ -85,7 +88,7 @@ const AdminLayoutMenu = ({
 }) => {
   const pathname = usePathname()
   return (
-    <ul className={`${prefix === "lg" ? "hidden lg:block bg-[#383838] w-[150px] h-full text-gray-400": "w-[300px]"}`}>
+    <ul className={`${prefix === "lg" ? "hidden lg:block bg-[#383838] w-[150px] h-full text-white": "w-[300px]"}`}>
       <li className="px-4 py-2 border-b border-50 lg:border-0">
         <Link
           href="/admin/users"
@@ -112,6 +115,15 @@ const AdminLayoutMenu = ({
             setTimeout(() => setHeaderMenuOpen?.(), 500)
           }}
         >돼지고기</Link>
+      </li>
+      <li className="px-4 py-2 border-b border-50 lg:border-0">
+        <Link
+          href="/admin/products/profit"
+          className={`${pathname.includes("/admin/products/profit") ? "text-yellow-700 " : ""}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
+          onClick={() => {
+            setTimeout(() => setHeaderMenuOpen?.(), 500)
+          }}
+        >수익육</Link>
       </li>
       <li className="px-4 py-2 border-b border-50 lg:border-0">
         <Link

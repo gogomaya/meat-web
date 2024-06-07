@@ -325,16 +325,200 @@ export const HomeWhyUs = () => {
           </div>
         </div>
         <div className="md:w-1/2 md:pl-6 mt-6 md:mt-0">
-          <iframe
+          {/* <iframe
             src="https://www.youtube.com/embed/GSwEU2vT9LI?si=3Ub8EckRz6lTQJMQ"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             className="w-full aspect-video"
-          ></iframe>
+          ></iframe> */}
+          <CounterSection />
         </div>
       </div>
     </section>
   )
 }
+
+export const CounterSection: React.FC = () => {
+  const sectionStyle = {
+    backgroundColor: "#1c1c1e",
+    padding: "50px 0",
+    color: "#fff",
+    textAlign: "center" as "center"
+  }
+
+  const counterWrapStyle = {
+    display: "flex",
+    flexWrap: "wrap" as "wrap",
+    justifyContent: "space-around",
+    alignItems: "center"
+  }
+
+  const counterSingleWrapStyle = {
+    margin: "20px"
+  }
+
+  const counterNumberWrapStyle = {
+    display: "flex",
+    alignItems: "baseline",
+    justifyContent: "center",
+    marginBottom: "10px"
+  }
+
+  const counterSingleNumberWrapStyle = {
+    display: "flex",
+    flexDirection: "column" as "column",
+    transition: "transform 0.3s ease-in-out"
+  }
+
+  const counterNumberStyle = {
+    fontSize: "2em",
+    color: "#ffcc00",
+    textShadow: "0 0 5px rgba(255, 204, 0, 0.7)",
+    margin: 0
+  }
+
+  const counterDetailsStyle = {
+    fontSize: "1em",
+    color: "#bbb"
+  }
+
+  const containerStyle = {
+    maxWidth: "1200px",
+    margin: "0 auto",
+    padding: "0 20px"
+  }
+
+  return (
+    <div data-w-id="7f92dd69-750e-0360-a1c7-795fdbde5fa8" style={sectionStyle}>
+      <div style={containerStyle}>
+        <div style={counterWrapStyle}>
+          <div data-w-id="e55b0bc7-9d09-c401-06f1-f28580e14f10" style={counterSingleWrapStyle}>
+            <div style={counterNumberWrapStyle}>
+              <div
+                style={{
+                  ...counterSingleNumberWrapStyle,
+                  WebkitTransform: "translate3d(0, 0%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                  MozTransform: "translate3d(0, 0%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                  msTransform: "translate3d(0, 0%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                  transform: "translate3d(0, 0%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                  marginRight: "5px"
+                }}
+              >
+                {["0", "1", "2", "3", "4", "5", "6", "7", "8", "2"].map((num) => (
+                  <h1 className="counter-number" style={counterNumberStyle} key={num}>{num}</h1>
+                ))}
+              </div>
+              <div
+                style={{
+                  ...counterSingleNumberWrapStyle,
+                  WebkitTransform: "translate3d(0, -90%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                  MozTransform: "translate3d(0, -90%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                  msTransform: "translate3d(0, -90%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                  transform: "translate3d(0, -90%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)"
+                }}
+              >
+                {["0", "8", "7", "6", "5", "4", "3", "2", "1", "0"].map((num) => (
+                  <h1 className="counter-number" style={counterNumberStyle} key={num}>{num}</h1>
+                ))}
+              </div>
+              <h1 className="counter-number" style={counterNumberStyle}>+</h1>
+            </div>
+            <div className="counter-details" style={counterDetailsStyle}>years of experience</div>
+          </div>
+          <div data-w-id="cfa23c1a-1051-6b95-f34a-ff88723818a3" style={counterSingleWrapStyle}>
+            <div style={counterNumberWrapStyle}>
+              <div
+                style={{
+                  ...counterSingleNumberWrapStyle,
+                  WebkitTransform: "translate3d(0, 0%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                  MozTransform: "translate3d(0, 0%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                  msTransform: "translate3d(0, 0%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                  transform: "translate3d(0, 0%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                  marginRight: "5px"
+                }}
+              >
+                {["0", "1", "2", "3", "4", "5", "6", "7", "8", "5"].map((num) => (
+                  <h1 className="counter-number" style={counterNumberStyle} key={num}>{num}</h1>
+                ))}
+              </div>
+              <div
+                style={{
+                  ...counterSingleNumberWrapStyle,
+                  WebkitTransform: "translate3d(0, -90%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                  MozTransform: "translate3d(0, -90%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                  msTransform: "translate3d(0, -90%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                  transform: "translate3d(0, -90%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)"
+                }}
+              >
+                {["0", "8", "7", "6", "5", "4", "3", "2", "1", "0"].map((num) => (
+                  <h1 className="counter-number" style={counterNumberStyle} key={num}>{num}</h1>
+                ))}
+              </div>
+              <h1 className="counter-number" style={counterNumberStyle}>K</h1>
+              <h1 className="counter-number" style={counterNumberStyle}>+</h1>
+            </div>
+            <div className="counter-details" style={counterDetailsStyle}>satisfied customers</div>
+          </div>
+          <div data-w-id="24ac6198-a536-6a70-dbb2-5b617aae6381" style={counterSingleWrapStyle}>
+            <div style={counterNumberWrapStyle}>
+              <div
+                style={{
+                  ...counterSingleNumberWrapStyle,
+                  WebkitTransform: "translate3d(0, 0%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                  MozTransform: "translate3d(0, 0%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                  msTransform: "translate3d(0, 0%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                  transform: "translate3d(0, 0%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                  marginRight: "5px"
+                }}
+              >
+                {["0", "1", "2", "3", "4", "5", "6", "7", "8", "4"].map((num) => (
+                  <h1 className="counter-number" style={counterNumberStyle} key={num}>{num}</h1>
+                ))}
+              </div>
+              <h1 className="counter-number" style={counterNumberStyle}>K</h1>
+              <h1 className="counter-number" style={counterNumberStyle}>+</h1>
+            </div>
+            <div className="counter-details" style={counterDetailsStyle}>Total bookings</div>
+          </div>
+          <div data-w-id="bfafb6d7-05e5-9d3e-9b9e-b3f50031b6ed" style={counterSingleWrapStyle}>
+            <div style={counterNumberWrapStyle}>
+              <div
+                style={{
+                  ...counterSingleNumberWrapStyle,
+                  WebkitTransform: "translate3d(0, 0%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                  MozTransform: "translate3d(0, 0%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                  msTransform: "translate3d(0, 0%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                  transform: "translate3d(0, 0%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                  marginRight: "5px"
+                }}
+              >
+                {["0", "1", "2", "3", "4", "5", "6", "7", "8", "3"].map((num) => (
+                  <h1 className="counter-number" style={counterNumberStyle} key={num}>{num}</h1>
+                ))}
+              </div>
+              <div
+                style={{
+                  ...counterSingleNumberWrapStyle,
+                  WebkitTransform: "translate3d(0, -90%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                  MozTransform: "translate3d(0, -90%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                  msTransform: "translate3d(0, -90%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)",
+                  transform: "translate3d(0, -90%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)"
+                }}
+              >
+                {["5", "8", "7", "6", "5", "4", "3", "2", "1", "0"].map((num) => (
+                  <h1 className="counter-number" style={counterNumberStyle} key={num}>{num}</h1>
+                ))}
+              </div>
+              <h1 className="counter-number" style={counterNumberStyle}>K</h1>
+              <h1 className="counter-number" style={counterNumberStyle}>+</h1>
+            </div>
+            <div className="counter-details" style={counterDetailsStyle}>event complete</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 
 // 기타 section
 export const HomeDunDunRice = () => {

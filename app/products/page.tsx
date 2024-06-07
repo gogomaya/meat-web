@@ -32,6 +32,7 @@ const Products = async (props: {
     const categoryName = {
       cow: "소고기",
       pork: "돼지고기",
+      profit: "수익육",
       simple: "간편식"
     }
     if (searchParams.is_today) {
@@ -60,7 +61,6 @@ const Products = async (props: {
             fontSize: "32px"
           }}>{titleName()}</div>
         <div className="container">
-          {/* <ProductsSearch products={products} searchParams={searchParams} /> */}
           <ProductsList products={products} />
           {total_rows ? (
             <ProductsPagination searchParams={searchParams} total_rows={total_rows} />

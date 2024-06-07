@@ -55,10 +55,13 @@ li {
   position: absolute;
   top: 62px;
   /* top: 100%; */
-  left: calc(-20px - 140px);
-  
+  /* left: calc(-20px - 140px); */
+  left: calc(-40px);
   width: max-content;
   white-space: nowrap; 
+  background-image: url('/images/Bg.png');
+  background-size: cover; 
+  background-repeat: no-repeat;
 }
 
 #submenu.block {
@@ -1455,6 +1458,10 @@ textarea.w-input, textarea.w-select {
   display: none !important;
 }
 
+.category-menu-flex {
+  display: flex;
+}
+
 @media screen and (max-width: 991px) {
   .w-container {
     max-width: 728px;
@@ -1610,6 +1617,9 @@ textarea.w-input, textarea.w-select {
 }
 
 @media screen and (max-width: 479px) {
+  .product-list-mobile {
+    flex-direction: column;
+  }
   .w-container {
     max-width: none;
   }
@@ -2651,6 +2661,11 @@ textarea.w-input, textarea.w-select {
 }
 
 @media screen and (max-width: 767px) {
+  .product-list-mobile li {
+    flex: 1 1 calc(50% - 16px); /* 1줄에 2개 */
+    box-sizing: border-box;
+  }
+  
   .w-nav[data-collapse="small"] .w-nav-menu {
     display: none;
   }
@@ -8810,6 +8825,11 @@ figure {
 
 .category-menu-flex{
   display: flex;
+}
+
+.category-menu-flex > * {
+  display: flex;
+  flex-direction: column;
 }
 
 @media screen and (min-width: 1920px) {

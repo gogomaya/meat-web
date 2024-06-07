@@ -1,7 +1,7 @@
 "use client"
 import Link from "next/link"
 import {useEffect, useState} from "react"
-import {Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, FormControl, FormHelperText, InputLabel, MenuItem, Pagination, Select, TextField, TextareaAutosize} from "@mui/material"
+import {Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, FormControl, FormHelperText, InputLabel, MenuItem, Pagination, PaginationItem, Select, TextField, TextareaAutosize, styled} from "@mui/material"
 import {ResponseApi, SearchParams} from "@/types/commonTypes"
 import {User} from "@/types/usersTypes"
 import {Board, BoardsMessage, BoardsReply, BoardsSearchParams} from "@/types/boardsTypes"
@@ -254,6 +254,7 @@ export const BoardsList = ({
   )
 }
 
+
 export const BoardsPagination = ({
   searchParams,
   total_rows,
@@ -263,11 +264,25 @@ export const BoardsPagination = ({
   total_rows: number
   boardsRead: Function
 }) => {
+
+  const StyledPaginationItem = styled(PaginationItem)(({ }) => ({
+    "&.Mui-selected": {
+      backgroundColor: "black",
+      color: "white",
+      "&:hover": {
+        backgroundColor: "black"
+      }
+    }
+  }))
+
   return (
     <Pagination
       variant="outlined"
       color="primary"
+      shape="rounded"
       count={Math.ceil(total_rows / searchParams.rowsPerPage)}
+      showFirstButton
+      showLastButton
       page={searchParams.page + 1}
       className="flex justify-center"
       onChange={(_, value) => {
@@ -280,6 +295,7 @@ export const BoardsPagination = ({
         searchParams.page = Number(value - 1) as never
         boardsRead()
       }}
+      renderItem={(item) => <StyledPaginationItem {...item} />}
     />
   )
 }
@@ -529,7 +545,7 @@ const BoardsRepliesForm = ({
         <button
           className="product-button"
           style={{
-            padding: "5px 8px",
+            padding: "5px 3px",
             backgroundColor: "#000",
             color: "#fff",
             border: "none",

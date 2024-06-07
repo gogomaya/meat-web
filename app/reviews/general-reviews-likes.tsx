@@ -73,12 +73,12 @@ export const GeneralReviewsLikes = ({
         className={like.liked ? "text-red-500 cursor-pointer mr-2" : "text-gray-500 cursor-pointer mr-2"}
         onClick={() => reviewsLikesPut(true)}
       />
-      <span>좋아요 {like.likedCount > 0 ? like.likedCount : null}</span>
+      <span>{like.likedCount > 0 ? like.likedCount : null}</span>
       <FaRegThumbsDown
         className={like.disliked ? "text-red-500 cursor-pointer ml-2" : "text-gray-500 cursor-pointer ml-2"}
         onClick={() => reviewsLikesPut(false)}
       />
-      <span>싫어요 {like.dislikedCount > 0 ? like.dislikedCount : null}</span>
+      <span>{like.dislikedCount > 0 ? like.dislikedCount : null}</span>
     </div>
   )
 }
