@@ -41,8 +41,8 @@ const AdminLayout = ({
                   {pathname.includes("/admin/products/pork") && (
                     <Link href={"/admin/products/pork"}>돼지고기</Link>
                   )}
-                  {pathname.includes("/admin/products/profit") && (
-                    <Link href={"/admin/products/profit"}>수익육</Link>
+                  {pathname.includes("/admin/products/imported") && (
+                    <Link href={"/admin/products/imported"}>수입육</Link>
                   )}
                   {pathname.includes("/admin/products/simple") && (
                     <Link href={"/admin/products/simple"}>간편식</Link>
@@ -92,7 +92,7 @@ const AdminLayoutMenu = ({
       <li className="px-4 py-2 border-b border-50 lg:border-0">
         <Link
           href="/admin/users"
-          className={`${pathname.includes("/admin/users") ? "text-yellow-700 " : ""}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
+          className={`${pathname.includes("/admin/users") ? "text-yellow-700 " : "text-red-200 "}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
           onClick={() => {
             setTimeout(() => setHeaderMenuOpen?.(), 500)
           }}
@@ -101,7 +101,7 @@ const AdminLayoutMenu = ({
       <li className="px-4 py-2 border-b border-50 lg:border-0">
         <Link
           href="/admin/products/cow"
-          className={`${pathname.includes("/admin/products/cow") ? "text-yellow-700 " : ""}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
+          className={`${pathname.includes("/admin/products/cow") ? "text-yellow-700 " : "text-red-200"}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
           onClick={() => {
             setTimeout(() => setHeaderMenuOpen?.(), 500)
           }}
@@ -118,12 +118,12 @@ const AdminLayoutMenu = ({
       </li>
       <li className="px-4 py-2 border-b border-50 lg:border-0">
         <Link
-          href="/admin/products/profit"
-          className={`${pathname.includes("/admin/products/profit") ? "text-yellow-700 " : ""}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
+          href="/admin/products/imported"
+          className={`${pathname.includes("/admin/products/imported") ? "text-yellow-700 " : ""}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
           onClick={() => {
             setTimeout(() => setHeaderMenuOpen?.(), 500)
           }}
-        >수익육</Link>
+        >수입육</Link>
       </li>
       <li className="px-4 py-2 border-b border-50 lg:border-0">
         <Link

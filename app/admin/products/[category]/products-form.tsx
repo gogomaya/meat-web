@@ -25,7 +25,8 @@ const AdminProductsForm = ({
   const productForm = useForm<Product>({
     defaultValues: {
       ...product,
-      price: product.price === 0 ? "" : product.price
+      price: product.price === 0 ? "" : product.price,
+      discounted_price: product.discounted_price === 0 ? "" : product.discounted_price
     },
     resolver: yupResolver(yup.object().shape({
       product_pk: yup.number().required(),
@@ -33,6 +34,7 @@ const AdminProductsForm = ({
       category: yup.mixed<ProductCategory>().required(),
       category_menu: yup.string().required("메뉴를 선택해 주세요."),
       price: yup.mixed<number | string>().required(),
+      discounted_price: yup.mixed<number | string>().required(),
       is_today: yup.boolean().default(product.is_today),
       is_best: yup.boolean().default(product.is_best),
       is_sold_out: yup.boolean().default(product.is_sold_out),
@@ -147,7 +149,7 @@ const AdminProductsForm = ({
             error={!!errors.price}
             helperText={errors.price && errors.price.message}
           />
-          {/* <TextField
+          <TextField
             className="!mt-8"
             label="할인된 최종 금액"
             placeholder="할인이 없어도 금액을 입력해주세요"
@@ -160,7 +162,7 @@ const AdminProductsForm = ({
             {...register("discounted_price")}
             // error={!!errors.discounted_price}
             // helperText={errors.discounted_price && errors.discounted_price.message}
-          /> */}
+          />
           <TextField
             className="!mt-8"
             label="간단한 설명"

@@ -152,7 +152,7 @@ export const MegaMenu = () => {
       todayMenu: false,
       megaMenu: false,
       cow: false,
-      profit: false,
+      imported: false,
       pork: false,
       simple: false,
       review: false,
@@ -183,7 +183,7 @@ export const MegaMenu = () => {
               <li key={category_menu}><Link href={`/products?category=cow&category_menu=${category_menu}`} className="text-white px-2">{category_menu}</Link></li>
             ))}
           </ol> */}
-          <ol id="submenu" onMouseOut={outMenu} className={`w-full px-4 py-2 border border-[#FACC15] ${menu.todayMenu || menu.cow || menu.pork || menu.simple || menu.profit || menu.board ? "block" : "hidden"}  rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
+          <ol id="submenu" onMouseOut={outMenu} className={`w-full px-4 py-2 border border-[#FACC15] ${menu.todayMenu || menu.cow || menu.pork || menu.simple || menu.imported || menu.board ? "block" : "hidden"}  rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
             <div className="flex">
               {/* <div className="item" style={{width: "120px"}}>
               </div> */}
@@ -198,8 +198,8 @@ export const MegaMenu = () => {
                 ))}
               </div>
               <div className="item" style={{width: "140px"}}>
-                {categoriesMenu.profit.map((category_menu) => (
-                  <li key={category_menu}><Link href={`/products?category=profit&category_menu=${category_menu}`} className="text-white">{category_menu}</Link></li>
+                {categoriesMenu.imported.map((category_menu) => (
+                  <li key={category_menu}><Link href={`/products?category=imported&category_menu=${category_menu}`} className="text-white">{category_menu}</Link></li>
                 ))}
               </div>
               <div className="item" style={{width: "140px"}}>
@@ -223,8 +223,8 @@ export const MegaMenu = () => {
             ))}
           </ol> */}
         </li>
-        <li style={{width: "140px"}} id="profit" className="relative" onMouseOver={overMenu} >
-          <Link href="/products?category=profit" className="text-white">수익육</Link>
+        <li style={{width: "140px"}} id="imported" className="relative" onMouseOver={overMenu} >
+          <Link href="/products?category=imported" className="text-white">수입육</Link>
           {/* <ol id="submenu" className={`w-18 absolute border border-[#FACC15] ${menu.simple ? "block" : "hidden"} py-2 rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
             {categoriesMenu.simple.map((category_menu) => (
               <li key={category_menu}><Link href={`/products?category=simple&category_menu=${category_menu}`} className="text-white">{category_menu}</Link></li>
