@@ -99,7 +99,8 @@ const OrderPay = async (props: {
     status: "pending",
     created_at: "",
     shipfee: 0,
-    discount: 0
+    discount: 0,
+    file_name: ""
   }
   const searchParams = {
     order_pk : order_pk,
