@@ -77,7 +77,6 @@ export const BoardsList = ({
     boardsForm.setValue("boards", boardsFormReset(boards))
     boardsForm.setValue("total_rows", total_rows)
   }, [boardsForm, boards, total_rows])
-  console.log(boardsSearchParams)
   return (
     <div className="container flex flex-col py-4 mx-8 py-6">
       <div className="my-2 overflow-x-auto sm:-mx-6 lg:-mx-8  py-4">

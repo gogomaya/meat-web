@@ -71,7 +71,7 @@ interface MypageProps {
 }
 
 // 마이 페이지 사이드 바
-export const Side: React.FC<MypageProps> = async ({bookmarkCount, addressCount}) => {
+export const Side: React.FC<MypageProps> = ({bookmarkCount, addressCount}) => {
 
   const [isDropdownHidden, setIsDropdownHidden] = useState(true)
   const toggleDropdown = () => {
