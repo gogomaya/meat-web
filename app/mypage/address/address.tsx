@@ -81,15 +81,30 @@ export const AddressForm = ({user, addressInfo, firstAddress}: AddressProps ) =>
     setFirstAddress(false)
   }
 
-  // TODO: 주소 API 이어서 완성
+  const MySwal = withReactContent(Swal)
+
+  // 다음주소 API 에서, 주소선택 시
   const complete = (data: { address: any; addressType: string; bname: string; buildingName: string }) => {
     console.log(`address : ${data.address}`)
     console.log(`addressType : ${data.addressType}`)
     console.log(`bname : ${data.bname}`)
     console.log(`buildingName : ${data.buildingName}`)
-
     setAddress(data.address)
+    MySwal.close()
   }
+
+  // [주소찾기] 클릭 시, 모달로 다음주소 API 띄우기
+  const handleAddress = ( event: React.MouseEvent<HTMLButtonElement, MouseEvent> ) => {
+    event.preventDefault()
+
+    MySwal.fire({
+      title: <DaumPostcode className="postmodal" onComplete={complete} autoClose={false} />,
+      text: "",
+      confirmButtonText: "확인"
+    })
+  }
+
+
   return (
     <>
       <form className="ml-auo space-y-4">
@@ -98,16 +113,22 @@ export const AddressForm = ({user, addressInfo, firstAddress}: AddressProps ) =>
           value={recipient}
           onChange={(e) => setRecipient(e.target.value)}
         />
-        <input className="w-full rounded-md py-2.5 px-4 border text-sm outline-[#007bff]"
-          type="text" id="address" placeholder="주소"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-        />
-        <DaumPostcode
-          className="postmodal"
-          autoClose
-          onComplete={complete} />
-
+        <div className="flex flex-wrap flex-col md:flex-row">
+          <div className="item flex-[3]">
+            <input className="w-full rounded-md py-2.5 px-4 border text-sm outline-[#007bff]"
+              type="text" id="address" placeholder="주소"
+              value={address}
+              readOnly
+              onChange={(e) => setAddress(e.target.value)}
+            />
+          </div>
+          <div className="item flex-1">
+            <button className="w-full text-center px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200"
+              onClick={(e) => handleAddress(e)}>
+              주소찾기
+            </button>
+          </div>
+        </div>
         <input className="w-full rounded-md py-2.5 px-4 border text-sm outline-[#007bff]"
           type="text" id="address_detail" placeholder="상세 주소"
           value={addressDetail}
@@ -184,6 +205,31 @@ export const AddressUpdateForm = ({user, addressInfo}: AddressProps ) => {
   const handleCheckboxChange = () => {
     setPrimary((prev) => (prev === 1 ? 0 : 1))
   }
+
+  const MySwal = withReactContent(Swal)
+
+  // 다음주소 API 에서, 주소선택 시
+  const complete = (data: { address: any; addressType: string; bname: string; buildingName: string }) => {
+    console.log(`address : ${data.address}`)
+    console.log(`addressType : ${data.addressType}`)
+    console.log(`bname : ${data.bname}`)
+    console.log(`buildingName : ${data.buildingName}`)
+    setAddress(data.address)
+    MySwal.close()
+  }
+
+  // [주소찾기] 클릭 시, 모달로 다음주소 API 띄우기
+  const handleAddress = ( event: React.MouseEvent<HTMLButtonElement, MouseEvent> ) => {
+    event.preventDefault()
+
+    MySwal.fire({
+      title: <DaumPostcode className="postmodal" onComplete={complete} autoClose={false} />,
+      text: "",
+      confirmButtonText: "확인"
+    })
+  }
+
+
   return (
     <>
       <form className="ml-auo space-y-4">
@@ -192,11 +238,22 @@ export const AddressUpdateForm = ({user, addressInfo}: AddressProps ) => {
           value={recipient}
           onChange={(e) => setRecipient(e.target.value)}
         />
-        <input className="w-full rounded-md py-2.5 px-4 border text-sm outline-[#007bff]"
-          type="text" id="address" placeholder="주소"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-        />
+        <div className="flex flex-wrap flex-col md:flex-row">
+          <div className="item flex-[3]">
+            <input className="w-full rounded-md py-2.5 px-4 border text-sm outline-[#007bff]"
+              type="text" id="address" placeholder="주소"
+              value={address}
+              readOnly
+              onChange={(e) => setAddress(e.target.value)}
+            />
+          </div>
+          <div className="item flex-1">
+            <button className="w-full text-center px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200"
+              onClick={(e) => handleAddress(e)}>
+              주소찾기
+            </button>
+          </div>
+        </div>
         <input className="w-full rounded-md py-2.5 px-4 border text-sm outline-[#007bff]"
           type="text" id="address_detail" placeholder="상세 주소"
           value={addressDetail}

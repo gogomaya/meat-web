@@ -46,15 +46,17 @@ export const BookMarkList = ({bookmarks}: BookMarkListProps) => {
         <div key={bookmark.bookmark_pk} className="w-full flex gap-6 max-w-4xl bg-white rounded-lg shadow-md p-6">
           <div className="item flex-1">
             <div className="inner flex h-full justify-center items-center">
-              <Image
-                src={`/${process.env.NEXT_PUBLIC_UPLOAD_IMAGES}/products/${encodeURIComponent(String(bookmark.image_file))}`}
-                alt=""
-                width={128}
-                height={128}
-                sizes="100vw"
-                style={{height: "128px", objectFit: "contain"}}
-                className="w-full"
-                priority />
+              <a href={`/products/${bookmark.product_pk}`}>
+                <Image
+                  src={`/${process.env.NEXT_PUBLIC_UPLOAD_IMAGES}/products/${encodeURIComponent(String(bookmark.image_file))}`}
+                  alt=""
+                  width={128}
+                  height={128}
+                  sizes="100vw"
+                  style={{height: "128px", objectFit: "contain"}}
+                  className="w-full"
+                  priority />
+              </a>
             </div>
           </div>
           <div className="item flex-[3]">

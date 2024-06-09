@@ -115,7 +115,6 @@ export const OrderList = ({orders}: OrderListProps) => {
   const handleOrderClick = (order : Order) => {
     const MySwal = withReactContent(Swal)
     MySwal.fire({
-      // title: <img src="/images/1.jpg" />,
       title: <OrderItemTable order={order} />,
       text: "",
       confirmButtonText: "확인"
