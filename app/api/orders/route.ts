@@ -32,13 +32,14 @@ export const GET = async (request: NextRequest) => {
                             WHERE order_item_pk = (SELECT MIN(order_item_pk) FROM order_items oi WHERE oi.order_pk = o.order_pk ) 
                             )
           ) file_name
-    FROM orders o
+    FROM orders o 
     WHERE user_pk IS NOT NULL
     AND ("" = ? OR user_pk = ?)
     ORDER BY ${orderColumn} ${orderDirection}
     LIMIT ?, ?
   `, [user_pk, user_pk, page, rowsPerPage])
   console.log(rows)
+
   return NextResponse.json({
     orders: rows,
     total_rows: total_rows[0].total_rows

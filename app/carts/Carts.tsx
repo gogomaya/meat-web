@@ -32,6 +32,7 @@ export const CartsDetailContent = () => {
   const shippingFee = 3000
 
 
+  // [주문하기] 클릭
   const handleOrderClick = () => {
     // product_pk와 quantity 추출
     const productPks = cartProducts.map((cartProduct) => cartProduct.product.product_pk).join(",")
@@ -44,6 +45,21 @@ export const CartsDetailContent = () => {
     console.log(`orderUrl : ${orderUrl}`)
 
     // 이동
+    router.push(orderUrl)
+  }
+
+  // [선택한상품만 결제하기] 클릭
+  const handleCheckedPayClick = () => {
+    const cartProducts = JSON.parse(localStorage.getItem("cartProducts") || "[]")
+    const checkedProducts = cartProducts.filter((product: CartProduct ) => product.checked)
+    console.log(checkedProducts)
+
+    // product_pk와 quantity 추출
+    const productPks = checkedProducts.map((cartProduct : CartProduct) => cartProduct.product.product_pk).join(",")
+    const quantityList = checkedProducts.map((cartProduct  : CartProduct) => cartProduct.quantity).join(",")
+    console.log(`productPks : ${productPks}`)
+    console.log(`quantityList : ${quantityList}`)
+    const orderUrl = `/order?productPks=${productPks}&quantityList=${quantityList}`
     router.push(orderUrl)
   }
 
@@ -191,11 +207,12 @@ export const CartsDetailContent = () => {
                   variant="contained"
                   className="btn h-12 w-full md:w-[220px] text-lg md:ml-4"
                   disabled={!cartProducts.find((cartProduct) => cartProduct.checked)}
-                  onClick={() => {
-                    router.push(`/order?orderProducts=${encodeURIComponent(
-                      JSON.stringify(cartProducts.filter((cartProduct) => cartProduct.checked))
-                    )}`)
-                  }}
+                  // onClick={() => {
+                  //   router.push(`/order?orderProducts=${encodeURIComponent(
+                  //     JSON.stringify(cartProducts.filter((cartProduct) => cartProduct.checked))
+                  //   )}`)
+                  // }}
+                  onClick={handleCheckedPayClick}
                   style={{backgroundColor: "#A51C30"}}
                 >
                   <span>선택상품만 결제하기</span>
@@ -273,9 +290,6 @@ export const CartsDetailContent = () => {
               variant="contained"
               className="btn w-full h-16 text-2xl"
               disabled={cartProducts.length === 0}
-              // onClick={() => {
-              //   router.push(`/order?orderProducts=${encodeURIComponent(JSON.stringify(cartProducts))}`)
-              // }}
               onClick={handleOrderClick}
               style={{backgroundColor: "#A51C30"}}
             >

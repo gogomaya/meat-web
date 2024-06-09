@@ -16,6 +16,8 @@ const Home = async (props: {
   const {user} = await loginCheck(false)
   const {bookmarkCount,addressCount} = await myPageData(user)
 
+
+
   const searchParams = {
     user_pk: user.user_pk,
     rowsPerPage: Number(props.searchParams.rowsPerPage) || 5,
@@ -27,10 +29,13 @@ const Home = async (props: {
   let bookmarksResponse: ResponseApi = {}
   let bookmarks = []
   let lastPage = 0
+
+
   try {
     bookmarksResponse = await bookmarksServices.bookmarksRead(searchParams)
     bookmarks = bookmarksResponse.data.bookmarks
-    lastPage = Math.floor(bookmarksResponse.data.total_rows / searchParams.rowsPerPage)
+    // lastPage = Math.floor(bookmarksResponse.data.total_rows / searchParams.rowsPerPage)
+    lastPage = Math.ceil(bookmarksResponse.data.total_rows / searchParams.rowsPerPage) - 1
     console.log("lastPage :" + lastPage)
     console.log(`찜리스트 없음 : ${bookmarks == null || bookmarks.length == 0}`)
     console.log(bookmarks)
@@ -64,7 +69,7 @@ const Home = async (props: {
               :
               <>
                 <BookMarkList bookmarks={bookmarks} />
-                <MyPagination page={page} prev={prev} next={next} lastPage={lastPage}/>
+                <MyPagination domain={"bookmarks"} page={page} prev={prev} next={next} lastPage={lastPage}/>
               </>
             }
           </div>
