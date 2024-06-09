@@ -7,6 +7,7 @@ import Link from "next/link"
 import {useState} from "react"
 import Swal from "sweetalert2"
 import withReactContent from "sweetalert2-react-content"
+import {myPageAddCart} from "../mypage"
 
 interface BookMarkListProps {
   bookmarks: Bookmark[]
@@ -81,8 +82,9 @@ export const BookMarkList = ({bookmarks}: BookMarkListProps) => {
                 </Link>
               </div>
               <div className="item">
-                {/* TODO: 장바구니로 연결 */}
-                <button className="w-full px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
+                <button
+                  className="w-full px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200"
+                  onClick={() => myPageAddCart(bookmark.product_pk, 1)}>
                   장바구니 담기
                 </button>
               </div>

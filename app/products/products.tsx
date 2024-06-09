@@ -563,7 +563,7 @@ const CartOrderButton = ({
 }) => {
   const router = useRouter()
   const [open, setOpen] = React.useState(false)
-  // 장바구니 추가
+  // 🛒 장바구니 추가
   const addCartOrderList = async (product: Product, quantity: number) => {
     try {
       // 로컬 스토리지에서 장바구니 데이터를 가져오기

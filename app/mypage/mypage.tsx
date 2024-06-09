@@ -1,5 +1,12 @@
 "use client"
+import {productsServices} from "@/services/productsServices"
+import {ResponseApi} from "@/types/commonTypes"
+import {CartProduct, Product} from "@/types/productsTypes"
+import _ from "lodash"
 import {useState} from "react"
+import Swal from "sweetalert2"
+import withReactContent from "sweetalert2-react-content"
+
 
 interface MyPageBannerProps {
   title: string, subTitle: string
@@ -228,4 +235,67 @@ export const MyPagination: React.FC<MyPaginationProps> = ({domain, page, prev, n
       </div>
     </>
   )
+}
+
+
+
+// [마이페이지] > [장바구니]
+// - 마이페이지에서 장바구니 추가
+export const myPageAddCart = async (product_pk : number, quantity: number)=> {
+  let product : Product = {
+    product_pk : product_pk
+  } as Product
+  try {
+    // 장바구니에 담을 상품 정보 조회
+    let productResponse : ResponseApi = await productsServices.productsDetail(product_pk)
+    console.log("---------------------------------------------------")
+    console.log(`productResponse : ${productResponse}`)
+    product = productResponse.data.product
+    console.log(`product : ${product}`)
+    console.dir(product)
+    console.log("---------------------------------------------------")
+    // 로컬 스토리지에서 장바구니 데이터를 가져오기
+    let cartProducts: CartProduct[] = JSON.parse(localStorage.getItem("cartProducts") || "[]")
+
+    // 장바구니에서 동일한 product_pk가 있는지 찾기
+    const cartProduct = _.find(cartProducts, (cartProduct: CartProduct) => {
+      return cartProduct.product.product_pk === product.product_pk
+    })
+
+    if (cartProduct) {
+      // 동일한 product_pk가 있으면 수량을 1 증가시키기
+      cartProduct.quantity += 1
+    } else {
+      // 동일한 product_pk가 없으면 새로운 상품 추가
+      cartProducts.push({
+        product,
+        quantity,
+        checked: true
+      })
+    }
+
+    // 로컬 스토리지에 장바구니 데이터 저장
+    localStorage.setItem("cartProducts", JSON.stringify(cartProducts))
+    // 장바구니 항목 수 업데이트
+    window.postMessage({cartProductsLength: cartProducts.length}, "*")
+
+    const MySwal = withReactContent(Swal)
+    MySwal.fire({
+      title: <p className="text-xl">장바구니 추가</p>,
+      text: "해당 상품을 장바구니에 추가하였습니다. 장바구니로 이동하시겠습니까?",
+      icon: "info",
+      showCancelButton: true,
+      cancelButtonText: "확인",
+      confirmButtonText: "장바구니 이동"
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        location.href = "/carts"
+      }
+    })
+  } catch (error) {
+    // 오류 발생 시 경고 메시지 표시 및 로컬 스토리지 초기화
+    alert("알 수 없는 오류가 발생하였습니다. 다시 시도 해주세요.")
+    localStorage.setItem("cartProducts", "")
+  }
+
 }

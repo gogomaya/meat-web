@@ -2,10 +2,13 @@
 import {Order} from "@/types/ordersTypes"
 import Image from "next/image"
 import Link from "next/link"
-import {useState} from "react"
+import {useEffect, useState} from "react"
 import {getOrderStatusMeaning} from "./ordersUtils"
 import Swal from "sweetalert2"
 import withReactContent from "sweetalert2-react-content"
+import {OrderItem, OrderItemSearchParams} from "@/types/orderItemsTypes"
+import {orderItemsService} from "@/services/orderItemsServices"
+import {myPageAddCart} from "../mypage"
 
 interface ModalProps {
     title: string;
@@ -107,6 +110,18 @@ export const OrderList = ({orders}: OrderListProps) => {
       }
     })
   }
+
+  // [장바구니] & [이미지] 클릭
+  const handleOrderClick = (order : Order) => {
+    const MySwal = withReactContent(Swal)
+    MySwal.fire({
+      // title: <img src="/images/1.jpg" />,
+      title: <OrderItemTable order={order} />,
+      text: "",
+      confirmButtonText: "확인"
+    })
+  }
+
   return (
     <div className="flex flex-col items-center gap-10 my-2 mx-4 md:mx-0">
       {orders.map((order) => (
@@ -146,23 +161,17 @@ export const OrderList = ({orders}: OrderListProps) => {
               {/* 내용 */}
               <div className="w-full flex flex-wrap justify-between items-center  px-4 py-2">
                 <div className="item flex-1">
-                  <Image
-                    src={`/${process.env.NEXT_PUBLIC_UPLOAD_IMAGES}/products/${encodeURIComponent(String(order.file_name))}`}
-                    alt=""
-                    width={32}
-                    height={32}
-                    sizes="100vw"
-                    className="md:w-16"
-                    priority />
-                  {/* <Image
-                    src="/images/logo.png"
-                    alt=""
-                    width={32}
-                    height={32}
-                    sizes="100vw"
-                    className="md:w-16"
-                    priority
-                  /> */}
+                  {/* 주문 이미지 */}
+                  <button onClick={() => handleOrderClick(order)}>
+                    <Image
+                      src={`/${process.env.NEXT_PUBLIC_UPLOAD_IMAGES}/products/${encodeURIComponent(String(order.file_name))}`}
+                      alt=""
+                      width={32}
+                      height={32}
+                      sizes="100vw"
+                      className="md:w-16"
+                      priority />
+                  </button>
                 </div>
                 <div className="item flex-[3]">
                   <div className="flex flex-col items-between">
@@ -177,6 +186,7 @@ export const OrderList = ({orders}: OrderListProps) => {
                       <button
                         type="button"
                         className="text-white bg-[#A51C30] hover:bg-[#8B0A1D] font-semibold rounded-md text-sm px-6 py-1 w-full active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200"
+                        onClick={() => handleOrderClick(order)}
                       >
                         장바구니
                       </button>
@@ -238,3 +248,96 @@ export const OrderList = ({orders}: OrderListProps) => {
     </div>
   )
 }
+
+/**
+ * 주문상세 모달(sweet alert용)
+ * @returns
+ */
+interface OrderItemTableProps {
+  order: Order
+  // items: OrderItem[]
+}
+const OrderItemTable: React.FC<OrderItemTableProps> = ({order}) => {
+  const [orderItems, setOrderItems] = useState([] as OrderItem[])
+
+  useEffect(() => {
+    const searchParams = {
+      order_pk : order.order_pk,
+      rowsPerPage: null,
+      page: null,
+      orderColumn: "order_pk",
+      orderDirection: "desc",
+      query: ""
+    } as OrderItemSearchParams
+    const fetchOrderItems = async () => {
+      try {
+        const orderItemsResponse = await orderItemsService.orderItemsRead(searchParams)
+        const items = await orderItemsResponse.data.orderItems
+        setOrderItems(items)
+        console.log(`items : ${items}`)
+
+      } catch (err) {
+        console.log("주문항목 못 가져옴...")
+
+      }
+    }
+
+    fetchOrderItems()
+  }, [order.order_pk])
+
+  const data = [
+    {id: 1, name: "John Doe", email: "john@example.com", status: "Active"},
+    {id: 2, name: "Jane Smith", email: "jane@example.com", status: "Inactive"},
+    {id: 3, name: "Sam Green", email: "sam@example.com", status: "Active"}
+  ]
+
+  const handleCartClick = (item : OrderItem) => {
+    console.log(`orderItem : ${item}`)
+    console.log(`product_pk : ${item.product_pk}`)
+    // 장바구니 추가
+    myPageAddCart(item.product_pk, 1)
+  }
+
+
+  return (
+    <div className="container mx-auto mt-10">
+      <h2 className="text-2xl font-bold mb-4">{order.title}</h2>
+      <div className="overflow-x-auto">
+        <table className="min-w-full bg-white border border-gray-300">
+          <thead>
+            <tr>
+              <th className="px-6 py-3 border-b-2 border-gray-300 bg-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                NO
+              </th>
+              <th className="px-6 py-3 border-b-2 border-gray-300 bg-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                상품명
+              </th>
+              <th className="px-6 py-3 border-b-2 border-gray-300 bg-gray-200 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                비고
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {orderItems.map((item, index) => (
+              <tr key={item.order_item_pk}>
+                <td className="px-6 py-4 border-b text-left text-sm border-gray-200">{index+1}</td>
+                <td className="px-6 py-4 border-b text-left text-sm border-gray-200">
+                  <a href={`/products/${item.product_pk}`}>
+                    {item.name}
+                  </a>
+                </td>
+                <td className="px-6 py-4 border-b text-left text-sm border-gray-200">
+                  <button onClick={() => handleCartClick(item)}>
+                    <svg className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium md:w-8 md:h-8 css-i4bv87-MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="ShoppingCartIcon"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2M1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2"></path></svg>
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  )
+}
+
+export default OrderItemTable

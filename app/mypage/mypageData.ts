@@ -4,6 +4,8 @@ import {ResponseApi} from "@/types/commonTypes"
 import {MyPageData} from "@/types/myPageTypes"
 import {User} from "@/types/usersTypes"
 import {addressServices} from "@/services/addressService"
+import {OrderItem, OrderItemSearchParams} from "@/types/orderItemsTypes"
+import {orderItemsService} from "@/services/orderItemsServices"
 
 
 
@@ -48,3 +50,6 @@ export const myPageData = async (user: User): Promise<MyPageData> => {
 
   return myPageData
 }
+
+
+
