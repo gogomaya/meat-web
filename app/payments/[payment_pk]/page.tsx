@@ -1,3 +1,4 @@
+import {RemoveOrderItem} from "@/app/carts/Carts"
 import ErrorPage from "@/app/error"
 import MainLayout from "@/app/main-layout"
 import {OrderSuccessContent} from "@/app/order/Order"
@@ -14,8 +15,6 @@ import {Order, OrderParams} from "@/types/ordersTypes"
 import {Payment} from "@/types/paymentsTypes"
 import {User} from "@/types/usersTypes"
 import {redirect} from "next/navigation"
-// import { OrderSuccessContent } from "../Order"
-// import { orderSuccess } from "../orderSuccess"
 
 /**
  * 결제 성공
@@ -133,6 +132,8 @@ const PaymentSuccess = async (props: {
           }}>주문 완료</div>
       </div>
       <OrderSuccessContent order={order} orderItems={orderItems} userInfo={userInfo} address={address} />
+      {/* 주문한 장바구니 삭제 */}
+      <RemoveOrderItem items={orderItems} />
     </MainLayout>
   )
 }

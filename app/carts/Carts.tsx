@@ -7,6 +7,8 @@ import {useState, useEffect} from "react"
 import {CartProduct} from "@/types/productsTypes"
 import {useForm} from "react-hook-form"
 import _ from "lodash"
+import {OrderItem, OrderItemSearchParams} from "@/types/orderItemsTypes"
+import {orderItemsService} from "@/services/orderItemsServices"
 
 export const CartsDetailContent = () => {
   const router = useRouter()
@@ -301,4 +303,36 @@ export const CartsDetailContent = () => {
       </div>
     </>
   )
+}
+
+
+// 장바구니에서 상품 삭제
+export const removeFromCart = async (product_pk : number) => {
+  // 로컬 스토리지에서 장바구니 데이터 가져오기
+  let cartProducts = JSON.parse(localStorage.getItem("cartProducts") || "[]")
+
+  // 장바구니에서 동일한 product_pk가 있는지 찾기
+  const index = cartProducts.findIndex((cartProduct: CartProduct) => cartProduct.product.product_pk === product_pk)
+
+  if (index !== -1) {
+    // 해당 상품이 장바구니에 존재할 경우 삭제하기
+    cartProducts.splice(index, 1)
+
+    // 로컬 스토리지에 업데이트된 장바구니 데이터 저장
+    localStorage.setItem("cartProducts", JSON.stringify(cartProducts))
+
+    // 장바구니 항목 수 업데이트
+    window.postMessage({cartProductsLength: cartProducts.length}, "*")
+
+    console.log("상품이 장바구니에서 삭제되었습니다.")
+  } else {
+    console.log("해당 상품이 장바구니에 존재하지 않습니다.")
+  }
+}
+
+export const RemoveOrderItem = ({items}: { items: OrderItem[] }) => {
+  items.forEach((item: OrderItem) => {
+    removeFromCart(item.product_pk)
+  })
+  return <></>
 }
