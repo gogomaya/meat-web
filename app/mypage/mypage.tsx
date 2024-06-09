@@ -197,7 +197,7 @@ interface MyPaginationProps {
 export const MyPagination: React.FC<MyPaginationProps> = ({domain, page, prev, next, lastPage}) => {
   console.log("::: MyPagination :::")
   console.log(`${page}, ${prev}, ${next}, ${lastPage}`)
-  
+
   return (
     <>
       {/* 페이지네이션 */}
