@@ -54,10 +54,19 @@ export const POST = async (request: NextRequest) => {
       VALUES (?, ?, ?, ?, ?, ?)
     `, [user_pk, mobile, recipient, address, address_detail, is_primary])
 
+    // 마지막으로 삽입된 address_pk 가져오기
+    const [rows]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
+      SELECT LAST_INSERT_ID() as address_pk
+    `)
+
+    const address_pk = rows[0].address_pk
+
     return NextResponse.json({
       message: "Address created successfully",
-      status: 200
+      status: 200,
+      address_pk: address_pk
     })
+
   } catch (error) {
     console.error("Error occurred while creating/deleting address:", error)
     return NextResponse.error()

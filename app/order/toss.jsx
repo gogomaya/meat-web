@@ -16,6 +16,8 @@ export function CheckoutPage({pay, address_pk}) {
   const paymentMethodsWidgetRef = useRef(null)
   const [price, setPrice] = useState(pay.finalPrice)
 
+  console.log(`pay : ${pay}`)
+  console.dir(pay)
   console.log(`address_pk (배송지번호) : ${address_pk}`)
 
   useEffect(() => {
@@ -63,6 +65,16 @@ export function CheckoutPage({pay, address_pk}) {
   const handlePaymentRequest = async () => {
     // 결제를 요청하기 전에 orderId, amount를 서버에 저장하세요.
     // 결제 과정에서 악의적으로 결제 금액이 바뀌는 것을 확인하는 용도입니다.
+
+    let params = `orderPk=${pay.orderPk}&addressPk=${address_pk}`
+    if( pay.customerName ) params += `&guestName=${pay.customerName}`
+    if( pay.customerMobilePhone ) params += `&guestMobile=${pay.customerMobilePhone}`
+    if( pay.guestRecipient ) params += `&guestRecipient=${pay.guestRecipient}`
+    if( pay.guestMobile ) params += `&guestRecipientMobile=${pay.guestMobile}`
+    if( pay.guestAddress ) params += `&guestAddress=${pay.guestAddress}`
+    if( pay.guestAddressDetail ) params += `&guestAddressDetail=${pay.guestAddressDetail}`
+    console.log("::::::::::::::::: params ::::::::::::::::")
+    console.log(params)
     try {
       await paymentWidget?.requestPayment({
         orderId: pay.orderId,                       // 주문 번호
@@ -70,7 +82,7 @@ export function CheckoutPage({pay, address_pk}) {
         customerName: pay.customerName,
         customerEmail: pay.customerEmail,
         customerMobilePhone: pay.customerMobilePhone,
-        successUrl: `${window.location.origin}/order/success?orderPk=${pay.orderPk}&addressPk=${address_pk}`,
+        successUrl: `${window.location.origin}/order/success?${params}`,
         failUrl: `${window.location.origin}/order/fail`
       })
     } catch (error) {
@@ -108,7 +120,6 @@ export function CheckoutPage({pay, address_pk}) {
           onClick={handlePaymentRequest}
         ><span>{pay.finalPrice.toLocaleString()}원 </span>결제하기</button>
       </div>
-      {/* <button onClick={handlePaymentRequest}>결제하기</button> */}
     </div>
   )
 }

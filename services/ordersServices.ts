@@ -12,6 +12,7 @@ export const ordersServices = {
     console.log(":::::::::: ordersServices.orderCreate() ::::::::::")
     console.log("productPks : " + productPks)
     console.log("quantityList : " + quantityList)
+    console.log("guest_mobile : " + guest_mobile)
     try {
       // 주문항목에 담을 상품목록 조회
       const productList: Product[] = []
@@ -107,6 +108,7 @@ export const ordersServices = {
     try {
       const formData = new FormData()
       if (updatedOrderData.user_pk !== undefined) formData.append("user_pk", String(updatedOrderData.user_pk))
+      if (updatedOrderData.guest_name !== undefined) formData.append("guest_name", updatedOrderData.guest_name)
       if (updatedOrderData.guest_mobile !== undefined) formData.append("guest_mobile", updatedOrderData.guest_mobile)
       if (updatedOrderData.address_pk !== undefined) formData.append("address_pk", String(updatedOrderData.address_pk))
       if (updatedOrderData.shipment_pk !== undefined) formData.append("shipment_pk", String(updatedOrderData.shipment_pk))

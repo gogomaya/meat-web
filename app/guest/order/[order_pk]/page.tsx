@@ -7,12 +7,8 @@ import {ordersServices} from "@/services/ordersServices"
 import {orderItemsService} from "@/services/orderItemsServices"
 import {OrderItemSearchParams} from "@/types/orderItemsTypes"
 import ErrorPage from "@/app/error"
-import {User} from "@/types/usersTypes"
-import {usersServices} from "@/services/usersServices"
-import {AddressSearchParams} from "@/types/addressTypes"
-import {addressServices} from "@/services/addressService"
 import {redirect} from "next/navigation"
-import {OrderDetailContent} from "../Order"
+import {OrderDetailContent, Post} from "../GuestOrder"
 
 /**
  * 주문서 작성
@@ -51,41 +47,6 @@ const OrderPay = async (props: {
     let url = `/redirect?redirectUrl=${redirectUrl}&title=${title}&text=${text}&icon=warning`
     redirect(url)
   }
-
-
-  // 배송지 조회
-  let addressResponse: ResponseApi = {}
-  let addressList = []
-  let lastPage = 0
-  let noAddress = false
-
-  // 회원
-  if( user && !guest && guest != 1 ) {
-    const addressParams = {
-      user_pk: user.user_pk,
-      rowsPerPage: 5
-    } as AddressSearchParams
-    try {
-      addressResponse = await addressServices.addressRead(addressParams)
-      addressList = await addressResponse.data.addressList
-      lastPage = Math.floor(addressResponse.data.total_rows / addressParams.rowsPerPage)
-      console.log(addressList)
-      console.log(addressList.length)
-      if( addressList.length == 0 ) {
-        noAddress = true
-        console.log("배송지가 없으므로, 신규 등록해야합니다.")
-      }      // 배송지 없음
-    } catch (error) {
-      console.log(":::::::::::::::::::::::::::::::::::::: 배송지 없음")
-      console.error(`error : ${error}`)
-      return <></>
-    }
-    if( noAddress ) {
-      // ?firstAddress=true 를 붙여주변 기본 배송지로 세팅해서 주소등록
-      redirect("/mypage/address/create?firstAddress=true")
-    }
-  }
-
 
   let ordersResponse: ResponseApi = {}
   let orderItemsResponse: ResponseApi = {}
@@ -130,33 +91,6 @@ const OrderPay = async (props: {
   }
 
 
-
-
-  // 주문자 정보 조회
-  const user_pk = order.user_pk || 0
-  let userResponse: ResponseApi = {}
-  let userInfo: User = {
-    user_pk: 0,
-    id: "",
-    name: "",
-    nickname: "",
-    mobile: "",
-    third_party: "Naver"
-  }
-  // 회원
-  if( user && !guest && guest != 1 ) {
-    try {
-      userResponse = await usersServices.usersDetail(user_pk)
-      console.dir(userResponse)
-      userInfo = userResponse.data.user
-      console.log(userInfo)
-      console.dir(userInfo)
-    } catch (error) {
-      console.error(error)
-      return <ErrorPage />
-    }
-  }
-
   if( guest && guest == 1 ) {
     console.log("::::::::::::::::: 비회원 주문 ::::::::::::::")
   }
@@ -177,11 +111,7 @@ const OrderPay = async (props: {
             alignItems: "center"
           }}>주문서</div>
       </div>
-      {/* <Post setcompany={function (arg0: any): void {
-        throw new Error("Function not implemented.")
-      } } company={undefined} /> */}
-      {/* <OrderDetailContent orderProducts={orderProducts} /> */}
-      <OrderDetailContent order={order} orderItems={orderItems} userInfo={userInfo} addressList={addressList} />
+      <OrderDetailContent order={order} orderItems={orderItems}  />
     </MainLayout>
   )
 }

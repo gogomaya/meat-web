@@ -1,6 +1,8 @@
+import {addressServices} from "@/services/addressService"
 import {ordersServices} from "@/services/ordersServices"
 import {paymentsServices} from "@/services/paymentsServices"
 import {shipmentsServices} from "@/services/shipmentsServices"
+import {Address} from "@/types/addressTypes"
 import {ResponseApi} from "@/types/commonTypes"
 import {Order, OrderParams} from "@/types/ordersTypes"
 import {Payment} from "@/types/paymentsTypes"
@@ -22,13 +24,45 @@ interface PaySuccessResult {
 }
 
 export const orderSuccess = async (searchParams: OrderParams): Promise<PaySuccessResult> => {
-  const {order_pk, address_pk, payment_key} = searchParams
+  let {
+    order_pk, address_pk, payment_key, guest_name, guest_mobile,
+    recipient, recipient_mobile, address, address_detail
+  } = searchParams
   let result = false
   let shipmentResult = false
   let orderResult = false
   let paymentResult = false
   let shipment_pk = 0
   let payment_pk = 0
+
+  // 비회원 배송지 등록
+  const newAddress: Omit<Address, "address_pk" | "created_at"> = {
+    user_pk: 0,
+    recipient: recipient,
+    address: address,
+    address_detail: address_detail,
+    mobile: recipient_mobile,
+    is_primary: 1,
+    delivery_request: "",
+    delivery_method: ""
+  }
+
+  if( recipient && recipient_mobile && address ) {
+    try {
+      const addressCreateResult: ResponseApi = await addressServices.addressCreate(newAddress)
+      console.dir(addressCreateResult)
+      if( addressCreateResult.data.status == 200 ) {
+        console.log("비회원 새 배송지 등록 성공")
+        address_pk = addressCreateResult.data.address_pk
+        console.log(`등록된 배송지 번호 : ${addressCreateResult.data.address_pk}`)
+
+      }
+    } catch (error) {
+      console.error("[결제완료] 비회원 새 배송지 등록 중 오류 발생:", error)
+    }
+
+
+  }
 
   // 배송 등록
   try {
@@ -52,12 +86,16 @@ export const orderSuccess = async (searchParams: OrderParams): Promise<PaySucces
   console.log("::::::::::::::: 주문 업데이트 ::::::::::::::")
   console.log(`order_pk : ${order_pk}`)
   console.log(`address_pk : ${address_pk}`)
+  console.log(`guest_name : ${guest_name}`)
+  console.log(`guest_mobile : ${guest_mobile}`)
 
 
   try {
     const order = {
       order_pk: order_pk,
       address_pk: address_pk,
+      guest_name: guest_name,
+      guest_mobile: guest_mobile,
       status: "paid"
     } as Order
     const orderUpdateResult: ResponseApi = await ordersServices.ordersUpdate(order)

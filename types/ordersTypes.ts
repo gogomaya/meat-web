@@ -11,6 +11,7 @@ export interface Order {
   shipment_pk: number
   address_pk: number
   title: string // 한우 소고기 외 3건
+  guest_name?: string // 비회원인 경우 이름(보내는분)
   guest_mobile?: string // 비회원인 경우 전화번호
   total_price?: number | null
   total_quantity?: number | null
@@ -36,6 +37,12 @@ export interface OrderParams  {
   order_pk: number
   address_pk: number
   payment_key: string
+  guest_name: string
+  guest_mobile: string
+  recipient : string            // 받는사람
+  recipient_mobile : string
+  address : string
+  address_detail : string
   pks: number[]
   list: number[]
 }

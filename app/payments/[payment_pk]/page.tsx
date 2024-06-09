@@ -48,7 +48,7 @@ const PaymentSuccess = async (props: {
 
   if( !payment_pk || isNaN(payment_pk) ) {
     console.log(`payment_pk : ${payment_pk}`)
-    console.log("잘못된 접급입니다.")
+    console.log("잘못된 접근입니다.")
     return <ErrorPage/>
   }
 
@@ -100,20 +100,27 @@ const PaymentSuccess = async (props: {
     return <ErrorPage />
   }
 
-  // 주문자 정보 조회
-  try {
-    const user_pk = order.user_pk || 0
-    let userResponse = await usersServices.usersDetail(user_pk)
-    if( userResponse.data.status == 200 ) {
-      console.log("주문자 정보 조회 성공!")
-      userInfo = userResponse.data.user
-      console.dir(userInfo)
+  if( order.user_pk && order.user_pk != 0 ) {
+    // 주문자 정보 조회
+    try {
+      const user_pk = order.user_pk || 0
+      let userResponse = await usersServices.usersDetail(user_pk)
+      if( userResponse.data.status == 200 ) {
+        console.log("주문자 정보 조회 성공!")
+        userInfo = userResponse.data.user
+        console.dir(userInfo)
+      }
+    } catch (error) {
+      console.error(error)
+      return <ErrorPage />
     }
-  } catch (error) {
-    console.error(error)
-    return <ErrorPage />
-  }
 
+  }
+  // 비회원
+  else {
+    userInfo.name = order.guest_name || ""
+    userInfo.mobile = order.guest_mobile || ""
+  }
 
   return (
     <MainLayout user={user}>
