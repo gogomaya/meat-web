@@ -242,6 +242,8 @@ export const MyPagination: React.FC<MyPaginationProps> = ({domain, page, prev, n
 // [마이페이지] > [장바구니]
 // - 마이페이지에서 장바구니 추가
 export const myPageAddCart = async (product_pk : number, quantity: number)=> {
+
+  // ------------------------------------------------------------------------
   let product : Product = {
     product_pk : product_pk
   } as Product
@@ -278,7 +280,10 @@ export const myPageAddCart = async (product_pk : number, quantity: number)=> {
     localStorage.setItem("cartProducts", JSON.stringify(cartProducts))
     // 장바구니 항목 수 업데이트
     window.postMessage({cartProductsLength: cartProducts.length}, "*")
+    // ------------------------------------------------------------------------
 
+
+    // ------------------------------------------------------------------------
     const MySwal = withReactContent(Swal)
     MySwal.fire({
       title: <p className="text-xl">장바구니 추가</p>,
@@ -299,3 +304,5 @@ export const myPageAddCart = async (product_pk : number, quantity: number)=> {
   }
 
 }
+
+

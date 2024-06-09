@@ -1,18 +1,10 @@
-import ErrorPage from "@/app/error"
-import MainLayout from "@/app/main-layout"
 import {loginCheck} from "@/app/users/login/loginCheck"
-import {addressServices} from "@/services/addressService"
-import {orderItemsService} from "@/services/orderItemsServices"
-import {ordersServices} from "@/services/ordersServices"
-import {usersServices} from "@/services/usersServices"
-import {AddressSearchParams} from "@/types/addressTypes"
-import {ResponseApi} from "@/types/commonTypes"
-import {OrderItemSearchParams} from "@/types/orderItemsTypes"
 import {Order, OrderParams} from "@/types/ordersTypes"
-import {User} from "@/types/usersTypes"
 import {redirect} from "next/navigation"
-import {OrderSuccessContent} from "../Order"
 import {orderSuccess} from "../orderSuccess"
+import {orderItemsByOrderPk} from "../orderUtil"
+import {OrderItem} from "@/types/orderItemsTypes"
+import {RemoveOrderItem} from "@/app/carts/Carts"
 
 /**
  * 결제 성공
@@ -64,6 +56,8 @@ const OrderSuccess = async (props: {
   } as OrderParams
   const paySuccessResult = await orderSuccess(params)
 
+
+  let items : OrderItem[] = []
   if( paySuccessResult.result ) {
     console.log("결제 성공!")
     console.log(`result : ${paySuccessResult.result}`)
