@@ -299,7 +299,6 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
 
   const handleFavoriteClick = async () => {
 
-    alert("사용자확인")
     if (!user) {
       Swal.fire({
         title: "로그인이 필요한 서비스입니다.",
@@ -508,7 +507,7 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
                     <FavoriteBorderIcon style={{color: "white", fontSize: "24px"}} />
                   )}
                 </div>
-                <CartOrderButton type="CART" product={product} quantity={quantity}>
+                <CartOrderButton type="CART" product={product} quantity={quantity} user={user}>
                   <Button
                     style={{
                       backgroundColor: "#A51C30",
@@ -524,7 +523,7 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
                     장바구니
                   </Button>
                 </CartOrderButton>
-                <CartOrderButton type="ORDER" product={product} quantity={quantity}>
+                <CartOrderButton type="ORDER" product={product} quantity={quantity} user={user}>
                   <Button
                     style={{
                       backgroundColor: "#271A11",
@@ -554,11 +553,13 @@ const CartOrderButton = ({
   children,
   product,
   quantity,
+  user,
   type
 }: {
   children: React.ReactElement<{onClick: Function}>
   product: Product
   quantity: number
+  user: User
   type: "CART" | "ORDER"
 }) => {
   const router = useRouter()
@@ -596,6 +597,52 @@ const CartOrderButton = ({
       alert("알 수 없는 오류가 발생하였습니다. 다시 시도 해주세요.")
       localStorage.setItem("cartProducts", "")
     }
+  }
+
+  // 한 상품 주문
+  const orderOne = async (product_pk:number, quantity:number) => {
+    console.log(`product_pk : ${product_pk}`)
+    console.log(`quantity : ${quantity}`)
+
+    // 회원
+    if( user.user_pk ) {
+      // alert("회원")
+      router.push(`/order?productPks=${product.product_pk}&quantityList=${quantity}`)
+    }
+    // 비회원
+    else {
+      // alert("비회원")
+      const MySwal = withReactContent(Swal)
+      MySwal.fire({
+        title: "비회원 주문",
+        text: "전화번호를 입력해주세요. (- 기호없이 : 01012341234 )",
+        input: "text",
+        inputAttributes: {
+          autocapitalize: "off"
+        },
+        showCancelButton: true,
+        confirmButtonText: "구매하기",
+        cancelButtonText: "취소",
+        showLoaderOnConfirm: true,
+        preConfirm: async (mobile) => {
+          try {
+            // TODO: 전화번호 검증 로직 필요
+            return {mobile: mobile}
+          } catch (error) {
+            //
+          }
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // 비회원 주문
+          router.push(`/guest/order?mobile=${result.value.mobile}&productPks=${product.product_pk}&quantityList=${quantity}`)
+        }
+      })
+
+    }
+
+
   }
 
 
@@ -646,7 +693,8 @@ const CartOrderButton = ({
             }
             if (type === "ORDER") {
               // 구매하기 -> 알림 -> 아니오 -> 한상품만
-              router.push(`/order?productPks=${product.product_pk}&quantityList=${quantity}`)
+              orderOne(product.product_pk, quantity)
+              // router.push(`/order?productPks=${product.product_pk}&quantityList=${quantity}`)
             }
           }} color="primary">
             아니오
@@ -659,6 +707,7 @@ const CartOrderButton = ({
               // 장바구니로 이동
               router.push("/carts")
             }
+            // 구매하기 -> 알림 -> 예 -> 장바구니 포함 주문
             if( type === "ORDER") {
               addCartOrderList(product, quantity)
               orderWithCart()

@@ -38,8 +38,7 @@ export const orderCheckout = async (searchParams: OrderParams): Promise<OrderRes
   }
 
   try {
-    const orderCreateResult = await ordersServices.ordersCreate(user_pk, "", pks, list)
-    console.log("❤❤❤❤❤❤❤❤❤❤❤❤")
+    const orderCreateResult = await ordersServices.ordersCreate(user_pk, mobile, pks, list)
     console.dir(orderCreateResult)
     const responseStatus = orderCreateResult.data.status
 
