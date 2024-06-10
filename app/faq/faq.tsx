@@ -74,7 +74,7 @@ const faqItems = [
   {
     category: "accountAndOrder",
     question: "회원 가입은 필수인가요?",
-    answer: "네, 회원 가입은 필수입니다. 회원 가입 시 다양한 혜택을 누릴 수 있습니다."
+    answer: "회원 가입 시 다양한 혜택을 누리실 수 있지만, 비회원 주문하기도 가능합니다."
   },
 
   // 보안 및 개인정보보호
@@ -276,7 +276,7 @@ export const FaqSection: React.FC = () => {
     {
       category: "accountAndOrder",
       question: "회원 가입은 필수인가요?",
-      answer: "네, 회원 가입은 필수입니다. 회원 가입 시 다양한 혜택을 누릴 수 있습니다."
+      answer: "회원 가입 시 다양한 혜택을 누리실 수 있지만, 비회원 주문하기도 가능합니다."
     },
 
     // 보안 및 개인정보보호

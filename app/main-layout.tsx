@@ -70,7 +70,6 @@ const MainLayout = ({
           />
         </Link>
         <MegaMenu />
-        {/* <TestSubMenu /> */}
         <div className="flex gap-3">
           <MainSearch />
           <Users user={user} />
