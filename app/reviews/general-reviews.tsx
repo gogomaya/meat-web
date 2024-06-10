@@ -262,7 +262,7 @@ export const GeneralReview = ({
     <Card>
       <CardContent>
         <Image
-          src="/images/7.jpg"
+          src={`/upload-images/reviews/${review.images}`}
           alt="상품 이미지"
           width={400}
           height={100}
