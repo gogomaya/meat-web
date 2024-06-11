@@ -29,9 +29,7 @@ export const CartsDetailContent = () => {
     return <Skeleton variant="rectangular" animation="wave" width="100%" height={300} />
   }
   // 전체 상품 금액, 할인 금액, 배송비 계산
-  const discountAmount = 0
   const shippingFee = 5000
-
 
   // [주문하기] 클릭
   const handleOrderClick = () => {
@@ -140,7 +138,13 @@ export const CartsDetailContent = () => {
                             </div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
-                            <div>{cartProduct.product.discounted_price.toLocaleString()}원</div>
+                            <div>
+                              {cartProduct.product.discounted_price !== undefined ? (
+                                <span>{cartProduct.product.discounted_price.toLocaleString()}원</span>
+                              ) : (
+                                <span>가격 정보 없음</span>
+                              )}
+                            </div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-center">
                             <div className="flex items-center text-center">
@@ -180,7 +184,13 @@ export const CartsDetailContent = () => {
                             </div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
-                            <div>{(Number(cartProduct.product.discounted_price) * cartProduct.quantity).toLocaleString()}원</div>
+                            <div>
+                              {cartProduct.product.discounted_price !== undefined ? (
+                                <span>{(Number(cartProduct.product.discounted_price) * cartProduct.quantity).toLocaleString()}원</span>
+                              ) : (
+                                <span>가격 정보 없음</span>
+                              )}
+                            </div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <IconButton
@@ -272,9 +282,11 @@ export const CartsDetailContent = () => {
               </div>
               <div className="flex justify-between mb-2">
                 <span>할인 금액</span>
-                <span>-{_.sumBy(cartProducts, (cartProduct) => {
-                  return (Number(cartProduct.product.price) - Number(cartProduct.product.discounted_price)) * cartProduct.quantity
-                }).toLocaleString()}원
+                <span>-{(_.sumBy(cartProducts, (cartProduct) => {
+                  const productPrice = Number(cartProduct.product.price)
+                  const discountedPrice = Number(cartProduct.product.discounted_price) || 0
+                  return (productPrice - discountedPrice) * cartProduct.quantity
+                }) || 0).toLocaleString()}원
                 </span>
               </div>
               <div className="flex justify-between mb-2">
@@ -285,13 +297,16 @@ export const CartsDetailContent = () => {
                 <span className="font-bold text-lg">최종 결제 금액</span>
                 <span className="font-bold text-lg">
                   {(
-                    _.sumBy(cartProducts, (cartProduct) => {
-                      return Number(cartProduct.product.price) * cartProduct.quantity
+                    (_.sumBy(cartProducts, (cartProduct) => {
+                      const productPrice = cartProduct.product ? Number(cartProduct.product.price) : 0
+                      return productPrice * cartProduct.quantity
                     }) -
-                  _.sumBy(cartProducts, (cartProduct) => {
-                    return (Number(cartProduct.product.price) - Number(cartProduct.product.discounted_price)) * cartProduct.quantity
-                  }) +
-                  shippingFee
+                    _.sumBy(cartProducts, (cartProduct) => {
+                      const productPrice = cartProduct.product ? Number(cartProduct.product.price) : 0
+                      const discountedPrice = cartProduct.product ? Number(cartProduct.product.discounted_price) : 0
+                      return (productPrice - discountedPrice) * cartProduct.quantity
+                    })) +
+                    shippingFee
                   ).toLocaleString()}원
                 </span>
               </div>
