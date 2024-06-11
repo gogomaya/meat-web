@@ -244,7 +244,7 @@ export const ProductDetailReview = () => {
   }
 
   return (
-    <div className="container p-4 bg-white">
+    <div className="container p-3 bg-white">
       <div className="py-4" style={{fontSize: "30px"}}><strong>고객리뷰</strong></div>
       <div className="mb-6">
         {Object.entries(reviewStats).slice(1).map(([key, val], index) => (

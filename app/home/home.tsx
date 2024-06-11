@@ -23,10 +23,10 @@ export const HomeBanner = () => {
         alignItems: "center"
       }}
     >
-      <div className="flex flex-col items-center space-y-4 md:w-1/2 z-6" style={{maxWidth: "800px"}}>
+      <div className="flex flex-col items-center space-y-4 md:w-1/2 z-6 gap-1" style={{maxWidth: "800px"}}>
         <div className="text-6xl font-extrabold text-yellow-400 shadow-lg">Premium No.9</div>
         <div className="text-4xl font-bold text-white shadow">모든 작업을 직접하여 적은 유통마진으로</div>
-        <div className="text-2xl text-gray-300 shadow">
+        <div className="text-2xl text-gray-300 shadow flex gap-2">
           <span style={{color: "red"}}>한우1++</span>
           <span style={{color: "yellow"}}>No.9</span>만을 판매하는 한솔축산입니다.
         </div>
@@ -60,8 +60,8 @@ export const HomeBanner = () => {
       .section::before {
         top: 0;
         left: 0;
-        width: 480px;
-        height: 440px;
+        width: 380px;
+        height: 410px;
         background-image: url('/images/meat-img02_1.png');
         transform: translate(-100%, 0%);
         animation: slideInFromLeft 1s forwards;
@@ -71,8 +71,8 @@ export const HomeBanner = () => {
       .section::after {
         bottom: 0;
         right: 0;
-        width: 462px;
-        height: 446px;
+        width: 400px;
+        height: 416px;
         background-image: url('/images/meat-img01.png');
         transform: translate(100%, 37%);
         animation: slideInFromRight 1s forwards;
