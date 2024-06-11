@@ -368,7 +368,7 @@ export const OrderDetailContent = ({
             }
           </div>
 
-          <div className="py-3">
+          <div className="py-8">
             <div className="flex">
               <div className="w-full">
                 <div className="text-2xl font-semibold mb-4 p-2">결제방법</div>

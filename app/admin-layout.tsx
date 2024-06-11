@@ -92,7 +92,7 @@ const AdminLayoutMenu = ({
       <li className="px-4 py-2 border-b border-50 lg:border-0">
         <Link
           href="/admin/users"
-          className={`${pathname.includes("/admin/users") ? "text-yellow-700 " : "text-red-200 "}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
+          className={`${pathname.includes("/admin/users") ? "text-yellow-700 " : "text-white "}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
           onClick={() => {
             setTimeout(() => setHeaderMenuOpen?.(), 500)
           }}
@@ -101,7 +101,7 @@ const AdminLayoutMenu = ({
       <li className="px-4 py-2 border-b border-50 lg:border-0">
         <Link
           href="/admin/products/cow"
-          className={`${pathname.includes("/admin/products/cow") ? "text-yellow-700 " : "text-red-200"}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
+          className={`${pathname.includes("/admin/products/cow") ? "text-yellow-700 " : "text-white "}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
           onClick={() => {
             setTimeout(() => setHeaderMenuOpen?.(), 500)
           }}
@@ -110,7 +110,7 @@ const AdminLayoutMenu = ({
       <li className="px-4 py-2 border-b border-50 lg:border-0">
         <Link
           href="/admin/products/pork"
-          className={`${pathname.includes("/admin/products/pork") ? "text-yellow-700 " : ""}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
+          className={`${pathname.includes("/admin/products/pork") ? "text-yellow-700 " : "text-white "}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
           onClick={() => {
             setTimeout(() => setHeaderMenuOpen?.(), 500)
           }}
@@ -119,7 +119,7 @@ const AdminLayoutMenu = ({
       <li className="px-4 py-2 border-b border-50 lg:border-0">
         <Link
           href="/admin/products/imported"
-          className={`${pathname.includes("/admin/products/imported") ? "text-yellow-700 " : ""}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
+          className={`${pathname.includes("/admin/products/imported") ? "text-yellow-700 " : "text-white "}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
           onClick={() => {
             setTimeout(() => setHeaderMenuOpen?.(), 500)
           }}
@@ -128,7 +128,7 @@ const AdminLayoutMenu = ({
       <li className="px-4 py-2 border-b border-50 lg:border-0">
         <Link
           href="/admin/products/simple"
-          className={`${pathname.includes("/admin/products/simple") ? "text-yellow-700 " : ""}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
+          className={`${pathname.includes("/admin/products/simple") ? "text-yellow-700 " : "text-white "}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
           onClick={() => {
             setTimeout(() => setHeaderMenuOpen?.(), 500)
           }}

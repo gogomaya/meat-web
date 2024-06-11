@@ -209,7 +209,7 @@ export const MegaMenu = () => {
               <div className="item" style={{width: "140px"}}>
                 <li><Link href="/boards?category=notice" className="text-white">공지사항</Link></li>
                 <li><Link href="/faq" className="text-white">자주하는질문</Link></li>
-                <li><Link href="/boards?category=qna" className="text-white">1:1문의하기</Link></li>
+                <li><Link href="/boards?category=qna" className="text-white">문의하기</Link></li>
               </div>
             </div>
           </ol>
@@ -383,7 +383,7 @@ const MainMobileMenu = () => {
                   <ol>
                     <li><Link href="/boards?category=notice">공지사항</Link></li>
                     <li><Link href="/faq">자주하는질문</Link></li>
-                    <li><Link href="/boards?category=qna">1:1문의하기</Link></li>
+                    <li><Link href="/boards?category=qna">문의하기</Link></li>
                   </ol>
                 </AccordionDetails>
               </Accordion>
@@ -426,10 +426,18 @@ const MainBottom = () => {
     >
       <div className="bg-transparent p-6 md:p-12 text-white">
         <div className="flex footer-menu-link space-x-4">
-          <div className="footer-menu-content cursor-pointer hover:underline">회사소개</div><span>|</span>
-          <div className="footer-menu-content cursor-pointer hover:underline">이용안내</div><span>|</span>
-          <div className="footer-menu-content cursor-pointer hover:underline">이용약관</div><span>|</span>
-          <div className="footer-menu-content cursor-pointer hover:underline">개인정보처리방침</div>
+          <Link href={"https://smartstore.naver.com/hansolmeat1534"}>
+            <div className="footer-menu-content cursor-pointer hover:underline text-white">회사소개</div><span>|</span>
+          </Link>
+          <Link href={"https://smartstore.naver.com/hansolmeat1534"}>
+            <div className="footer-menu-content cursor-pointer hover:underline text-white">이용안내</div><span>|</span>
+          </Link>
+          <Link href={"/policy"}>
+            <div className="footer-menu-content cursor-pointer hover:underline text-white">이용약관</div><span>|</span>
+          </Link>
+          <Link href={"/policy"}>
+            <div className="footer-menu-content cursor-pointer hover:underline text-white">개인정보처리방침</div><span>|</span>
+          </Link>
         </div>
         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <div className="text-2xl font-bold" style={{textAlign: "left"}}>

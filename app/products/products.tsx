@@ -236,6 +236,20 @@ export const ProductsList = ({products}: { products: Product[] }) => {
                 >
                   {product.etc}
                 </button>
+                <button
+                  className="product-button"
+                  style={{
+                    padding: "5px 8px",
+                    backgroundColor: "#FACC15",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: "20px",
+                    cursor: "pointer",
+                    fontSize: "0.8rem"
+                  }}
+                >
+                  택배배송
+                </button>
               </div>
             </li>
           ))
@@ -338,7 +352,7 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
         imageWidth: 200,
         // imageHeight: 200,
         imageAlt: "하트",
-        timer: 2500,
+        timer: 1500,
         timerProgressBar: true,
         didOpen: () => {
           Swal.showLoading()
@@ -492,7 +506,14 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
           <Divider className="bg-gray-800 h-0.5 mb-4" />
           <div>
             <div className="flex flex-col items-end mb-4 lg:w-1/2 ml-auto py-2">
-              <strong className="text-2xl">총금액: {(Number(product.price) * quantity).toLocaleString()}원</strong>
+              <div className="flex gap-3 align-items">
+                <div className="text-xl text-red-600">{(((Number(product.price) - Number(product.discounted_price)) / Number(product.price)) * 100).toFixed(0)}%</div>
+                <div className="text-xl" style={{textDecoration: "line-through"}}>{(Number(product.price) * quantity).toLocaleString()}원</div>
+              </div>
+              <strong className="text-3xl text-red-700">{(Number(product.discounted_price) * quantity).toLocaleString()}원</strong>
+              <div className="flex gap-2 align-items">
+                <div className="text-red-600">즉시 할인가</div><div>100g당 {product.per100g}</div>
+              </div>
             </div>
             <div className="flex justify-start items-center mb-4 py-4">
               <div className="product-detail-button flex w-full gap-2 items-center">

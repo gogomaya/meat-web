@@ -110,7 +110,7 @@ export const BoardsList = ({
                 <tbody className="bg-white divide-y divide-gray-200">
                   <tr>
                     <td colSpan={9999999} className="px-6 py-12 whitespace-nowrap">
-                      <div className="flex justify-center items-center">1:1 문의가 없습니다.</div>
+                      <div className="flex justify-center items-center">게시물이 없습니다.</div>
                     </td>
                   </tr>
                 </tbody>

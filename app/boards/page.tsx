@@ -13,7 +13,7 @@ const boardsMessages: BoardsMessage[] = [
     buttonUpdateTitle: "수정하기"
   },
   {
-    title: "1:1문의하기",
+    title: "문의하기",
     category: "qna",
     buttonCreateTitle: "문의하기",
     buttonUpdateTitle: "문의수정"

@@ -63,7 +63,7 @@ const Products = async (props: {
             total_rows={boards_total_rows}
             boardsSearchParams={boardsSearchParams}
             boardsMessage={{
-              title: "1:1문의하기",
+              title: "문의하기",
               category: "qna",
               buttonCreateTitle: "문의하기",
               buttonUpdateTitle: "문의수정"

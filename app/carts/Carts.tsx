@@ -28,10 +28,9 @@ export const CartsDetailContent = () => {
   if (cartProducts === null) {
     return <Skeleton variant="rectangular" animation="wave" width="100%" height={300} />
   }
-  // 전체 상품 금액, 할인 금액, 배송비 계산 (임시 값)
-  // const totalAmount = 100000
+  // 전체 상품 금액, 할인 금액, 배송비 계산
   const discountAmount = 0
-  const shippingFee = 3000
+  const shippingFee = 5000
 
 
   // [주문하기] 클릭
@@ -141,7 +140,7 @@ export const CartsDetailContent = () => {
                             </div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
-                            <div>{cartProduct.product.price.toLocaleString()}원</div>
+                            <div>{cartProduct.product.discounted_price.toLocaleString()}원</div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-center">
                             <div className="flex items-center text-center">
@@ -181,7 +180,7 @@ export const CartsDetailContent = () => {
                             </div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
-                            <div>{(Number(cartProduct.product.price) * cartProduct.quantity).toLocaleString()}원</div>
+                            <div>{(Number(cartProduct.product.discounted_price) * cartProduct.quantity).toLocaleString()}원</div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <IconButton
@@ -268,12 +267,15 @@ export const CartsDetailContent = () => {
               <div className="flex justify-between mb-2">
                 <span>총 상품 금액</span>
                 <span>{_.sumBy(cartProducts, (cartProduct) => {
-                  return Number(cartProduct.product.price) * cartProduct.quantity
+                  return Number(cartProduct.product.discounted_price) * cartProduct.quantity
                 }).toLocaleString()}원</span>
               </div>
               <div className="flex justify-between mb-2">
                 <span>할인 금액</span>
-                <span>-{discountAmount.toLocaleString()}원</span>
+                <span>-{_.sumBy(cartProducts, (cartProduct) => {
+                  return (Number(cartProduct.product.price) - Number(cartProduct.product.discounted_price)) * cartProduct.quantity
+                }).toLocaleString()}원
+                </span>
               </div>
               <div className="flex justify-between mb-2">
                 <span>배송비</span>
@@ -281,9 +283,17 @@ export const CartsDetailContent = () => {
               </div>
               <div className="flex justify-between">
                 <span className="font-bold text-lg">최종 결제 금액</span>
-                <span className="font-bold text-lg">{(_.sumBy(cartProducts, (cartProduct) => {
-                  return Number(cartProduct.product.price) * cartProduct.quantity
-                }) - discountAmount + shippingFee).toLocaleString()}원</span>
+                <span className="font-bold text-lg">
+                  {(
+                    _.sumBy(cartProducts, (cartProduct) => {
+                      return Number(cartProduct.product.price) * cartProduct.quantity
+                    }) -
+                  _.sumBy(cartProducts, (cartProduct) => {
+                    return (Number(cartProduct.product.price) - Number(cartProduct.product.discounted_price)) * cartProduct.quantity
+                  }) +
+                  shippingFee
+                  ).toLocaleString()}원
+                </span>
               </div>
             </div>
           </div>
