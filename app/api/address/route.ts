@@ -47,7 +47,7 @@ export const POST = async (request: NextRequest) => {
     const is_primary = formData.get("is_primary") || 0
 
     const mysql = await mysql2Pool()
-    console.log(`user_pk : ${user_pk}`)
+    // console.log(`user_pk : ${user_pk}`)
     // 새로운 주소 추가
     await mysql.execute(`
       INSERT INTO address (user_pk, mobile, recipient, address, address_detail, is_primary)

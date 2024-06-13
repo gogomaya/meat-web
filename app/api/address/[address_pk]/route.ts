@@ -7,7 +7,7 @@ export const GET = async (
   context: {params: {address_pk: number}}
 ) => {
   const {address_pk} = context.params
-  console.log(`/api/address - address_pk : ${address_pk}`)
+  // console.log(`/api/address - address_pk : ${address_pk}`)
   try {
     const mysql = await mysql2Pool()
     const [address]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
@@ -43,9 +43,9 @@ export const PUT = async (
     const address_detail = formData.get("address_detail")
     const is_primary = formData.get("is_primary") || 0
 
-    console.log(`address_pk : ${address_pk}`)
-    console.log(`user_pk : ${user_pk}`)
-    console.log(`is_primary : ${is_primary}`)
+    // console.log(`address_pk : ${address_pk}`)
+    // console.log(`user_pk : ${user_pk}`)
+    // console.log(`is_primary : ${is_primary}`)
     const mysql = await mysql2Pool()
     if( is_primary == "1" ) {
       await  mysql.execute(`

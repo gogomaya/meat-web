@@ -13,7 +13,7 @@ export const DELETE = async (
     DELETE FROM bookmarks WHERE bookmark_pk = ?
   `, [bookmark_pk])
 
-  console.log("result : " + result)
+  // console.log("result : " + result)
 
   return NextResponse.json({
     result: "Bookmarks deleted successfully"

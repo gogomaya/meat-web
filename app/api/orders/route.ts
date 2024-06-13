@@ -10,9 +10,9 @@ export const GET = async (request: NextRequest) => {
   const orderDirection = searchParams.get("orderDirection") || "desc"
   const query = searchParams.get("query") || ""
   const user_pk = searchParams.get("user_pk") || ""
-  console.log(":::::::::::::::: [GET] :::::::::::::::")
-  console.log("::::::::::: /api/orders ::::::::::")
-  console.log("searchParams : " + searchParams)
+  // console.log(":::::::::::::::: [GET] :::::::::::::::")
+  // console.log("::::::::::: /api/orders ::::::::::")
+  // console.log("searchParams : " + searchParams)
   const mysql = await mysql2Pool()
   const [total_rows]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
     SELECT COUNT(*) AS total_rows FROM orders

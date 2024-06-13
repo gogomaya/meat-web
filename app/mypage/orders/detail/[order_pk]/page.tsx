@@ -162,7 +162,7 @@ const OrderDetail = async (props: {
                             </div>
                             <div className="item flex-[3]">
                               <div className="flex flex-col items-between">
-                                <div className="item"><span>{item.price.toLocaleString()}</span>원</div>
+                                <div className="item"><span>{Number(item.price).toLocaleString()}</span>원</div>
                                 <div className="item"><span>{item.quantity}</span>개</div>
                               </div>
                             </div>

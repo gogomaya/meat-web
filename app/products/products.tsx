@@ -210,7 +210,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
                       color: "#ff0000"
                     }}
                   >
-                      Sold out
+                    Sold out
                   </span>
                 ) : null}
               </Link>
@@ -219,7 +219,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
                   {product.name}
                 </Link>
                 <br />
-                <strong style={{color: "#000", fontSize: "1.1rem"}}>{product.price.toLocaleString()}원</strong>
+                <strong style={{color: "#000", fontSize: "1.1rem"}}>{product.discounted_price.toLocaleString()}원</strong>
               </p>
               <div style={{display: "flex", flexWrap: "wrap", gap: "10px"}}>
                 <button
@@ -300,7 +300,6 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
   const [isFavorited, setIsFavorited] = React.useState(false)
   const bookmark = bookmarksServices.bookmarksDetail(searchParams)
 
-  console.log("::::::::::::::::::::::::::::::::::::::::::::::::::::::")
   bookmark.then((result) => {
     if( !result.data.bookmark ) {
       setIsFavorited(false)
@@ -364,7 +363,11 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
 
     setIsFavorited(!isFavorited)
   }
+  const [selectedOption, setSelectedOption] = React.useState("")
 
+  const handleOptionChange = (event: { target: { value: React.SetStateAction<string> } }) => {
+    setSelectedOption(event.target.value)
+  }
 
   return (
     <div className="container mx-auto py-8">
@@ -403,10 +406,33 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
         </div>
         <div>
           <div className="py-2 font-bold text-4xl">{product.name}</div>
-          <div className="py-8">{product.description}</div>
-          <div className="mb-4">
-            <span className="mr-2 text-red-700 font-bold text-4xl">{product.price.toLocaleString()}원</span>
+          <div className="py-4">{product.description}</div>
+          <div className="mb-2">
+            <div className="py-2">
+              <div className="flex gap-3 align-items">
+                <div className="text-xl text-red-600">{(((Number(product.price) - Number(product.discounted_price)) / Number(product.price)) * 100).toFixed(0)}%</div>
+                <div className="text-xl" style={{textDecoration: "line-through"}}>{(Number(product.price)).toLocaleString()}원</div>
+              </div>
+              <strong className="text-3xl text-red-700">{(Number(product.discounted_price)).toLocaleString()}원</strong>
+              <div>100g당 {product.per100g}</div>
+            </div>
+            <div><p>배송사: 로젠택배</p></div>
+            {/* <strong className="text-4xl text-red-700">{(Number(product.discounted_price) * quantity).toLocaleString()}원</strong> */}
             <div className="py-3 flex flex-wrap gap-2">
+              <button
+                className="product-button"
+                style={{
+                  padding: "5px 8px",
+                  backgroundColor: "#271A11",
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: "20px",
+                  cursor: "pointer",
+                  fontSize: "0.8rem"
+                }}
+              >
+                {product.etc}
+              </button>
               <button
                 className="product-button"
                 style={{
@@ -419,7 +445,7 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
                   fontSize: "0.8rem"
                 }}
               >
-                {product.etc}
+                택배배송
               </button>
             </div>
             <Divider className="bg-gray-800 h-0.5 mb-4" />
@@ -450,6 +476,24 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
                   <div className="flex-grow">{product.etc}</div>
                 </div>
               </>
+            )}
+          </div>
+          <div>
+            {/* category가 pork일 때만 드롭다운을 렌더링 */}
+            {product.category === "pork" && (
+              <div className="mb-4 flex items-center gap-4">
+                <div className="w-24">종류</div>
+                <select
+                  value={selectedOption}
+                  onChange={handleOptionChange}
+                  className="w-32 h-10 p-1 border border-gray-300 rounded"
+                  required
+                >
+                  <option value="수육">수육</option>
+                  <option value="찌개">찌개</option>
+                  <option value="구이">구이</option>
+                </select>
+              </div>
             )}
           </div>
           <div className="mb-4 flex items-center gap-4">
@@ -505,14 +549,10 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
           </div>
           <Divider className="bg-gray-800 h-0.5 mb-4" />
           <div>
-            <div className="flex flex-col items-end mb-4 lg:w-1/2 ml-auto py-2">
-              <div className="flex gap-3 align-items">
-                <div className="text-xl text-red-600">{(((Number(product.price) - Number(product.discounted_price)) / Number(product.price)) * 100).toFixed(0)}%</div>
-                <div className="text-xl" style={{textDecoration: "line-through"}}>{(Number(product.price) * quantity).toLocaleString()}원</div>
-              </div>
-              <strong className="text-3xl text-red-700">{(Number(product.discounted_price) * quantity).toLocaleString()}원</strong>
-              <div className="flex gap-2 align-items">
-                <div className="text-red-600">즉시 할인가</div><div>100g당 {product.per100g}</div>
+            <div className="flex flex-col items-end mb-4 lg:w-1/2 ml-auto py-2 gap-1">
+              <div className="flex items-center gap-4">
+                <div className="text-red-600 text-2xl">결제 예상금액</div>
+                <strong className="text-3xl text-red-700">{(Number(product.discounted_price) * quantity).toLocaleString()}원</strong>
               </div>
             </div>
             <div className="flex justify-start items-center mb-4 py-4">
