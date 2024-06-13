@@ -72,7 +72,7 @@ export const HomeBanner = () => {
         bottom: 0;
         right: 0;
         width: 400px;
-        height: 400px;
+        height: 385px;
         background-image: url('/images/meat-img01.png');
         transform: translate(100%, 37%);
         animation: slideInFromRight 1s forwards;

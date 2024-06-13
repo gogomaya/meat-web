@@ -8,7 +8,7 @@ export const GET = async (
   context: {params: {order_pk: number}}
 ) => {
   const {order_pk} = context.params
-  console.log(`order_pk : ${order_pk}`)
+  // console.log(`order_pk : ${order_pk}`)
 
   const mysql = await mysql2Pool()
   const [order]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
@@ -49,7 +49,7 @@ export const PUT = async (
     WHERE order_pk = ?
   `, [address_pk, guest_name || "",  guest_mobile || "", status, order_pk])
 
-  console.log("result : " + result)
+  // console.log("result : " + result)
 
   return NextResponse.json({
     result: "Order updated successfully",
@@ -68,7 +68,7 @@ export const DELETE = async (
     DELETE FROM orders WHERE order_pk = ?
   `, [order_pk])
 
-  console.log("result : " + result)
+  // console.log("result : " + result)
 
   return NextResponse.json({
     result: "Order deleted successfully"

@@ -10,8 +10,8 @@ export const GET = async (
   const {user_pk} = context.params
   const product_pk = searchParams.get("product_pk")
 
-  console.log(`user_pk : ${user_pk}`)
-  console.log(`product_pk : ${product_pk}`)
+  // console.log(`user_pk : ${user_pk}`)
+  // console.log(`product_pk : ${product_pk}`)
 
 
   const mysql = await mysql2Pool()
@@ -19,7 +19,7 @@ export const GET = async (
     SELECT * FROM bookmarks WHERE user_pk = ? and product_pk = ?
   `, [user_pk, product_pk])
 
-  console.log("bookmark : " + bookmark)
+  // console.log("bookmark : " + bookmark)
 
   return NextResponse.json({
     bookmark: bookmark[0]

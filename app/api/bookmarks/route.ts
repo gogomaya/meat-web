@@ -12,8 +12,8 @@ export const GET = async (request: NextRequest) => {
     const query = searchParams.get("query") || ""
     const user_pk = searchParams.get("user_pk") || ""
 
-    console.log(":::::::::::::::: [GET] :::::::::::::::")
-    console.log("::::::::::: /api/bookmarks ::::::::::")
+    // console.log(":::::::::::::::: [GET] :::::::::::::::")
+    // console.log("::::::::::: /api/bookmarks ::::::::::")
 
     const mysql = await mysql2Pool()
 
