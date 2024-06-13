@@ -43,9 +43,9 @@ export const commonServices = {
       pork: [
         "구이",
         "수육",
-        "찌개",
-        "불고기",
-        "찜"
+        "찌개"
+        // "불고기",
+        // "찜"
       ],
       imported: [
         "수입육"
