@@ -20,7 +20,7 @@ const Cart = async () => {
             alignItems: "center"
           }}>장바구니</div>
       </div>
-      <CartsDetailContent />
+      <CartsDetailContent user={user} />
     </MainLayout>
   )
 }
