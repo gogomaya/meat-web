@@ -17,9 +17,17 @@ http://localhost:3000/order/success?orderPk=1&addressPk=5&paymentType=NORMAL&ord
   - shipment_pk  
   - status : paid
 
+## 결제 승인
+3. ⚡ 토스 결제 승인 API 호출
+
+
 ## 결제 등록
-3. payments - INSERT
-  - 
+5. payments - INSERT
+  - order_pk
+  - status        : 'completed'
+  - payment_key   : 토스결제키 (결제 취소 시 쓰임)
+
+
 
 
 

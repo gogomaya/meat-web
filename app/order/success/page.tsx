@@ -71,6 +71,8 @@ const OrderSuccess = async (props: {
 
   const params = {
     order_pk : order_pk,
+    order_id : order_id,
+    amount : amount,
     address_pk : address_pk,
     payment_key : payment_key,
     guest_name : guest_name,
