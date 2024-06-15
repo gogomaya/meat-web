@@ -7,7 +7,9 @@ const TermsandPolicy = async () => {
   const {user} = await loginCheck(false)
   return (
     <MainLayout user={user}>
-      <TermsAndPolicyTabs />
+      <div className="container">
+        <TermsAndPolicyTabs />
+      </div>
     </MainLayout>
   )
 }
