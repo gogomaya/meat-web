@@ -35,6 +35,8 @@ export interface OrderParams  {
   user_pk: number
   mobile: string
   order_pk: number
+  order_id: string
+  amount: number
   address_pk: number
   payment_key: string
   guest_name: string

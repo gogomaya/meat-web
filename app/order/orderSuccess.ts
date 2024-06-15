@@ -7,6 +7,7 @@ import {ResponseApi} from "@/types/commonTypes"
 import {Order, OrderParams} from "@/types/ordersTypes"
 import {Payment} from "@/types/paymentsTypes"
 import {Shipment} from "@/types/shipmentsTypes"
+import {LocalLaundryService} from "@mui/icons-material"
 
 
 /**
@@ -25,7 +26,7 @@ interface PaySuccessResult {
 
 export const orderSuccess = async (searchParams: OrderParams): Promise<PaySuccessResult> => {
   let {
-    order_pk, address_pk, payment_key, guest_name, guest_mobile,
+    order_pk, order_id, amount, address_pk, payment_key, guest_name, guest_mobile,
     recipient, recipient_mobile, address, address_detail
   } = searchParams
   let result = false
@@ -128,6 +129,47 @@ export const orderSuccess = async (searchParams: OrderParams): Promise<PaySucces
   } catch (error) {
     console.error("[결제완료] 결제 등록 중 오류 발생:", error)
   }
+
+  // ⚡ 토스 결제 승인 API 호출
+  // payment_key
+  // order_id
+  // amount
+  console.log("⚡ 토스 결제 승인 요청")
+  console.log(`payment_key  : ${payment_key}`)
+  console.log(`order_id  : ${order_id}`)
+  console.log(`amount  : ${amount}`)
+
+  fetch("https://api.tosspayments.com/v1/payments/confirm", {
+    method: "POST",
+    headers: {
+      Authorization: "Basic dGVzdF9nc2tfZG9jc19PYVB6OEw1S2RtUVhrelJ6M3k0N0JNdzY6",
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      orderId: order_id,
+      amount: amount,
+      paymentKey: payment_key
+    })
+  })
+    .then((response) => {
+      if (!response.ok) {
+        return response.json().then((error) => {
+          // TODO: 결제 실패 비즈니스 로직을 구현하세요.
+          console.log(":::::::::::: ⚡ 결제 승인 실패 ::::::::::::")
+          console.log(error)
+        })
+      }
+      return response.json()
+    })
+    .then((data) => {
+      // TODO: 결제 성공 비즈니스 로직을 구현하세요.
+      console.log(":::::::::::: ⚡ 결제 승인 성공 ::::::::::::")
+      console.log(data)
+    })
+    .catch((error) => {
+      console.error("Fetch error:", error)
+    })
+
 
 
   result = shipmentResult && orderResult && paymentResult

@@ -1,5 +1,9 @@
 ## DOING
-
+- TODO: 
+- TODO: 토스 결제 승인
+    - TODO: 결제 실패 시, 로직
+    - TODO: 결제 성공 시, 로직
+- TODO: 토스 결제 취소
 - TODO: 주문 취소
 - TODO: 환불
 
