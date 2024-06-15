@@ -8,9 +8,11 @@ import {CartProduct} from "@/types/productsTypes"
 import {useForm} from "react-hook-form"
 import _ from "lodash"
 import {OrderItem, OrderItemSearchParams} from "@/types/orderItemsTypes"
-import {orderItemsService} from "@/services/orderItemsServices"
+import {User} from "@/types/usersTypes"
+import Swal from "sweetalert2"
+import withReactContent from "sweetalert2-react-content"
 
-export const CartsDetailContent = () => {
+export const CartsDetailContent = ({user}: { user: User }) => {
   const router = useRouter()
   const [open, setOpen] = useState(false)
   const cartProductsForm = useForm<{cartProducts: CartProduct[]}>({
@@ -37,14 +39,43 @@ export const CartsDetailContent = () => {
     const productPks = cartProducts.map((cartProduct) => cartProduct.product.product_pk).join(",")
     const quantityList = cartProducts.map((cartProduct) => cartProduct.quantity).join(",")
 
-    // URL 생성
-    const orderUrl = `/order?productPks=${productPks}&quantityList=${quantityList}`
-    console.log(`productPks : ${productPks}`)
-    console.log(`quantityList : ${quantityList}`)
-    console.log(`orderUrl : ${orderUrl}`)
+    // 회원
+    if( user.user_pk ) {
+      const orderUrl = `/order?productPks=${productPks}&quantityList=${quantityList}`
+      router.push(orderUrl)
+    }
+    // 비회원
+    else {
+      const MySwal = withReactContent(Swal)
+      MySwal.fire({
+        title: "비회원 주문",
+        text: "전화번호를 입력해주세요. (- 기호없이 : 01012341234 )",
+        input: "text",
+        inputAttributes: {
+          autocapitalize: "off"
+        },
+        showCancelButton: true,
+        confirmButtonText: "구매하기",
+        cancelButtonText: "취소",
+        showLoaderOnConfirm: true,
+        preConfirm: async (mobile) => {
+          try {
+            // TODO: 전화번호 검증 로직 필요
+            return {mobile: mobile}
+          } catch (error) {
+            //
+          }
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // 비회원 주문
+          router.push(`/guest/order?mobile=${result.value.mobile}&productPks=${productPks}&quantityList=${quantityList}`)
+        }
+      })
+    }
 
-    // 이동
-    router.push(orderUrl)
+
   }
 
   // [선택한상품만 결제하기] 클릭
@@ -58,8 +89,44 @@ export const CartsDetailContent = () => {
     const quantityList = checkedProducts.map((cartProduct  : CartProduct) => cartProduct.quantity).join(",")
     console.log(`productPks : ${productPks}`)
     console.log(`quantityList : ${quantityList}`)
-    const orderUrl = `/order?productPks=${productPks}&quantityList=${quantityList}`
-    router.push(orderUrl)
+
+    // 회원
+    if( user.user_pk ) {
+      const orderUrl = `/order?productPks=${productPks}&quantityList=${quantityList}`
+      router.push(orderUrl)
+    }
+    // 비회원
+    else {
+      const MySwal = withReactContent(Swal)
+      MySwal.fire({
+        title: "비회원 주문",
+        text: "전화번호를 입력해주세요. (- 기호없이 : 01012341234 )",
+        input: "text",
+        inputAttributes: {
+          autocapitalize: "off"
+        },
+        showCancelButton: true,
+        confirmButtonText: "구매하기",
+        cancelButtonText: "취소",
+        showLoaderOnConfirm: true,
+        preConfirm: async (mobile) => {
+          try {
+            // TODO: 전화번호 검증 로직 필요
+            return {mobile: mobile}
+          } catch (error) {
+            //
+          }
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // 비회원 주문
+          router.push(`/guest/order?mobile=${result.value.mobile}&productPks=${productPks}&quantityList=${quantityList}`)
+        }
+      })
+    }
+
+
   }
 
   return (
