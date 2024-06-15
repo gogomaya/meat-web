@@ -135,16 +135,16 @@ export const HomeCateMenu = () => {
   }, [])
 
   return (
-    <section className="p-12 md:p-16 mx-8">
-      <div className="contatiner flex flex-col md:flex-row gap-4">
-        <div className="contatiner relative section flex-1 h-64 md:h-auto rounded-lg overflow-hidden" data-index="0">
+    <section className="p-4 md:p-8 mx-2 md:mx-8">
+      <div className="container flex flex-col md:flex-row gap-4">
+        <div className="relative section flex-1 h-64 md:h-auto rounded-lg overflow-hidden" data-index="0">
           <div className="bg-image absolute inset-0 bg-cover bg-center bg-no-repeat" style={{backgroundImage: "linear-gradient(to bottom, #271a11, rgba(0, 0, 0, 0) 67%), url('/images/Rectangle 6.png')"}}></div>
           <div className="absolute inset-0 bg-black bg-opacity-10 hover:bg-opacity-20 transition duration-300 rounded-lg"></div>
-          <div className="relative flex flex-col justify-center items-center h-full text-white p-2">
-            <div className="text-xl md:text-4xl font-bold mb-24 text-center">한우 투뿔 꽃등심 <br />부채살</div>
+          <div className="container relative flex flex-col justify-center items-center h-full text-white p-2">
+            <div className="text-lg md:text-4xl font-bold mb-4 text-center">한우 투뿔 꽃등심 부채살</div>
             <Link href="/products?category=cow">
               <button className="flex items-center justify-between gap-2 w-full p-2 md:py-2 md:px-4 bg-black text-white rounded hover:bg-gray-800 transition duration-300">
-                <span>&apos;소고기&apos; 바로가기</span>
+                <span>&#39;소고기&#39; 바로가기</span>
                 <Image
                   src="/images/Icon Right.png"
                   alt="Ddun Dun Rice"
@@ -162,11 +162,11 @@ export const HomeCateMenu = () => {
               <div className="bg-image absolute inset-0 bg-cover bg-center bg-no-repeat" style={{backgroundImage: "linear-gradient(to left, #271a11, rgba(217, 217, 217, 0) 100%), url('/images/Rectangle 10.png')"}}></div>
               <div className="absolute inset-0 bg-black bg-opacity-10 hover:bg-opacity-20 transition duration-300 rounded-lg"></div>
               <div className="relative flex flex-col justify-center items-center h-full text-white p-2">
-                <div className="text-md md:text-lg font-bold text-center text-yellow-400">한돈 국내산</div>
-                <div className="text-xl md:text-2xl font-bold mb-12 text-center">🐷 생삼겹살 목살</div>
+                <div className="text-sm md:text-lg font-bold text-center text-yellow-400">한돈 국내산</div>
+                <div className="text-lg md:text-2xl font-bold mb-2 text-center">🐷 생삼겹살 목살</div>
                 <Link href="/products?category=pork">
                   <button className="flex items-center justify-between gap-2 w-full p-2 md:py-2 md:px-4 bg-black text-white rounded hover:bg-gray-800 transition duration-300">
-                    <span>&apos;돼지고기&apos; 바로가기</span>
+                    <span>&#39;돼지고기&#39; 바로가기</span>
                     <Image
                       src="/images/Icon Right.png"
                       alt="Ddun Dun Rice"
@@ -182,11 +182,11 @@ export const HomeCateMenu = () => {
               <div className="bg-image absolute inset-0 bg-cover bg-center bg-no-repeat" style={{backgroundImage: "linear-gradient(to left, #271a11, rgba(217, 217, 217, 0) 100%), url('/images/Rectangle 8.png')"}}></div>
               <div className="absolute inset-0 bg-black bg-opacity-10 hover:bg-opacity-20 transition duration-300 rounded-lg"></div>
               <div className="relative flex flex-col justify-center items-center h-full text-white p-2">
-                <div className="text-md md:text-lg font-bold text-left text-yellow-400">가장 신선한</div>
-                <div className="text-xl md:text-2xl font-bold mb-12 text-left">🥩 육회 & 육사시미</div>
+                <div className="text-sm md:text-lg font-bold text-center text-yellow-400">가장 신선한</div>
+                <div className="text-lg md:text-2xl font-bold mb-2 text-center">🥩 육회 & 육사시미</div>
                 <Link href="/products?category=cow&category_menu=육회/사시미">
                   <button className="flex items-center justify-between gap-2 w-full p-2 md:py-2 md:px-4 bg-black text-white rounded hover:bg-gray-800 transition duration-300">
-                    <span>&apos;육회&apos; 바로가기</span>
+                    <span>&#39;육회&#39; 바로가기</span>
                     <Image
                       src="/images/Icon Right.png"
                       alt="Ddun Dun Rice"
@@ -203,10 +203,10 @@ export const HomeCateMenu = () => {
             <div className="bg-image absolute inset-0 bg-cover bg-center bg-no-repeat" style={{backgroundImage: "linear-gradient(to left, #271a11, rgba(217, 217, 217, 0) 100%), url('/images/Rectangle 7.png')"}}></div>
             <div className="absolute inset-0 bg-black bg-opacity-10 hover:bg-opacity-20 transition duration-300 rounded-lg"></div>
             <div className="relative flex flex-col justify-center items-center h-full text-white p-2">
-              <div className="text-xl md:text-2xl font-bold mb-12 text-center">🍲 고추장불고기 & 간장불고기 <br />제육볶음 주물럭 밀키트</div>
+              <div className="text-lg md:text-2xl font-bold mb-2 text-center">🍲 고추장불고기 & 간장불고기 <br />제육볶음 주물럭 밀키트</div>
               <Link href="/products?category=simple">
                 <button className="flex items-center justify-between gap-2 w-full p-2 md:py-2 md:px-4 bg-black text-white rounded hover:bg-gray-800 transition duration-300">
-                  <span>&apos;밀키트&apos; 바로가기</span>
+                  <span>&#39;밀키트&#39; 바로가기</span>
                   <Image
                     src="/images/Icon Right.png"
                     alt="Ddun Dun Rice"
@@ -235,6 +235,21 @@ export const HomeCateMenu = () => {
         }
         .section:hover .bg-image {
           transform: scale(1.13);
+        }
+        @media screen and (max-width: 767px) {
+          .text-lg {
+            font-size: 1.5rem; /* 모바일에서 텍스트 크기 조정 */
+          }
+          .text-md {
+            font-size: 1.2rem; /* 모바일에서 텍스트 크기 조정 */
+          }
+          .text-sm {
+            font-size: 1rem; /* 모바일에서 텍스트 크기 조정 */
+          }
+          .p-8, .mx-8 {
+            padding: 2rem; /* 모바일 화면에서만 padding 조정 */
+            margin: 0; /* 모바일 화면에서는 margin을 0으로 설정 */
+          }
         }
       `}</style>
     </section>

@@ -155,7 +155,7 @@ const AdminProductsForm = ({
           <TextField
             className="!mt-8"
             label="* 할인된 최종 금액"
-            placeholder="할인이 없어도 금액을 입력해주세요"
+            placeholder="할인이 없어도 최종 금액을 입력해주세요"
             fullWidth
             type="number"
             variant="standard"
