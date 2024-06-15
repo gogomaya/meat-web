@@ -18,7 +18,7 @@ CREATE TABLE `products` (
   `category` enum('cow','pork','simple') NOT NULL,
   `category_menu` varchar(500) NOT NULL,
   `price` int(11) NOT NULL,
-  -- `discounted_price` int(11) NOT NULL,
+  `discounted_price` int(11) NOT NULL,
   `description` varchar(500) DEFAULT NULL COMMENT '금액 밑에 간단한 설명',
   `origin` varchar(500) DEFAULT NULL COMMENT '원산지',
   `etc` varchar(500) DEFAULT NULL COMMENT '배송관련 간단 설명',

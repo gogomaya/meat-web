@@ -583,6 +583,7 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
                     장바구니
                   </Button>
                 </CartOrderButton>
+                {/* 🔳 구매하기 버튼 */}
                 <CartOrderButton type="ORDER" product={product} quantity={quantity} user={user}>
                   <Button
                     style={{
@@ -717,6 +718,7 @@ const CartOrderButton = ({
       alert("장바구니가 비어 있습니다.")
       return
     }
+
     // product_pk와 quantity 추출 및 문자열 병합
     const productPks = storedCartProducts.map((cartProduct : CartProduct ) => cartProduct.product.product_pk).join(",")
     const quantityList = storedCartProducts.map((cartProduct: CartProduct ) => cartProduct.quantity).join(",")
@@ -724,7 +726,41 @@ const CartOrderButton = ({
     console.log(`quantityList : ${quantityList}`)
     console.log(`/order?productPks=${productPks}&quantityList=${quantityList}`)
 
-    router.push(`/order?productPks=${productPks}&quantityList=${quantityList}`)
+    // 회원
+    if( user.user_pk ) {
+      router.push(`/order?productPks=${productPks}&quantityList=${quantityList}`)
+    }
+    // 비회원
+    else {
+      const MySwal = withReactContent(Swal)
+      MySwal.fire({
+        title: "비회원 주문",
+        text: "전화번호를 입력해주세요. (- 기호없이 : 01012341234 )",
+        input: "text",
+        inputAttributes: {
+          autocapitalize: "off"
+        },
+        showCancelButton: true,
+        confirmButtonText: "구매하기",
+        cancelButtonText: "취소",
+        showLoaderOnConfirm: true,
+        preConfirm: async (mobile) => {
+          try {
+            // TODO: 전화번호 검증 로직 필요
+            return {mobile: mobile}
+          } catch (error) {
+            //
+          }
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // 비회원 주문
+          router.push(`/guest/order?mobile=${result.value.mobile}&productPks=${productPks}&quantityList=${quantityList}`)
+        }
+      })
+    }
+
   }
   return (
     <div>
