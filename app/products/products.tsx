@@ -325,8 +325,7 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
         cancelButtonText: "취소"
       }).then((result) => {
         if (result.isConfirmed) {
-          const btnUser = document.getElementById("btn-user")
-          btnUser?.click()
+          window.postMessage({loginPopup: "on"}, "*")
         }
       })
       return
@@ -672,8 +671,26 @@ const CartOrderButton = ({
     }
     // 비회원
     else {
-      // alert("비회원")
       const MySwal = withReactContent(Swal)
+
+      // 👩‍💼 회원가입 유도 체크
+      const result = await MySwal.fire({
+        title: "회원가입 후 주문하기",
+        text: "회원가입 시, 더 편리하게 이용하실 수 있습니다.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "회원가입",
+        confirmButtonColor: "#271A11",
+        cancelButtonText: "비회원 주문"
+      })
+
+      if (result.isConfirmed) {
+        window.postMessage({loginPopup: "on"}, "*")
+        return
+      } else if (result.isDismissed) {
+        console.log("비회원 주문")
+      }
+
       MySwal.fire({
         title: "비회원 주문",
         text: "전화번호를 입력해주세요. (- 기호없이 : 01012341234 )",
@@ -733,6 +750,25 @@ const CartOrderButton = ({
     // 비회원
     else {
       const MySwal = withReactContent(Swal)
+
+      // 👩‍💼 회원가입 유도 체크
+      const result = await MySwal.fire({
+        title: "회원가입 후 주문하기",
+        text: "회원가입 시, 더 편리하게 이용하실 수 있습니다.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "회원가입",
+        confirmButtonColor: "#271A11",
+        cancelButtonText: "비회원 주문"
+      })
+
+      if (result.isConfirmed) {
+        window.postMessage({loginPopup: "on"}, "*")
+        return
+      } else if (result.isDismissed) {
+        console.log("비회원 주문")
+      }
+
       MySwal.fire({
         title: "비회원 주문",
         text: "전화번호를 입력해주세요. (- 기호없이 : 01012341234 )",
