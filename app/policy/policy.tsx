@@ -53,7 +53,7 @@ const TermsAndPolicyTabs: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState<string>("terms")
 
   return (
-    <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+    <div className="p-8" style={{display: "flex", alignItems: "center"}}>
       <div>
         <button
           style={{

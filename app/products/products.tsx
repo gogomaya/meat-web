@@ -446,9 +446,11 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
                 택배배송
               </button>
             </div>
-            <Divider className="bg-gray-800 h-0.5 mb-4" />
+            <div className="py-2"></div>
+            <Divider className="bg-gray-800 h-0.5" />
             {product.origin && (
               <>
+                <div className="py-2"></div>
                 <div className="flex items-center mb-2">
                   <div className="w-24 mr-5">원산지</div>
                   <div className="flex-grow">{product.origin}</div>
