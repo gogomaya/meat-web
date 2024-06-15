@@ -1617,9 +1617,23 @@ textarea.w-input, textarea.w-select {
 }
 
 @media screen and (max-width: 479px) {
-  .product-list-mobile {
+  /* .product-list-mobile {
     flex-direction: column;
+    width: 100%;
   }
+
+  .product-item {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .product-list-mobile li {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  } */
+
   .w-container {
     max-width: none;
   }
@@ -2661,11 +2675,31 @@ textarea.w-input, textarea.w-select {
 }
 
 @media screen and (max-width: 767px) {
-  .product-list-mobile li {
-    flex: 1 1 calc(50% - 16px); /* 1줄에 2개 */
+  /* .product-list-mobile li {
+    flex: 1 1 calc(50% - 16px);
     box-sizing: border-box;
+  } */
+
+  .product-list-mobile {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 10px;
+    list-style-type: none; /* 리스트 스타일 제거 */
   }
-  
+
+  .product-list-mobile li {
+    flex-basis: 100%; /* 각 상품을 한 줄에 하나씩 출력 */
+    padding: 15px;
+    border-radius: 5px;
+    border: 2px solid #271A11;
+    transition: transform 0.3s, opacity 0.3s;
+    opacity: 0;
+    transform: translateY(20px);
+    margin-bottom: 30px; /* 상품 아래 간격 설정 */
+    box-sizing: border-box; /* 요소의 패딩과 테두리를 포함하여 크기 계산 */
+  }
+
   .w-nav[data-collapse="small"] .w-nav-menu {
     display: none;
   }
@@ -2680,6 +2714,10 @@ textarea.w-input, textarea.w-select {
 }
 
 @media screen and (max-width: 479px) {
+  .w-tab-link {
+    display: block;
+  }
+
   .w-nav[data-collapse="tiny"] .w-nav-menu {
     display: none;
   }
@@ -2740,12 +2778,6 @@ textarea.w-input, textarea.w-select {
 
 .w--tab-active {
   display: block;
-}
-
-@media screen and (max-width: 479px) {
-  .w-tab-link {
-    display: block;
-  }
 }
 
 .w-ix-emptyfix:after {
