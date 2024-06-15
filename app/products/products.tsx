@@ -690,6 +690,7 @@ const CartOrderButton = ({
       } else if (result.isDismissed) {
         console.log("비회원 주문")
       }
+      if (result.dismiss === Swal.DismissReason.backdrop) return
 
       MySwal.fire({
         title: "비회원 주문",
@@ -761,13 +762,13 @@ const CartOrderButton = ({
         confirmButtonColor: "#271A11",
         cancelButtonText: "비회원 주문"
       })
-
       if (result.isConfirmed) {
         window.postMessage({loginPopup: "on"}, "*")
         return
       } else if (result.isDismissed) {
         console.log("비회원 주문")
       }
+      if (result.dismiss === Swal.DismissReason.backdrop) return
 
       MySwal.fire({
         title: "비회원 주문",
