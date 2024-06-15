@@ -34,7 +34,7 @@ export const CartsDetailContent = ({user}: { user: User }) => {
   const shippingFee = 5000
 
   // [주문하기] 클릭
-  const handleOrderClick = () => {
+  const handleOrderClick = async () => {
     // product_pk와 quantity 추출
     const productPks = cartProducts.map((cartProduct) => cartProduct.product.product_pk).join(",")
     const quantityList = cartProducts.map((cartProduct) => cartProduct.quantity).join(",")
@@ -47,6 +47,28 @@ export const CartsDetailContent = ({user}: { user: User }) => {
     // 비회원
     else {
       const MySwal = withReactContent(Swal)
+
+      // 👩‍💼 회원가입 유도 체크
+      const result = await MySwal.fire({
+        title: "회원가입 후 주문하기",
+        text: "회원가입 시, 더 편리하게 이용하실 수 있습니다.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "회원가입",
+        confirmButtonColor: "#271A11",
+        cancelButtonText: "비회원 주문"
+      })
+      let guestOrder = false
+      if (result.isConfirmed) {
+        window.postMessage({loginPopup: "on"}, "*")
+        return
+      } else if (result.isDismissed) {
+        console.log("비회원 주문")
+        guestOrder = true
+      }
+      if (result.dismiss === Swal.DismissReason.backdrop) return
+
+
       MySwal.fire({
         title: "비회원 주문",
         text: "전화번호를 입력해주세요. (- 기호없이 : 01012341234 )",
@@ -79,7 +101,7 @@ export const CartsDetailContent = ({user}: { user: User }) => {
   }
 
   // [선택한상품만 결제하기] 클릭
-  const handleCheckedPayClick = () => {
+  const handleCheckedPayClick = async () => {
     const cartProducts = JSON.parse(localStorage.getItem("cartProducts") || "[]")
     const checkedProducts = cartProducts.filter((product: CartProduct ) => product.checked)
     console.log(checkedProducts)
@@ -98,6 +120,28 @@ export const CartsDetailContent = ({user}: { user: User }) => {
     // 비회원
     else {
       const MySwal = withReactContent(Swal)
+
+      // 👩‍💼 회원가입 유도 체크
+      const result = await MySwal.fire({
+        title: "회원가입 후 주문하기",
+        text: "회원가입 시, 더 편리하게 이용하실 수 있습니다.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "회원가입",
+        confirmButtonColor: "#271A11",
+        cancelButtonText: "비회원 주문"
+      })
+
+      let guestOrder = false
+      if (result.isConfirmed) {
+        window.postMessage({loginPopup: "on"}, "*")
+        return
+      } else if (result.isDismissed) {
+        console.log("비회원 주문")
+        guestOrder = true
+      }
+      if (result.dismiss === Swal.DismissReason.backdrop) return
+
       MySwal.fire({
         title: "비회원 주문",
         text: "전화번호를 입력해주세요. (- 기호없이 : 01012341234 )",
