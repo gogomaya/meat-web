@@ -311,23 +311,22 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
 
 
   const handleFavoriteClick = async () => {
-
-    if (!user) {
+    if (!user.id) {
       Swal.fire({
         title: "로그인이 필요한 서비스입니다.",
-        text: "",
-        icon: "warning",
+        text: "회원가입 또는 로그인을 하시겠습니까?",
+        // icon: "warning",
+        imageUrl: `${process.env.NEXT_PUBLIC_URL}/images/logo.png`,
+        imageWidth: 100,
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
+        confirmButtonColor: "#271A11",
         cancelButtonColor: "#d33",
-        confirmButtonText: "로그인하러 가기"
+        confirmButtonText: "로그인하러 가기",
+        cancelButtonText: "취소"
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire({
-            title: "네",
-            text: "Your file has been deleted.",
-            icon: "success"
-          })
+          const btnUser = document.getElementById("btn-user")
+          btnUser?.click()
         }
       })
       return
