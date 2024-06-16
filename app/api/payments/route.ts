@@ -55,7 +55,7 @@ export const POST = async (request: NextRequest) => {
     // 마지막으로 삽입된 레코드의 AUTO_INCREMENT 값 가져오기
     const [pk]: [RowDataPacket[], FieldPacket[]] = await mysql.execute("SELECT LAST_INSERT_ID() payment_pk FROM dual")
     const payment_pk = pk[0]["payment_pk"]
-    console.log(`등록된 결제번호 - payment_pk : ${payment_pk}`)
+    // console.log(`등록된 결제번호 - payment_pk : ${payment_pk}`)
 
     return NextResponse.json({
       message: "Payment created successfully",

@@ -446,9 +446,9 @@ export const OrderSuccessContent = ({
     customerEmail : customerEmail,
     customerMobilePhone : customerMobilePhone
   }
-  console.log(":::::::::::::::::: 주문 항목 리스트 확인 ::::::::::::::::::::::")
+  // console.log(":::::::::::::::::: 주문 항목 리스트 확인 ::::::::::::::::::::::")
 
-  console.log(`orderItems : ${orderItems}`)
+  // console.log(`orderItems : ${orderItems}`)
 
   const renderOrderItems = () => {
     return (

@@ -35,6 +35,10 @@ const AdminLayout = ({
                   {pathname.includes("/admin/users") && (
                     <span>회원 관리</span>
                   )}
+                  {/* 주문취소, 주문확인 */}
+                  {pathname.includes("/admin/orders") && (
+                    <Link href={"/admin/orders"}>주문 관리</Link>
+                  )}
                   {pathname.includes("/admin/products/cow") && (
                     <Link href={"/admin/products/cow"}>소고기</Link>
                   )}
@@ -46,10 +50,6 @@ const AdminLayout = ({
                   )}
                   {pathname.includes("/admin/products/simple") && (
                     <Link href={"/admin/products/simple"}>간편식</Link>
-                  )}
-                  {/* 주문취소, 주문확인 */}
-                  {pathname.includes("/admin/products/order") && (
-                    <Link href={"/admin/products/order"}>주문관리</Link>
                   )}
                 </Breadcrumbs>
               </div>
@@ -104,6 +104,15 @@ const AdminLayoutMenu = ({
       </li>
       <li className="px-4 py-2 border-b border-50 lg:border-0">
         <Link
+          href="/admin/orders"
+          className={`${pathname.includes("/admin/orders") ? "text-yellow-700 " : "text-white "}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
+          onClick={() => {
+            setTimeout(() => setHeaderMenuOpen?.(), 500)
+          }}
+        >주문 관리</Link>
+      </li>
+      <li className="px-4 py-2 border-b border-50 lg:border-0">
+        <Link
           href="/admin/products/cow"
           className={`${pathname.includes("/admin/products/cow") ? "text-yellow-700 " : "text-white "}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
           onClick={() => {
@@ -137,15 +146,6 @@ const AdminLayoutMenu = ({
             setTimeout(() => setHeaderMenuOpen?.(), 500)
           }}
         >간편식</Link>
-      </li>
-      <li className="px-4 py-2 border-b border-50 lg:border-0">
-        <Link
-          href="/admin/products/order"
-          className={`${pathname.includes("/admin/products/simple") ? "text-yellow-700 " : "text-white "}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
-          onClick={() => {
-            setTimeout(() => setHeaderMenuOpen?.(), 500)
-          }}
-        >주문관리</Link>
       </li>
     </ul>
   )

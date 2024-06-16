@@ -63,7 +63,7 @@ export const CartsDetailContent = ({user}: { user: User }) => {
         window.postMessage({loginPopup: "on"}, "*")
         return
       } else if (result.isDismissed) {
-        console.log("비회원 주문")
+        // console.log("비회원 주문")
         guestOrder = true
       }
       if (result.dismiss === Swal.DismissReason.backdrop) return
@@ -104,13 +104,13 @@ export const CartsDetailContent = ({user}: { user: User }) => {
   const handleCheckedPayClick = async () => {
     const cartProducts = JSON.parse(localStorage.getItem("cartProducts") || "[]")
     const checkedProducts = cartProducts.filter((product: CartProduct ) => product.checked)
-    console.log(checkedProducts)
+    // console.log(checkedProducts)
 
     // product_pk와 quantity 추출
     const productPks = checkedProducts.map((cartProduct : CartProduct) => cartProduct.product.product_pk).join(",")
     const quantityList = checkedProducts.map((cartProduct  : CartProduct) => cartProduct.quantity).join(",")
-    console.log(`productPks : ${productPks}`)
-    console.log(`quantityList : ${quantityList}`)
+    // console.log(`productPks : ${productPks}`)
+    // console.log(`quantityList : ${quantityList}`)
 
     // 회원
     if( user.user_pk ) {
@@ -137,7 +137,7 @@ export const CartsDetailContent = ({user}: { user: User }) => {
         window.postMessage({loginPopup: "on"}, "*")
         return
       } else if (result.isDismissed) {
-        console.log("비회원 주문")
+        // console.log("비회원 주문")
         guestOrder = true
       }
       if (result.dismiss === Swal.DismissReason.backdrop) return
@@ -458,9 +458,9 @@ export const removeFromCart = async (product_pk : number) => {
     // 장바구니 항목 수 업데이트
     window.postMessage({cartProductsLength: cartProducts.length}, "*")
 
-    console.log("상품이 장바구니에서 삭제되었습니다.")
+    // console.log("상품이 장바구니에서 삭제되었습니다.")
   } else {
-    console.log("해당 상품이 장바구니에 존재하지 않습니다.")
+    // console.log("해당 상품이 장바구니에 존재하지 않습니다.")
   }
 }
 
