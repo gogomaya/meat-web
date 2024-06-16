@@ -3,7 +3,7 @@ import {AddressSearchParams} from "@/types/addressTypes"
 import {ResponseApi} from "@/types/commonTypes"
 import {MyPageData} from "@/types/myPageTypes"
 import {User} from "@/types/usersTypes"
-import {addressServices} from "@/services/addressService"
+import {addressServices} from "@/services/addressServices"
 import {OrderItem, OrderItemSearchParams} from "@/types/orderItemsTypes"
 import {orderItemsService} from "@/services/orderItemsServices"
 

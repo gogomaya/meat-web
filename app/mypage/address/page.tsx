@@ -67,7 +67,7 @@ const Home = async (props: {
               </div>
             </div>
             <AddressList addressList={addressList} />
-            <MyPagination page={page} prev={prev} next={next} lastPage={lastPage} domain={""}/>
+            <MyPagination page={page} prev={prev} next={next} lastPage={lastPage} domain={"address"}/>
           </div>
         </div>
       </div>
