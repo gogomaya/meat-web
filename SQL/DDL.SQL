@@ -72,11 +72,12 @@ CREATE TABLE `orders` (
 	`title`	VARCHAR(100)	NOT NULL	COMMENT '한우 소고기 외 3건',
 	`guest_name`	VARCHAR(20)	NULL	COMMENT '비회원 - 이름 (보내는 분)',
 	`guest_mobile`	VARCHAR(20)	NULL	COMMENT '비회원 - 전화번호',
-	`total_price`	INT	NULL,
+	`total_discount_price`	INT	NULL COMMENT '실제 할인 결제금액',
+	`total_price`	INT	NULL COMMENT '상품 정가',
 	`total_quantity`	INT	NULL,
 	`total_count`	INT	NOT NULL	DEFAULT current_timestamp(),
-	`discount`	INT	NOT NULL DEFAULT 0,
-	`shipfee`	INT	NOT NULL DEFAULT 0,
+	`discount`	INT	NOT NULL DEFAULT 0 COMMENT '할인된 가격(정가-할인가)',
+	`shipfee`	INT	NOT NULL DEFAULT 0 COMMENT '배송비',
 	`status`	ENUM('pending','paid','shipping','delivered','cancelled')	NOT NULL	DEFAULT 'pending'	COMMENT '결제대기, 결제완료, 배송중,배송완료,주문취소',
 	`created_at`	DATETIME	NOT NULL	DEFAULT current_timestamp()
 );
@@ -94,6 +95,7 @@ CREATE TABLE `order_items` (
 	`product_pk`	INT(11)	NOT NULL,
 	`quantity`	INT	NOT NULL	DEFAULT 1,
 	`price`	INT	NOT NULL,
+	`discount_price`	INT	NOT NULL,
 	`created_at`	DATETIME	NOT NULL	DEFAULT current_timestamp()
 );
 
