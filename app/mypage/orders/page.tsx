@@ -34,8 +34,8 @@ const Home = async (props: {
     ordersResponse = await ordersServices.ordersRead(searchParams)
     orders = ordersResponse.data.orders
     lastPage = Math.ceil(ordersResponse.data.total_rows / searchParams.rowsPerPage) - 1
-    console.log("lastPage :" + lastPage)
-    console.log(`주문목록 없음 : ${orders == null || orders.length == 0}`)
+    // console.log("lastPage :" + lastPage)
+    // console.log(`주문목록 없음 : ${orders == null || orders.length == 0}`)
   } catch (error) {
     console.error(error)
     return <ErrorPage />
