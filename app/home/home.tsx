@@ -30,11 +30,11 @@ export const HomeBanner = () => {
           <span style={{color: "red"}}>한우1++</span>
           <span style={{color: "yellow"}}>No.9</span>만을 판매하는 한솔축산입니다.
         </div>
-        <div className="space-y-2">
+        {/* <div className="space-y-2">
           <Link href="/products?is_today=true">
             <button className="click-mobile-version py-2 px-4 bg-yellow-400 text-black rounded hover:bg-yellow-500 transition duration-300 ease-in-out shadow-lg">오늘의 메뉴 바로가기</button>
           </Link>
-        </div>
+        </div> */}
       </div>
       <style jsx>{`
       @media (max-width: 768px) {
@@ -182,8 +182,8 @@ export const HomeCateMenu = () => {
               <div className="bg-image absolute inset-0 bg-cover bg-center bg-no-repeat" style={{backgroundImage: "linear-gradient(to left, #271a11, rgba(217, 217, 217, 0) 100%), url('/images/Rectangle 8.png')"}}></div>
               <div className="absolute inset-0 bg-black bg-opacity-10 hover:bg-opacity-20 transition duration-300 rounded-lg"></div>
               <div className="relative flex flex-col justify-center items-center h-full text-white p-2">
-                <div className="text-sm md:text-2xl font-bold text-center text-yellow-400">가장 신선한</div>
-                <div className="text-sm md:text-2xl font-bold mb-2 text-center">🥩 육회 & 육사시미</div>
+                <div className="text-xs md:text-2xl font-bold text-center text-yellow-400">가장 신선한</div>
+                <div className="text-xs md:text-2xl font-bold mb-2 text-center">🥩 육회 & 육사시미</div>
                 <Link href="/products?category=cow&category_menu=육회/사시미">
                   <button className="text-xs md:text-base flex items-center justify-between gap-2 w-full p-2 md:py-2 md:px-4 bg-black text-white rounded hover:bg-gray-800 transition duration-300 text-sm md:text-base">
                     <span>&#39;육회&#39; 바로가기</span>

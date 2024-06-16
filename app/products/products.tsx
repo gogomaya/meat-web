@@ -963,7 +963,7 @@ export const NavDetail = () => {
   }
 
   return (
-    <nav className={`container sticky top-16 items-center w-full z-10 ${isFixed ? "visible" : "invisible md:visible"} flex-1 flex justify-center items-center nav-detail`} style={{height: "100px"}}>
+    <nav className={`!block md:hidden container sticky top-16 items-center w-full z-10 ${isFixed ? "visible" : "invisible md:visible"} flex-1 flex justify-center items-center nav-detail`} style={{height: "100px"}}>
       <ul className="flex w-full h-20 items-center">
         <li
           onClick={() => {
