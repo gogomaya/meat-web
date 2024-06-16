@@ -307,15 +307,16 @@ export const AddressList = ({addressList}: AddressListProps) => {
       cancelButtonText: "취소"
     }).then(async (result) => {
       if (result.isConfirmed) {
+        let addressResponse: ResponseApi = {}
+        addressResponse = await addressServices.addressDelete(address_pk)
+        console.log(addressResponse)
+
         MySwal.fire({
           title: <p>배송지가 삭제되었습니다.</p>,
           didOpen: () => {
             Swal.showLoading()
           }
         })
-        // TODO: 배송 삭제 요청
-        let addressResponse: ResponseApi = {}
-        addressResponse = await addressServices.addressDelete(address_pk)
 
         location.reload()
       }

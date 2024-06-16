@@ -70,10 +70,11 @@ export const POST = async (request: NextRequest) => {
     const product_pk = formData.get("product_pk")
     const quantity = formData.get("quantity")
     const price = formData.get("price")
+    const discount_price = formData.get("discount_price")
 
     const mysql = await mysql2Pool()
-    const columns = ["order_pk", "product_pk", "quantity", "price"]
-    const values = [order_pk, product_pk, quantity, price]
+    const columns = ["order_pk", "product_pk", "quantity", "price", "discount_price"]
+    const values = [order_pk, product_pk, quantity, price, discount_price]
 
     const [result] = await mysql.execute(`
       INSERT INTO order_items (${columns.join(", ")})

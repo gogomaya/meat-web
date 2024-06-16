@@ -64,11 +64,19 @@ export const DELETE = async (
   const {order_pk} = context.params
 
   const mysql = await mysql2Pool()
+  // 주문 삭제
   const [result]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
     DELETE FROM orders WHERE order_pk = ?
   `, [order_pk])
 
   console.log("result : " + result)
+
+  // 주문 항목 삭제
+  const [item_result]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
+    DELETE FROM order_items WHERE order_pk = ?
+    `, [order_pk])
+
+  console.log("item_result : " + item_result)
 
   return NextResponse.json({
     result: "Order deleted successfully"

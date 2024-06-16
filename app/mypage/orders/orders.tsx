@@ -9,6 +9,8 @@ import withReactContent from "sweetalert2-react-content"
 import {OrderItem, OrderItemSearchParams} from "@/types/orderItemsTypes"
 import {orderItemsService} from "@/services/orderItemsServices"
 import {myPageAddCart} from "../mypage"
+import {ResponseApi} from "@/types/commonTypes"
+import {ordersServices} from "@/services/ordersServices"
 
 interface ModalProps {
     title: string;
@@ -87,6 +89,8 @@ export const OrderList = ({orders}: OrderListProps) => {
   console.log(orders)
 
   const MySwal = withReactContent(Swal)
+
+  // 🗑️ 주문 삭제
   const handleDelete = async (order_pk : number) => {
     console.log(`order_pk : ${order_pk}`)
     MySwal.fire({
@@ -96,16 +100,20 @@ export const OrderList = ({orders}: OrderListProps) => {
       confirmButtonText: "삭제",
       showCancelButton: true,
       cancelButtonText: "취소"
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
+
+        let response: ResponseApi = {}
+        response = await ordersServices.ordersDelete(order_pk)
+        console.log(response)
+
         MySwal.fire({
           title: <p>주문 내역이 삭제되었습니다.</p>,
           didOpen: () => {
             Swal.showLoading()
           }
         })
-        // TODO: 주문 삭제 요청
-        // ordersServices.ordersDelete(order_pk)
+
         location.reload()
       }
     })
@@ -148,7 +156,9 @@ export const OrderList = ({orders}: OrderListProps) => {
             <div className="item flex-[2]">
               {/* 타이틀 */}
               <div className="w-full flex justify-between items-center px-4 py-2">
+                {/* 주문 상태 */}
                 <div className="item"><span className="text-[#A51C30] font-bold">{getOrderStatusMeaning(order.status)}</span></div>
+                {/* 주문 삭제 */}
                 <div className="item">
                   <button onClick={()=>handleDelete(order.order_pk)}>
                     <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">

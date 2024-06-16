@@ -20,16 +20,17 @@ export const BookMarkList = ({bookmarks}: BookMarkListProps) => {
   const MySwal = withReactContent(Swal)
   const handleDelete = async (bookmark_pk : number) => {
     console.log("bookmark_pk : " + bookmark_pk)
-    const response: ResponseApi = await bookmarksServices.bookmarksDelete(bookmark_pk)
-    console.log(response.data)
     MySwal.fire({
       title: <p>정말로 삭제하시겠습니까?</p>,
       icon: "warning",
       confirmButtonText: "삭제",
       showCancelButton: true,
       cancelButtonText: "취소"
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
+        // 📡 찜 상품 삭제 요청
+        const response: ResponseApi = await bookmarksServices.bookmarksDelete(bookmark_pk)
+        console.log(response.data)
         MySwal.fire({
           title: <p>찜한 상품이 삭제되었습니다.</p>,
           didOpen: () => {
