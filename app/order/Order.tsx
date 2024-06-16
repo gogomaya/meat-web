@@ -576,9 +576,9 @@ export const OrderSuccessContent = ({
 
   }
 
+
   return (
     <div className="container mx-auto p-8">
-
       <div className="p-3 w-full mb-5">
         <p className="text-4xl">
           감사합니다.

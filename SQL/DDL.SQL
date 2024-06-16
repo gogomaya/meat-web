@@ -160,3 +160,24 @@ CREATE TABLE `payments` (
 	`created_at`	DATETIME	NOT NULL	DEFAULT current_timestamp()
 );
 
+
+
+--------------------------- [cancellations] ---------------------------
+--------------------------- [취소] ---------------------------
+DROP TABLE IF EXISTS `cancellations`;
+
+CREATE TABLE `cancellations` (
+	`cancellation_pk`	INT(11)	NOT NULL,
+	`order_pk`	INT(11)	NOT NULL,
+	`type`	ENUM('cancel','return')	NOT NULL	DEFAULT 'cancel'	COMMENT '주문취소, 반품',
+	`status`	ENUM('pending','complete')	NOT NULL	DEFAULT 'pending'	COMMENT '취소요청, 처리완료',
+	`description`	TEXT	NULL,
+	`is_confirmed`	TINYINT(1)	NOT NULL	DEFAULT 0,
+	`is_refund`	TINYINT(1)	NOT NULL	DEFAULT 0,
+	`account_number`	VARCHAR(100)	NULL,
+	`bank_name`	VARCHAR(100)	NULL,
+	`depositor`	VARCHAR(100)	NULL,
+	`created_at`	DATETIME	NOT NULL	DEFAULT current_timestamp()	COMMENT '취소 접수일',
+	`completed_at`	DATETIME	NULL	COMMENT '처리 완료일'
+);
+

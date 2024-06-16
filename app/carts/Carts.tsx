@@ -442,6 +442,13 @@ export const CartsDetailContent = ({user}: { user: User }) => {
 
 // 장바구니에서 상품 삭제
 export const removeFromCart = async (product_pk : number) => {
+  if (typeof window == "undefined") {
+    console.log("로컬 스토리지가 접근되지 않습니다.")
+    return
+  }
+  console.log("주문한 상품 장바구니에서 삭제...")
+  console.log(`product_pk : ${product_pk}`)
+
   // 로컬 스토리지에서 장바구니 데이터 가져오기
   let cartProducts = JSON.parse(localStorage.getItem("cartProducts") || "[]")
 
