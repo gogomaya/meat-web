@@ -14,6 +14,7 @@ import {commonServices} from "@/services/commonServices"
 import ExpandLessIcon from "@mui/icons-material/ExpandLess"
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"
 
+
 const MainLayout = ({
   children,
   user
@@ -54,7 +55,7 @@ const MainLayout = ({
     <div className="mx-auto">
       <header
         id="header"
-        className="p-4 sticky top-0 z-20 bg-cover bg-center bg-opacity-90 w-full flex justify-center items-center md:py-4 md:px-12 text-white transition-opacity -300 border-b border-white"
+        className="p-4 sticky top-0 z-20 bg-cover bg-center bg-opacity-90 w-full flex items-center md:py-4 md:px-10 text-white transition-opacity -300 border-b border-white"
         style={{backgroundImage: "url('/images/Bg.png')", backgroundPosition: "center calc(50% - 185px)", opacity: headerOpacity}}
       >
         <MainMobileMenu />
@@ -253,6 +254,9 @@ export const MegaMenu = () => {
             <li><Link href="/boards?category=qna" className="text-white">1:1문의하기</Link></li>
           </ol> */}
         </li>
+        {/* <li style={{ width: "140px" }} id="board" className="relative" onMouseOver={overMenu}>
+          <Link href="/admin" className="text-white">관리자</Link>
+        </li> */}
       </ul>
     </nav>
   )
@@ -295,7 +299,7 @@ const MainMobileMenu = () => {
   const [open, setOpen] = useState(false)
   const categoriesMenu = commonServices.categoriesMenu()
   return <>
-    <IconButton style={{display: "none", color:"white"}} className="!block md:!hidden" onClick={() => setOpen(true)}>
+    <IconButton style={{display: "none", color:"white"}} className="p-4 !block px-10 md:!hidden" onClick={() => setOpen(true)}>
       <MenuIcon />
     </IconButton>
     <Drawer
@@ -306,7 +310,7 @@ const MainMobileMenu = () => {
     >
       <Box className="p-2">
         <nav>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <Link href="/users/login">로그인</Link>
             <Link href="/users/sign-up">회원가입</Link>
           </div>
@@ -318,13 +322,13 @@ const MainMobileMenu = () => {
         <SearchBar />
         <nav>
           <ul className="items-center">
-            <li>
+            {/* <li>
               <Accordion>
                 <AccordionSummary>
                   <Link href="/products?is_today=true">오늘의 메뉴</Link>
                 </AccordionSummary>
               </Accordion>
-            </li>
+            </li> */}
             <li>
               <Accordion>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -367,13 +371,13 @@ const MainMobileMenu = () => {
                 </AccordionDetails>
               </Accordion>
             </li>
-            <li>
+            {/* <li>
               <Accordion>
                 <AccordionSummary>
                   <Link href="/products">리뷰</Link>
                 </AccordionSummary>
               </Accordion>
-            </li>
+            </li> */}
             <li>
               <Accordion>
                 <AccordionSummary expandIcon={<ExpandMoreIcon />}>
