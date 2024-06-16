@@ -125,7 +125,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
         item.style.transform = "translateY(0)"
       }, index * 100)
     })
-  }, [])
+  }, [products])
 
   return (
     <><section className="flex justify-between items-center py-4 rounded-lg">
@@ -166,7 +166,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
                 borderRadius: "5px",
                 border: "2px solid #271A11",
                 transition: "transform 0.3s, opacity 0.3s",
-                opacity: 0,
+                // opacity: 0,
                 transform: "translateY(20px)"
               }}
               onMouseEnter={enlargeImage}
@@ -446,9 +446,11 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
                 택배배송
               </button>
             </div>
-            <Divider className="bg-gray-800 h-0.5 mb-4" />
+            <div className="py-2"></div>
+            <Divider className="bg-gray-800 h-0.5" />
             {product.origin && (
               <>
+                <div className="py-2"></div>
                 <div className="flex items-center mb-2">
                   <div className="w-24 mr-5">원산지</div>
                   <div className="flex-grow">{product.origin}</div>
@@ -494,7 +496,7 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
               </div>
             )}
           </div>
-          <div className="mb-4 flex items-center gap-4">
+          <div className="mb-4 flex items-center gap-4 flex-wrap">
             <div className="w-24">수량</div>
             <input
               type="number"
@@ -503,7 +505,7 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
               className="w-20 h-8 p-2 border border-gray-300 rounded"
               min="1"
             />
-            <div>
+            <div className="free-shipping-info">
               <style>
                 {`
                   @keyframes blink {
@@ -513,6 +515,12 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
                   }
                   .blink {
                     animation: blink 1.5s infinite;
+                  }
+                  @media (max-width: 768px) {
+                    .free-shipping-info {
+                      width: 100%;
+                      margin-top: 8px;
+                    }
                   }
                 `}
               </style>
@@ -690,6 +698,7 @@ const CartOrderButton = ({
       } else if (result.isDismissed) {
         console.log("비회원 주문")
       }
+      if (result.dismiss === Swal.DismissReason.backdrop) return
 
       MySwal.fire({
         title: "비회원 주문",
@@ -722,7 +731,6 @@ const CartOrderButton = ({
 
 
   }
-
 
   // 장바구니 포함 주문
   const orderWithCart = async () => {
@@ -761,13 +769,13 @@ const CartOrderButton = ({
         confirmButtonColor: "#271A11",
         cancelButtonText: "비회원 주문"
       })
-
       if (result.isConfirmed) {
         window.postMessage({loginPopup: "on"}, "*")
         return
       } else if (result.isDismissed) {
         console.log("비회원 주문")
       }
+      if (result.dismiss === Swal.DismissReason.backdrop) return
 
       MySwal.fire({
         title: "비회원 주문",
@@ -955,7 +963,7 @@ export const NavDetail = () => {
   }
 
   return (
-    <nav className={`container sticky top-16 items-center w-full z-10 ${isFixed ? "visible" : "invisible md:visible"} flex-1 flex justify-center items-center nav-detail`} style={{height: "100px"}}>
+    <nav className={`!block md:hidden container sticky top-16 items-center w-full z-10 ${isFixed ? "visible" : "invisible md:visible"} flex-1 flex justify-center items-center nav-detail`} style={{height: "100px"}}>
       <ul className="flex w-full h-20 items-center">
         <li
           onClick={() => {

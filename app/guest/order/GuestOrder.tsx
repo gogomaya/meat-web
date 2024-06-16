@@ -90,7 +90,8 @@ export const OrderDetailContent = ({
 
 
   const totalDiscount = order.discount
-  const totalShipFee = order.shipfee
+  const totalShipFee = Number(order?.total_price) >= 150000 ? 0 : 5000
+  // const totalShipFee = order.shipfee
   const finalPrice = Number(order?.total_price) - totalDiscount + totalShipFee
 
   // 결제에 필요한 정보
@@ -254,7 +255,7 @@ export const OrderDetailContent = ({
           <div className="text-2xl font-semibold mb-4">결제금액</div>
           <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
           <div className="space-y-2 bg-gray-200 rounded-lg p-3">
-            <p className="text-lg m-2 text-black">총 상품금액: {String(order.total_price).toLocaleString()}원</p>
+            <p className="text-lg m-2 text-black">총 상품금액: {Number(order.total_price).toLocaleString()}원</p>
             {/* TODO: 할인금액이랑 배송비는 어디서 등록하고, 가져와야할까요? */}
             <p className="text-lg m-2 text-black">할인 금액: {totalDiscount.toLocaleString()}원</p>
             <p className="text-lg m-2 text-black">총 배송비: {totalShipFee.toLocaleString()}원</p>
@@ -423,7 +424,8 @@ export const OrderSuccessContent = ({
   })
 
   const totalDiscount = order.discount
-  const totalShipFee = order.shipfee
+  // const totalShipFee = order.shipfee
+  const totalShipFee = Number(order?.total_price) >= 150000 ? 0 : 5000
   const finalPrice = Number(order?.total_price) - totalDiscount + totalShipFee
 
   // 결제에 필요한 정보
@@ -444,9 +446,9 @@ export const OrderSuccessContent = ({
     customerEmail : customerEmail,
     customerMobilePhone : customerMobilePhone
   }
-  console.log(":::::::::::::::::: 주문 항목 리스트 확인 ::::::::::::::::::::::")
+  // console.log(":::::::::::::::::: 주문 항목 리스트 확인 ::::::::::::::::::::::")
 
-  console.log(`orderItems : ${orderItems}`)
+  // console.log(`orderItems : ${orderItems}`)
 
   const renderOrderItems = () => {
     return (

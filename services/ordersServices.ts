@@ -46,16 +46,18 @@ export const ordersServices = {
           total_quantity = total_quantity + quantityList[i]
         }
       }
+
       const discount = total_price - total_discount_price
       console.log("total_price : " + total_price)
       console.log("total_discount_price : " + total_discount_price)
       console.log("total_quantity : " + total_quantity)
       console.log("total_count : " + total_count)
       console.log("discount : " + discount)
+
       // 상품목록 확인
-      console.log("::::::::::: 전달받은 productPks 로 조회된 상품정보 리스트 ::::::::::")
-      console.log(productList)
-      console.log("-----------------------------------------------------------------")
+      // console.log("::::::::::: 전달받은 productPks 로 조회된 상품정보 리스트 ::::::::::")
+      // console.log(productList)
+      // console.log("-----------------------------------------------------------------")
       // 주문 데이터 등록
       console.log("order - [INSERT] - 주문 데이터 등록")
       const formData = new FormData()

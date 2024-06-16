@@ -168,7 +168,7 @@ const Users = ({user}: {user: User}) => {
                     setOpen("close")
                   }}
                 >
-                  1초 회원가입으로 {" "}
+                  카카오톡 1초 회원가입으로 {" "}
                 </span>
                 입력없이 <br />간편하게 로그인 하세요.
               </div>

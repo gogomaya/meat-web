@@ -81,6 +81,9 @@ const AdminProductsForm = ({
     }
     backdrop.close()
   }
+
+  const gradeOptions = ["1++", "1+", "1", "2", "3"]
+
   useEffect(() => {
     const DecoupledEditor = require("@ckeditor/ckeditor5-build-decoupled-document")
     DecoupledEditor
@@ -152,7 +155,7 @@ const AdminProductsForm = ({
           <TextField
             className="!mt-8"
             label="* 할인된 최종 금액"
-            placeholder="할인이 없어도 금액을 입력해주세요"
+            placeholder="할인이 없어도 최종 금액을 입력해주세요"
             fullWidth
             type="number"
             variant="standard"
@@ -163,30 +166,25 @@ const AdminProductsForm = ({
             // error={!!errors.discounted_price}
             // helperText={errors.discounted_price && errors.discounted_price.message}
           />
-          <TextField
-            className="!mt-8"
-            label="간단한 설명"
-            placeholder="간단한 설명"
-            fullWidth
-            variant="standard"
-            InputLabelProps={{
-              shrink: true
-            }}
-            {...register("description")}
-          />
-          <TextField
-            className="!mt-8"
-            label="출고관련 비고"
-            placeholder="출고관련 비고"
-            fullWidth
-            variant="standard"
-            InputLabelProps={{
-              shrink: true
-            }}
-            {...register("etc")}
-          />
+          <FormControl variant="standard" error={!!errors.grade} fullWidth className="!mt-8">
+            <InputLabel shrink>등급</InputLabel>
+            <Controller
+              control={control}
+              name="grade"
+              render={({field}) => (
+                <Select {...field}>
+                  {gradeOptions.map((grade, index) => (
+                    <MenuItem key={index} value={grade}>{grade}</MenuItem>
+                  ))}
+                </Select>
+              )}
+            />
+            {errors.grade && errors.grade.message && (
+              <FormHelperText>{errors.grade.message}</FormHelperText>
+            )}
+          </FormControl>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-4">
           <TextField
             className="!mt-8"
             label="원산지"
@@ -232,7 +230,7 @@ const AdminProductsForm = ({
             {...register("part")}
           />
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-4">
           <TextField
             className="!mt-8"
             label="100g당"
@@ -244,7 +242,7 @@ const AdminProductsForm = ({
             }}
             {...register("per100g")}
           />
-          <TextField
+          {/* <TextField
             className="!mt-8"
             label="등급"
             placeholder="등급"
@@ -254,6 +252,28 @@ const AdminProductsForm = ({
               shrink: true
             }}
             {...register("grade")}
+          /> */}
+          <TextField
+            className="!mt-8"
+            label="간단한 설명"
+            placeholder="간단한 설명"
+            fullWidth
+            variant="standard"
+            InputLabelProps={{
+              shrink: true
+            }}
+            {...register("description")}
+          />
+          <TextField
+            className="!mt-8"
+            label="출고관련 비고"
+            placeholder="출고관련 비고"
+            fullWidth
+            variant="standard"
+            InputLabelProps={{
+              shrink: true
+            }}
+            {...register("etc")}
           />
           <TextField
             className="!mt-8"
