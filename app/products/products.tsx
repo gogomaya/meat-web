@@ -103,7 +103,6 @@ export const ProductSubtitle = () => {
 }
 
 export const ProductsList = ({products}: { products: Product[] }) => {
-  console.log(products)
   const enlargeImage = (event: React.MouseEvent<HTMLLIElement>) => {
     const img = event.currentTarget.querySelector("img") as HTMLElement
     if (img) {
