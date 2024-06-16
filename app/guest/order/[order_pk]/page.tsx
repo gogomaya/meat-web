@@ -31,10 +31,10 @@ const OrderPay = async (props: {
   const {user} = await loginCheck(false)
   const order_pk = props.params.order_pk
   const guest = props.searchParams.guest
-  console.log("주문 등록 완료 후")
-  console.log(":::::::::::::::::: [주문서 작성]:::::::::::::::::: ")
-  console.log ("/ordre/{order_pk}")
-  console.log(`order_pk : ${order_pk}`)
+  // console.log("주문 등록 완료 후")
+  // console.log(":::::::::::::::::: [주문서 작성]:::::::::::::::::: ")
+  // console.log ("/ordre/{order_pk}")
+  // console.log(`order_pk : ${order_pk}`)
 
   let title = "주문서 조회 실패"
   let text = "잘못된 주문 번호입니다."
@@ -77,14 +77,14 @@ const OrderPay = async (props: {
   } as OrderItemSearchParams
   try {
     ordersResponse = await ordersServices.ordersDetail(order_pk)
-    console.log(":::::::::: ordersResponse ::::::::::")
-    console.log(ordersResponse)
+    // console.log(":::::::::: ordersResponse ::::::::::")
+    // console.log(ordersResponse)
     order = ordersResponse.data.order     // ⭐주문 정보
     orderItemsResponse = await orderItemsService.orderItemsRead(searchParams)
-    console.log(":::::::::: orderItemsResponse ::::::::::")
-    console.log(orderItemsResponse)
+    // console.log(":::::::::: orderItemsResponse ::::::::::")
+    // console.log(orderItemsResponse)
     orderItems = orderItemsResponse.data.orderItems // ⭐주문 항목 정보
-    console.log(orderItems)
+    // console.log(orderItems)
   } catch (error) {
     console.error(error)
     return <ErrorPage />

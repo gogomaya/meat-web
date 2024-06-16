@@ -12,9 +12,9 @@ export const GET = async (request: NextRequest) => {
     const orderDirection = searchParams.get("orderDirection") || "desc"
     const query = searchParams.get("query") || ""
     const order_pk = searchParams.get("order_pk") || ""
-    console.log("::::::::::: searchParams ::::::::::")
-    console.log(searchParams)
-    console.log("order_pk : " + order_pk)
+    // console.log("::::::::::: searchParams ::::::::::")
+    // console.log(searchParams)
+    // console.log("order_pk : " + order_pk)
     const mysql = await mysql2Pool()
     const [total_rows]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
       SELECT COUNT(*) AS total_rows FROM order_items
@@ -48,8 +48,8 @@ export const GET = async (request: NextRequest) => {
       ORDER BY ${orderColumn} ${orderDirection}
     `, [order_pk, order_pk])
 
-    console.log(`orderItems : ${rows}`)
-    console.log(`total_rows : ${total_rows}`)
+    // console.log(`orderItems : ${rows}`)
+    // console.log(`total_rows : ${total_rows}`)
 
     return NextResponse.json({
       message: "[API] /api/orderItems - 주문 항목 리스트 조회 성공",
@@ -77,7 +77,7 @@ export const POST = async (request: NextRequest) => {
     const values = [order_pk, product_pk, quantity, price, discount_price]
 
     const [result] = await mysql.execute(`
-      INSERT INTO order_items (${columns.join(", ")})
+      INSERT INTO order_items (${columns.join(", ")}) 
       VALUES (${columns.map(() => "?").join(", ")})
     `, values)
 

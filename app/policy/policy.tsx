@@ -53,16 +53,32 @@ const TermsAndPolicyTabs: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState<string>("terms")
 
   return (
-    <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+    <div className="p-8" style={{display: "flex", alignItems: "center"}}>
       <div>
         <button
-          style={{backgroundColor: selectedTab === "terms" ? "#008CBA" : "#4CAF50", color: "white", padding: "10px 20px", fontSize: "16px", margin: "4px 2px", cursor: "pointer", border: "none"}}
+          style={{
+            backgroundColor: selectedTab === "terms" ? "black" : "yellow",
+            color: selectedTab === "terms" ? "white" : "black",
+            padding: "10px 20px",
+            fontSize: "16px",
+            margin: "4px 2px",
+            cursor: "pointer",
+            border: "none"
+          }}
           onClick={() => setSelectedTab("terms")}
         >
           이용약관
         </button>
         <button
-          style={{backgroundColor: selectedTab === "privacy" ? "#008CBA" : "#4CAF50", color: "white", padding: "10px 20px", fontSize: "16px", margin: "4px 2px", cursor: "pointer", border: "none"}}
+          style={{
+            backgroundColor: selectedTab === "privacy" ? "black" : "yellow",
+            color: selectedTab === "privacy" ? "white" : "black",
+            padding: "10px 20px",
+            fontSize: "16px",
+            margin: "4px 2px",
+            cursor: "pointer",
+            border: "none"
+          }}
           onClick={() => setSelectedTab("privacy")}
         >
           개인정보처리방침

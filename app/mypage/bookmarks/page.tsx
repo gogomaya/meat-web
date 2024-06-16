@@ -35,10 +35,10 @@ const Home = async (props: {
     bookmarksResponse = await bookmarksServices.bookmarksRead(searchParams)
     bookmarks = bookmarksResponse.data.bookmarks
     // lastPage = Math.floor(bookmarksResponse.data.total_rows / searchParams.rowsPerPage)
-    lastPage = Math.ceil(bookmarksResponse.data.total_rows / searchParams.rowsPerPage) - 1
-    console.log("lastPage :" + lastPage)
-    console.log(`찜리스트 없음 : ${bookmarks == null || bookmarks.length == 0}`)
-    console.log(bookmarks)
+    // lastPage = Math.ceil(bookmarksResponse.data.total_rows / searchParams.rowsPerPage) - 1
+    // console.log("lastPage :" + lastPage)
+    // console.log(`찜리스트 없음 : ${bookmarks == null || bookmarks.length == 0}`)
+    // console.log(bookmarks)
   } catch (error) {
     console.error(error)
     return <ErrorPage />

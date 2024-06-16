@@ -10,9 +10,9 @@ export const GET = async (request: NextRequest) => {
   const orderDirection = searchParams.get("orderDirection") || "desc"
   const query = searchParams.get("query") || ""
   const user_pk = searchParams.get("user_pk") || ""
-  console.log(":::::::::::::::: [GET] :::::::::::::::")
-  console.log("::::::::::: /api/orders ::::::::::")
-  console.log("searchParams : " + searchParams)
+  // console.log(":::::::::::::::: [GET] :::::::::::::::")
+  // console.log("::::::::::: /api/orders ::::::::::")
+  // console.log("searchParams : " + searchParams)
   const mysql = await mysql2Pool()
   const [total_rows]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
     SELECT COUNT(*) AS total_rows FROM orders
@@ -38,7 +38,7 @@ export const GET = async (request: NextRequest) => {
     ORDER BY ${orderColumn} ${orderDirection}
     LIMIT ?, ?
   `, [user_pk, user_pk, page, rowsPerPage])
-  console.log(rows)
+  // console.log(rows)
 
   return NextResponse.json({
     orders: rows,
@@ -54,11 +54,14 @@ export const POST = async (request: NextRequest) => {
     const title = formData.get("title") || "주문 상품"
     const guest_mobile = formData.get("guest_mobile")
     const total_price = formData.get("total_price")
+    const total_discount_price = formData.get("total_discount_price")
     const total_quantity = formData.get("total_quantity")
     const total_count = formData.get("total_count")
+    const discount = formData.get("discount")
+    const shipfee = formData.get("shipfee")
     const mysql = await mysql2Pool()
-    const columns = ["user_pk", "shipment_pk", "title", "guest_mobile", "total_price", "total_quantity", "total_count"]
-    const values = [user_pk, shipment_pk, title, guest_mobile, total_price, total_quantity, total_count]
+    const columns = ["user_pk", "shipment_pk", "title", "guest_mobile", "total_price", "total_discount_price", "total_quantity", "total_count" , "discount", "shipfee"]
+    const values = [user_pk, shipment_pk, title, guest_mobile, total_price, total_discount_price, total_quantity, total_count, discount, shipfee]
     const [result] = await mysql.execute(`
       INSERT INTO orders (${columns.join(", ")})
       VALUES (${columns.map(() => "?").join(", ")})
@@ -66,7 +69,7 @@ export const POST = async (request: NextRequest) => {
     // 마지막으로 삽입된 레코드의 AUTO_INCREMENT 값 가져오기
     const [pk]: [RowDataPacket[], FieldPacket[]] = await mysql.execute("SELECT LAST_INSERT_ID() order_pk FROM dual")
     const order_pk = pk[0]["order_pk"]
-    console.log(`등록된 주문번호 - order_pk : ${order_pk}`)
+    // console.log(`등록된 주문번호 - order_pk : ${order_pk}`)
     return NextResponse.json({
       reslut: true,
       message: "Order created successfully",

@@ -8,13 +8,13 @@ export const GET = async (
   context: { params: { shipment_pk: number } }
 ) => {
   const {shipment_pk} = context.params
-  console.log(`/api/shipments - shipment_pk : ${shipment_pk}`)
+  // console.log(`/api/shipments - shipment_pk : ${shipment_pk}`)
   try {
     const mysql = await mysql2Pool()
     const [shipment]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
       SELECT * FROM shipments WHERE shipment_pk = ?
     `, [shipment_pk])
-    console.log(`shipment 배송 정보 조회 : ${shipment}`)
+    // console.log(`shipment 배송 정보 조회 : ${shipment}`)
 
     if (!shipment || shipment.length === 0) {
       return NextResponse.error()
@@ -49,7 +49,7 @@ export const PUT = async (
     const ship_company = formData.get("ship_company") || null
     const status = formData.get("status") || "pending"
 
-    console.log(`shipment_pk : ${shipment_pk}`)
+    // console.log(`shipment_pk : ${shipment_pk}`)
     const mysql = await mysql2Pool()
 
     await mysql.execute(`

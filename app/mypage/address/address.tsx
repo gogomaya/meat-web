@@ -274,7 +274,7 @@ export const AddressUpdateForm = ({user, addressInfo}: AddressProps ) => {
               onChange={handleCheckboxChange}
               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
             />
-            <span className="px-3" style={{userSelect: "none", cursor: "pointer"}}>
+            <span className="px-2 text-sm md:text-lg" style={{userSelect: "none", cursor: "pointer"}}>
               기본 배송지
             </span>
           </label>

@@ -125,7 +125,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
         item.style.transform = "translateY(0)"
       }, index * 100)
     })
-  }, [])
+  }, [products])
 
   return (
     <><section className="flex justify-between items-center py-4 rounded-lg">
@@ -166,7 +166,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
                 borderRadius: "5px",
                 border: "2px solid #271A11",
                 transition: "transform 0.3s, opacity 0.3s",
-                opacity: 0,
+                // opacity: 0,
                 transform: "translateY(20px)"
               }}
               onMouseEnter={enlargeImage}
@@ -210,7 +210,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
                       color: "#ff0000"
                     }}
                   >
-                      Sold out
+                    Sold out
                   </span>
                 ) : null}
               </Link>
@@ -219,7 +219,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
                   {product.name}
                 </Link>
                 <br />
-                <strong style={{color: "#000", fontSize: "1.1rem"}}>{product.price.toLocaleString()}원</strong>
+                <strong style={{color: "#000", fontSize: "1.1rem"}}>{product.discounted_price.toLocaleString()}원</strong>
               </p>
               <div style={{display: "flex", flexWrap: "wrap", gap: "10px"}}>
                 <button
@@ -235,6 +235,20 @@ export const ProductsList = ({products}: { products: Product[] }) => {
                   }}
                 >
                   {product.etc}
+                </button>
+                <button
+                  className="product-button"
+                  style={{
+                    padding: "5px 8px",
+                    backgroundColor: "#FACC15",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: "20px",
+                    cursor: "pointer",
+                    fontSize: "0.8rem"
+                  }}
+                >
+                  택배배송
                 </button>
               </div>
             </li>
@@ -286,7 +300,6 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
   const [isFavorited, setIsFavorited] = React.useState(false)
   const bookmark = bookmarksServices.bookmarksDetail(searchParams)
 
-  console.log("::::::::::::::::::::::::::::::::::::::::::::::::::::::")
   bookmark.then((result) => {
     if( !result.data.bookmark ) {
       setIsFavorited(false)
@@ -298,23 +311,21 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
 
 
   const handleFavoriteClick = async () => {
-
-    if (!user) {
+    if (!user.id) {
       Swal.fire({
         title: "로그인이 필요한 서비스입니다.",
-        text: "",
-        icon: "warning",
+        text: "회원가입 또는 로그인을 하시겠습니까?",
+        // icon: "warning",
+        imageUrl: `${process.env.NEXT_PUBLIC_URL}/images/logo.png`,
+        imageWidth: 100,
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
+        confirmButtonColor: "#271A11",
         cancelButtonColor: "#d33",
-        confirmButtonText: "로그인하러 가기"
+        confirmButtonText: "로그인하러 가기",
+        cancelButtonText: "취소"
       }).then((result) => {
         if (result.isConfirmed) {
-          Swal.fire({
-            title: "네",
-            text: "Your file has been deleted.",
-            icon: "success"
-          })
+          window.postMessage({loginPopup: "on"}, "*")
         }
       })
       return
@@ -338,7 +349,7 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
         imageWidth: 200,
         // imageHeight: 200,
         imageAlt: "하트",
-        timer: 2500,
+        timer: 1500,
         timerProgressBar: true,
         didOpen: () => {
           Swal.showLoading()
@@ -350,7 +361,11 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
 
     setIsFavorited(!isFavorited)
   }
+  const [selectedOption, setSelectedOption] = React.useState("")
 
+  const handleOptionChange = (event: { target: { value: React.SetStateAction<string> } }) => {
+    setSelectedOption(event.target.value)
+  }
 
   return (
     <div className="container mx-auto py-8">
@@ -389,10 +404,33 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
         </div>
         <div>
           <div className="py-2 font-bold text-4xl">{product.name}</div>
-          <div className="py-8">{product.description}</div>
-          <div className="mb-4">
-            <span className="mr-2 text-red-700 font-bold text-4xl">{product.price.toLocaleString()}원</span>
+          <div className="py-4">{product.description}</div>
+          <div className="mb-2">
+            <div className="py-2">
+              <div className="flex gap-3 align-items">
+                <div className="text-xl text-red-600">{(((Number(product.price) - Number(product.discounted_price)) / Number(product.price)) * 100).toFixed(0)}%</div>
+                <div className="text-xl" style={{textDecoration: "line-through"}}>{(Number(product.price)).toLocaleString()}원</div>
+              </div>
+              <strong className="text-3xl text-red-700">{(Number(product.discounted_price)).toLocaleString()}원</strong>
+              <div>100g당 {product.per100g}</div>
+            </div>
+            <div><p>배송사: 로젠택배</p></div>
+            {/* <strong className="text-4xl text-red-700">{(Number(product.discounted_price) * quantity).toLocaleString()}원</strong> */}
             <div className="py-3 flex flex-wrap gap-2">
+              <button
+                className="product-button"
+                style={{
+                  padding: "5px 8px",
+                  backgroundColor: "#271A11",
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: "20px",
+                  cursor: "pointer",
+                  fontSize: "0.8rem"
+                }}
+              >
+                {product.etc}
+              </button>
               <button
                 className="product-button"
                 style={{
@@ -405,12 +443,14 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
                   fontSize: "0.8rem"
                 }}
               >
-                {product.etc}
+                택배배송
               </button>
             </div>
-            <Divider className="bg-gray-800 h-0.5 mb-4" />
+            <div className="py-2"></div>
+            <Divider className="bg-gray-800 h-0.5" />
             {product.origin && (
               <>
+                <div className="py-2"></div>
                 <div className="flex items-center mb-2">
                   <div className="w-24 mr-5">원산지</div>
                   <div className="flex-grow">{product.origin}</div>
@@ -438,7 +478,25 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
               </>
             )}
           </div>
-          <div className="mb-4 flex items-center gap-4">
+          <div>
+            {/* category가 pork일 때만 드롭다운을 렌더링 */}
+            {product.category === "pork" && (
+              <div className="mb-4 flex items-center gap-4">
+                <div className="w-24">종류</div>
+                <select
+                  value={selectedOption}
+                  onChange={handleOptionChange}
+                  className="w-32 h-10 p-1 border border-gray-300 rounded"
+                  required
+                >
+                  <option value="수육">수육</option>
+                  <option value="찌개">찌개</option>
+                  <option value="구이">구이</option>
+                </select>
+              </div>
+            )}
+          </div>
+          <div className="mb-4 flex items-center gap-4 flex-wrap">
             <div className="w-24">수량</div>
             <input
               type="number"
@@ -447,7 +505,7 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
               className="w-20 h-8 p-2 border border-gray-300 rounded"
               min="1"
             />
-            <div>
+            <div className="free-shipping-info">
               <style>
                 {`
                   @keyframes blink {
@@ -457,6 +515,12 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
                   }
                   .blink {
                     animation: blink 1.5s infinite;
+                  }
+                  @media (max-width: 768px) {
+                    .free-shipping-info {
+                      width: 100%;
+                      margin-top: 8px;
+                    }
                   }
                 `}
               </style>
@@ -491,8 +555,11 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
           </div>
           <Divider className="bg-gray-800 h-0.5 mb-4" />
           <div>
-            <div className="flex flex-col items-end mb-4 lg:w-1/2 ml-auto py-2">
-              <strong className="text-2xl">총금액: {(Number(product.price) * quantity).toLocaleString()}원</strong>
+            <div className="flex flex-col items-end mb-4 lg:w-1/2 ml-auto py-2 gap-1">
+              <div className="flex items-center gap-4">
+                <div className="text-red-600 text-2xl">결제 예상금액</div>
+                <strong className="text-3xl text-red-700">{(Number(product.discounted_price) * quantity).toLocaleString()}원</strong>
+              </div>
             </div>
             <div className="flex justify-start items-center mb-4 py-4">
               <div className="product-detail-button flex w-full gap-2 items-center">
@@ -523,6 +590,7 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
                     장바구니
                   </Button>
                 </CartOrderButton>
+                {/* 🔳 구매하기 버튼 */}
                 <CartOrderButton type="ORDER" product={product} quantity={quantity} user={user}>
                   <Button
                     style={{
@@ -611,8 +679,27 @@ const CartOrderButton = ({
     }
     // 비회원
     else {
-      // alert("비회원")
       const MySwal = withReactContent(Swal)
+
+      // 👩‍💼 회원가입 유도 체크
+      const result = await MySwal.fire({
+        title: "회원가입 후 주문하기",
+        text: "회원가입 시, 더 편리하게 이용하실 수 있습니다.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "회원가입",
+        confirmButtonColor: "#271A11",
+        cancelButtonText: "비회원 주문"
+      })
+
+      if (result.isConfirmed) {
+        window.postMessage({loginPopup: "on"}, "*")
+        return
+      } else if (result.isDismissed) {
+        console.log("비회원 주문")
+      }
+      if (result.dismiss === Swal.DismissReason.backdrop) return
+
       MySwal.fire({
         title: "비회원 주문",
         text: "전화번호를 입력해주세요. (- 기호없이 : 01012341234 )",
@@ -645,7 +732,6 @@ const CartOrderButton = ({
 
   }
 
-
   // 장바구니 포함 주문
   const orderWithCart = async () => {
     // 구매하기 -> 알림 -> 예 -> 장바구니까지 주문
@@ -657,6 +743,7 @@ const CartOrderButton = ({
       alert("장바구니가 비어 있습니다.")
       return
     }
+
     // product_pk와 quantity 추출 및 문자열 병합
     const productPks = storedCartProducts.map((cartProduct : CartProduct ) => cartProduct.product.product_pk).join(",")
     const quantityList = storedCartProducts.map((cartProduct: CartProduct ) => cartProduct.quantity).join(",")
@@ -664,7 +751,60 @@ const CartOrderButton = ({
     console.log(`quantityList : ${quantityList}`)
     console.log(`/order?productPks=${productPks}&quantityList=${quantityList}`)
 
-    router.push(`/order?productPks=${productPks}&quantityList=${quantityList}`)
+    // 회원
+    if( user.user_pk ) {
+      router.push(`/order?productPks=${productPks}&quantityList=${quantityList}`)
+    }
+    // 비회원
+    else {
+      const MySwal = withReactContent(Swal)
+
+      // 👩‍💼 회원가입 유도 체크
+      const result = await MySwal.fire({
+        title: "회원가입 후 주문하기",
+        text: "회원가입 시, 더 편리하게 이용하실 수 있습니다.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "회원가입",
+        confirmButtonColor: "#271A11",
+        cancelButtonText: "비회원 주문"
+      })
+      if (result.isConfirmed) {
+        window.postMessage({loginPopup: "on"}, "*")
+        return
+      } else if (result.isDismissed) {
+        console.log("비회원 주문")
+      }
+      if (result.dismiss === Swal.DismissReason.backdrop) return
+
+      MySwal.fire({
+        title: "비회원 주문",
+        text: "전화번호를 입력해주세요. (- 기호없이 : 01012341234 )",
+        input: "text",
+        inputAttributes: {
+          autocapitalize: "off"
+        },
+        showCancelButton: true,
+        confirmButtonText: "구매하기",
+        cancelButtonText: "취소",
+        showLoaderOnConfirm: true,
+        preConfirm: async (mobile) => {
+          try {
+            // TODO: 전화번호 검증 로직 필요
+            return {mobile: mobile}
+          } catch (error) {
+            //
+          }
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // 비회원 주문
+          router.push(`/guest/order?mobile=${result.value.mobile}&productPks=${productPks}&quantityList=${quantityList}`)
+        }
+      })
+    }
+
   }
   return (
     <div>
@@ -823,7 +963,7 @@ export const NavDetail = () => {
   }
 
   return (
-    <nav className={`container sticky top-16 items-center w-full z-10 ${isFixed ? "visible" : "invisible md:visible"} flex-1 flex justify-center items-center nav-detail`} style={{height: "100px"}}>
+    <nav className={`!block md:hidden container sticky top-16 items-center w-full z-10 ${isFixed ? "visible" : "invisible md:visible"} flex-1 flex justify-center items-center nav-detail`} style={{height: "100px"}}>
       <ul className="flex w-full h-20 items-center">
         <li
           onClick={() => {

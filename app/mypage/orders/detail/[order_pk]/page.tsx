@@ -37,7 +37,8 @@ const OrderDetail = async (props: {
     order_id: "",
     address_pk: 0,
     shipfee: 0,
-    discount: 0
+    discount: 0,
+    total_discount_price: 0
   }
 
   const searchParams = {
@@ -117,7 +118,7 @@ const OrderDetail = async (props: {
                     </div>
                     <div className="item flex-[3]">
                       <div className="inner p-1">
-                        <span className="px-3">₩ {formatNumber(order.total_price || 0)} 원</span>
+                        <span className="px-3">₩ {formatNumber(order.total_discount_price || 0)} 원</span>
                       </div>
                     </div>
                   </div>
@@ -135,7 +136,6 @@ const OrderDetail = async (props: {
                     </div>
                   </div>
                 </div>
-                {/* TODO: order_items 목록 조회부터~ */}
                 <p className="text-xl font-bold py-3">상세 정보</p>
                 {orderItems.map((item: OrderItem) => (
                   <>
@@ -162,7 +162,7 @@ const OrderDetail = async (props: {
                             </div>
                             <div className="item flex-[3]">
                               <div className="flex flex-col items-between">
-                                <div className="item"><span>{item.price.toLocaleString()}</span>원</div>
+                                <div className="item"><span>{Number(item.discounted_price).toLocaleString()}</span>원</div>
                                 <div className="item"><span>{item.quantity}</span>개</div>
                               </div>
                             </div>
@@ -171,7 +171,7 @@ const OrderDetail = async (props: {
                                 {/* 총 가격 */}
                                 <div className="item text-center">
                                   <p className="font-bold">
-                                    <span>{(Number(item.price) * item.quantity).toLocaleString()}</span>원
+                                    <span>{(Number(item.discounted_price) * item.quantity).toLocaleString()}</span>원
                                   </p>
                                 </div>
                               </div>

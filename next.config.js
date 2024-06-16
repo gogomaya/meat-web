@@ -3,6 +3,9 @@ const nextConfig = {
   reactStrictMode: false,
   eslint: {
     dirs: ["/"]
+  },
+  images: {
+    domains: ["assets-global.website-files.com"]
   }
 }
 

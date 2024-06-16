@@ -30,7 +30,7 @@ import {OrderDetailContent} from "../Order"
  */
 const OrderPay = async (props: {
   params: {order_pk: number},   // 경로 변수
-  searchParams: {guest: number}              // 쿼리 스트링 파라미터
+  searchParams: {guest: number} // 쿼리 스트링 파라미터
 }) => {
   const {user} = await loginCheck(false)
   const order_pk = props.params.order_pk

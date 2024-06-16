@@ -8,7 +8,7 @@ export const GET = async (
   context: { params: { payment_pk: number } }
 ) => {
   const {payment_pk} = context.params
-  console.log(`/api/payments - payment_pk : ${payment_pk}`)
+  // console.log(`/api/payments - payment_pk : ${payment_pk}`)
   try {
     const mysql = await mysql2Pool()
     const [payment]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
@@ -46,7 +46,7 @@ export const PUT = async (
     const status = formData.get("status")
     const pay_id = formData.get("pay_id") || null
 
-    console.log(`payment_pk : ${payment_pk}`)
+    // console.log(`payment_pk : ${payment_pk}`)
     const mysql = await mysql2Pool()
 
     await mysql.execute(`

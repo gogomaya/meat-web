@@ -14,6 +14,7 @@ export interface Order {
   guest_name?: string // 비회원인 경우 이름(보내는분)
   guest_mobile?: string // 비회원인 경우 전화번호
   total_price?: number | null
+  total_discount_price: number | null
   total_quantity?: number | null
   total_count: number
   status: OrderStatus // 결제대기, 결제완료, 배송중, 배송완료, 주문취소
@@ -35,6 +36,8 @@ export interface OrderParams  {
   user_pk: number
   mobile: string
   order_pk: number
+  order_id: string
+  amount: number
   address_pk: number
   payment_key: string
   guest_name: string

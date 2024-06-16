@@ -8,9 +8,11 @@ import {CartProduct} from "@/types/productsTypes"
 import {useForm} from "react-hook-form"
 import _ from "lodash"
 import {OrderItem, OrderItemSearchParams} from "@/types/orderItemsTypes"
-import {orderItemsService} from "@/services/orderItemsServices"
+import {User} from "@/types/usersTypes"
+import Swal from "sweetalert2"
+import withReactContent from "sweetalert2-react-content"
 
-export const CartsDetailContent = () => {
+export const CartsDetailContent = ({user}: { user: User }) => {
   const router = useRouter()
   const [open, setOpen] = useState(false)
   const cartProductsForm = useForm<{cartProducts: CartProduct[]}>({
@@ -28,41 +30,147 @@ export const CartsDetailContent = () => {
   if (cartProducts === null) {
     return <Skeleton variant="rectangular" animation="wave" width="100%" height={300} />
   }
-  // 전체 상품 금액, 할인 금액, 배송비 계산 (임시 값)
-  // const totalAmount = 100000
-  const discountAmount = 0
-  const shippingFee = 3000
-
+  // 전체 상품 금액, 할인 금액, 배송비 계산
+  const shippingFee = 5000
 
   // [주문하기] 클릭
-  const handleOrderClick = () => {
+  const handleOrderClick = async () => {
     // product_pk와 quantity 추출
     const productPks = cartProducts.map((cartProduct) => cartProduct.product.product_pk).join(",")
     const quantityList = cartProducts.map((cartProduct) => cartProduct.quantity).join(",")
 
-    // URL 생성
-    const orderUrl = `/order?productPks=${productPks}&quantityList=${quantityList}`
-    console.log(`productPks : ${productPks}`)
-    console.log(`quantityList : ${quantityList}`)
-    console.log(`orderUrl : ${orderUrl}`)
+    // 회원
+    if( user.user_pk ) {
+      const orderUrl = `/order?productPks=${productPks}&quantityList=${quantityList}`
+      router.push(orderUrl)
+    }
+    // 비회원
+    else {
+      const MySwal = withReactContent(Swal)
 
-    // 이동
-    router.push(orderUrl)
+      // 👩‍💼 회원가입 유도 체크
+      const result = await MySwal.fire({
+        title: "회원가입 후 주문하기",
+        text: "회원가입 시, 더 편리하게 이용하실 수 있습니다.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "회원가입",
+        confirmButtonColor: "#271A11",
+        cancelButtonText: "비회원 주문"
+      })
+      let guestOrder = false
+      if (result.isConfirmed) {
+        window.postMessage({loginPopup: "on"}, "*")
+        return
+      } else if (result.isDismissed) {
+        // console.log("비회원 주문")
+        guestOrder = true
+      }
+      if (result.dismiss === Swal.DismissReason.backdrop) return
+
+
+      MySwal.fire({
+        title: "비회원 주문",
+        text: "전화번호를 입력해주세요. (- 기호없이 : 01012341234 )",
+        input: "text",
+        inputAttributes: {
+          autocapitalize: "off"
+        },
+        showCancelButton: true,
+        confirmButtonText: "구매하기",
+        cancelButtonText: "취소",
+        showLoaderOnConfirm: true,
+        preConfirm: async (mobile) => {
+          try {
+            // TODO: 전화번호 검증 로직 필요
+            return {mobile: mobile}
+          } catch (error) {
+            //
+          }
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // 비회원 주문
+          router.push(`/guest/order?mobile=${result.value.mobile}&productPks=${productPks}&quantityList=${quantityList}`)
+        }
+      })
+    }
+
+
   }
 
   // [선택한상품만 결제하기] 클릭
-  const handleCheckedPayClick = () => {
+  const handleCheckedPayClick = async () => {
     const cartProducts = JSON.parse(localStorage.getItem("cartProducts") || "[]")
     const checkedProducts = cartProducts.filter((product: CartProduct ) => product.checked)
-    console.log(checkedProducts)
+    // console.log(checkedProducts)
 
     // product_pk와 quantity 추출
     const productPks = checkedProducts.map((cartProduct : CartProduct) => cartProduct.product.product_pk).join(",")
     const quantityList = checkedProducts.map((cartProduct  : CartProduct) => cartProduct.quantity).join(",")
-    console.log(`productPks : ${productPks}`)
-    console.log(`quantityList : ${quantityList}`)
-    const orderUrl = `/order?productPks=${productPks}&quantityList=${quantityList}`
-    router.push(orderUrl)
+    // console.log(`productPks : ${productPks}`)
+    // console.log(`quantityList : ${quantityList}`)
+
+    // 회원
+    if( user.user_pk ) {
+      const orderUrl = `/order?productPks=${productPks}&quantityList=${quantityList}`
+      router.push(orderUrl)
+    }
+    // 비회원
+    else {
+      const MySwal = withReactContent(Swal)
+
+      // 👩‍💼 회원가입 유도 체크
+      const result = await MySwal.fire({
+        title: "회원가입 후 주문하기",
+        text: "회원가입 시, 더 편리하게 이용하실 수 있습니다.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "회원가입",
+        confirmButtonColor: "#271A11",
+        cancelButtonText: "비회원 주문"
+      })
+
+      let guestOrder = false
+      if (result.isConfirmed) {
+        window.postMessage({loginPopup: "on"}, "*")
+        return
+      } else if (result.isDismissed) {
+        // console.log("비회원 주문")
+        guestOrder = true
+      }
+      if (result.dismiss === Swal.DismissReason.backdrop) return
+
+      MySwal.fire({
+        title: "비회원 주문",
+        text: "전화번호를 입력해주세요. (- 기호없이 : 01012341234 )",
+        input: "text",
+        inputAttributes: {
+          autocapitalize: "off"
+        },
+        showCancelButton: true,
+        confirmButtonText: "구매하기",
+        cancelButtonText: "취소",
+        showLoaderOnConfirm: true,
+        preConfirm: async (mobile) => {
+          try {
+            // TODO: 전화번호 검증 로직 필요
+            return {mobile: mobile}
+          } catch (error) {
+            //
+          }
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // 비회원 주문
+          router.push(`/guest/order?mobile=${result.value.mobile}&productPks=${productPks}&quantityList=${quantityList}`)
+        }
+      })
+    }
+
+
   }
 
   return (
@@ -141,7 +249,13 @@ export const CartsDetailContent = () => {
                             </div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
-                            <div>{cartProduct.product.price.toLocaleString()}원</div>
+                            <div>
+                              {cartProduct.product.discounted_price !== undefined ? (
+                                <span>{cartProduct.product.discounted_price.toLocaleString()}원</span>
+                              ) : (
+                                <span>가격 정보 없음</span>
+                              )}
+                            </div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-center">
                             <div className="flex items-center text-center">
@@ -181,7 +295,13 @@ export const CartsDetailContent = () => {
                             </div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
-                            <div>{(Number(cartProduct.product.price) * cartProduct.quantity).toLocaleString()}원</div>
+                            <div>
+                              {cartProduct.product.discounted_price !== undefined ? (
+                                <span>{(Number(cartProduct.product.discounted_price) * cartProduct.quantity).toLocaleString()}원</span>
+                              ) : (
+                                <span>가격 정보 없음</span>
+                              )}
+                            </div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <IconButton
@@ -204,61 +324,59 @@ export const CartsDetailContent = () => {
                   )}
                 </table>
               </div>
-              <div className="cart-mobile flex flex-col md:flex-row md:items-center justify-start space-y-4 py-4 md:space-y-0 md:space-x-2">
-                <Button
-                  variant="contained"
-                  className="btn h-12 w-full md:w-[220px] text-lg md:ml-4"
-                  disabled={!cartProducts.find((cartProduct) => cartProduct.checked)}
-                  // onClick={() => {
-                  //   router.push(`/order?orderProducts=${encodeURIComponent(
-                  //     JSON.stringify(cartProducts.filter((cartProduct) => cartProduct.checked))
-                  //   )}`)
-                  // }}
-                  onClick={handleCheckedPayClick}
-                  style={{backgroundColor: "#A51C30"}}
-                >
-                  <span>선택상품만 결제하기</span>
-                </Button>
-                <div className="w-full md:w-auto">
-                  <Button
-                    variant="contained"
-                    className="btn h-12 w-full md:w-auto text-lg"
-                    disabled={cartProducts.length === 0}
-                    onClick={() => setOpen(true)}
-                    style={{backgroundColor: "#4F3623"}}
-                  >
-                    장바구니 비우기
-                  </Button>
-                  <Dialog
-                    open={open}
-                    onClose={() => setOpen(false)}
-                    aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description"
-                  >
-                    <DialogTitle id="alert-dialog-title">
-                      {"정말 장바구니를 비우시겠습니까?"}
-                    </DialogTitle>
-                    <DialogActions>
-                      <Button onClick={() => setOpen(false)} color="primary">
-                        아니오
-                      </Button>
-                      <Button
-                        onClick={() => {
-                          localStorage.setItem("cartProducts", "[]")
-                          cartProductsForm.setValue("cartProducts", [])
-                          window.postMessage({cartProductsLength: "on"}, "*")
-                          setOpen(false)
-                        }}
-                        color="secondary"
-                        autoFocus
-                      >
-                        네
-                      </Button>
-                    </DialogActions>
-                  </Dialog>
-                </div>
-              </div>
             </div>
+          </div>
+          <div className="product-detail-button flex-col md:flex-row md:items-center justify-start py-4 gap-2">
+            <Button
+              variant="contained"
+              className="btn h-12 w-full md:w-[220px] text-lg md:ml-4"
+              disabled={!cartProducts.find((cartProduct) => cartProduct.checked)}
+              // onClick={() => {
+              //   router.push(`/order?orderProducts=${encodeURIComponent(
+              //     JSON.stringify(cartProducts.filter((cartProduct) => cartProduct.checked))
+              //   )}`)
+              // }}
+              onClick={handleCheckedPayClick}
+              style={{backgroundColor: "#A51C30"}}
+            >
+              <span>선택상품만 결제하기</span>
+            </Button>
+            <Button
+              variant="contained"
+              className="btn h-12 w-full md:w-auto text-lg"
+              disabled={cartProducts.length === 0}
+              onClick={() => setOpen(true)}
+              style={{backgroundColor: "#4F3623"}}
+            >
+              장바구니 비우기
+            </Button>
+            <Dialog
+              open={open}
+              onClose={() => setOpen(false)}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogTitle id="alert-dialog-title">
+                {"정말 장바구니를 비우시겠습니까?"}
+              </DialogTitle>
+              <DialogActions>
+                <Button onClick={() => setOpen(false)} color="primary">
+                  아니오
+                </Button>
+                <Button
+                  onClick={() => {
+                    localStorage.setItem("cartProducts", "[]")
+                    cartProductsForm.setValue("cartProducts", [])
+                    window.postMessage({cartProductsLength: "on"}, "*")
+                    setOpen(false)
+                  }}
+                  color="secondary"
+                  autoFocus
+                >
+                  네
+                </Button>
+              </DialogActions>
+            </Dialog>
           </div>
         </div>
         <div className="w-full md:w-1/3 pr-8 ml-4">
@@ -268,12 +386,17 @@ export const CartsDetailContent = () => {
               <div className="flex justify-between mb-2">
                 <span>총 상품 금액</span>
                 <span>{_.sumBy(cartProducts, (cartProduct) => {
-                  return Number(cartProduct.product.price) * cartProduct.quantity
+                  return Number(cartProduct.product.discounted_price) * cartProduct.quantity
                 }).toLocaleString()}원</span>
               </div>
               <div className="flex justify-between mb-2">
                 <span>할인 금액</span>
-                <span>-{discountAmount.toLocaleString()}원</span>
+                <span>-{(_.sumBy(cartProducts, (cartProduct) => {
+                  const productPrice = Number(cartProduct.product.price)
+                  const discountedPrice = Number(cartProduct.product.discounted_price) || 0
+                  return (productPrice - discountedPrice) * cartProduct.quantity
+                }) || 0).toLocaleString()}원
+                </span>
               </div>
               <div className="flex justify-between mb-2">
                 <span>배송비</span>
@@ -281,9 +404,20 @@ export const CartsDetailContent = () => {
               </div>
               <div className="flex justify-between">
                 <span className="font-bold text-lg">최종 결제 금액</span>
-                <span className="font-bold text-lg">{(_.sumBy(cartProducts, (cartProduct) => {
-                  return Number(cartProduct.product.price) * cartProduct.quantity
-                }) - discountAmount + shippingFee).toLocaleString()}원</span>
+                <span className="font-bold text-lg">
+                  {(
+                    (_.sumBy(cartProducts, (cartProduct) => {
+                      const productPrice = cartProduct.product ? Number(cartProduct.product.price) : 0
+                      return productPrice * cartProduct.quantity
+                    }) -
+                    _.sumBy(cartProducts, (cartProduct) => {
+                      const productPrice = cartProduct.product ? Number(cartProduct.product.price) : 0
+                      const discountedPrice = cartProduct.product ? Number(cartProduct.product.discounted_price) : 0
+                      return (productPrice - discountedPrice) * cartProduct.quantity
+                    })) +
+                    shippingFee
+                  ).toLocaleString()}원
+                </span>
               </div>
             </div>
           </div>
@@ -324,9 +458,9 @@ export const removeFromCart = async (product_pk : number) => {
     // 장바구니 항목 수 업데이트
     window.postMessage({cartProductsLength: cartProducts.length}, "*")
 
-    console.log("상품이 장바구니에서 삭제되었습니다.")
+    // console.log("상품이 장바구니에서 삭제되었습니다.")
   } else {
-    console.log("해당 상품이 장바구니에 존재하지 않습니다.")
+    // console.log("해당 상품이 장바구니에 존재하지 않습니다.")
   }
 }
 

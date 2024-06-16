@@ -262,7 +262,7 @@ export const GeneralReview = ({
     <Card>
       <CardContent>
         <Image
-          src="/images/7.jpg"
+          src={`/upload-images/reviews/${review.images}`}
           alt="상품 이미지"
           width={400}
           height={100}
@@ -330,7 +330,7 @@ export const GeneralReviews = ({
     <div className="container">
       <div className="py-8" style={{fontSize: "30px"}}><strong>고객리뷰</strong></div>
       {total_rows === 0 ? (
-        <div className="mb-6 p-4">등록된 리뷰가 없습니다.</div>
+        <div className="mb-6">등록된 리뷰가 없습니다.</div>
       ) : (
         <div className="mb-6 p-4">
           {Object.entries(reviewStats).slice(1).map(([key, val], index) => (
