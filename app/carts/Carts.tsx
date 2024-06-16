@@ -324,61 +324,59 @@ export const CartsDetailContent = ({user}: { user: User }) => {
                   )}
                 </table>
               </div>
-              <div className="cart-mobile flex flex-col md:flex-row md:items-center justify-start space-y-4 py-4 md:space-y-0 md:space-x-2">
-                <Button
-                  variant="contained"
-                  className="btn h-12 w-full md:w-[220px] text-lg md:ml-4"
-                  disabled={!cartProducts.find((cartProduct) => cartProduct.checked)}
-                  // onClick={() => {
-                  //   router.push(`/order?orderProducts=${encodeURIComponent(
-                  //     JSON.stringify(cartProducts.filter((cartProduct) => cartProduct.checked))
-                  //   )}`)
-                  // }}
-                  onClick={handleCheckedPayClick}
-                  style={{backgroundColor: "#A51C30"}}
-                >
-                  <span>선택상품만 결제하기</span>
-                </Button>
-                <div className="w-full md:w-auto">
-                  <Button
-                    variant="contained"
-                    className="btn h-12 w-full md:w-auto text-lg"
-                    disabled={cartProducts.length === 0}
-                    onClick={() => setOpen(true)}
-                    style={{backgroundColor: "#4F3623"}}
-                  >
-                    장바구니 비우기
-                  </Button>
-                  <Dialog
-                    open={open}
-                    onClose={() => setOpen(false)}
-                    aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description"
-                  >
-                    <DialogTitle id="alert-dialog-title">
-                      {"정말 장바구니를 비우시겠습니까?"}
-                    </DialogTitle>
-                    <DialogActions>
-                      <Button onClick={() => setOpen(false)} color="primary">
-                        아니오
-                      </Button>
-                      <Button
-                        onClick={() => {
-                          localStorage.setItem("cartProducts", "[]")
-                          cartProductsForm.setValue("cartProducts", [])
-                          window.postMessage({cartProductsLength: "on"}, "*")
-                          setOpen(false)
-                        }}
-                        color="secondary"
-                        autoFocus
-                      >
-                        네
-                      </Button>
-                    </DialogActions>
-                  </Dialog>
-                </div>
-              </div>
             </div>
+          </div>
+          <div className="product-detail-button flex-col md:flex-row md:items-center justify-start py-4 gap-2">
+            <Button
+              variant="contained"
+              className="btn h-12 w-full md:w-[220px] text-lg md:ml-4"
+              disabled={!cartProducts.find((cartProduct) => cartProduct.checked)}
+              // onClick={() => {
+              //   router.push(`/order?orderProducts=${encodeURIComponent(
+              //     JSON.stringify(cartProducts.filter((cartProduct) => cartProduct.checked))
+              //   )}`)
+              // }}
+              onClick={handleCheckedPayClick}
+              style={{backgroundColor: "#A51C30"}}
+            >
+              <span>선택상품만 결제하기</span>
+            </Button>
+            <Button
+              variant="contained"
+              className="btn h-12 w-full md:w-auto text-lg"
+              disabled={cartProducts.length === 0}
+              onClick={() => setOpen(true)}
+              style={{backgroundColor: "#4F3623"}}
+            >
+              장바구니 비우기
+            </Button>
+            <Dialog
+              open={open}
+              onClose={() => setOpen(false)}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogTitle id="alert-dialog-title">
+                {"정말 장바구니를 비우시겠습니까?"}
+              </DialogTitle>
+              <DialogActions>
+                <Button onClick={() => setOpen(false)} color="primary">
+                  아니오
+                </Button>
+                <Button
+                  onClick={() => {
+                    localStorage.setItem("cartProducts", "[]")
+                    cartProductsForm.setValue("cartProducts", [])
+                    window.postMessage({cartProductsLength: "on"}, "*")
+                    setOpen(false)
+                  }}
+                  color="secondary"
+                  autoFocus
+                >
+                  네
+                </Button>
+              </DialogActions>
+            </Dialog>
           </div>
         </div>
         <div className="w-full md:w-1/3 pr-8 ml-4">
