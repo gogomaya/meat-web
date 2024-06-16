@@ -103,6 +103,7 @@ export const ProductSubtitle = () => {
 }
 
 export const ProductsList = ({products}: { products: Product[] }) => {
+  console.log(products)
   const enlargeImage = (event: React.MouseEvent<HTMLLIElement>) => {
     const img = event.currentTarget.querySelector("img") as HTMLElement
     if (img) {
@@ -125,7 +126,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
         item.style.transform = "translateY(0)"
       }, index * 100)
     })
-  }, [])
+  }, [products])
 
   return (
     <><section className="flex justify-between items-center py-4 rounded-lg">
@@ -166,7 +167,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
                 borderRadius: "5px",
                 border: "2px solid #271A11",
                 transition: "transform 0.3s, opacity 0.3s",
-                opacity: 0,
+                // opacity: 0,
                 transform: "translateY(20px)"
               }}
               onMouseEnter={enlargeImage}
