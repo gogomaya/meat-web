@@ -427,16 +427,16 @@ const MainBottom = () => {
       <div className="bg-transparent p-6 md:p-12 text-white">
         <div className="flex footer-menu-link space-x-4">
           <Link href={"https://smartstore.naver.com/hansolmeat1534"}>
-            <div className="footer-menu-content cursor-pointer hover:underline text-white">회사소개</div><span>|</span>
+            <div className="footer-menu-content cursor-pointer hover:underline text-white">회사소개</div>
           </Link>
           <Link href={"https://smartstore.naver.com/hansolmeat1534"}>
-            <div className="footer-menu-content cursor-pointer hover:underline text-white">이용안내</div><span>|</span>
+            <div className="footer-menu-content cursor-pointer hover:underline text-white">이용안내</div>
           </Link>
           <Link href={"/policy"}>
-            <div className="footer-menu-content cursor-pointer hover:underline text-white">이용약관</div><span>|</span>
+            <div className="footer-menu-content cursor-pointer hover:underline text-white">이용약관</div>
           </Link>
           <Link href={"/policy"}>
-            <div className="footer-menu-content cursor-pointer hover:underline text-white">개인정보처리방침</div><span>|</span>
+            <div className="footer-menu-content cursor-pointer hover:underline text-white">개인정보처리방침</div>
           </Link>
         </div>
         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">

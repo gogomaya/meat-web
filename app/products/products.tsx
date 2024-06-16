@@ -496,7 +496,7 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
               </div>
             )}
           </div>
-          <div className="mb-4 flex items-center gap-4">
+          <div className="mb-4 flex items-center gap-4 flex-wrap">
             <div className="w-24">수량</div>
             <input
               type="number"
@@ -505,7 +505,7 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
               className="w-20 h-8 p-2 border border-gray-300 rounded"
               min="1"
             />
-            <div>
+            <div className="free-shipping-info">
               <style>
                 {`
                   @keyframes blink {
@@ -515,6 +515,12 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
                   }
                   .blink {
                     animation: blink 1.5s infinite;
+                  }
+                  @media (max-width: 768px) {
+                    .free-shipping-info {
+                      width: 100%;
+                      margin-top: 8px;
+                    }
                   }
                 `}
               </style>
@@ -725,7 +731,6 @@ const CartOrderButton = ({
 
 
   }
-
 
   // 장바구니 포함 주문
   const orderWithCart = async () => {

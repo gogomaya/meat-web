@@ -56,7 +56,7 @@ const Products = async (props: {
         </div>
         {/* <Divider className="container mt-8" style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} /> */}
         {/* 문의 */}
-        <div id="qna" className="mx-16 px-2">
+        <div id="qna" className="px-2">
           <BoardsList
             user={user}
             boards={boards}
@@ -71,7 +71,7 @@ const Products = async (props: {
           />
         </div>
         {/* 주문정보 */}
-        <div id="ship" className="mx-16 p-2"><ShipDetail /></div>
+        <div id="ship" className="p-2"><ShipDetail /></div>
       </div>
     </MainLayout>
   )
