@@ -13908,6 +13908,32 @@ figure {
   font-display: swap;
 }
 
+@media (max-width: 768px) {
+  .title-description {
+    font-size: 2.5rem;
+  }
+  .sub-description {
+    font-size: 1.7rem;
+  }
+  .description {
+    font-size: 1.0rem; 
+  }
+  .click-mobile-version {
+    font-size: 1.0rem;
+  }
+}
+
+.footer-menu-content {
+  font-size: 16px; 
+}
+
+@media (max-width: 768px) {
+  .footer-menu-content {
+    font-size: 12px; 
+    padding-bottom: 10px;
+  }
+}
+
 /* 디자인 시안 수정 */
 /* .footer-inner {
   width: 1280px;
