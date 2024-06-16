@@ -54,11 +54,14 @@ export const POST = async (request: NextRequest) => {
     const title = formData.get("title") || "주문 상품"
     const guest_mobile = formData.get("guest_mobile")
     const total_price = formData.get("total_price")
+    const total_discount_price = formData.get("total_discount_price")
     const total_quantity = formData.get("total_quantity")
     const total_count = formData.get("total_count")
+    const discount = formData.get("discount")
+    const shipfee = formData.get("shipfee")
     const mysql = await mysql2Pool()
-    const columns = ["user_pk", "shipment_pk", "title", "guest_mobile", "total_price", "total_quantity", "total_count"]
-    const values = [user_pk, shipment_pk, title, guest_mobile, total_price, total_quantity, total_count]
+    const columns = ["user_pk", "shipment_pk", "title", "guest_mobile", "total_price", "total_discount_price", "total_quantity", "total_count" , "discount", "shipfee"]
+    const values = [user_pk, shipment_pk, title, guest_mobile, total_price, total_discount_price, total_quantity, total_count, discount, shipfee]
     const [result] = await mysql.execute(`
       INSERT INTO orders (${columns.join(", ")})
       VALUES (${columns.map(() => "?").join(", ")})

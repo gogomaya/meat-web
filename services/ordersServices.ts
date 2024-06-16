@@ -17,32 +17,41 @@ export const ordersServices = {
       // 주문항목에 담을 상품목록 조회
       const productList: Product[] = []
 
-      // total_price, total_quantity, total_count 계산
+      // total_discount_price(총 할인가), total_price(총 정가), total_quantity, total_count, discount(할인된 가격[정가-할인가]) 계산
+      let total_discount_price : number = 0
       let total_price : number = 0
       let total_quantity : number = 0
       let total_count : number = productPks.length
-      let title = `주문 상품 외 ${productPks.length}건`
+      let title = `주문 상품 외 ${productPks.length - 1}건`
+      let shipfee = 5000      // 기본 배송비 5000원
 
       for (let i = 0; i < productPks.length; i++) {
         const product_pk = productPks[i]
         let amount = 0
+        let discount_amount = 0
         const productResponse: ResponseApi = await productsServices.productsDetail(product_pk)
         if (!productResponse.error && productResponse.data) {
           const product: Product = productResponse.data.product
           productList.push(product)
           if( i == 0 && productPks.length > 1 ) {
-            title = `${product.name} 외 ${productPks.length} 건`
+            title = `${product.name} 외 ${productPks.length - 1} 건`
           } else if ( i == 0 && productPks.length == 1 ) {
             title = product.name
           }
+
           amount = Number(product.price) * quantityList[i]
+          discount_amount = Number(product.discounted_price) * quantityList[i]
           total_price = total_price + amount
+          total_discount_price = total_discount_price + discount_amount
           total_quantity = total_quantity + quantityList[i]
         }
       }
+      const discount = total_price - total_discount_price
       console.log("total_price : " + total_price)
+      console.log("total_discount_price : " + total_discount_price)
       console.log("total_quantity : " + total_quantity)
       console.log("total_count : " + total_count)
+      console.log("discount : " + discount)
       // 상품목록 확인
       console.log("::::::::::: 전달받은 productPks 로 조회된 상품정보 리스트 ::::::::::")
       console.log(productList)
@@ -54,8 +63,15 @@ export const ordersServices = {
       formData.append("guest_mobile", guest_mobile)
       formData.append("title", title)
       formData.append("total_price", String(total_price))
+      formData.append("total_discount_price", String(total_discount_price))
       formData.append("total_quantity", String(total_quantity))
       formData.append("total_count", String(total_count))
+      formData.append("discount", String(discount))
+      // ⭐(할인가 기준) 15만원이상 무료배송, 건당 5,000원
+      if( total_discount_price >= 150000 ) shipfee = 0
+      formData.append("shipfee", String(shipfee))
+
+
       const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/orders`, {
         method: "POST",
         body: formData

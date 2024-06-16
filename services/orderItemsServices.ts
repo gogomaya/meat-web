@@ -19,6 +19,7 @@ export const orderItemsService = {
       formData.append("order_pk", String(order_pk))
       formData.append("quantity", String(quantity))
       formData.append("price", String(product.price))
+      formData.append("discount_price", String(product.discounted_price))
       // 주문 항목 생성 요청
       const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/orderItems`, {
         method: "POST",

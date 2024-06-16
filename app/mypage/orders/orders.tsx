@@ -174,8 +174,9 @@ export const OrderList = ({orders}: OrderListProps) => {
                 </div>
                 <div className="item flex-[3]">
                   <div className="flex flex-col items-between">
+                    {/* 주문 제목 / 가격 / 수량 */}
                     <div className="item"><span>{order.title}</span></div>
-                    <div className="item"><span>{order.total_price?.toLocaleString()}</span>원</div>
+                    <div className="item"><span>{order.total_discount_price?.toLocaleString()}</span>원</div>
                     <div className="item"><span>{order.total_quantity}</span>개</div>
                   </div>
                 </div>
@@ -193,7 +194,7 @@ export const OrderList = ({orders}: OrderListProps) => {
                     {/* 총 가격 */}
                     <div className="item text-center">
                       <p className="font-bold">
-                        <span>{order.total_price?.toLocaleString()}</span>원
+                        <span>{order.total_discount_price?.toLocaleString()}</span>원
                       </p>
                     </div>
                   </div>
