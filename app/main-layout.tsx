@@ -70,7 +70,7 @@ const MainLayout = ({
             priority
           />
         </Link>
-        <MegaMenu />
+        <MegaMenu user={user} />
         <div className="flex gap-3">
           <MainSearch />
           <Users user={user} />
@@ -146,7 +146,7 @@ export const CsIcon = () => {
   )
 }
 
-export const MegaMenu = () => {
+export const MegaMenu = ({user}: {user: User}) => {
   const getMenu = () => {
     return {
       todayMenu: false,
@@ -254,9 +254,12 @@ export const MegaMenu = () => {
             <li><Link href="/boards?category=qna" className="text-white">1:1문의하기</Link></li>
           </ol> */}
         </li>
-        {/* <li style={{ width: "140px" }} id="board" className="relative" onMouseOver={overMenu}>
-          <Link href="/admin" className="text-white">관리자</Link>
-        </li> */}
+        {user.is_admin ? (
+          <li style={{width: "140px"}} id="board" className="relative" onMouseOver={overMenu}>
+            <Link href="/admin" className="text-white">관리자</Link>
+          </li>
+        ) : null}
+        {/* 관리자 페이지 연결 */}
       </ul>
     </nav>
   )
@@ -298,6 +301,10 @@ const MainSearch = () => {
 const MainMobileMenu = () => {
   const [open, setOpen] = useState(false)
   const categoriesMenu = commonServices.categoriesMenu()
+  const handleLinkClick = () => {
+    window.postMessage({loginPopup: "on"}, "*")
+    return
+  }
   return <>
     <IconButton style={{display: "none", color:"white"}} className="p-4 !block px-10 md:!hidden" onClick={() => setOpen(true)}>
       <MenuIcon />
@@ -311,8 +318,8 @@ const MainMobileMenu = () => {
       <Box className="p-2">
         <nav>
           <div className="flex items-center gap-3">
-            <Link href="/users/login">로그인</Link>
-            <Link href="/users/sign-up">회원가입</Link>
+            <div onClick={handleLinkClick}>로그인</div>
+            <div onClick={handleLinkClick}>회원가입</div>
           </div>
           <span className="flex-1"></span>
           <IconButton onClick={() => setOpen(false)}>
