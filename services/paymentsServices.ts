@@ -37,6 +37,18 @@ export const paymentsServices = {
     }
   },
 
+  paymentDetailByOrderPk: async (order_pk: number): Promise<ResponseApi> => {
+    console.log(`order_pk : ${order_pk}`)
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/payments/order/${order_pk}`)
+      return await commonServices.responseJson(response)
+    } catch (error) {
+      throw error
+    }
+  },
+
+
+
   paymentUpdate: async (payment: Omit<Payment, "created_at">): Promise<ResponseApi> => {
     console.log(`payment_pk : ${payment.payment_pk}`)
     console.log(`order_pk : ${payment.order_pk}`)

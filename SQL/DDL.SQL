@@ -167,7 +167,7 @@ CREATE TABLE `payments` (
 DROP TABLE IF EXISTS `cancellations`;
 
 CREATE TABLE `cancellations` (
-	`cancellation_pk`	INT(11)	NOT NULL,
+	`cancellation_pk`	INT(11)	NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`order_pk`	INT(11)	NOT NULL,
 	`type`	ENUM('cancel','return')	NOT NULL	DEFAULT 'cancel'	COMMENT '주문취소, 반품',
 	`status`	ENUM('pending','complete')	NOT NULL	DEFAULT 'pending'	COMMENT '취소요청, 처리완료',

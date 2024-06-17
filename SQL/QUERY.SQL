@@ -1,4 +1,4 @@
--- Active: 1717429630666@@125.176.102.143@23306@meat_web
+-- Active: 1718630384205@@125.176.102.143@23306@meat_web
 SELECT * FROM orders;
 SELECT * FROM orders ORDER BY created_at desc;
 SELECT * FROM order_items;
@@ -85,3 +85,20 @@ SELECT o.*
 
 
 
+---
+SELECT *
+FROM cancellations
+WHERE order_pk IN ( SELECT order_pk FROM orders WHERE user_pk = 7 )
+;
+
+
+
+
+---
+
+SELECT c.* 
+      ,o.*
+      ,o.created_at as ordered_at
+      ,o.status as order_status
+FROM cancellations c JOIN orders o ON (c.order_pk = o.order_pk)
+      ;

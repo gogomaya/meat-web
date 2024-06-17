@@ -18,16 +18,22 @@ export const GET = async (request: NextRequest) => {
     const mysql = await mysql2Pool()
 
     const [total_rows]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
-      SELECT COUNT(*) AS total_rows FROM cancellations
-      WHERE ("" = ? OR user_pk = ?)
-    `, [user_pk, user_pk])
+      SELECT COUNT(*) AS total_rows
+      FROM cancellations
+      WHERE order_pk IN ( SELECT order_pk FROM orders WHERE user_pk = ? )
+    `, [user_pk])
 
     const [cancellations]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
-      SELECT * FROM cancellations
-      WHERE ("" = ? OR user_pk = ?)
-      ORDER BY is_primary desc, ${orderColumn} ${orderDirection}
+      SELECT c.* 
+            ,o.*
+            ,o.created_at as ordered_at
+            ,c.status as status
+            ,o.status as order_status
+      FROM cancellations c JOIN orders o ON (c.order_pk = o.order_pk)
+      WHERE c.order_pk IN ( SELECT order_pk FROM orders WHERE user_pk = ? )
+      ORDER BY ${orderColumn} ${orderDirection}
       LIMIT ?, ?
-    `, [user_pk, user_pk, page, rowsPerPage])
+    `, [user_pk, page, rowsPerPage])
 
 
     return NextResponse.json({

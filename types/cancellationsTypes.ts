@@ -1,6 +1,12 @@
 import {SearchParams} from "./commonTypes"
 
+export type CancellationStatus = "pending" | "complete"
+// 취소대기, 처리완료
+
 export interface Cancellation {
+  total_discount_price: string;
+  total_count: string;
+  title: string;
   cancellation_pk: number;
   order_pk: number;
   type: "cancel" | "return";
@@ -13,6 +19,7 @@ export interface Cancellation {
   depositor?: string;
   created_at: string;
   completed_at?: string;
+  ordered_at: string;
 }
 
 export interface CancellationSearchParams extends SearchParams {

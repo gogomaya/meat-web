@@ -1,4 +1,4 @@
--- Active: 1717429630666@@125.176.102.143@23306@meat_web
+-- Active: 1718630384205@@125.176.102.143@23306@meat_web
 
 -- TRUNCATE
 TRUNCATE bookmarks;
@@ -327,3 +327,18 @@ INSERT INTO `shipments` (
     '로젠택배',                 -- ship_company
     'pending'                   -- status
 );
+
+
+-- 취소 샘플데이터
+TRUNCATE cancellations;
+INSERT INTO `cancellations` (`order_pk`, `type`, `status`, `description`, `is_confirmed`, `is_refund`, `account_number`, `bank_name`, `depositor`, `created_at`, `completed_at`) VALUES
+(1, 'cancel', 'pending', '고객이 취소 요청', 0, 0, NULL, NULL, NULL, '2024-06-01 12:00:00', NULL),
+(2, 'return', 'complete', '상품 불량으로 인한 반품', 1, 1, '123456789', '은행A', '홍길동', '2024-06-02 14:30:00', '2024-06-03 10:00:00'),
+(3, 'cancel', 'complete', '고객이 주문 취소', 1, 0, NULL, NULL, NULL, '2024-06-03 09:15:00', '2024-06-04 08:45:00'),
+(4, 'return', 'pending', '고객이 상품 반품 요청', 0, 0, NULL, NULL, NULL, '2024-06-04 11:00:00', NULL),
+(5, 'cancel', 'pending', '취소 요청', 0, 0, NULL, NULL, NULL, '2024-06-05 15:20:00', NULL),
+(6, 'cancel', 'complete', '배송 지연으로 인한 주문 취소', 1, 0, NULL, NULL, NULL, '2024-06-06 10:10:00', '2024-06-07 09:00:00'),
+(7, 'return', 'complete', '상품 설명과 다름', 1, 1, '987654321', '은행B', '김철수', '2024-06-07 13:45:00', '2024-06-08 11:30:00'),
+(8, 'cancel', 'pending', '고객 변심', 0, 0, NULL, NULL, NULL, '2024-06-08 17:25:00', NULL),
+(9, 'return', 'pending', '사이즈 문제로 인한 반품', 0, 0, NULL, NULL, NULL, '2024-06-09 12:40:00', NULL),
+(10, 'cancel', 'complete', '관리자에 의해 취소됨', 1, 0, NULL, NULL, NULL, '2024-06-10 14:50:00', '2024-06-11 10:20:00');

@@ -1,7 +1,5 @@
 import {ordersServices} from "@/services/ordersServices"
-import {ResponseApi} from "@/types/commonTypes"
 import {OrderParams} from "@/types/ordersTypes"
-import ErrorPage from "../error"
 import {redirect} from "next/navigation"
 
 interface OrderResult {
