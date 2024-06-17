@@ -1,4 +1,4 @@
-import {addressServices} from "@/services/addressService"
+import {addressServices} from "@/services/addressServices"
 import {ordersServices} from "@/services/ordersServices"
 import {paymentsServices} from "@/services/paymentsServices"
 import {shipmentsServices} from "@/services/shipmentsServices"

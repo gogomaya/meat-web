@@ -10,7 +10,7 @@ import ErrorPage from "@/app/error"
 import {User} from "@/types/usersTypes"
 import {usersServices} from "@/services/usersServices"
 import {AddressSearchParams} from "@/types/addressTypes"
-import {addressServices} from "@/services/addressService"
+import {addressServices} from "@/services/addressServices"
 import {redirect} from "next/navigation"
 import {OrderDetailContent} from "../Order"
 
@@ -104,7 +104,8 @@ const OrderPay = async (props: {
     created_at: "",
     shipfee: 0,
     discount: 0,
-    file_name: ""
+    file_name: "",
+    total_discount_price: 0
   }
   const searchParams = {
     order_pk : order_pk,
@@ -128,8 +129,6 @@ const OrderPay = async (props: {
     console.error(error)
     return <ErrorPage />
   }
-
-
 
 
   // 주문자 정보 조회
