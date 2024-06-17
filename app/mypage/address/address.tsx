@@ -1,5 +1,5 @@
 "use client"
-import {addressServices} from "@/services/addressService"
+import {addressServices} from "@/services/addressServices"
 import {Address} from "@/types/addressTypes"
 import {ResponseApi} from "@/types/commonTypes"
 import {User} from "@/types/usersTypes"
