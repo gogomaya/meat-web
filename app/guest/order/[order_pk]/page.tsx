@@ -65,7 +65,8 @@ const OrderPay = async (props: {
     created_at: "",
     shipfee: 0,
     discount: 0,
-    file_name: ""
+    file_name: "",
+    total_discount_price: 0
   }
   const searchParams = {
     order_pk : order_pk,
