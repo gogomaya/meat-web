@@ -154,7 +154,7 @@ export const orderSuccess = async (searchParams: OrderParams): Promise<PaySucces
     .then((response) => {
       if (!response.ok) {
         return response.json().then((error) => {
-          // TODO: 결제 실패 비즈니스 로직을 구현하세요.
+        // TODO: 결제 실패 비즈니스 로직을 구현하세요.
           console.log(":::::::::::: ⚡ 결제 승인 실패 ::::::::::::")
           console.log(error)
         })
@@ -162,13 +162,42 @@ export const orderSuccess = async (searchParams: OrderParams): Promise<PaySucces
       return response.json()
     })
     .then((data) => {
-      // TODO: 결제 성공 비즈니스 로직을 구현하세요.
+    // TODO: 결제 성공 비즈니스 로직을 구현하세요.
       console.log(":::::::::::: ⚡ 결제 승인 성공 ::::::::::::")
       console.log(data)
     })
     .catch((error) => {
       console.error("Fetch error:", error)
     })
+
+
+  // ⚡ 토스 결제 상태 확인 요청
+  // const paymentKey = payment_key
+  // fetch(`https://api.tosspayments.com/v1/payments/${paymentKey}`, {
+  //   method: "GET",
+  //   headers: {
+  //     Authorization: "Basic dGVzdF9nc2tfZG9jc19PYVB6OEw1S2RtUVhrelJ6M3k0N0JNdzY6",
+  //     "Content-Type": "application/json"
+  //   }
+  // })
+  // .then((response) => {
+  //   if (!response.ok) {
+  //     return response.json().then((error) => {
+  //       // TODO: 결제 조회 실패 비즈니스 로직을 구현하세요.
+  //       console.log(":::::::::::: ⚡ 결제 조회 실패 ::::::::::::")
+  //       console.log(error)
+  //     });
+  //   }
+  //   return response.json();
+  // })
+  // .then((data) => {
+  //   // TODO: 결제 조회 성공 비즈니스 로직을 구현하세요.
+  //   console.log(":::::::::::: ⚡ 결제 조회 성공 ::::::::::::")
+  //   console.log(data);
+  // })
+  // .catch((error) => {
+  //   console.error("Fetch error:", error);
+  // });
 
 
 

@@ -1,5 +1,5 @@
 "use client"
-import {Order} from "@/types/ordersTypes"
+import {Order, OrderParams} from "@/types/ordersTypes"
 import Image from "next/image"
 import Link from "next/link"
 import {useEffect, useState} from "react"
@@ -11,9 +11,14 @@ import {orderItemsService} from "@/services/orderItemsServices"
 import {myPageAddCart} from "../mypage"
 import {ResponseApi} from "@/types/commonTypes"
 import {ordersServices} from "@/services/ordersServices"
+import {orderCancel} from "./orderCancel"
 
 
-export const CancelButton = () => {
+interface OrderProps {
+  order: Order
+}
+
+export const CancelButton: React.FC<OrderProps> = ({order}) => {
 
   /*
      text="- 배송 전 주문 취소의 경우, 관리자 승인 후 환불 처리가 진행됩니다."
@@ -46,6 +51,16 @@ export const CancelButton = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         // TODO: 주문 취소 요청
+        const params = {
+          order_pk : order.order_pk
+        } as OrderParams
+        const cancelResult = await orderCancel(params)
+        console.log(`cancelResult : ${cancelResult}`)
+        console.dir(cancelResult)
+
+
+
+
         // 1️⃣ 주문 상태 변경 : cancelled
         // 2️⃣ 취소 등록
         // 3️⃣ 환불은 관리자에서 확인 후, ⚡ 토스 결체 취소 요청
@@ -57,7 +72,7 @@ export const CancelButton = () => {
           }
         })
 
-        location.reload()
+        // location.reload()
       }
     })
   }
@@ -234,7 +249,7 @@ export const OrderList = ({orders}: OrderListProps) => {
                       배송조회
                     </Link>
                     {/* 주문/배송취소 버튼 */}
-                    <CancelButton />
+                    <CancelButton order={order} />
                   </>
                   :
                   <></>

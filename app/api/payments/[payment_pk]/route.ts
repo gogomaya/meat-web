@@ -20,7 +20,7 @@ export const GET = async (
     }
 
     return NextResponse.json({
-      message: "[API] - /api/payments/{payemnt_pk} - 주문 조회 성공",
+      message: "[API] - /api/payments/{payment_pk} - 주문 조회 성공",
       status: 200,
       payment: payment[0]
     })

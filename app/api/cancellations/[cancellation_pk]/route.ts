@@ -13,7 +13,13 @@ export const GET = async (
     const mysql = await mysql2Pool()
     const [cancellation]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(
       `
-      SELECT * FROM cancellation WHERE cancellation_pk = ?
+      SELECT c.* 
+            ,o.*
+            ,o.created_at as ordered_at
+            ,c.status as status
+            ,o.status as order_status
+      FROM cancellations c JOIN orders o ON (c.order_pk = o.order_pk)
+      WHERE cancellation_pk = ?
     `,
       [cancellation_pk]
     )
@@ -59,7 +65,7 @@ export const PUT = async (
 
     await mysql.execute(
       `
-        UPDATE cancellation
+        UPDATE cancellations
         SET order_pk = ?, type = ?, status = ?, description = ?, is_confirmed = ?, is_refund = ?, account_number = ?, bank_name = ?, depositor = ?
         WHERE cancellation_pk = ?
       `,
@@ -100,7 +106,7 @@ export const DELETE = async (
     const mysql = await mysql2Pool()
     await mysql.execute(
       `
-        DELETE FROM cancellation WHERE cancellation_pk = ?
+        DELETE FROM cancellations WHERE cancellation_pk = ?
       `,
       [cancellation_pk]
     )

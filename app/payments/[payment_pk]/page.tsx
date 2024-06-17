@@ -12,7 +12,7 @@ import {Address, AddressSearchParams} from "@/types/addressTypes"
 import {ResponseApi} from "@/types/commonTypes"
 import {OrderItem, OrderItemSearchParams} from "@/types/orderItemsTypes"
 import {Order, OrderParams} from "@/types/ordersTypes"
-import {Payment} from "@/types/paymentsTypes"
+import {Payment, PaymentSearchParams} from "@/types/paymentsTypes"
 import {User} from "@/types/usersTypes"
 import {redirect} from "next/navigation"
 
@@ -28,8 +28,8 @@ import {redirect} from "next/navigation"
  * @returns
  */
 const PaymentSuccess = async (props: {
-  params: {payment_pk : number,},  // 경로 변수
-  searchParams: {}                // 쿼리 스트링 파라미터
+  params: {payment_pk : number,},     // 경로 변수
+  searchParams: PaymentSearchParams   // 쿼리 스트링 파라미터
 }) => {
   const {user} = await loginCheck(false)
   let order_pk = 0

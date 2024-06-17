@@ -16,8 +16,6 @@ const Home = async (props: {
   const {user} = await loginCheck(false)
   const {bookmarkCount,addressCount} = await myPageData(user)
 
-
-
   const searchParams = {
     user_pk: user.user_pk,
     rowsPerPage: Number(props.searchParams.rowsPerPage) || 5,
@@ -30,15 +28,10 @@ const Home = async (props: {
   let bookmarks = []
   let lastPage = 0
 
-
   try {
     bookmarksResponse = await bookmarksServices.bookmarksRead(searchParams)
     bookmarks = bookmarksResponse.data.bookmarks
-    // lastPage = Math.floor(bookmarksResponse.data.total_rows / searchParams.rowsPerPage)
-    // lastPage = Math.ceil(bookmarksResponse.data.total_rows / searchParams.rowsPerPage) - 1
-    // console.log("lastPage :" + lastPage)
-    // console.log(`찜리스트 없음 : ${bookmarks == null || bookmarks.length == 0}`)
-    // console.log(bookmarks)
+    lastPage = Math.floor(bookmarksResponse.data.total_rows / searchParams.rowsPerPage)
   } catch (error) {
     console.error(error)
     return <ErrorPage />
@@ -46,9 +39,7 @@ const Home = async (props: {
   const page = searchParams.page
   const prev = searchParams.page == 0 ? 0 : searchParams.page-1
   const next = searchParams.page+1
-  console.log("prev : " + prev)
-  console.log("next : " + next)
-  console.log("lastPage : " + lastPage)
+
   return (
     <MainLayout user={user}>
       <div className="w-full">

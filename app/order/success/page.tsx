@@ -83,8 +83,8 @@ const OrderSuccess = async (props: {
     address : address,
     address_detail : address_detail
   } as OrderParams
-  const paySuccessResult = await orderSuccess(params)
 
+  const paySuccessResult = await orderSuccess(params)
 
   let items : OrderItem[] = []
   if( paySuccessResult.result ) {
