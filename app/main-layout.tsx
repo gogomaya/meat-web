@@ -185,8 +185,6 @@ export const MegaMenu = ({user}: {user: User}) => {
           </ol> */}
           <ol id="submenu" onMouseOut={outMenu} className={`w-full px-4 py-2 border border-[#FACC15] ${menu.todayMenu || menu.cow || menu.pork || menu.simple || menu.imported || menu.board ? "block" : "hidden"}  rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
             <div className="flex">
-              {/* <div className="item" style={{width: "120px"}}>
-              </div> */}
               <div className="item" style={{width: "140px"}}>
                 {categoriesMenu.cow.map((category_menu) => (
                   <li key={category_menu}><Link href={`/products?category=cow&category_menu=${category_menu}`} className="text-white px-2">{category_menu}</Link></li>
@@ -306,103 +304,118 @@ const MainMobileMenu = () => {
     return
   }
   return <>
-    <IconButton style={{display: "none", color:"white"}} className="p-4 !block px-10 md:!hidden" onClick={() => setOpen(true)}>
-      <MenuIcon />
-    </IconButton>
-    <Drawer
-      className="w-full"
-      open={open}
-      onClose={() => setOpen(false)}
-      PaperProps={{sx: {width: "100%"}}}
-    >
-      <Box className="p-2">
-        <nav>
-          <div className="flex items-center gap-3">
-            <div onClick={handleLinkClick}>로그인</div>
-            <div onClick={handleLinkClick}>회원가입</div>
-          </div>
-          <span className="flex-1"></span>
-          <IconButton onClick={() => setOpen(false)}>
-            <CloseIcon/>
-          </IconButton>
-        </nav>
-        <SearchBar />
-        <nav>
-          <ul className="items-center">
-            {/* <li>
+    <div className="flex items-center">
+      <IconButton style={{display: "none", color:"white"}} className="!block md:!hidden gap-3" onClick={() => setOpen(true)}>
+        <MenuIcon />
+      </IconButton>
+      <Drawer
+        className="w-full"
+        open={open}
+        onClose={() => setOpen(false)}
+        PaperProps={{sx: {width: "100%"}}}
+      >
+        <Box className="p-2">
+          <nav>
+            <div className="flex items-center gap-3">
+              <div onClick={handleLinkClick}>로그인</div>
+              <div onClick={handleLinkClick}>회원가입</div>
+            </div>
+            <span className="flex-1"></span>
+            <IconButton onClick={() => setOpen(false)}>
+              <CloseIcon/>
+            </IconButton>
+          </nav>
+          <SearchBar />
+          <nav>
+            <ul className="items-center">
+              {/* <li>
               <Accordion>
                 <AccordionSummary>
                   <Link href="/products?is_today=true">오늘의 메뉴</Link>
                 </AccordionSummary>
               </Accordion>
             </li> */}
-            <li>
-              <Accordion>
-                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  <Link href="/products?category=cow">소고기</Link>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <ol>
-                    {categoriesMenu.cow.map((category_menu) => (
-                      <li key={category_menu}><Link href={`/products?category=cow&category_menu=${category_menu}`}>{category_menu}</Link></li>
-                    ))}
-                  </ol>
-                </AccordionDetails>
-              </Accordion>
-            </li>
-            <li>
-              <Accordion>
-                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  <Link href="/products?category=pork">돼지고기</Link>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <ol>
-                    {categoriesMenu.pork.map((category_menu) => (
-                      <li key={category_menu}><Link href={`/products?category=pork&category_menu=${category_menu}`}>{category_menu}</Link></li>
-                    ))}
-                  </ol>
-                </AccordionDetails>
-              </Accordion>
-            </li>
-            <li>
-              <Accordion>
-                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  <Link href="/products?category=simple">간편식</Link>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <ol>
-                    {categoriesMenu.simple.map((category_menu) => (
-                      <li key={category_menu}><Link href={`/products?category=simple&category_menu=${category_menu}`}>{category_menu}</Link></li>
-                    ))}
-                  </ol>
-                </AccordionDetails>
-              </Accordion>
-            </li>
-            {/* <li>
+              <li>
+                <Accordion>
+                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                    <Link href="/products?category=cow">소고기</Link>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <ol>
+                      {categoriesMenu.cow.map((category_menu) => (
+                        <li key={category_menu}><Link href={`/products?category=cow&category_menu=${category_menu}`}>{category_menu}</Link></li>
+                      ))}
+                    </ol>
+                  </AccordionDetails>
+                </Accordion>
+              </li>
+              <li>
+                <Accordion>
+                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                    <Link href="/products?category=pork">돼지고기</Link>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <ol>
+                      {categoriesMenu.pork.map((category_menu) => (
+                        <li key={category_menu}><Link href={`/products?category=pork&category_menu=${category_menu}`}>{category_menu}</Link></li>
+                      ))}
+                    </ol>
+                  </AccordionDetails>
+                </Accordion>
+              </li>
+              <li>
+                <Accordion>
+                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                    <Link href="/products?category=simple">간편식</Link>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <ol>
+                      {categoriesMenu.simple.map((category_menu) => (
+                        <li key={category_menu}><Link href={`/products?category=simple&category_menu=${category_menu}`}>{category_menu}</Link></li>
+                      ))}
+                    </ol>
+                  </AccordionDetails>
+                </Accordion>
+              </li>
+              {/* <li>
               <Accordion>
                 <AccordionSummary>
                   <Link href="/products">리뷰</Link>
                 </AccordionSummary>
               </Accordion>
             </li> */}
-            <li>
-              <Accordion>
-                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  <Link href="/products">고객센터</Link>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <ol>
-                    <li><Link href="/boards?category=notice">공지사항</Link></li>
-                    <li><Link href="/faq">자주하는질문</Link></li>
-                    <li><Link href="/boards?category=qna">문의하기</Link></li>
-                  </ol>
-                </AccordionDetails>
-              </Accordion>
-            </li>
-          </ul>
-        </nav>
-      </Box>
-    </Drawer>
+              <li>
+                <Accordion>
+                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                    <Link href="/products">고객센터</Link>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <ol>
+                      <li><Link href="/boards?category=notice">공지사항</Link></li>
+                      <li><Link href="/faq">자주하는질문</Link></li>
+                      <li><Link href="/boards?category=qna">문의하기</Link></li>
+                    </ol>
+                  </AccordionDetails>
+                </Accordion>
+              </li>
+            </ul>
+          </nav>
+        </Box>
+      </Drawer>
+      <IconButton className="flex md:!hidden">
+        <Link href="/">
+          <Image
+            src="/images/logo.png"
+            alt=""
+            width={32}
+            height={32}
+            sizes="100vw"
+            className="md:w-16"
+            priority
+          />
+        </Link>
+      </IconButton>
+    </div>
   </>
 }
 
@@ -455,16 +468,18 @@ const MainBottom = () => {
           (주) 한솔축산
           </div>
           <div className="mt-6 md:mt-0 flex justify-center w-full md:w-auto">
-            <Image
-              src="/images/logo.png"
-              alt="한솔축산 로고"
-              width={60}
-              height={60}
-              sizes="100vw"
-              className="w-20 h-20 md:w-24 md:h-24 cursor-pointer"
-              priority
-              onClick={scrollToTop}
-            />
+            <Link href="/home">
+              <Image
+                src="/images/logo.png"
+                alt="한솔축산 로고"
+                width={60}
+                height={60}
+                sizes="100vw"
+                className="w-20 h-20 md:w-24 md:h-24 cursor-pointer"
+                priority
+                onClick={scrollToTop}
+              />
+            </Link>
           </div>
         </div>
         <div className="footer-left space-y-4 mt-6">

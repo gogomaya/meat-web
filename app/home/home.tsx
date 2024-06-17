@@ -162,8 +162,8 @@ export const HomeCateMenu = () => {
               <div className="bg-image absolute inset-0 bg-cover bg-center bg-no-repeat" style={{backgroundImage: "linear-gradient(to left, #271a11, rgba(217, 217, 217, 0) 100%), url('/images/Rectangle 10.png')"}}></div>
               <div className="absolute inset-0 bg-black bg-opacity-10 hover:bg-opacity-20 transition duration-300 rounded-lg"></div>
               <div className="relative flex flex-col justify-center items-center h-full text-white p-2">
-                <div className="text-sm md:text-2xl font-bold text-center text-yellow-400">한돈 국내산</div>
-                <div className="text-sm md:text-2xl font-bold mb-2 text-center">🐷 생삼겹살 목살</div>
+                <div className="text-xs md:text-2xl font-bold text-center text-yellow-400">한돈 국내산</div>
+                <div className="text-xs md:text-2xl font-bold mb-2 text-center">🐷 생삼겹살 목살</div>
                 <Link href="/products?category=pork">
                   <button className="text-xs md:text-base flex items-center justify-between gap-2 w-full p-2 md:py-2 md:px-4 bg-black text-white rounded hover:bg-gray-800 transition duration-300">
                     <span>&#39;돼지고기&#39; 바로가기</span>
@@ -202,7 +202,7 @@ export const HomeCateMenu = () => {
           <div className="relative section flex-1 h-32 md:h-48 rounded-lg overflow-hidden" data-index="3">
             <div className="bg-image absolute inset-0 bg-cover bg-center bg-no-repeat" style={{backgroundImage: "linear-gradient(to left, #271a11, rgba(217, 217, 217, 0) 100%), url('/images/Rectangle 7.png')"}}></div>
             <div className="absolute inset-0 bg-black bg-opacity-10 hover:bg-opacity-20 transition duration-300 rounded-lg"></div>
-            <div className="relative flex flex-col justify-center items-center h-full text-white p-2 gap-10">
+            <div className="relative flex flex-col justify-center items-center h-full text-white p-2 gap-6">
               <div className="text-sm md:text-2xl md:text-2xl font-bold mb-2 text-center">🍲 고추장불고기 & 간장불고기 <br />제육볶음 주물럭 밀키트</div>
               <Link href="/products?category=simple">
                 <button className="text-sm md:text-xl flex items-center justify-between gap-2 w-full p-2 md:py-2 md:px-4 bg-black text-white rounded hover:bg-gray-800 transition duration-300">
