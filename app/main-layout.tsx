@@ -313,9 +313,13 @@ const MainMobileMenu = () => {
         open={open}
         onClose={() => setOpen(false)}
         PaperProps={{sx: {width: "100%"}}}
+        // style={{backgroundImage: "url('/images/Bg_2.png')"}}
       >
-        <Box className="p-2">
-          <nav>
+        <Box className="p-4"
+          style={{backgroundImage: "url('/images/Bg_2.png')"}}
+        >
+          <nav style={{backgroundImage: "url('/images/Bg_2.png')"}}
+          >
             <div className="flex items-center gap-3">
               <div onClick={handleLinkClick}>로그인</div>
               <div onClick={handleLinkClick}>회원가입</div>

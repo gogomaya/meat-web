@@ -184,7 +184,7 @@ const FaqItem: React.FC<FaqItemProps> = ({question, answer}) => {
       <div
         className="faq-qus-wrap flex justify-between items-center p-4 rounded cursor-pointer bg-opacity-10 hover:bg-opacity-99 hover:bg-[#3b2e20]"
         onClick={toggleFaq}
-        style={{backgroundImage: "url('/images/Bg.png')", backgroundBlendMode: "overlay"}}
+        style={{backgroundImage: "url('/images/Bg_2.png')", backgroundBlendMode: "overlay"}}
       >
         <h5 className="faq-qustion text-white text-lg font-semibold">{question}</h5>
         <AddCircleOutlineIcon className="text-white" />
