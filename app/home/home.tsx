@@ -11,7 +11,7 @@ export const HomeBanner = () => {
     <section
       className="section bg-cover bg-center bg-no-repeat py-12 p-6 md:p-12 text-white relative"
       style={{
-        backgroundImage: "url('/images/Bg_2.png')",
+        backgroundImage: "url('/images/Bg.png')",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
