@@ -55,8 +55,8 @@ const MainLayout = ({
     <div className="mx-auto">
       <header
         id="header"
-        className="p-4 sticky top-0 z-20 bg-cover bg-center bg-opacity-90 w-full flex items-center md:py-4 md:px-10 text-white transition-opacity -300 border-b border-white"
-        style={{backgroundImage: "url('/images/Bg.png')", backgroundPosition: "center calc(50% - 185px)", opacity: headerOpacity}}
+        className="p-4 sticky top-0 z-20 bg-cover bg-center bg-opacity-90 w-full flex items-center md:py-4 md:px-10 transition-opacity -300 border-b border-white"
+        style={{backgroundImage: "url('/images/Bg_3.png')", backgroundPosition: "center calc(50% - 38px)", opacity: headerOpacity}}
       >
         <MainMobileMenu />
         <Link href="/">
@@ -74,8 +74,8 @@ const MainLayout = ({
         <div className="flex gap-3">
           <MainSearch />
           <Users user={user} />
-          <Link href="/carts" className="text-white">
-            <Badge badgeContent={cartProductsLength} color="primary">
+          <Link href="/carts" className="text-black">
+            <Badge badgeContent={cartProductsLength} color="warning">
               <ShoppingCartIcon className="md:w-8 md:h-8" />
             </Badge>
           </Link>
@@ -174,10 +174,10 @@ export const MegaMenu = ({user}: {user: User}) => {
     <nav id="header" className="invisible md:visible flex-1 flex justify-center items-center">
       <ul className="flex">
         {/* <li style={{width: "140px"}} id="todayMenu" className={`relative ${menu.todayMenu ? "text-red-500" : ""}`} onMouseOver={overMenu} onMouseOut={outMenu}>
-          <Link href="/products?is_today=true" className="text-red-600">오늘의 메뉴</Link>
+          <Link href="/products?is_today=true" className="text-red-600">선물세트</Link>
         </li> */}
         <li style={{width: "140px"}} id="cow" className="relative" onMouseOver={overMenu} >
-          <Link href="/products?category=cow" className="text-white">소고기🐮</Link>
+          <Link href="/products?category=cow" className="text-black">소고기🐮</Link>
           {/* <ol id="submenu" className={`category-menu-flex flex w-30 absolute border border-[#FACC15] ${menu.cow ? "block" : "hidden"} py-2 rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
             {categoriesMenu.cow.map((category_menu) => (
               <li key={category_menu}><Link href={`/products?category=cow&category_menu=${category_menu}`} className="text-white px-2">{category_menu}</Link></li>
@@ -187,34 +187,34 @@ export const MegaMenu = ({user}: {user: User}) => {
             <div className="flex">
               <div className="item" style={{width: "140px"}}>
                 {categoriesMenu.cow.map((category_menu) => (
-                  <li key={category_menu}><Link href={`/products?category=cow&category_menu=${category_menu}`} className="text-white px-2">{category_menu}</Link></li>
+                  <li key={category_menu}><Link href={`/products?category=cow&category_menu=${category_menu}`} className="text-black px-2">{category_menu}</Link></li>
                 ))}
               </div>
               <div className="item" style={{width: "140px"}}>
                 {categoriesMenu.pork.map((category_menu) => (
-                  <li key={category_menu}><Link href={`/products?category=pork&category_menu=${category_menu}`} className="text-white">{category_menu}</Link></li>
+                  <li key={category_menu}><Link href={`/products?category=pork&category_menu=${category_menu}`} className="text-black">{category_menu}</Link></li>
                 ))}
               </div>
               <div className="item" style={{width: "140px"}}>
                 {categoriesMenu.imported.map((category_menu) => (
-                  <li key={category_menu}><Link href={`/products?category=imported&category_menu=${category_menu}`} className="text-white">{category_menu}</Link></li>
+                  <li key={category_menu}><Link href={`/products?category=imported&category_menu=${category_menu}`} className="text-black">{category_menu}</Link></li>
                 ))}
               </div>
               <div className="item" style={{width: "140px"}}>
                 {categoriesMenu.simple.map((category_menu) => (
-                  <li key={category_menu}><Link href={`/products?category=simple&category_menu=${category_menu}`} className="text-white">{category_menu}</Link></li>
+                  <li key={category_menu}><Link href={`/products?category=simple&category_menu=${category_menu}`} className="text-black">{category_menu}</Link></li>
                 ))}
               </div>
               <div className="item" style={{width: "140px"}}>
-                <li><Link href="/boards?category=notice" className="text-white">공지사항</Link></li>
-                <li><Link href="/faq" className="text-white">자주하는질문</Link></li>
-                <li><Link href="/boards?category=qna" className="text-white">문의하기</Link></li>
+                <li><Link href="/boards?category=notice" className="text-black">공지사항</Link></li>
+                <li><Link href="/faq" className="text-black">자주하는질문</Link></li>
+                <li><Link href="/boards?category=qna" className="text-black">문의하기</Link></li>
               </div>
             </div>
           </ol>
         </li>
         <li style={{width: "140px"}} id="pork" className="relative" onMouseOver={overMenu} >
-          <Link href="/products?category=pork" className="text-white">돼지고기🐷</Link>
+          <Link href="/products?category=pork" className="text-black">돼지고기🐷</Link>
           {/* <ol id="submenu" className={`w-18 absolute border border-[#FACC15] ${menu.pork ? "block" : "hidden"} py-2 rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
             {categoriesMenu.pork.map((category_menu) => (
               <li key={category_menu}><Link href={`/products?category=pork&category_menu=${category_menu}`} className="text-white">{category_menu}</Link></li>
@@ -222,7 +222,7 @@ export const MegaMenu = ({user}: {user: User}) => {
           </ol> */}
         </li>
         <li style={{width: "140px"}} id="imported" className="relative" onMouseOver={overMenu} >
-          <Link href="/products?category=imported" className="text-white">수입육</Link>
+          <Link href="/products?category=imported" className="text-black">수입육</Link>
           {/* <ol id="submenu" className={`w-18 absolute border border-[#FACC15] ${menu.simple ? "block" : "hidden"} py-2 rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
             {categoriesMenu.simple.map((category_menu) => (
               <li key={category_menu}><Link href={`/products?category=simple&category_menu=${category_menu}`} className="text-white">{category_menu}</Link></li>
@@ -230,7 +230,7 @@ export const MegaMenu = ({user}: {user: User}) => {
           </ol> */}
         </li>
         <li style={{width: "140px"}} id="simple" className="relative" onMouseOver={overMenu} >
-          <Link href="/products?category=simple" className="text-white">간편식</Link>
+          <Link href="/products?category=simple" className="text-black">간편식</Link>
           {/* <ol id="submenu" className={`w-18 absolute border border-[#FACC15] ${menu.simple ? "block" : "hidden"} py-2 rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
             {categoriesMenu.simple.map((category_menu) => (
               <li key={category_menu}><Link href={`/products?category=simple&category_menu=${category_menu}`} className="text-white">{category_menu}</Link></li>
@@ -245,7 +245,7 @@ export const MegaMenu = ({user}: {user: User}) => {
           </ol>
         </li> */}
         <li style={{width: "140px"}} id="board" className="relative" onMouseOver={overMenu} >
-          <Link href="/boards" className="text-white">고객센터</Link>
+          <Link href="/boards" className="text-black">고객센터</Link>
           {/* <ol id="submenu" className={`w-18 absolute border border-[#FACC15] ${menu.board ? "block" : "hidden"} py-2 rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
             <li><Link href="/boards?category=notice" className="text-white">공지사항</Link></li>
             <li><Link href="/faq" className="text-white">자주하는질문</Link></li>
@@ -254,7 +254,7 @@ export const MegaMenu = ({user}: {user: User}) => {
         </li>
         {user.is_admin ? (
           <li style={{width: "140px"}} id="board" className="relative" onMouseOver={overMenu}>
-            <Link href="/admin" className="text-white">관리자</Link>
+            <Link href="/admin" className="text-black">관리자</Link>
           </li>
         ) : null}
         {/* 관리자 페이지 연결 */}
@@ -276,7 +276,7 @@ const MainSearch = () => {
   return <>
     <Link
       href=""
-      className="hidden md:block p-0 text-white"
+      className="hidden md:block p-0 text-black"
       onClick={(event: React.MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault()
         setAnchorEl(event.currentTarget)
@@ -449,26 +449,26 @@ const MainBottom = () => {
     <section
       className="section footer bg-cover bg-center bg-no-repeat"
       style={{
-        backgroundImage: "url(\"/images/Bg.png\")"
+        backgroundImage: "url(\"/images/Bg_3.png\")"
       }}
     >
       <div className="bg-transparent p-6 md:p-12 text-white">
         <div className="flex footer-menu-link space-x-4">
           <Link href={"https://smartstore.naver.com/hansolmeat1534"}>
-            <div className="footer-menu-content cursor-pointer hover:underline text-white">회사소개</div>
+            <div className="footer-menu-content cursor-pointer hover:underline text-black">회사소개</div>
           </Link>
           <Link href={"https://smartstore.naver.com/hansolmeat1534"}>
-            <div className="footer-menu-content cursor-pointer hover:underline text-white">이용안내</div>
+            <div className="footer-menu-content cursor-pointer hover:underline text-black">이용안내</div>
           </Link>
           <Link href={"/policy"}>
-            <div className="footer-menu-content cursor-pointer hover:underline text-white">이용약관</div>
+            <div className="footer-menu-content cursor-pointer hover:underline text-black">이용약관</div>
           </Link>
           <Link href={"/policy"}>
-            <div className="footer-menu-content cursor-pointer hover:underline text-white">개인정보처리방침</div>
+            <div className="footer-menu-content cursor-pointer hover:underline text-black">개인정보처리방침</div>
           </Link>
         </div>
         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-          <div className="text-2xl font-bold" style={{textAlign: "left"}}>
+          <div className="text-2xl font-bold text-black" style={{textAlign: "left"}}>
           (주) 한솔축산
           </div>
           <div className="mt-6 md:mt-0 flex justify-center w-full md:w-auto">
@@ -487,7 +487,7 @@ const MainBottom = () => {
           </div>
         </div>
         <div className="footer-left space-y-4 mt-6">
-          <div className="footer-info text-sm leading-loose">
+          <div className="footer-info text-lg leading-loose text-black">
             <span className="footer-info-detail block">
               <span className="text-style-1 font-semibold">대표자</span> | 한승구, 박수현
             </span>
@@ -505,7 +505,7 @@ const MainBottom = () => {
             </span>
           </div>
           <div className="footer-info-detail block">
-            <span className="text-style-1">
+            <span className="text-style-1 text-black">
             © 2024 한솔. All right reserved.
             </span>
           </div>

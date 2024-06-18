@@ -162,7 +162,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
               className="product-item"
               style={{
                 padding: "15px",
-                width: "calc(33.333% - 20px)",
+                width: "calc(25% - 25px)",
                 borderRadius: "5px",
                 border: "2px solid #271A11",
                 transition: "transform 0.3s, opacity 0.3s",
@@ -255,7 +255,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
           ))
         ) : (
           <div style={{width: "100%", textAlign: "center", padding: "20px"}}>
-              준비된 상품이 없습니다.
+            준비된 상품이 없습니다.
           </div>
         )}
       </ol>
@@ -408,10 +408,22 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
           <div className="mb-2">
             <div className="py-2">
               <div className="flex gap-3 align-items">
-                <div className="text-xl text-red-600">{(((Number(product.price) - Number(product.discounted_price)) / Number(product.price)) * 100).toFixed(0)}%</div>
-                <div className="text-xl" style={{textDecoration: "line-through"}}>{(Number(product.price)).toLocaleString()}원</div>
+                {Number(product.discounted_price) !== Number(product.price) && (
+                  <>
+                    <div className="text-xl text-red-600">
+                      {(((Number(product.price) - Number(product.discounted_price)) / Number(product.price)) * 100).toFixed(0)}%
+                    </div>
+                    <div className="text-xl" style={{textDecoration: "line-through"}}>
+                      {(Number(product.price)).toLocaleString()}원
+                    </div>
+                  </>
+                )}
               </div>
-              <strong className="text-3xl text-red-700">{(Number(product.discounted_price)).toLocaleString()}원</strong>
+              {Number(product.discounted_price) !== Number(product.price) && (
+                <strong className="text-3xl text-red-700">
+                  {(Number(product.discounted_price)).toLocaleString()}원
+                </strong>
+              )}
               <div>100g당 {product.per100g}</div>
             </div>
             <div><p>배송사: 로젠택배</p></div>
