@@ -24,9 +24,9 @@ export const HomeBanner = () => {
       }}
     >
       <div className="flex flex-col items-center space-y-4 md:w-1/2 z-6 gap-1" style={{maxWidth: "800px"}}>
-        <div className="title-description text-6xl font-extrabold text-yellow-400 shadow-lg">Premium No.9</div>
-        <div className="sub-description text-4xl font-bold text-white shadow">모든 작업을 직접하여 적은 유통마진으로</div>
-        <div className="description text-2xl text-gray-300 shadow flex gap-2">
+        <div className="title-description text-6xl font-extrabold text-yellow-400">Premium No.9</div>
+        <div className="sub-description text-4xl font-bold text-white">모든 작업을 직접하여 적은 유통마진으로</div>
+        <div className="description text-2xl text-gray-300 flex gap-2">
           <span style={{color: "red"}}>한우1++</span>
           <span style={{color: "yellow"}}>No.9</span>만을 판매하는 한솔축산입니다.
         </div>
