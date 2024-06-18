@@ -408,14 +408,20 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
           <div className="mb-2">
             <div className="py-2">
               <div className="flex gap-3 align-items">
-                {Number(product.discounted_price) !== Number(product.price) && (
+                {Number(product.discounted_price) !== Number(product.price) ? (
                   <>
                     <div className="text-xl text-red-600">
                       {(((Number(product.price) - Number(product.discounted_price)) / Number(product.price)) * 100).toFixed(0)}%
                     </div>
                     <div className="text-xl" style={{textDecoration: "line-through"}}>
-                      {(Number(product.price)).toLocaleString()}원
+                      {Number(product.price).toLocaleString()}원
                     </div>
+                  </>
+                ) : (
+                  <>
+                    <strong className="text-3xl text-red-700">
+                      {(Number(product.discounted_price)).toLocaleString()}원
+                    </strong>
                   </>
                 )}
               </div>
@@ -490,8 +496,8 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
               </>
             )}
           </div>
-          <div>
-            {/* category가 pork일 때만 드롭다운을 렌더링 */}
+          {/* category가 pork일 때만 드롭다운을 렌더링 */}
+          {/* <div>
             {product.category === "pork" && (
               <div className="mb-4 flex items-center gap-4">
                 <div className="w-24">종류</div>
@@ -507,7 +513,7 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
                 </select>
               </div>
             )}
-          </div>
+          </div> */}
           <div className="mb-4 flex items-center gap-4 flex-wrap">
             <div className="w-24">수량</div>
             <input
