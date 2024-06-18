@@ -82,7 +82,7 @@ const AdminProductsForm = ({
     backdrop.close()
   }
 
-  const gradeOptions = ["1++", "1+", "1", "2", "3"]
+  const gradeOptions = ["1++(no.9)", "1++(no9) 특상"]
 
   useEffect(() => {
     const DecoupledEditor = require("@ckeditor/ckeditor5-build-decoupled-document")
