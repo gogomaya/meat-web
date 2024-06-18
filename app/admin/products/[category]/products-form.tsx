@@ -308,7 +308,7 @@ const AdminProductsForm = ({
             render={({field}) => (
               <FormControlLabel control={
                 <Checkbox {...field} checked={field.value} />
-              } label="오늘의 메뉴" />
+              } label="선물 세트" />
             )}
           />
           <Controller

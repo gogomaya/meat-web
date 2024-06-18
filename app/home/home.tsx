@@ -11,9 +11,8 @@ export const HomeBanner = () => {
     <section
       className="section bg-cover bg-center bg-no-repeat py-12 p-6 md:p-12 text-white relative"
       style={{
-        backgroundImage: "url('/images/Bg.png')",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
+        backgroundImage: "url('/images/Bg_4.png')",
+        backgroundRepeat: "repeat-x",
         backgroundSize: "cover",
         textAlign: "center",
         minHeight: "700px",
@@ -25,16 +24,16 @@ export const HomeBanner = () => {
     >
       <div className="flex flex-col items-center space-y-4 md:w-1/2 z-6 gap-1" style={{maxWidth: "800px"}}>
         <div className="title-description text-6xl font-extrabold text-yellow-400">Premium No.9</div>
-        <div className="sub-description text-4xl font-bold text-white">모든 작업을 직접하여 적은 유통마진으로</div>
-        <div className="description text-2xl text-gray-300 flex gap-2">
+        <div className="sub-description text-4xl font-bold text-black">모든 작업을 직접하여 적은 유통마진으로</div>
+        <div className="description text-2xl text-black flex gap-2">
           <span style={{color: "red"}}>한우1++</span>
           <span style={{color: "yellow"}}>No.9</span>만을 판매하는 한솔축산입니다.
         </div>
-        {/* <div className="space-y-2">
+        <div className="space-y-2">
           <Link href="/products?is_today=true">
-            <button className="click-mobile-version py-2 px-4 bg-yellow-400 text-black rounded hover:bg-yellow-500 transition duration-300 ease-in-out shadow-lg">오늘의 메뉴 바로가기</button>
+            <button className="click-mobile-version py-2 px-4 bg-yellow-400 text-black rounded hover:bg-yellow-500 transition duration-300 ease-in-out shadow-lg">선물 세트 바로가기</button>
           </Link>
-        </div> */}
+        </div>
       </div>
       <style jsx>{`
       @media (max-width: 768px) {
@@ -78,6 +77,19 @@ export const HomeBanner = () => {
         animation: slideInFromRight 1s forwards;
         animation-delay: 0.1s;
       }
+
+      // @keyframes backgroundScroll {
+      //   from {
+      //     background-position: 0 0;
+      //   }
+      //   to {
+      //     background-position: -100% 0;
+      //   }
+      // }
+
+      // .section {
+      //   animation: backgroundScroll 10s linear infinite;
+      // }
 
       @keyframes fadeIn {
         to {
@@ -304,22 +316,22 @@ export const HomeWhyUs = () => {
     <section
       className="section why bg-cover bg-center bg-no-repeat p-6 md:p-12 text-white"
       style={{
-        backgroundImage: "url(\"/images/Bg.png\")"
+        backgroundImage: "url(\"/images/Bg_3.png\")"
       }}
     >
       <div className="container flex flex-col md:flex-row justify-between items-center gap-10">
         <div className="flex flex-col space-y-4 md:w-1/2">
-          <div className="why-inner text-lg font-extrabold text-yellow-400">WHY US?</div>
-          <div className="why-inner text-2xl md:text-4xl font-bold text-white">왜 <span className="text-yellow-400">&apos;한솔축산&apos;</span> 인가?</div>
-          <div className="why-inner text-lg md:text-xl text-gray-300">
-            <span className="text-lg md:text-xl text-yellow-400">&lsquo;신선함을 잇다&rsquo;</span>는 바로 고객과의
+          <div className="why-inner text-lg font-extrabold text-red-700">WHY US?</div>
+          <div className="why-inner text-2xl md:text-4xl font-bold text-black">왜 <span className="text-red-700">&apos;한솔축산&apos;</span> 인가?</div>
+          <div className="why-inner text-lg md:text-xl text-black">
+            <span className="text-lg md:text-xl text-red-700 font-bold">&lsquo;신선함을 잇다&rsquo;</span>는 바로 고객과의
             <br />
             신뢰와 품질을 지키기 위해
             <br />
             노력하는 약속입니다.
           </div>
           <div className="space-y-2">
-            <div className="text-lg md:text-xl why-inner text-lg text-white">한솔축산은 신선한 프리미엄 한우 1++ No.9만을 고집합니다.<br />누구나 특별한 날, 특별한 시간을 즐길 수 있도록!<br />하누솔이 만들어 드립니다.</div>
+            <div className="text-lg md:text-xl why-inner text-lg text-black">한솔축산은 신선한 프리미엄 <span className="text-yellow-400 font-bold">한우 1++ No.9</span>만을 고집합니다.<br />누구나 특별한 날, 특별한 시간을 즐길 수 있도록!<br />하누솔이 만들어 드립니다.</div>
           </div>
         </div>
         <div className="md:w-1/2 md:pl-6 mt-6 md:mt-0">

@@ -11,7 +11,7 @@ const Products = async (props: {
 }) => {
   const {user} = await loginCheck(false)
   const searchParams = {
-    rowsPerPage: Number(props.searchParams.rowsPerPage) || 6,
+    rowsPerPage: Number(props.searchParams.rowsPerPage) || 16,
     page: Number(props.searchParams.page) || 0,
     orderColumn: props.searchParams.orderColumn || "product_pk",
     orderDirection: props.searchParams.orderDirection || "desc",
@@ -49,7 +49,7 @@ const Products = async (props: {
       <div className="pb-16">
         <div className="flex justify-center text-white py-8"
           style={{
-            backgroundImage: "url('/images/Bg.png')",
+            backgroundImage: "url('/images/Bg_3.png')",
             backgroundPosition: "center calc(10% - 620px)",
             backgroundRepeat: "repeat",
             backgroundSize: "cover",
