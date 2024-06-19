@@ -311,7 +311,7 @@ const MainMobileMenu = () => {
   }
   return <>
     <div className="flex items-center">
-      <IconButton style={{display: "none", color:"white"}} className="!block md:!hidden gap-3" onClick={() => setOpen(true)}>
+      <IconButton style={{display: "none", color:"black"}} className="!block md:!hidden gap-3" onClick={() => setOpen(true)}>
         <MenuIcon />
       </IconButton>
       <Drawer
@@ -322,9 +322,9 @@ const MainMobileMenu = () => {
         // style={{backgroundImage: "url('/images/Bg_2.png')"}}
       >
         <Box className="p-4"
-          style={{backgroundImage: "url('/images/Bg_2.png')"}}
+          style={{backgroundImage: "url('/images/Bg_3.png')"}}
         >
-          <nav style={{backgroundImage: "url('/images/Bg_2.png')"}}
+          <nav
           >
             <div className="flex items-center gap-3">
               <div onClick={handleLinkClick}>로그인</div>
