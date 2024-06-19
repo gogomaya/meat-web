@@ -18,7 +18,7 @@ export const MyPageBanner: React.FC<MyPageBannerProps> = ({title,subTitle}) => {
     <div className="flex justify-center py-8"
       style={{
         backgroundImage: "url('/images/Bg_3.png')",
-        backgroundPosition: "center calc(10% - 620px)",
+        backgroundPosition: "center calc(50% - 620px)",
         backgroundRepeat: "repeat",
         backgroundSize: "cover",
         textAlign: "center",
@@ -27,7 +27,7 @@ export const MyPageBanner: React.FC<MyPageBannerProps> = ({title,subTitle}) => {
         justifyContent: "center",
         alignItems: "center"
       }}>
-      <div className="text-red-100">마이 페이지</div>
+      <div className="text-red-700 text-4xl">마이 페이지</div>
       { title != ""
         ?
         <p>

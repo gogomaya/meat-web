@@ -39,6 +39,21 @@ html, body {
   transform: scaleX(1);
 }
 
+.custom-admin-button {
+  background-color: blue;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.custom-admin-button:hover {
+  background-color: darkblue;
+}
 
 ul {
   list-style-type: none;

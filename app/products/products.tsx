@@ -432,7 +432,7 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
                   {(Number(product.discounted_price)).toLocaleString()}원
                 </strong>
               )}
-              <div>100g당 {(Number(product.discounted_price)).toLocaleString()}원</div>
+              <div>100g당 { product.per100g }</div>
             </div>
             <div><p>배송사: 로젠택배</p></div>
             {/* <strong className="text-4xl text-red-700">{(Number(product.discounted_price) * quantity).toLocaleString()}원</strong> */}
