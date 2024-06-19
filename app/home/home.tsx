@@ -31,11 +31,11 @@ export const HomeBanner = () => {
         <div className="sub-description text-4xl font-bold text-black">모든 작업을 직접하여 적은 유통마진으로</div>
         <div className="description text-2xl text-black flex gap-2">
           <span style={{color: "red"}}>한우1++</span>
-          <span style={{color: "yellow"}}>No.9</span>만을 판매하는 한솔축산입니다.
+          <span className="text-yellow-400">No.9</span>만을 판매하는 한솔축산입니다.
         </div>
         <div className="space-y-2">
           <Link href="/products">
-            <button className="click-mobile-version py-2 px-4 bg-yellow-400 text-black rounded hover:bg-yellow-500 transition duration-300 ease-in-out shadow-lg">한솔축산 둘러보기</button>
+            <button className="click-mobile-version py-2 px-4 bg-yellow-400 text-black rounded hover:bg-yellow-500 transition duration-300 ease-in-out shadow-lg">한솔축산상품 둘러보기</button>
           </Link>
         </div>
       </div>

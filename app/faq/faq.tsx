@@ -13,7 +13,7 @@ const faqItems = [
   {
     category: "shipment",
     question: "무료 배송 기준은 어떻게 되나요?",
-    answer: "무료 배송 기준은 한 번에 구매하는 상품 가격이 5만원 이상일 경우에 적용됩니다."
+    answer: "무료 배송 기준은 한 번에 구매하는 상품 가격이 15만원 이상일 경우에 적용됩니다."
   },
   {
     category: "shipment",
@@ -215,7 +215,7 @@ export const FaqSection: React.FC = () => {
     {
       category: "shipment",
       question: "무료 배송 기준은 어떻게 되나요?",
-      answer: "무료 배송 기준은 한 번에 구매하는 상품 가격이 5만원 이상일 경우에 적용됩니다."
+      answer: "무료 배송 기준은 한 번에 구매하는 상품 가격이 15만원 이상일 경우에 적용됩니다."
     },
     {
       category: "shipment",

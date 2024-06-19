@@ -28,7 +28,7 @@ export const usersServices = {
       throw error
     }
   },
-  usersDetail: async (user_pk: number): Promise<ResponseApi> => {
+  usersDetail: async (user_pk: number | string | undefined | string[]): Promise<ResponseApi> => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/users/${user_pk}`, {
         method: "GET"
