@@ -302,7 +302,7 @@ const AdminProductsForm = ({
           {...register("image")}
         />
         <div className="mt-6 flex">
-          <Controller
+          {/* <Controller
             control={control}
             name="is_today"
             render={({field}) => (
@@ -310,7 +310,7 @@ const AdminProductsForm = ({
                 <Checkbox {...field} checked={field.value} />
               } label="선물 세트" />
             )}
-          />
+          /> */}
           <Controller
             control={control}
             name="is_best"
