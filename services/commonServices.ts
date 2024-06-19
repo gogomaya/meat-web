@@ -32,7 +32,9 @@ export const commonServices = {
   },
   categoriesMenu: (): {giftSet: string[], cow: string[], imported: string[] , pork: string[], simple: string[]} => {
     return {
-      giftSet: [],
+      giftSet: [
+        "선물세트"
+      ],
       cow: [
         "구이",
         "국거리/불고기",

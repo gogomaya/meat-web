@@ -223,7 +223,7 @@ export const MegaMenu = ({user}: {user: User}) => {
             <div className="flex">
               <div className="item" style={{width: "140px"}}>
                 {categoriesMenu.giftSet.map((category_menu) => (
-                  <li key={category_menu}><Link href={`/products?category=cow&category_menu=${category_menu}`} className="text-black px-2">{category_menu}</Link></li>
+                  <li key={category_menu}><Link href={`/products?category=giftSet&category_menu=${category_menu}`} className="text-black px-2">{category_menu}</Link></li>
                 ))}
               </div>
               <div className="item" style={{width: "140px"}}>
@@ -418,13 +418,13 @@ const MainMobileMenu = ({user}: {user: User}) => {
               <li>
                 <Accordion>
                   <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                    <Link href="/products">선물세트</Link>
+                    <Link href="/products/giftSet">선물세트</Link>
                   </AccordionSummary>
                   <AccordionDetails>
                     <ol>
                       {categoriesMenu.cow.map((category_menu) => (
                         <li key={category_menu}>
-                          <Link href={`/products?category=cow&category_menu=${category_menu}`}>{category_menu}</Link>
+                          <Link href={`/products?category=giftSet&category_menu=${category_menu}`}>{category_menu}</Link>
                         </li>
                       ))}
                     </ol>
