@@ -227,7 +227,7 @@ const Users = ({user}: {user: User}) => {
               style={{
                 minWidth: "auto",
                 border: "none",
-                fontSize: "30px",
+                fontSize: "20px",
                 cursor: "pointer",
                 color: "#FFFFFF",
                 backgroundColor: "transparent",
@@ -257,6 +257,20 @@ const Users = ({user}: {user: User}) => {
           </DialogActions>
           <div>
             <div className="flex flex-col justify-center item-center">
+              <div className="flex items-center gap-3 justify-center">
+                <Image
+                  src="/images/cow.png"
+                  alt="Logo"
+                  width={45}
+                  height={45}
+                  sizes="100vw"
+                  className="md:w-16"
+                  priority
+                />
+              </div>
+              <div className="flex items-center gap-3 justify-center text-red-700 py-4">
+                <strong>{user.name || user.nickname}</strong><span className="text-black">님, 안녕하세요 :)</span>
+              </div>
               <button type="button"
                 className="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
                 onClick={() => {
