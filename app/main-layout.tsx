@@ -64,7 +64,7 @@ const MainLayout = ({
           backgroundPositionY: "68%"
         }}
       >
-        <MainMobileMenu />
+        <MainMobileMenu user={user} />
         <Link href="/">
           <Image
             src="/images/logo.png"
@@ -302,16 +302,22 @@ const MainSearch = () => {
   </>
 }
 
-const MainMobileMenu = () => {
+const MainMobileMenu = ({user}: {user: User}) => {
   const [open, setOpen] = useState(false)
   const categoriesMenu = commonServices.categoriesMenu()
+
   const handleLinkClick = () => {
     window.postMessage({loginPopup: "on"}, "*")
     return
   }
-  return <>
+
+  return (
     <div className="flex items-center">
-      <IconButton style={{display: "none", color:"black"}} className="!block md:!hidden gap-3" onClick={() => setOpen(true)}>
+      <IconButton
+        style={{display: "none", color: "black"}}
+        className="!block md:!hidden gap-3"
+        onClick={() => setOpen(true)}
+      >
         <MenuIcon />
       </IconButton>
       <Drawer
@@ -319,32 +325,48 @@ const MainMobileMenu = () => {
         open={open}
         onClose={() => setOpen(false)}
         PaperProps={{sx: {width: "100%"}}}
-        // style={{backgroundImage: "url('/images/Bg_2.png')"}}
       >
-        <Box className="p-4"
-          style={{backgroundImage: "url('/images/Bg_3.png')"}}
-        >
-          <nav
-          >
-            <div className="flex items-center gap-3">
-              <div onClick={handleLinkClick}>로그인</div>
-              <div onClick={handleLinkClick}>회원가입</div>
+        <Box className="p-4" style={{backgroundImage: "url('/images/Bg_3.png')", backgroundColor: "rgba(255, 255, 255, 0.9)"}}>
+          <nav>
+            <div className="flex items-center gap-3 p-4">
+              {user ? (
+                <div className="flex items-center gap-8 p-4">
+                  <Image
+                    src="/images/cow.png"
+                    alt="Logo"
+                    width={60}
+                    height={60}
+                    sizes="100vw"
+                    className="md:w-16"
+                    priority /><div className="text-red-700">
+                    <strong>{user.name || user.nickname}</strong><span className="text-black">님, 안녕하세요 :)</span>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <div
+                    onClick={handleLinkClick}
+                    className="px-4 py-2 bg-yellow-500 text-white rounded-full hover:bg-yellow-600 cursor-pointer"
+                  >
+                    로그인
+                  </div>
+                  <div
+                    onClick={handleLinkClick}
+                    className="px-4 py-2 bg-red-700 text-white rounded-full hover:bg-brown-600 cursor-pointer"
+                  >
+                    회원가입
+                  </div>
+                </>
+              )}
+              <span className="flex-1"></span>
+              <IconButton onClick={() => setOpen(false)}>
+                <CloseIcon />
+              </IconButton>
             </div>
-            <span className="flex-1"></span>
-            <IconButton onClick={() => setOpen(false)}>
-              <CloseIcon/>
-            </IconButton>
           </nav>
           <SearchBar />
           <nav>
-            <ul className="items-center">
-              {/* <li>
-              <Accordion>
-                <AccordionSummary>
-                  <Link href="/products?is_today=true">오늘의 메뉴</Link>
-                </AccordionSummary>
-              </Accordion>
-            </li> */}
+            <ul className="items-center p-8">
               <li>
                 <Accordion>
                   <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -353,7 +375,9 @@ const MainMobileMenu = () => {
                   <AccordionDetails>
                     <ol>
                       {categoriesMenu.cow.map((category_menu) => (
-                        <li key={category_menu}><Link href={`/products?category=cow&category_menu=${category_menu}`}>{category_menu}</Link></li>
+                        <li key={category_menu}>
+                          <Link href={`/products?category=cow&category_menu=${category_menu}`}>{category_menu}</Link>
+                        </li>
                       ))}
                     </ol>
                   </AccordionDetails>
@@ -367,7 +391,9 @@ const MainMobileMenu = () => {
                   <AccordionDetails>
                     <ol>
                       {categoriesMenu.pork.map((category_menu) => (
-                        <li key={category_menu}><Link href={`/products?category=pork&category_menu=${category_menu}`}>{category_menu}</Link></li>
+                        <li key={category_menu}>
+                          <Link href={`/products?category=pork&category_menu=${category_menu}`}>{category_menu}</Link>
+                        </li>
                       ))}
                     </ol>
                   </AccordionDetails>
@@ -381,19 +407,14 @@ const MainMobileMenu = () => {
                   <AccordionDetails>
                     <ol>
                       {categoriesMenu.simple.map((category_menu) => (
-                        <li key={category_menu}><Link href={`/products?category=simple&category_menu=${category_menu}`}>{category_menu}</Link></li>
+                        <li key={category_menu}>
+                          <Link href={`/products?category=simple&category_menu=${category_menu}`}>{category_menu}</Link>
+                        </li>
                       ))}
                     </ol>
                   </AccordionDetails>
                 </Accordion>
               </li>
-              {/* <li>
-              <Accordion>
-                <AccordionSummary>
-                  <Link href="/products">리뷰</Link>
-                </AccordionSummary>
-              </Accordion>
-            </li> */}
               <li>
                 <Accordion>
                   <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -416,7 +437,7 @@ const MainMobileMenu = () => {
         <Link href="/">
           <Image
             src="/images/logo.png"
-            alt=""
+            alt="Logo"
             width={32}
             height={32}
             sizes="100vw"
@@ -426,12 +447,12 @@ const MainMobileMenu = () => {
         </Link>
       </IconButton>
     </div>
-  </>
+  )
 }
 
 const SearchBar = () => {
   return (
-    <section className="flex items-center bg-gray-100 rounded-full p-1">
+    <section className="flex items-center bg-gray-200 rounded-full p-1">
       <InputBase
         className="flex-1 ml-2"
         placeholder="검색어를 입력해주세요."
@@ -453,7 +474,7 @@ const MainBottom = () => {
   }
   return (
     <section
-      className="section footer bg-cover bg-center bg-no-repeat border border-yellow-200"
+      className="section footer bg-cover bg-center bg-no-repeat border border-yellow-200 px-8"
       style={{
         backgroundImage: "url(\"/images/Bg_3.png\")",
         boxShadow: "0 -4px 8px rgba(0, 0, 0, 0.1)"
