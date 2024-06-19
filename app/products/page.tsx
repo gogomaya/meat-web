@@ -30,6 +30,7 @@ const Products = async (props: {
   const {products, total_rows} = productsResponse.data
   const titleName = () => {
     const categoryName = {
+      giftSet: "선물세트",
       cow: "소고기",
       pork: "돼지고기",
       imported: "수입육",

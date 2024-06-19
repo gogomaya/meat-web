@@ -34,8 +34,8 @@ export const HomeBanner = () => {
           <span style={{color: "yellow"}}>No.9</span>만을 판매하는 한솔축산입니다.
         </div>
         <div className="space-y-2">
-          <Link href="/products?is_today=true">
-            <button className="click-mobile-version py-2 px-4 bg-yellow-400 text-black rounded hover:bg-yellow-500 transition duration-300 ease-in-out shadow-lg">선물 세트 바로가기</button>
+          <Link href="/products">
+            <button className="click-mobile-version py-2 px-4 bg-yellow-400 text-black rounded hover:bg-yellow-500 transition duration-300 ease-in-out shadow-lg">한솔축산 둘러보기</button>
           </Link>
         </div>
       </div>
@@ -151,7 +151,7 @@ export const HomeCateMenu = () => {
   }, [])
 
   return (
-    <section className="p-4 md:p-8 mx-2 md:mx-8">
+    <section className="px-8 md:p-8 mx-2 md:mx-8 py-8">
       <div className="container flex flex-col md:flex-row gap-10">
         <div className="relative section flex-1 h-64 md:h-auto rounded-lg overflow-hidden" data-index="0">
           <div className="bg-image absolute inset-0 bg-cover bg-center bg-no-repeat" style={{backgroundImage: "linear-gradient(to bottom, #271a11, rgba(0, 0, 0, 0) 67%), url('/images/Rectangle 6.png')"}}></div>

@@ -62,6 +62,8 @@ li {
   background-image: url('/images/Bg_3.png');
   background-size: cover; 
   background-repeat: no-repeat;
+  background-position-x: 80%;
+  background-position-y: 100%;
 }
 
 #submenu.block {

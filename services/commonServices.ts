@@ -30,8 +30,9 @@ export const commonServices = {
   ssrCsr: () => {
     return typeof window === "undefined" ? process.env.NEXT_PUBLIC_URL : ""
   },
-  categoriesMenu: (): {cow: string[], imported: string[] , pork: string[], simple: string[]} => {
+  categoriesMenu: (): {giftSet: string[], cow: string[], imported: string[] , pork: string[], simple: string[]} => {
     return {
+      giftSet: [],
       cow: [
         "구이",
         "국거리/불고기",
