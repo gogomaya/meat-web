@@ -104,7 +104,7 @@ const AdminOrdersList = ({
     })
   }
   const handleStartShipping = (order_pk: number) => {
-    console.log(`배송 시작 처리: order_pk=${order_pk}`)
+    alert("송장번호 입력")
   }
 
   useEffect(() => {
