@@ -37,7 +37,7 @@ const Users = ({user}: {user: User}) => {
       </Link>
       <Dialog open={open === "login"} onClose={() => setOpen("close")} maxWidth="sm" fullWidth>
         <DialogContent
-          style={{backgroundImage: "url('/images/Bg_2.png')",
+          style={{backgroundImage: "url('/images/Bg_3.png')",
             //  backgroundColor: "rgba(255, 255, 255)",
             backgroundBlendMode: "overlay"}}>
           <div className="container">
@@ -51,7 +51,7 @@ const Users = ({user}: {user: User}) => {
                   border: "none",
                   fontSize: "30px",
                   cursor: "pointer",
-                  color: "#FFFFFF",
+                  color: "#FEE601",
                   backgroundColor: "transparent",
                   padding: "0",
                   position: "relative",
@@ -69,7 +69,7 @@ const Users = ({user}: {user: User}) => {
                       transform: "translate(-50%, -50%)",
                       width: "40px",
                       height: "40px",
-                      border: "2px solid #FFFFFF",
+                      border: "2px solid #FEE601",
                       borderRadius: "50%",
                       pointerEvents: "none"
                     }}
@@ -218,7 +218,7 @@ const Users = ({user}: {user: User}) => {
         </DialogContent>
       </Dialog>
       <Dialog open={open === "logout"} onClose={() => setOpen("close")} maxWidth="xs" fullWidth >
-        <DialogContent style={{backgroundImage: "url('/images/Bg_2.png')"}}>
+        <DialogContent style={{backgroundImage: "url('/images/Bg_3.png')"}}>
           <DialogActions style={{justifyContent: "flex-end", position: "relative"}}>
             <Button
               onClick={() => setOpen("close")}
@@ -229,7 +229,7 @@ const Users = ({user}: {user: User}) => {
                 border: "none",
                 fontSize: "20px",
                 cursor: "pointer",
-                color: "#FFFFFF",
+                color: "#FEE601",
                 backgroundColor: "transparent",
                 padding: "0",
                 position: "relative",
@@ -247,7 +247,7 @@ const Users = ({user}: {user: User}) => {
                     transform: "translate(-50%, -50%)",
                     width: "40px",
                     height: "40px",
-                    border: "2px solid #FFFFFF",
+                    border: "2px solid #FEE601",
                     borderRadius: "50%",
                     pointerEvents: "none"
                   }}

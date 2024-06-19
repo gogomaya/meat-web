@@ -58,7 +58,7 @@ export const ProductsPagination = ({searchParams, total_rows}: {searchParams: Se
       shape="rounded"
       count={Math.ceil(total_rows / searchParams.rowsPerPage)}
       page={searchParams.page + 1}
-      className="flex justify-center"
+      className="flex justify-center py-8"
       onChange={(_, value) => {
         router.push("?" + new URLSearchParams({
           ...searchParams,

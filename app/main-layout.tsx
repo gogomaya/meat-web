@@ -157,6 +157,7 @@ export const MegaMenu = ({user}: {user: User}) => {
     return {
       todayMenu: false,
       megaMenu: false,
+      giftSet: false,
       cow: false,
       imported: false,
       pork: false,
@@ -179,18 +180,15 @@ export const MegaMenu = ({user}: {user: User}) => {
   return (
     <nav id="header" className="invisible md:visible flex-1 flex justify-center items-center">
       <ul className="flex">
-        {/* <li style={{width: "140px"}} id="todayMenu" className={`relative ${menu.todayMenu ? "text-red-500" : ""}`} onMouseOver={overMenu} onMouseOut={outMenu}>
-          <Link href="/products?is_today=true" className="text-red-600">선물세트</Link>
-        </li> */}
-        <li style={{width: "140px"}} id="cow" className="relative" onMouseOver={overMenu} >
-          <Link href="/products?category=cow" className="text-black">소고기🐮</Link>
-          {/* <ol id="submenu" className={`category-menu-flex flex w-30 absolute border border-[#FACC15] ${menu.cow ? "block" : "hidden"} py-2 rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
-            {categoriesMenu.cow.map((category_menu) => (
-              <li key={category_menu}><Link href={`/products?category=cow&category_menu=${category_menu}`} className="text-white px-2">{category_menu}</Link></li>
-            ))}
-          </ol> */}
-          <ol id="submenu" onMouseOut={outMenu} className={`w-full px-4 py-2 border border-[#FACC15] ${menu.todayMenu || menu.cow || menu.pork || menu.simple || menu.imported || menu.board ? "block" : "hidden"}  rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
+        {/* <li style={{width: "140px"}} id="giftSet" className={`relative ${menu.todayMenu ? "text-red-500" : ""}`} onMouseOver={overMenu} onMouseOut={outMenu}>
+          <Link href="/products/todayMenu" className="text-red-600">오늘의 메뉴</Link>
+          <ol id="submenu" onMouseOut={outMenu} className={`w-full px-4 py-2 border border-[#FACC15] ${menu.giftSet || menu.todayMenu || menu.cow || menu.pork || menu.simple || menu.imported || menu.board ? "block" : "hidden"}  rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
             <div className="flex">
+              <div className="item" style={{width: "140px"}}>
+                {categoriesMenu.giftSet.map((category_menu) => (
+                  <li key={category_menu}><Link href={`/products?category=cow&category_menu=${category_menu}`} className="text-black px-2">{category_menu}</Link></li>
+                ))}
+              </div>
               <div className="item" style={{width: "140px"}}>
                 {categoriesMenu.cow.map((category_menu) => (
                   <li key={category_menu}><Link href={`/products?category=cow&category_menu=${category_menu}`} className="text-black px-2">{category_menu}</Link></li>
@@ -218,6 +216,56 @@ export const MegaMenu = ({user}: {user: User}) => {
               </div>
             </div>
           </ol>
+        </li> */}
+        <li style={{width: "140px"}} id="giftSet" className="relative" onMouseOver={overMenu} >
+          <Link href="/products?category=giftSet" className="text-black">선물세트</Link>
+          <ol id="submenu" onMouseOut={outMenu} className={`w-full px-4 py-2 border border-[#FACC15] ${menu.giftSet || menu.todayMenu || menu.cow || menu.pork || menu.simple || menu.imported || menu.board ? "block" : "hidden"}  rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
+            <div className="flex">
+              <div className="item" style={{width: "140px"}}>
+                {categoriesMenu.giftSet.map((category_menu) => (
+                  <li key={category_menu}><Link href={`/products?category=cow&category_menu=${category_menu}`} className="text-black px-2">{category_menu}</Link></li>
+                ))}
+              </div>
+              <div className="item" style={{width: "140px"}}>
+                {categoriesMenu.cow.map((category_menu) => (
+                  <li key={category_menu}><Link href={`/products?category=cow&category_menu=${category_menu}`} className="text-black px-2">{category_menu}</Link></li>
+                ))}
+              </div>
+              <div className="item" style={{width: "140px"}}>
+                {categoriesMenu.pork.map((category_menu) => (
+                  <li key={category_menu}><Link href={`/products?category=pork&category_menu=${category_menu}`} className="text-black">{category_menu}</Link></li>
+                ))}
+              </div>
+              <div className="item" style={{width: "140px"}}>
+                {categoriesMenu.imported.map((category_menu) => (
+                  <li key={category_menu}><Link href={`/products?category=imported&category_menu=${category_menu}`} className="text-black">{category_menu}</Link></li>
+                ))}
+              </div>
+              <div className="item" style={{width: "140px"}}>
+                {categoriesMenu.simple.map((category_menu) => (
+                  <li key={category_menu}><Link href={`/products?category=simple&category_menu=${category_menu}`} className="text-black">{category_menu}</Link></li>
+                ))}
+              </div>
+              <div className="item" style={{width: "140px"}}>
+                <li><Link href="/boards?category=notice" className="text-black">공지사항</Link></li>
+                <li><Link href="/faq" className="text-black">자주하는질문</Link></li>
+                <li><Link href="/boards?category=qna" className="text-black">문의하기</Link></li>
+              </div>
+            </div>
+          </ol>
+          {/* <ol id="submenu" className={`category-menu-flex flex w-30 absolute border border-[#FACC15] ${menu.cow ? "block" : "hidden"} py-2 rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
+            {categoriesMenu.cow.map((category_menu) => (
+              <li key={category_menu}><Link href={`/products?category=cow&category_menu=${category_menu}`} className="text-white px-2">{category_menu}</Link></li>
+            ))}
+          </ol> */}
+        </li>
+        <li style={{width: "140px"}} id="cow" className="relative" onMouseOver={overMenu} >
+          <Link href="/products?category=cow" className="text-black">소고기🐮</Link>
+          {/* <ol id="submenu" className={`category-menu-flex flex w-30 absolute border border-[#FACC15] ${menu.cow ? "block" : "hidden"} py-2 rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
+            {categoriesMenu.cow.map((category_menu) => (
+              <li key={category_menu}><Link href={`/products?category=cow&category_menu=${category_menu}`} className="text-white px-2">{category_menu}</Link></li>
+            ))}
+          </ol> */}
         </li>
         <li style={{width: "140px"}} id="pork" className="relative" onMouseOver={overMenu} >
           <Link href="/products?category=pork" className="text-black">돼지고기🐷</Link>
@@ -329,7 +377,7 @@ const MainMobileMenu = ({user}: {user: User}) => {
         <Box className="p-4" style={{backgroundImage: "url('/images/Bg_3.png')", backgroundColor: "rgba(255, 255, 255, 0.9)"}}>
           <nav>
             <div className="flex items-center gap-3 p-4">
-              {user ? (
+              {user.user_pk > 0 ? (
                 <div className="flex items-center gap-8 p-4">
                   <Image
                     src="/images/cow.png"
@@ -367,6 +415,22 @@ const MainMobileMenu = ({user}: {user: User}) => {
           <SearchBar />
           <nav>
             <ul className="items-center p-8">
+              <li>
+                <Accordion>
+                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                    <Link href="/products">선물세트</Link>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <ol>
+                      {categoriesMenu.cow.map((category_menu) => (
+                        <li key={category_menu}>
+                          <Link href={`/products?category=cow&category_menu=${category_menu}`}>{category_menu}</Link>
+                        </li>
+                      ))}
+                    </ol>
+                  </AccordionDetails>
+                </Accordion>
+              </li>
               <li>
                 <Accordion>
                   <AccordionSummary expandIcon={<ExpandMoreIcon />}>
