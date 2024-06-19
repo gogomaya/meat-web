@@ -47,7 +47,7 @@ const Products = async (props: {
   return (
     <MainLayout user={user}>
       <div className="pb-16">
-        <div className="flex justify-center text-white py-8"
+        <div className="flex justify-center text-black py-8"
           style={{
             backgroundImage: "url('/images/Bg_3.png')",
             backgroundPosition: "center calc(10% - 620px)",

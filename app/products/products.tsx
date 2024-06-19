@@ -88,7 +88,7 @@ export const ProductSubtitle = () => {
     <div>
       <div className="flex justify-center text-white text-4xl"
         style={{
-          backgroundImage: "url('/images/Bg.png')",
+          backgroundImage: "url('/images/Bg_3.png')",
           backgroundPosition: "center calc(10% - 620px)",
           backgroundRepeat: "repeat",
           backgroundSize: "cover",
