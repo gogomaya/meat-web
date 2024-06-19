@@ -86,7 +86,7 @@ export const ProductsPagination = ({searchParams, total_rows}: {searchParams: Se
 export const ProductSubtitle = () => {
   return (
     <div>
-      <div className="flex justify-center text-white text-4xl"
+      <div className="flex justify-center text-black text-4xl"
         style={{
           backgroundImage: "url('/images/Bg_3.png')",
           backgroundPosition: "center calc(10% - 620px)",
@@ -96,7 +96,9 @@ export const ProductSubtitle = () => {
           minHeight: "200px",
           flexDirection: "column",
           justifyContent: "center",
-          alignItems: "center"
+          alignItems: "center",
+          borderRadius: "15px",
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)"
         }}>상품상세</div>
     </div>
   )
@@ -430,11 +432,11 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
                   {(Number(product.discounted_price)).toLocaleString()}원
                 </strong>
               )}
-              <div>100g당 {product.per100g}</div>
+              <div>100g당 {(Number(product.discounted_price)).toLocaleString()}원</div>
             </div>
             <div><p>배송사: 로젠택배</p></div>
             {/* <strong className="text-4xl text-red-700">{(Number(product.discounted_price) * quantity).toLocaleString()}원</strong> */}
-            <div className="py-3 flex flex-wrap gap-2">
+            <div className="py-6 flex flex-wrap gap-2">
               <button
                 className="product-button"
                 style={{

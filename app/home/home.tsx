@@ -9,20 +9,21 @@ import {SwiperSlide} from "swiper/react"
 export const HomeBanner = () => {
   return (
     <section
-      className="section bg-cover bg-center bg-no-repeat py-12 p-6 md:p-12 text-white relative"
+      className="section bg-cover bg-center bg-no-repeat py-12 p-6 md:p-12 text-white relative border border-yellow-200"
       style={{
         backgroundImage: "url('/images/Bg_4.png')",
         backgroundRepeat: "repeat-x",
         backgroundSize: "cover",
         // backgroundPosition: "center",
         backgroundPositionX: "25%",
-        backgroundPositionY: "8%",
+        backgroundPositionY: "0%",
         textAlign: "center",
         minHeight: "700px",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)"
       }}
     >
       <div className="flex flex-col items-center space-y-4 md:w-1/2 z-6 gap-1" style={{maxWidth: "800px"}}>
@@ -317,9 +318,15 @@ export const HomeWhyUs = () => {
 
   return (
     <section
-      className="section why bg-cover bg-center bg-no-repeat p-6 md:p-12 text-black"
+      className="section why p-6 md:p-12 text-black"
       style={{
-        backgroundImage: "url(\"/images/Bg_3.png\")"
+        backgroundImage: "url(\"/images/Bg_3.png\")",
+        backgroundRepeat: "repeat-x",
+        backgroundSize: "cover",
+        // backgroundPosition: "center",
+        backgroundPositionX: "55%",
+        backgroundPositionY: "60%",
+        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)"
       }}
     >
       <div className="container flex flex-col md:flex-row justify-between items-center gap-10">
