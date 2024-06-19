@@ -55,7 +55,7 @@ const MainLayout = ({
     <div className="mx-auto">
       <header
         id="header"
-        className="p-4 sticky top-0 z-20 bg-cover bg-center bg-opacity-90 w-full flex items-center md:py-4 md:px-10 transition-opacity -300 border-b border-white"
+        className="p-4 sticky top-0 z-20 bg-cover bg-center bg-opacity-90 w-full flex items-center md:py-4 md:px-10 transition-opacity -300 border-b border-yellow-200"
         style={{
           backgroundImage: "url('/images/Bg_3.png')",
           backgroundPosition: "center calc(50% - 38px)",
@@ -453,9 +453,10 @@ const MainBottom = () => {
   }
   return (
     <section
-      className="section footer bg-cover bg-center bg-no-repeat"
+      className="section footer bg-cover bg-center bg-no-repeat border border-yellow-200"
       style={{
-        backgroundImage: "url(\"/images/Bg_3.png\")"
+        backgroundImage: "url(\"/images/Bg_3.png\")",
+        boxShadow: "0 -4px 8px rgba(0, 0, 0, 0.1)"
       }}
     >
       <div className="bg-transparent p-6 md:p-12">

@@ -319,13 +319,31 @@ export const FaqSection: React.FC = () => {
   ]
 
   return (
+    <><div className="flex justify-center items-center text-balck text-4xl font-bold p-8"
+      style={{
+        backgroundImage: "url('/images/Bg_3.png')",
+        backgroundRepeat: "repeat-x",
+        backgroundSize: "cover",
+        backgroundPositionX: "55%",
+        backgroundPositionY: "0%",
+        textAlign: "center",
+        minHeight: "250px",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: "15px",
+        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)"
+      }}>
+      <div style={{marginBottom: "10px", fontSize: "2rem", textTransform: "uppercase", letterSpacing: "2px"}}>FAQ</div>
+      <div style={{fontSize: "1.5rem", fontWeight: "lighter", opacity: "0.9"}}>자주 묻는 질문</div>
+    </div>
     <section className="section faq">
       <div className="container">
         <div className="faq-main-wrap">
-          <div className="section-top-wrap">
-            <div className="section-sub-title">faq</div>
-            <div className="section-title">자주 묻는 질문</div>
-          </div>
+          {/* <div className="section-top-wrap">
+      <div className="section-sub-title" style={{ fontSize: '2rem' }}>faq</div>
+      <div className="section-title" style={{ fontSize: '3rem' }}>자주 묻는 질문</div>
+    </div> */}
           <div className="faq-grid-wrap">
             {faqData.map((faq, index) => (
               <div key={index} id={`faq-${index}`} className="faq-wrapper">
@@ -335,6 +353,6 @@ export const FaqSection: React.FC = () => {
           </div>
         </div>
       </div>
-    </section>
+    </section></>
   )
 }

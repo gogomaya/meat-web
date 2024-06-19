@@ -50,15 +50,19 @@ const Products = async (props: {
         <div className="flex justify-center text-black py-8"
           style={{
             backgroundImage: "url('/images/Bg_3.png')",
-            backgroundPosition: "center calc(10% - 620px)",
-            backgroundRepeat: "repeat",
+            backgroundRepeat: "repeat-x",
             backgroundSize: "cover",
+            // backgroundPosition: "center",
+            backgroundPositionX: "20%",
+            backgroundPositionY: "0%",
             textAlign: "center",
             minHeight: "200px",
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            fontSize: "32px"
+            fontSize: "32px",
+            borderRadius: "15px",
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)"
           }}>{titleName()}</div>
         <div className="container">
           <ProductsList products={products} />
