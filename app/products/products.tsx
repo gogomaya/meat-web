@@ -257,7 +257,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
           ))
         ) : (
           <div style={{width: "100%", textAlign: "center", padding: "20px"}}>
-            준비된 상품이 없습니다.
+            준비중입니다.
           </div>
         )}
       </ol>

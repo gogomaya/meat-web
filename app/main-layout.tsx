@@ -13,6 +13,9 @@ import {User} from "@/types/usersTypes"
 import {commonServices} from "@/services/commonServices"
 import ExpandLessIcon from "@mui/icons-material/ExpandLess"
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"
+import {usersServices} from "@/services/usersServices"
+import {useRouter} from "next/navigation"
+
 
 
 const MainLayout = ({
@@ -126,7 +129,7 @@ export const CsIcon = () => {
       <button onClick={scrollToTop} className="p-1 rounded-full flex items-center justify-center w-16 h-16">
         <ExpandLessIcon style={{fontSize: "32px"}} />
       </button>
-      <Link href="http://pf.kakao.com/_NZDHK">
+      <Link href="http://pf.kakao.com/_xeDxgxkG">
         <Image
           src="/images/quick_kakao.png"
           alt=""
@@ -350,13 +353,13 @@ const MainSearch = () => {
   </>
 }
 
-const MainMobileMenu = ({user}: {user: User}) => {
+const MainMobileMenu = ({user}: { user: User }) => {
   const [open, setOpen] = useState(false)
   const categoriesMenu = commonServices.categoriesMenu()
 
   const handleLinkClick = () => {
     window.postMessage({loginPopup: "on"}, "*")
-    return
+    setOpen(false)
   }
 
   return (
@@ -376,18 +379,42 @@ const MainMobileMenu = ({user}: {user: User}) => {
       >
         <Box className="p-4" style={{backgroundImage: "url('/images/Bg_3.png')", backgroundColor: "rgba(255, 255, 255, 0.9)"}}>
           <nav>
-            <div className="flex items-center gap-3 p-4">
+            <div className="flex justify-end">
+              <IconButton onClick={() => setOpen(false)}>
+                <CloseIcon />
+              </IconButton>
+            </div>
+            <div className="flex items-center gap-3 px-4">
               {user.user_pk > 0 ? (
                 <div className="flex items-center gap-8 p-4">
-                  <Image
-                    src="/images/cow.png"
-                    alt="Logo"
-                    width={60}
-                    height={60}
-                    sizes="100vw"
-                    className="md:w-16"
-                    priority /><div className="text-red-700">
-                    <strong>{user.name || user.nickname}</strong><span className="text-black">님, 안녕하세요 :)</span>
+                  <div>
+                    <Image
+                      src="/images/cow.png"
+                      alt="Logo"
+                      width={80}
+                      height={80}
+                      sizes="100vw"
+                      className="md:w-16"
+                      priority
+                    />
+                  </div>
+                  <div className="flex flex-col gap-3">
+                    <div className="text-red-700">
+                      <strong>{user.name || user.nickname}</strong><span className="text-black">님, 안녕하세요 :)</span>
+                    </div>
+                    <div className="flex justify-end">
+                      <button type="button"
+                        className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+                        onClick={async () => {
+                          await usersServices.usersLogout()
+                          setOpen(false)
+                          window.location.reload()
+                        }}
+                        style={{marginBottom: "20px", padding: "5px 10px"}}
+                      >
+                        로그아웃
+                      </button>
+                    </div>
                   </div>
                 </div>
               ) : (
@@ -407,9 +434,6 @@ const MainMobileMenu = ({user}: {user: User}) => {
                 </>
               )}
               <span className="flex-1"></span>
-              <IconButton onClick={() => setOpen(false)}>
-                <CloseIcon />
-              </IconButton>
             </div>
           </nav>
           <SearchBar />
@@ -422,7 +446,7 @@ const MainMobileMenu = ({user}: {user: User}) => {
                   </AccordionSummary>
                   <AccordionDetails>
                     <ol>
-                      {categoriesMenu.cow.map((category_menu) => (
+                      {categoriesMenu.giftSet.map((category_menu) => (
                         <li key={category_menu}>
                           <Link href={`/products?category=giftSet&category_menu=${category_menu}`}>{category_menu}</Link>
                         </li>
@@ -513,6 +537,7 @@ const MainMobileMenu = ({user}: {user: User}) => {
     </div>
   )
 }
+
 
 const SearchBar = () => {
   return (

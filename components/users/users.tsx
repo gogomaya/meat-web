@@ -268,7 +268,7 @@ const Users = ({user}: {user: User}) => {
                   priority
                 />
               </div>
-              <div className="flex items-center gap-3 justify-center text-red-700 py-4">
+              <div className="flex items-center justify-center text-red-700 py-4">
                 <strong>{user.name || user.nickname}</strong><span className="text-black">님, 안녕하세요 :)</span>
               </div>
               <button type="button"
