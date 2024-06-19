@@ -17,7 +17,7 @@ export const MyPageBanner: React.FC<MyPageBannerProps> = ({title,subTitle}) => {
   return (
     <div className="flex justify-center py-8"
       style={{
-        backgroundImage: "url('/images/Bg.png')",
+        backgroundImage: "url('/images/Bg_3.png')",
         backgroundPosition: "center calc(10% - 620px)",
         backgroundRepeat: "repeat",
         backgroundSize: "cover",
@@ -31,7 +31,7 @@ export const MyPageBanner: React.FC<MyPageBannerProps> = ({title,subTitle}) => {
       { title != ""
         ?
         <p>
-          <span className="text-white">{title}</span> / <span style={{color:"#A51C30",textDecoration:"underline"}}>{subTitle}</span>
+          <span className="text-black">{title}</span> / <span style={{color:"#A51C30",textDecoration:"underline"}}>{subTitle}</span>
         </p>
         :
         <></>

@@ -101,7 +101,7 @@ const OrderPay = async (props: {
       <div>
         <div className="flex justify-center text-red-100 text-4xl"
           style={{
-            backgroundImage: "url('/images/Bg.png')",
+            backgroundImage: "url('/images/Bg_3.png')",
             backgroundPosition: "center calc(10% - 620px)",
             backgroundRepeat: "repeat",
             backgroundSize: "cover",

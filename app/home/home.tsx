@@ -14,6 +14,9 @@ export const HomeBanner = () => {
         backgroundImage: "url('/images/Bg_4.png')",
         backgroundRepeat: "repeat-x",
         backgroundSize: "cover",
+        // backgroundPosition: "center",
+        backgroundPositionX: "25%",
+        backgroundPositionY: "8%",
         textAlign: "center",
         minHeight: "700px",
         display: "flex",
@@ -314,7 +317,7 @@ export const HomeWhyUs = () => {
 
   return (
     <section
-      className="section why bg-cover bg-center bg-no-repeat p-6 md:p-12 text-white"
+      className="section why bg-cover bg-center bg-no-repeat p-6 md:p-12 text-black"
       style={{
         backgroundImage: "url(\"/images/Bg_3.png\")"
       }}

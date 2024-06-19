@@ -56,7 +56,13 @@ const MainLayout = ({
       <header
         id="header"
         className="p-4 sticky top-0 z-20 bg-cover bg-center bg-opacity-90 w-full flex items-center md:py-4 md:px-10 transition-opacity -300 border-b border-white"
-        style={{backgroundImage: "url('/images/Bg_3.png')", backgroundPosition: "center calc(50% - 38px)", opacity: headerOpacity}}
+        style={{
+          backgroundImage: "url('/images/Bg_3.png')",
+          backgroundPosition: "center calc(50% - 38px)",
+          opacity: headerOpacity,
+          backgroundPositionX: "45%",
+          backgroundPositionY: "68%"
+        }}
       >
         <MainMobileMenu />
         <Link href="/">
@@ -452,7 +458,7 @@ const MainBottom = () => {
         backgroundImage: "url(\"/images/Bg_3.png\")"
       }}
     >
-      <div className="bg-transparent p-6 md:p-12 text-white">
+      <div className="bg-transparent p-6 md:p-12">
         <div className="flex footer-menu-link space-x-4">
           <Link href={"https://smartstore.naver.com/hansolmeat1534"}>
             <div className="footer-menu-content cursor-pointer hover:underline text-black">회사소개</div>

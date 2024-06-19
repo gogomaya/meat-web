@@ -39,7 +39,7 @@ const Boards = async (props: {
       <div
         className="flex justify-center text-red-100 py-8 text-4xl"
         style={{
-          backgroundImage: "url('/images/Bg.png')",
+          backgroundImage: "url('/images/Bg_3.png')",
           backgroundPosition: "center calc(10% - 220px)",
           backgroundRepeat: "repeat",
           backgroundSize: "cover",
