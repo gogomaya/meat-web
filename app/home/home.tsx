@@ -151,7 +151,7 @@ export const HomeCateMenu = () => {
   }, [])
 
   return (
-    <section className="px-8 md:p-8 mx-2 md:mx-8 py-8">
+    <section className="px-8 md:p-8 mx-2 md:mx-8 py-12">
       <div className="container flex flex-col md:flex-row gap-10">
         <div className="relative section flex-1 h-64 md:h-auto rounded-lg overflow-hidden" data-index="0">
           <div className="bg-image absolute inset-0 bg-cover bg-center bg-no-repeat" style={{backgroundImage: "linear-gradient(to bottom, #271a11, rgba(0, 0, 0, 0) 67%), url('/images/Rectangle 6.png')"}}></div>
@@ -221,7 +221,7 @@ export const HomeCateMenu = () => {
             <div className="relative flex flex-col justify-center items-center h-full text-white p-2 gap-6">
               <div className="text-sm md:text-2xl md:text-2xl font-bold mb-2 text-center">🍲 고추장불고기 & 간장불고기 <br />제육볶음 주물럭 밀키트</div>
               <Link href="/products?category=simple">
-                <button className="text-sm md:text-xl flex items-center justify-between gap-2 w-full p-2 md:py-2 md:px-4 bg-black text-white rounded hover:bg-gray-800 transition duration-300">
+                <button className="text-xs md:text-xl flex items-center justify-between gap-2 w-full p-2 md:py-2 md:px-4 bg-black text-white rounded hover:bg-gray-800 transition duration-300">
                   <span>&#39;밀키트&#39; 바로가기</span>
                   <Image
                     src="/images/Icon Right.png"
@@ -330,7 +330,7 @@ export const HomeWhyUs = () => {
       }}
     >
       <div className="container flex flex-col md:flex-row justify-between items-center gap-10">
-        <div className="flex flex-col space-y-4 md:w-1/2 p-12">
+        <div className="flex flex-col space-y-4 md:w-1/2 md:px-16">
           <div className="why-inner text-lg font-extrabold text-red-700">WHY US?</div>
           <div className="why-inner text-2xl md:text-4xl font-bold text-black">왜 <span className="text-red-700">&apos;한솔축산&apos;</span> 인가?</div>
           <div className="why-inner text-lg md:text-xl text-black">

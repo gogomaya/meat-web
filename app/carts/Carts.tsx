@@ -410,11 +410,12 @@ export const CartsDetailContent = ({user}: { user: User }) => {
                       const productPrice = cartProduct.product ? Number(cartProduct.product.price) : 0
                       return productPrice * cartProduct.quantity
                     }) -
-                    (_.sumBy(cartProducts, (cartProduct) => {
+                    _.sumBy(cartProducts, (cartProduct) => {
                       const productPrice = cartProduct.product ? Number(cartProduct.product.price) : 0
                       const discountedPrice = cartProduct.product ? Number(cartProduct.product.discounted_price) : 0
                       return (productPrice - discountedPrice) * cartProduct.quantity
-                    }))) +
+                    })
+                    ) +
                     shippingFee
                   ).toLocaleString()}원
                 </span>

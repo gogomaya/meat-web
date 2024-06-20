@@ -11,7 +11,7 @@ const AdminOrders = async (props: {searchParams: SearchParams}) => {
   const searchParams = {
     rowsPerPage: Number(props.searchParams.rowsPerPage) || 10,
     page: Number(props.searchParams.page) || 0,
-    orderColumn: props.searchParams.orderColumn || "user_pk",
+    orderColumn: props.searchParams.orderColumn || "order_pk",
     orderDirection: props.searchParams.orderDirection || "desc",
     query: props.searchParams.query || ""
   } as SearchParams
