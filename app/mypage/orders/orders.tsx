@@ -72,7 +72,7 @@ export const CancelButton: React.FC<OrderProps> = ({order}) => {
           }
         })
 
-        // location.reload()
+        location.reload()
       }
     })
   }
