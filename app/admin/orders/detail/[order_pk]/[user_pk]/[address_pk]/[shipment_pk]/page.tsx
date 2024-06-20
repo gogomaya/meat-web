@@ -11,9 +11,10 @@ import {orderItemsService} from "@/services/orderItemsServices"
 import {OrderItem, OrderItemSearchParams} from "@/types/orderItemsTypes"
 import {myPageData} from "@/app/mypage/mypageData"
 import AdminLayout from "@/app/admin-layout"
+import {shipmentsServices} from "@/services/shipmentsServices"
 
 const OrderDetail = async (props: {
-  params: { order_pk: number, user_pk: number }
+  params: { order_pk: number, user_pk: number, address_pk: number, shipment_pk: number }
   searchParams: OrderSearchParams
 }) => {
   const {user} = await loginCheck(false)
@@ -22,15 +23,20 @@ const OrderDetail = async (props: {
 
   let ordersResponse: ResponseApi = {}
   let userInfoResponse: ResponseApi = {}
+  let shipmentResponse: ResponseApi = {}
   let orderItemsResponse: ResponseApi = {}
-  let order_pk = props.params.order_pk
 
-  let userInfo: []
+  let order_pk = props.params.order_pk
+  let user_pk = props.params.user_pk
+  let address_pk = props.params.address_pk
+  let shipment_pk = props.params.shipment_pk
+
+  let userInfo: any
   let orderItems = []
-  let user_pk = 0
   let order : Order = {
     order_pk: 0,
-    user_pk: null,
+    user_pk: 0,
+    address_pk: 0,
     shipment_pk: 0,
     title: "",
     total_count: 0,
@@ -38,7 +44,6 @@ const OrderDetail = async (props: {
     created_at: "",
     file_name: undefined,
     order_id: "",
-    address_pk: 0,
     shipfee: 0,
     discount: 0,
     total_discount_price: 0
@@ -57,19 +62,18 @@ const OrderDetail = async (props: {
     ordersResponse = await ordersServices.ordersDetail(order_pk)
     order = ordersResponse.data.order
     // user_pk = order.user_pk
-    userInfoResponse = await usersServices.usersDetail(user_pk)
     orderItemsResponse = await orderItemsService.orderItemsRead(searchParams)
-    console.log(":::::::::: orderItemsResponse ::::::::::")
-    console.log(orderItemsResponse)
-    console.log(":::::::::: orderItemsResponse ::::::::::")
+    userInfoResponse = await usersServices.usersDetail(user_pk)
+    // shipmentResponse = await shipmentsServices.shipmentDetail(shipment_pk)
+    userInfo = userInfoResponse.data
+    console.log(":::::::::: shipmentInfoResponse ::::::::::")
     console.log(userInfoResponse)
     orderItems = orderItemsResponse.data.orderItems
-    console.log(orderItems)
+    // console.log(orderItems)
   } catch (error) {
     console.error(error)
     return <ErrorPage />
   }
-  console.log(ordersResponse)
   const formatNumber = (number: number) => {
     const formattedNumber = number.toLocaleString()
     return formattedNumber
@@ -98,7 +102,6 @@ const OrderDetail = async (props: {
                 </div>
               </div>
             </div>
-            {/* 상세 정보 라인 */}
             <div className="w-full flex flex-wrap flex-col md:flex-row justify-between bg-white border border-solid border-gray-200 my-4">
               <div className="item flex-1 bg-gray-200 text-center">
                 <div className="inner p-1">
@@ -134,6 +137,100 @@ const OrderDetail = async (props: {
               <div className="item flex-[3]">
                 <div className="inner p-1">
                   <span className="px-3">{getOrderStatusMeaning( order.status )}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="box py-4">
+            <p className="text-xl font-bold py-3">구매자 정보</p>
+            {/* 상세 정보 라인 */}
+            <div className="w-full flex flex-wrap flex-col md:flex-row justify-between bg-white border border-solid border-gray-200 my-4">
+              <div className="item flex-1 bg-gray-200 text-center">
+                <div className="inner p-1">
+                  <span className="font-bold">성명 또는 닉네임</span>
+                </div>
+              </div>
+              <div className="item flex-[3]">
+                <div className="inner p-1">
+                  <span className="px-3" id="orderPk">
+                    {userInfo.user.name}
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div className="w-full flex flex-wrap flex-col md:flex-row justify-between bg-white border border-solid border-gray-200 my-4">
+              <div className="item flex-1 bg-gray-200 text-center">
+                <div className="inner p-1">
+                  <span className="font-bold">전화번호</span>
+                </div>
+              </div>
+              <div className="item flex-[3]">
+                <div className="inner p-1">
+                  <span className="px-3">{userInfo.user.mobile }</span>
+                </div>
+              </div>
+            </div>
+            <div className="w-full flex flex-wrap flex-col md:flex-row justify-between bg-white border border-solid border-gray-200 my-4">
+              <div className="item flex-1 bg-gray-200 text-center">
+                <div className="inner p-1">
+                  <span className="font-bold">가입경로</span>
+                </div>
+              </div>
+              <div className="item flex-[3]">
+                <div className="inner p-1">
+                  <span className="px-3">{userInfo.user.third_party}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="box py-4">
+            <p className="text-xl font-bold py-3">배송 정보</p>
+            {/* 상세 정보 라인 */}
+            <div className="w-full flex flex-wrap flex-col md:flex-row justify-between bg-white border border-solid border-gray-200 my-4">
+              <div className="item flex-1 bg-gray-200 text-center">
+                <div className="inner p-1">
+                  <span className="font-bold">송장번호</span>
+                </div>
+              </div>
+              <div className="item flex-[3]">
+                <div className="inner p-1">
+                  <span className="px-3" id="orderPk"></span>
+                </div>
+              </div>
+            </div>
+            <div className="w-full flex flex-wrap flex-col md:flex-row justify-between bg-white border border-solid border-gray-200 my-4">
+              <div className="item flex-1 bg-gray-200 text-center">
+                <div className="inner p-1">
+                  <span className="font-bold">배송업체</span>
+                </div>
+              </div>
+              <div className="item flex-[3]">
+                <div className="inner p-1">
+                  <span className="px-3"></span>
+                </div>
+              </div>
+            </div>
+            <div className="w-full flex flex-wrap flex-col md:flex-row justify-between bg-white border border-solid border-gray-200 my-4">
+              <div className="item flex-1 bg-gray-200 text-center">
+                <div className="inner p-1">
+                  <span className="font-bold">배송상태</span>
+                </div>
+              </div>
+              <div className="item flex-[3]">
+                <div className="inner p-1">
+                  <span className="px-3"></span>
+                </div>
+              </div>
+            </div>
+            <div className="w-full flex flex-wrap flex-col md:flex-row justify-between bg-white border border-solid border-gray-200 my-4">
+              <div className="item flex-1 bg-gray-200 text-center">
+                <div className="inner p-1">
+                  <span className="font-bold">배송등록일자</span>
+                </div>
+              </div>
+              <div className="item flex-[3]">
+                <div className="inner p-1">
+                  <span className="px-3"></span>
                 </div>
               </div>
             </div>
@@ -184,10 +281,6 @@ const OrderDetail = async (props: {
               </div>
             </>
           ))}
-          {/* <p className="text-xl font-bold py-3">구매자 정보</p>
-          {userInfo.map((item:UserInfo) => (
-
-          ))}  */}
         </div>
       </div>
     </AdminLayout>

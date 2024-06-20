@@ -19,6 +19,7 @@ import {getOrderStatusMeaning} from "@/app/mypage/orders/ordersUtils"
 import withReactContent from "sweetalert2-react-content"
 import Swal from "sweetalert2"
 import * as XLSX from "xlsx"
+import {ordersServices} from "@/services/ordersServices"
 
 const AdminOrdersList = ({
   orders,
@@ -76,36 +77,61 @@ const AdminOrdersList = ({
   //     cancelButtonText: "닫기"
   //   })
   // }
-  const handleOrderDetail = async (order_pk: number, user_pk: number) => {
-    // console.log(`order_pk : ${order_pk}`)
-    router.push(`/admin/orders/detail/${order_pk}?user_pk=${user_pk}`)
+  const handleOrderDetail = async (order_pk: number, user_pk: number, address_pk: number, shipment_pk: number) => {
+    // alert(`=====user_pk : ${user_pk}`)
+    router.push(`/admin/orders/detail/${order_pk}/${user_pk}/${address_pk}/${shipment_pk}`)
   }
   const handleDelete = async (order_pk : number) => {
-    // console.log(`order_pk : ${order_pk}`)
     MySwal.fire({
       title: <p>정말로 삭제하시겠습니까?</p>,
-      text: "주문 내역이 삭제되면, 되돌릴 수 없습니다.",
+      text: "주문이 취소되면, 되돌릴 수 없습니다.",
       icon: "warning",
       confirmButtonText: "삭제",
       showCancelButton: true,
       cancelButtonText: "취소"
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
+        let orderResponse: ResponseApi = {}
+        orderResponse = await ordersServices.ordersDelete(order_pk)
+        console.log(orderResponse)
+
         MySwal.fire({
-          title: <p>주문 내역이 삭제되었습니다.</p>,
+          title: <p>주문요청이 취소되었습니다.</p>,
           didOpen: () => {
             Swal.showLoading()
           }
         })
-        // TODO: 주문 삭제 요청
-        // ordersServices.ordersDelete(order_pk)
+
         location.reload()
       }
     })
   }
-  const handleStartShipping = (order_pk: number) => {
-    alert("송장번호 입력")
-  }
+  // const handleStartShipping = (address_pk:number, shipment_pk: number) => {
+  //   MySwal.fire({
+  //     title: <p>배송관리</p>,
+  //     text: "송장번호를 입력해주세요",
+  //     icon: "info",
+  //     confirmButtonText: "입력",
+  //     showCancelButton: true,
+  //     cancelButtonText: "취소"
+  //   }).then(async (result) => {
+  //     if (result.isConfirmed) {
+  //       // 배송상태 조회
+  //       let orderResponse: ResponseApi = {}
+  //       orderResponse = await ordersServices.ordersDelete(order_pk)
+  //       console.log(orderResponse)
+
+  //       MySwal.fire({
+  //         title: <p>주문요청이 취소되었습니다.</p>,
+  //         didOpen: () => {
+  //           Swal.showLoading()
+  //         }
+  //       })
+
+  //       location.reload()
+  //     }
+  //   })
+  // }
 
   useEffect(() => {
     setQuery(searchParams.query)
@@ -137,14 +163,14 @@ const AdminOrdersList = ({
             <EnhancedTabledHead
               searchParams={searchParams}
               headCells={[
-                {id: "shipment_start", label: "배송관리", sort: true},
+                // {id: "shipment_start", label: "배송상태", sort: true},
                 {id: "order_pk", label: "주문번호", sort: true},
                 // {id: "address_pk", label: "주소지", sort: true},
                 {id: "user_pk", label: "주문자 회원번호", sort: true},
                 {id: "title", label: "주문내역", sort: true},
                 {id: "total_quantity", label: "총 수량", sort: true},
                 {id: "total_discount_price", label: "총가격", sort: true},
-                {id: "guest_mobile", label: "(비회원)전화번호", sort: true},
+                {id: "guest_mobile", label: "회원여부", sort: true},
                 {id: "order_status", label: "주문상태", sort: true},
                 // {id: "shipment_pk", label: "배송번호", sort: true},
                 {id: "created_at", label: "주문등록일자", sort: true},
@@ -153,23 +179,23 @@ const AdminOrdersList = ({
             />
             <TableBody>
               {orders.map((order) => (
-                <TableRow key={order.order_pk} onClick={()=>handleOrderDetail(order.order_pk, order.user_pk ?? 0)} style={{cursor: "pointer"}}>
-                  {getOrderStatusMeaning(order.status) === "결제완료" ? (
+                <TableRow key={order.order_pk} onClick={()=>handleOrderDetail(order.order_pk, order.user_pk ?? 0, order.address_pk, order.shipment_pk)} style={{cursor: "pointer"}}>
+                  {/* {getOrderStatusMeaning(order.status) === "결제완료" ? (
                     <TableCell>
-                      <button className="custom-admin-button" onClick={() => handleStartShipping(order.order_pk)}>
-                        배송시작
+                      <button className="custom-admin-button" onClick={() => handleStartShipping(order.address_pk, order.shipment_pk)}>
+                        배송시작하기
                       </button>
                     </TableCell>
                   ) : (
                     <TableCell></TableCell>
-                  )}
+                  )} */}
                   <TableCell>{order.order_pk}</TableCell>
                   {/* <TableCell onClick={()=>handleOrderDetail(order.order_pk)} style={{cursor: "pointer"}}>{order.address_pk}</TableCell> */}
                   <TableCell>{order.user_pk}</TableCell>
                   <TableCell>{order.title}</TableCell>
                   <TableCell>{order.total_quantity}</TableCell>
                   <TableCell>{Number(order.total_discount_price).toLocaleString()}</TableCell>
-                  <TableCell>{order.guest_mobile}</TableCell>
+                  <TableCell>{order.guest_mobile ? "비회원" : "회원"}</TableCell>
                   <TableCell>{getOrderStatusMeaning(order.status)}</TableCell>
                   {/* <TableCell>{order.shipment_pk}</TableCell> */}
                   <TableCell>{moment(order.created_at).format("YYYY-MM-DD")}</TableCell>

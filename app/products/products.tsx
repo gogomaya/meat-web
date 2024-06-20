@@ -945,7 +945,7 @@ export const NavDetail = () => {
   const [isFixed, setIsFixed] = React.useState(false)
   React.useEffect(() => {
     const handleScroll = () => {
-      const scrollY = window.scrollY - 240
+      const scrollY = window.scrollY
       const navElement = document.querySelector(".nav-detail") as HTMLElement
 
       if (scrollY > navElement.offsetTop) {
@@ -984,14 +984,14 @@ export const NavDetail = () => {
 
   return (
     <nav className={`!block md:hidden container sticky top-16 items-center w-full z-10 ${isFixed ? "visible" : "invisible md:visible"} flex-1 flex justify-center items-center nav-detail`} style={{height: "100px"}}>
-      <ul className="flex w-full h-20 items-center">
+      <ul className="flex w-full h-30 items-center py-8">
         <li
           onClick={() => {
             scrollToElement("detail")
             handleMouseHover()
             handleMouseClick("detail")
           }}
-          className={`p-2 flex-1 text-center ${isHovered ? "highlight-underline" : ""} ${isClicked === "detail" ? "text-red-500" : ""}`}
+          className={`p-2 flex-1 bg-white text-center ${isHovered ? "highlight-underline" : ""} ${isClicked === "detail" ? "text-red-500" : ""}`}
           style={{
             border: "3px solid #271A11",
             marginLeft: "8px"
@@ -1005,7 +1005,7 @@ export const NavDetail = () => {
             handleMouseHover()
             handleMouseClick("review2")
           }}
-          className={`p-2 flex-1 text-center ${isHovered ? "highlight-underline" : ""} ${isClicked === "review2" ? "text-red-500" : ""}`}
+          className={`p-2 flex-1 bg-white text-center ${isHovered ? "highlight-underline" : ""} ${isClicked === "review2" ? "text-red-500" : ""}`}
           style={{
             borderTop: "3px solid #271A11",
             borderBottom: "3px solid #271A11"
@@ -1019,7 +1019,7 @@ export const NavDetail = () => {
             handleMouseHover()
             handleMouseClick("qna")
           }}
-          className={`p-2 flex-1 text-center ${isHovered ? "highlight-underline" : ""} ${isClicked === "qna" ? "text-red-500" : ""}`}
+          className={`p-2 flex-1 bg-white text-center ${isHovered ? "highlight-underline" : ""} ${isClicked === "qna" ? "text-red-500" : ""}`}
           style={{
             border: "3px solid #271A11"
           }}
@@ -1032,7 +1032,7 @@ export const NavDetail = () => {
             handleMouseHover()
             handleMouseClick("ship")
           }}
-          className={`p-2 flex-1 text-center ${isHovered ? "highlight-underline" : ""} ${isClicked === "ship" ? "text-red-500" : ""}`}
+          className={`p-2 flex-1 bg-white text-center ${isHovered ? "highlight-underline" : ""} ${isClicked === "ship" ? "text-red-500" : ""}`}
           style={{
             borderTop: "3px solid #271A11",
             borderBottom: "3px solid #271A11",
