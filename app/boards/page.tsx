@@ -37,9 +37,9 @@ const Boards = async (props: {
   return (
     <MainLayout user={user}>
       <div
-        className="flex justify-center text-red-100 py-8 text-4xl"
+        className="flex justify-center text-black py-8 text-4xl"
         style={{
-          backgroundImage: "url('/images/Bg.png')",
+          backgroundImage: "url('/images/Bg_3.png')",
           backgroundPosition: "center calc(10% - 220px)",
           backgroundRepeat: "repeat",
           backgroundSize: "cover",
@@ -47,7 +47,9 @@ const Boards = async (props: {
           minHeight: "200px",
           flexDirection: "column",
           justifyContent: "center",
-          alignItems: "center"
+          alignItems: "center",
+          borderRadius: "15px",
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)"
         }}
       >{boardsMessage.title}</div>
       <BoardsList

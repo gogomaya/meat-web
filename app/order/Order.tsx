@@ -111,7 +111,8 @@ export const OrderDetailContent = ({
   console.log(`addressList[0].address_pk (기본 배송지 번호) : ${addressList[0].address_pk}`)
 
   const totalDiscount = order.discount
-  const totalShipFee = order.shipfee
+  const totalShipFee = Number(order?.total_price) >= 150000 ? 0 : 5000
+  // const totalShipFee = order.shipfee
   const finalPrice = Number(order?.total_price) - totalDiscount + totalShipFee
 
   // 결제에 필요한 정보
@@ -163,9 +164,14 @@ export const OrderDetailContent = ({
                     priority />
                 </td>
                 <td className="p-3 text-center">{orderItem.name}</td>
-                <td className="p-3 text-center">{orderItem.price.toLocaleString()}원</td>
+                <td className="p-3 text-center">
+                  <span className="line-through">{orderItem.price.toLocaleString()}원</span><br />
+                  <span className="text-[#A51C30] font-bold">{orderItem.discounted_price.toLocaleString()}원</span>
+                </td>
                 <td className="p-3 text-center">{orderItem.quantity}</td>
-                <td className="p-3 text-center">{(Number(orderItem.price)*orderItem.quantity).toLocaleString()}원</td>
+                <td className="p-3 text-center">
+                  <span className="text-[#A51C30] font-bold">{(Number(orderItem.discounted_price)*orderItem.quantity).toLocaleString()}원</span>
+                </td>
               </tr>
             ))
           }
@@ -173,10 +179,6 @@ export const OrderDetailContent = ({
       </table>
     )
   }
-
-  // const handlePayMethodChange = (type: string) => {
-  //   setOrderInfo({...orderInfo, paymentMethod: type})
-  // }
 
   // 주소창 이벤트 핸들러
   const [enroll_company, setEnroll_company] = useState({
@@ -196,63 +198,6 @@ export const OrderDetailContent = ({
     setPopup(!popup)
   }
 
-  // 영수증 타입 변경 핸들러
-  // const handleReceiptTypeChange = (type: string) => {
-  //   setOrderInfo({...orderInfo, receiptType: type})
-  // }
-
-  // 영수증 내용 렌더링 함수
-  const RenderReceiptContent = () => {
-    const [phoneNumber, setPhoneNumber] = useState("010-111-1111")
-    const [editingPhoneNumber, setEditingPhoneNumber] = useState(false)
-
-    const handlePhoneNumberChange = (e: { target: { value: SetStateAction<string> } }) => {
-      setPhoneNumber(e.target.value)
-    }
-
-    const handleEditButtonClick = () => {
-      setEditingPhoneNumber(true)
-    }
-
-    const handleSaveButtonClick = () => {
-      setEditingPhoneNumber(false)
-    }
-
-    // if (orderInfo.receiptType === "personal" || orderInfo.receiptType === "business") {
-    //   return (
-    //     <div className="flex justify-between items-center border-b m-2" style={{backgroundColor: "#fff"}}>
-    //       <h5>{orderInfo.receiptType === "personal" ? "개인소득공제용" : "사업자 지출증빙용"}</h5>
-    //       {editingPhoneNumber ? (
-    //         <input
-    //           type="text"
-    //           value={phoneNumber}
-    //           onChange={handlePhoneNumberChange}
-    //           style={{border: "1px solid black"}} // 추가된 부분
-    //         />
-    //       ) : (
-    //         <h5>{phoneNumber}</h5>
-    //       )}
-    //       {editingPhoneNumber ? (
-    //         <button className="bg-green-500 text-white font-semibold px-6 py-3 rounded-lg shadow-lg hover:bg-green-600 transition-colors" onClick={handleSaveButtonClick}>
-    //           저장
-    //         </button>
-    //       ) : (
-    //         <button className="bg-green-500 text-white font-semibold px-6 py-3 rounded-lg shadow-lg hover:bg-green-600 transition-colors" onClick={handleEditButtonClick}>
-    //           변경
-    //         </button>
-    //       )}
-    //     </div>
-    //   )
-    // } else {
-    //   return null
-    // }
-  }
-
-  // const handlePayment = () => {
-  //   console.log(orderProducts)
-  //   console.log(orderInfo)
-  //   alert("토스페이먼츠 호출")
-  // }
 
   // 배송지 선택
   const handleCheckboxChange = (address_pk: number) => {
@@ -285,32 +230,19 @@ export const OrderDetailContent = ({
               </div>
               <Divider style={{backgroundColor: "#ddd", height: "0.1px"}} />
             </div>
-            {/* TODO: DB - users 에 email 이 없음... 향후 이슈논의 */}
-            {/* <div>
-              <div className="flex items-center justify-between py-2">
-                <div className="w-1/4 font-medium">이메일 주소</div>
-                <div className="w-3/4">
-                  <span>wwwwww@naver.com</span>
-                  <div className="text-sm text-gray-600">이메일을 통해 주문 처리 과정을 보내드립니다.</div>
-                </div>
-              </div>
-              <Divider style={{backgroundColor: "#ddd", height: "0.1px"}} />
-            </div> */}
           </div>
         </div>
         <div className="w-full md:w-1/4 pl-4 mt-8 md:mt-0 bg-white p-3">
           <div className="text-2xl font-semibold mb-4">결제금액</div>
           <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
           <div className="space-y-2 bg-gray-200 rounded-lg p-3">
-            {/* <p className="text-lg m-2 text-black">총 상품금액: {totalPrice.toLocaleString()}원</p>
+            <p className="text-lg m-2 text-black">
+              총 상품금액: <span className="line-through">{order.total_price?.toLocaleString()}원</span>
+            </p>
             <p className="text-lg m-2 text-black">할인 금액: {totalDiscount.toLocaleString()}원</p>
             <p className="text-lg m-2 text-black">총 배송비: {totalShipFee.toLocaleString()}원</p>
-            <p className="text-lg m-2 font-semibold text-black">최종 결제 금액: {finalPrice.toLocaleString()}원</p> */}
-            <p className="text-lg m-2 text-black">총 상품금액: {String(order.total_price).toLocaleString()}원</p>
-            {/* TODO: 할인금액이랑 배송비는 어디서 등록하고, 가져와야할까요? */}
-            <p className="text-lg m-2 text-black">할인 금액: {totalDiscount.toLocaleString()}원</p>
-            <p className="text-lg m-2 text-black">총 배송비: {totalShipFee.toLocaleString()}원</p>
-            <p className="text-lg m-2 font-semibold text-black">최종 결제 금액: {finalPrice.toLocaleString()}원</p>
+            <p className="text-lg m-2 text-black">(15만원 결제 시, 무료 배송)</p>
+            <p className="text-lg m-2 font-semibold text-[#A51C30]">최종 결제 금액: {finalPrice.toLocaleString()}원</p>
           </div>
         </div>
       </div>
@@ -526,7 +458,8 @@ export const OrderSuccessContent = ({
   })
 
   const totalDiscount = order.discount
-  const totalShipFee = order.shipfee
+  const totalShipFee = Number(order?.total_price) >= 150000 ? 0 : 5000
+  // const totalShipFee = order.shipfee
   const finalPrice = Number(order?.total_price) - totalDiscount + totalShipFee
 
   // 결제에 필요한 정보
@@ -581,9 +514,14 @@ export const OrderSuccessContent = ({
                     priority />
                 </td>
                 <td className="p-3 text-center">{orderItem.name}</td>
-                <td className="p-3 text-center">{orderItem.price.toLocaleString()}원</td>
+                <td className="p-3 text-center">
+                  <span className="line-through">{orderItem.price.toLocaleString()}원</span><br />
+                  <span className="text-[#A51C30] font-bold">{orderItem.discounted_price.toLocaleString()}원</span>
+                </td>
                 <td className="p-3 text-center">{orderItem.quantity}</td>
-                <td className="p-3 text-center">{(Number(orderItem.price)*orderItem.quantity).toLocaleString()}원</td>
+                <td className="p-3 text-center">
+                  <span className="text-[#A51C30] font-bold">{(Number(orderItem.discounted_price)*orderItem.quantity).toLocaleString()}원</span>
+                </td>
               </tr>
             ))
           }
@@ -638,9 +576,9 @@ export const OrderSuccessContent = ({
 
   }
 
+
   return (
     <div className="container mx-auto p-8">
-
       <div className="p-3 w-full mb-5">
         <p className="text-4xl">
           감사합니다.
@@ -687,9 +625,12 @@ export const OrderSuccessContent = ({
           <div className="text-2xl font-semibold mb-4">결제금액</div>
           <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
           <div className="space-y-2 bg-gray-200 rounded-lg p-3">
+            <p className="text-lg m-2 text-black">
+              총 상품금액: <span className="line-through">{order.total_price?.toLocaleString()}원</span>
+            </p>
             <p className="text-lg m-2 text-black">할인 금액: {totalDiscount.toLocaleString()}원</p>
             <p className="text-lg m-2 text-black">총 배송비: {totalShipFee.toLocaleString()}원</p>
-            <p className="text-lg m-2 font-semibold text-black">최종 결제 금액: {finalPrice.toLocaleString()}원</p>
+            <p className="text-lg m-2 font-semibold text-[#A51C30]">최종 결제 금액: {finalPrice.toLocaleString()}원</p>
           </div>
         </div>
       </div>

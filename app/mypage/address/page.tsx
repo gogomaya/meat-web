@@ -2,7 +2,8 @@ import {loginCheck} from "@/app/users/login/loginCheck"
 import MainLayout from "@/app/main-layout"
 import {MyPageBanner, MyPagination, Side} from "../mypage"
 import Link from "next/link"
-import {addressServices} from "@/services/addressService"
+import {addressServices} from "@/services/addressServices"
+// import {addressServices} from "@/services/addressService"
 import {ResponseApi} from "@/types/commonTypes"
 import ErrorPage from "@/app/error"
 import {AddressSearchParams} from "@/types/addressTypes"
@@ -67,7 +68,7 @@ const Home = async (props: {
               </div>
             </div>
             <AddressList addressList={addressList} />
-            <MyPagination page={page} prev={prev} next={next} lastPage={lastPage} domain={""}/>
+            <MyPagination page={page} prev={prev} next={next} lastPage={lastPage} domain={"address"}/>
           </div>
         </div>
       </div>

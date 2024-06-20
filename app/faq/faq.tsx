@@ -13,7 +13,7 @@ const faqItems = [
   {
     category: "shipment",
     question: "무료 배송 기준은 어떻게 되나요?",
-    answer: "무료 배송 기준은 한 번에 구매하는 상품 가격이 5만원 이상일 경우에 적용됩니다."
+    answer: "무료 배송 기준은 한 번에 구매하는 상품 가격이 15만원 이상일 경우에 적용됩니다."
   },
   {
     category: "shipment",
@@ -184,7 +184,7 @@ const FaqItem: React.FC<FaqItemProps> = ({question, answer}) => {
       <div
         className="faq-qus-wrap flex justify-between items-center p-4 rounded cursor-pointer bg-opacity-10 hover:bg-opacity-99 hover:bg-[#3b2e20]"
         onClick={toggleFaq}
-        style={{backgroundImage: "url('/images/Bg.png')", backgroundBlendMode: "overlay"}}
+        style={{backgroundImage: "url('/images/Bg_2.png')", backgroundBlendMode: "overlay"}}
       >
         <h5 className="faq-qustion text-white text-lg font-semibold">{question}</h5>
         <AddCircleOutlineIcon className="text-white" />
@@ -215,7 +215,7 @@ export const FaqSection: React.FC = () => {
     {
       category: "shipment",
       question: "무료 배송 기준은 어떻게 되나요?",
-      answer: "무료 배송 기준은 한 번에 구매하는 상품 가격이 5만원 이상일 경우에 적용됩니다."
+      answer: "무료 배송 기준은 한 번에 구매하는 상품 가격이 15만원 이상일 경우에 적용됩니다."
     },
     {
       category: "shipment",
@@ -319,13 +319,31 @@ export const FaqSection: React.FC = () => {
   ]
 
   return (
+    <><div className="flex justify-center items-center text-balck text-4xl font-bold p-8"
+      style={{
+        backgroundImage: "url('/images/Bg_3.png')",
+        backgroundRepeat: "repeat-x",
+        backgroundSize: "cover",
+        backgroundPositionX: "55%",
+        backgroundPositionY: "0%",
+        textAlign: "center",
+        minHeight: "250px",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: "15px",
+        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)"
+      }}>
+      <div style={{marginBottom: "10px", fontSize: "2rem", textTransform: "uppercase", letterSpacing: "2px"}}>FAQ</div>
+      <div style={{fontSize: "1.5rem", fontWeight: "lighter", opacity: "0.9"}}>자주 묻는 질문</div>
+    </div>
     <section className="section faq">
       <div className="container">
         <div className="faq-main-wrap">
-          <div className="section-top-wrap">
-            <div className="section-sub-title">faq</div>
-            <div className="section-title">자주 묻는 질문</div>
-          </div>
+          {/* <div className="section-top-wrap">
+      <div className="section-sub-title" style={{ fontSize: '2rem' }}>faq</div>
+      <div className="section-title" style={{ fontSize: '3rem' }}>자주 묻는 질문</div>
+    </div> */}
           <div className="faq-grid-wrap">
             {faqData.map((faq, index) => (
               <div key={index} id={`faq-${index}`} className="faq-wrapper">
@@ -335,6 +353,6 @@ export const FaqSection: React.FC = () => {
           </div>
         </div>
       </div>
-    </section>
+    </section></>
   )
 }

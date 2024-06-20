@@ -10,7 +10,7 @@ import ErrorPage from "@/app/error"
 import {User} from "@/types/usersTypes"
 import {usersServices} from "@/services/usersServices"
 import {AddressSearchParams} from "@/types/addressTypes"
-import {addressServices} from "@/services/addressService"
+import {addressServices} from "@/services/addressServices"
 import {redirect} from "next/navigation"
 import {OrderDetailContent} from "../Order"
 
@@ -30,7 +30,7 @@ import {OrderDetailContent} from "../Order"
  */
 const OrderPay = async (props: {
   params: {order_pk: number},   // 경로 변수
-  searchParams: {guest: number}              // 쿼리 스트링 파라미터
+  searchParams: {guest: number} // 쿼리 스트링 파라미터
 }) => {
   const {user} = await loginCheck(false)
   const order_pk = props.params.order_pk
@@ -104,7 +104,8 @@ const OrderPay = async (props: {
     created_at: "",
     shipfee: 0,
     discount: 0,
-    file_name: ""
+    file_name: "",
+    total_discount_price: 0
   }
   const searchParams = {
     order_pk : order_pk,
@@ -128,8 +129,6 @@ const OrderPay = async (props: {
     console.error(error)
     return <ErrorPage />
   }
-
-
 
 
   // 주문자 정보 조회
@@ -166,7 +165,7 @@ const OrderPay = async (props: {
       <div>
         <div className="flex justify-center text-red-100 text-4xl"
           style={{
-            backgroundImage: "url('/images/Bg.png')",
+            backgroundImage: "url('/images/Bg_3.png')",
             backgroundPosition: "center calc(10% - 620px)",
             backgroundRepeat: "repeat",
             backgroundSize: "cover",

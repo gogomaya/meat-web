@@ -58,7 +58,7 @@ export const ProductsPagination = ({searchParams, total_rows}: {searchParams: Se
       shape="rounded"
       count={Math.ceil(total_rows / searchParams.rowsPerPage)}
       page={searchParams.page + 1}
-      className="flex justify-center"
+      className="flex justify-center py-8"
       onChange={(_, value) => {
         router.push("?" + new URLSearchParams({
           ...searchParams,
@@ -86,9 +86,9 @@ export const ProductsPagination = ({searchParams, total_rows}: {searchParams: Se
 export const ProductSubtitle = () => {
   return (
     <div>
-      <div className="flex justify-center text-white text-4xl"
+      <div className="flex justify-center text-black text-4xl"
         style={{
-          backgroundImage: "url('/images/Bg.png')",
+          backgroundImage: "url('/images/Bg_3.png')",
           backgroundPosition: "center calc(10% - 620px)",
           backgroundRepeat: "repeat",
           backgroundSize: "cover",
@@ -96,7 +96,9 @@ export const ProductSubtitle = () => {
           minHeight: "200px",
           flexDirection: "column",
           justifyContent: "center",
-          alignItems: "center"
+          alignItems: "center",
+          borderRadius: "15px",
+          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)"
         }}>상품상세</div>
     </div>
   )
@@ -125,7 +127,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
         item.style.transform = "translateY(0)"
       }, index * 100)
     })
-  }, [])
+  }, [products])
 
   return (
     <><section className="flex justify-between items-center py-4 rounded-lg">
@@ -162,11 +164,11 @@ export const ProductsList = ({products}: { products: Product[] }) => {
               className="product-item"
               style={{
                 padding: "15px",
-                width: "calc(33.333% - 20px)",
+                width: "calc(25% - 25px)",
                 borderRadius: "5px",
                 border: "2px solid #271A11",
                 transition: "transform 0.3s, opacity 0.3s",
-                opacity: 0,
+                // opacity: 0,
                 transform: "translateY(20px)"
               }}
               onMouseEnter={enlargeImage}
@@ -255,7 +257,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
           ))
         ) : (
           <div style={{width: "100%", textAlign: "center", padding: "20px"}}>
-              준비된 상품이 없습니다.
+            상품을 준비중입니다.
           </div>
         )}
       </ol>
@@ -264,9 +266,9 @@ export const ProductsList = ({products}: { products: Product[] }) => {
 }
 
 export const ProductsDetailContent = ({product, user}: { product: Product, user: User }) => {
-  console.log(":::::::::: ProductsDetailContent Component ::::::::::")
-  console.log(":::::::::: product ::::::::::")
-  console.log(product)
+  // console.log(":::::::::: ProductsDetailContent Component ::::::::::")
+  // console.log(":::::::::: product ::::::::::")
+  // console.log(product)
   const [quantity, setQuantity] = React.useState(1)
   const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newQuantity = parseInt(event.target.value)
@@ -311,7 +313,7 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
 
 
   const handleFavoriteClick = async () => {
-    if (!user.id) {
+    if (!user.user_pk) {
       Swal.fire({
         title: "로그인이 필요한 서비스입니다.",
         text: "회원가입 또는 로그인을 하시겠습니까?",
@@ -408,15 +410,33 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
           <div className="mb-2">
             <div className="py-2">
               <div className="flex gap-3 align-items">
-                <div className="text-xl text-red-600">{(((Number(product.price) - Number(product.discounted_price)) / Number(product.price)) * 100).toFixed(0)}%</div>
-                <div className="text-xl" style={{textDecoration: "line-through"}}>{(Number(product.price)).toLocaleString()}원</div>
+                {Number(product.discounted_price) !== Number(product.price) ? (
+                  <>
+                    <div className="text-xl text-red-600">
+                      {(((Number(product.price) - Number(product.discounted_price)) / Number(product.price)) * 100).toFixed(0)}%
+                    </div>
+                    <div className="text-xl" style={{textDecoration: "line-through"}}>
+                      {Number(product.price).toLocaleString()}원
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <strong className="text-3xl text-red-700">
+                      {(Number(product.discounted_price)).toLocaleString()}원
+                    </strong>
+                  </>
+                )}
               </div>
-              <strong className="text-3xl text-red-700">{(Number(product.discounted_price)).toLocaleString()}원</strong>
-              <div>100g당 {product.per100g}</div>
+              {Number(product.discounted_price) !== Number(product.price) && (
+                <strong className="text-3xl text-red-700">
+                  {(Number(product.discounted_price)).toLocaleString()}원
+                </strong>
+              )}
+              <div>100g당 { product.per100g }</div>
             </div>
             <div><p>배송사: 로젠택배</p></div>
             {/* <strong className="text-4xl text-red-700">{(Number(product.discounted_price) * quantity).toLocaleString()}원</strong> */}
-            <div className="py-3 flex flex-wrap gap-2">
+            <div className="py-6 flex flex-wrap gap-2">
               <button
                 className="product-button"
                 style={{
@@ -446,9 +466,11 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
                 택배배송
               </button>
             </div>
-            <Divider className="bg-gray-800 h-0.5 mb-4" />
+            <div className="py-2"></div>
+            <Divider className="bg-gray-800 h-0.5" />
             {product.origin && (
               <>
+                <div className="py-2"></div>
                 <div className="flex items-center mb-2">
                   <div className="w-24 mr-5">원산지</div>
                   <div className="flex-grow">{product.origin}</div>
@@ -476,8 +498,8 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
               </>
             )}
           </div>
-          <div>
-            {/* category가 pork일 때만 드롭다운을 렌더링 */}
+          {/* category가 pork일 때만 드롭다운을 렌더링 */}
+          {/* <div>
             {product.category === "pork" && (
               <div className="mb-4 flex items-center gap-4">
                 <div className="w-24">종류</div>
@@ -493,8 +515,8 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
                 </select>
               </div>
             )}
-          </div>
-          <div className="mb-4 flex items-center gap-4">
+          </div> */}
+          <div className="mb-4 flex items-center gap-4 flex-wrap">
             <div className="w-24">수량</div>
             <input
               type="number"
@@ -503,7 +525,7 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
               className="w-20 h-8 p-2 border border-gray-300 rounded"
               min="1"
             />
-            <div>
+            <div className="free-shipping-info">
               <style>
                 {`
                   @keyframes blink {
@@ -513,6 +535,12 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
                   }
                   .blink {
                     animation: blink 1.5s infinite;
+                  }
+                  @media (max-width: 768px) {
+                    .free-shipping-info {
+                      width: 100%;
+                      margin-top: 8px;
+                    }
                   }
                 `}
               </style>
@@ -724,7 +752,6 @@ const CartOrderButton = ({
 
   }
 
-
   // 장바구니 포함 주문
   const orderWithCart = async () => {
     // 구매하기 -> 알림 -> 예 -> 장바구니까지 주문
@@ -918,7 +945,7 @@ export const NavDetail = () => {
   const [isFixed, setIsFixed] = React.useState(false)
   React.useEffect(() => {
     const handleScroll = () => {
-      const scrollY = window.scrollY - 240
+      const scrollY = window.scrollY
       const navElement = document.querySelector(".nav-detail") as HTMLElement
 
       if (scrollY > navElement.offsetTop) {
@@ -956,15 +983,15 @@ export const NavDetail = () => {
   }
 
   return (
-    <nav className={`container sticky top-16 items-center w-full z-10 ${isFixed ? "visible" : "invisible md:visible"} flex-1 flex justify-center items-center nav-detail`} style={{height: "100px"}}>
-      <ul className="flex w-full h-20 items-center">
+    <nav className={`!block md:hidden container sticky top-16 items-center w-full z-10 ${isFixed ? "visible" : "invisible md:visible"} flex-1 flex justify-center items-center nav-detail`} style={{height: "100px"}}>
+      <ul className="flex w-full h-30 items-center py-8">
         <li
           onClick={() => {
             scrollToElement("detail")
             handleMouseHover()
             handleMouseClick("detail")
           }}
-          className={`p-2 flex-1 text-center ${isHovered ? "highlight-underline" : ""} ${isClicked === "detail" ? "text-red-500" : ""}`}
+          className={`p-2 flex-1 bg-white text-center ${isHovered ? "highlight-underline" : ""} ${isClicked === "detail" ? "text-red-500" : ""}`}
           style={{
             border: "3px solid #271A11",
             marginLeft: "8px"
@@ -978,7 +1005,7 @@ export const NavDetail = () => {
             handleMouseHover()
             handleMouseClick("review2")
           }}
-          className={`p-2 flex-1 text-center ${isHovered ? "highlight-underline" : ""} ${isClicked === "review2" ? "text-red-500" : ""}`}
+          className={`p-2 flex-1 bg-white text-center ${isHovered ? "highlight-underline" : ""} ${isClicked === "review2" ? "text-red-500" : ""}`}
           style={{
             borderTop: "3px solid #271A11",
             borderBottom: "3px solid #271A11"
@@ -992,7 +1019,7 @@ export const NavDetail = () => {
             handleMouseHover()
             handleMouseClick("qna")
           }}
-          className={`p-2 flex-1 text-center ${isHovered ? "highlight-underline" : ""} ${isClicked === "qna" ? "text-red-500" : ""}`}
+          className={`p-2 flex-1 bg-white text-center ${isHovered ? "highlight-underline" : ""} ${isClicked === "qna" ? "text-red-500" : ""}`}
           style={{
             border: "3px solid #271A11"
           }}
@@ -1005,7 +1032,7 @@ export const NavDetail = () => {
             handleMouseHover()
             handleMouseClick("ship")
           }}
-          className={`p-2 flex-1 text-center ${isHovered ? "highlight-underline" : ""} ${isClicked === "ship" ? "text-red-500" : ""}`}
+          className={`p-2 flex-1 bg-white text-center ${isHovered ? "highlight-underline" : ""} ${isClicked === "ship" ? "text-red-500" : ""}`}
           style={{
             borderTop: "3px solid #271A11",
             borderBottom: "3px solid #271A11",

@@ -7,12 +7,14 @@ const Cart = async () => {
   return (
     <MainLayout user={user}>
       <div>
-        <div className="flex justify-center text-white text-4xl"
+        <div className="flex justify-center text-black text-4xl"
           style={{
-            backgroundImage: "url('/images/Bg.png')",
-            backgroundPosition: "center calc(10% - 620px)",
-            backgroundRepeat: "repeat",
+            backgroundImage: "url('/images/Bg_3.png')",
+            backgroundRepeat: "repeat-x",
             backgroundSize: "cover",
+            // backgroundPosition: "center",
+            backgroundPositionX: "55%",
+            backgroundPositionY: "116%",
             textAlign: "center",
             minHeight: "200px",
             flexDirection: "column",

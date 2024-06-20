@@ -1,5 +1,5 @@
 "use client"
-import {addressServices} from "@/services/addressService"
+import {addressServices} from "@/services/addressServices"
 import {Address} from "@/types/addressTypes"
 import {ResponseApi} from "@/types/commonTypes"
 import {User} from "@/types/usersTypes"
@@ -274,7 +274,7 @@ export const AddressUpdateForm = ({user, addressInfo}: AddressProps ) => {
               onChange={handleCheckboxChange}
               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
             />
-            <span className="px-3" style={{userSelect: "none", cursor: "pointer"}}>
+            <span className="px-2 text-sm md:text-lg" style={{userSelect: "none", cursor: "pointer"}}>
               기본 배송지
             </span>
           </label>
@@ -307,15 +307,16 @@ export const AddressList = ({addressList}: AddressListProps) => {
       cancelButtonText: "취소"
     }).then(async (result) => {
       if (result.isConfirmed) {
+        let addressResponse: ResponseApi = {}
+        addressResponse = await addressServices.addressDelete(address_pk)
+        console.log(addressResponse)
+
         MySwal.fire({
           title: <p>배송지가 삭제되었습니다.</p>,
           didOpen: () => {
             Swal.showLoading()
           }
         })
-        // TODO: 배송 삭제 요청
-        let addressResponse: ResponseApi = {}
-        addressResponse = await addressServices.addressDelete(address_pk)
 
         location.reload()
       }

@@ -24,15 +24,15 @@ const Order = async (props: {
   // 비회원 주문이므로 로그인 체크 안함
   const {user} = await loginCheck(false)
 
-  console.log("::::::::::: productPks :::::::::::")
+  // console.log("::::::::::: productPks :::::::::::")
   let productPks = props.searchParams.productPks
-  console.log(productPks)
-  console.log("::::::::::: quantityList :::::::::::")
+  // console.log(productPks)
+  // console.log("::::::::::: quantityList :::::::::::")
   let quantityList = props.searchParams.quantityList
-  console.log(quantityList)
-  console.log("::::::::::: 모바일 :::::::::::")
+  // console.log(quantityList)
+  // console.log("::::::::::: 모바일 :::::::::::")
   let mobile = props.searchParams.mobile
-  console.log(mobile)
+  // console.log(mobile)
 
   // 유효성 검사 함수
   const isValidInput = (arr: number[]) => arr?.every((num) => !isNaN(num) && num >= 0)
@@ -61,11 +61,11 @@ const Order = async (props: {
   } as OrderParams
 
   const orderResult = await orderCheckout(params)
-  console.log(`orderResult : ${orderResult}`)
+  // console.log(`orderResult : ${orderResult}`)
 
   if( orderResult.result ) {
-    console.log(`result : ${orderResult.result}`)
-    console.log(`order_pk : ${orderResult.order_pk}`)
+    // console.log(`result : ${orderResult.result}`)
+    // console.log(`order_pk : ${orderResult.order_pk}`)
     redirect(`/guest/order/${orderResult.order_pk}?guest=1`)
   }
 
@@ -78,7 +78,7 @@ const Order = async (props: {
       <div>
         <div className="flex justify-center text-white text-4xl"
           style={{
-            backgroundImage: "url('/images/Bg.png')",
+            backgroundImage: "url('/images/Bg_3.png')",
             backgroundPosition: "center calc(10% - 620px)",
             backgroundRepeat: "repeat",
             backgroundSize: "cover",

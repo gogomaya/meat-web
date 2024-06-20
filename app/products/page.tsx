@@ -11,7 +11,7 @@ const Products = async (props: {
 }) => {
   const {user} = await loginCheck(false)
   const searchParams = {
-    rowsPerPage: Number(props.searchParams.rowsPerPage) || 6,
+    rowsPerPage: Number(props.searchParams.rowsPerPage) || 16,
     page: Number(props.searchParams.page) || 0,
     orderColumn: props.searchParams.orderColumn || "product_pk",
     orderDirection: props.searchParams.orderDirection || "desc",
@@ -30,6 +30,7 @@ const Products = async (props: {
   const {products, total_rows} = productsResponse.data
   const titleName = () => {
     const categoryName = {
+      giftSet: "선물세트",
       cow: "소고기",
       pork: "돼지고기",
       imported: "수입육",
@@ -47,18 +48,22 @@ const Products = async (props: {
   return (
     <MainLayout user={user}>
       <div className="pb-16">
-        <div className="flex justify-center text-white py-8"
+        <div className="flex justify-center text-black py-8"
           style={{
-            backgroundImage: "url('/images/Bg.png')",
-            backgroundPosition: "center calc(10% - 620px)",
-            backgroundRepeat: "repeat",
+            backgroundImage: "url('/images/Bg_3.png')",
+            backgroundRepeat: "repeat-x",
             backgroundSize: "cover",
+            // backgroundPosition: "center",
+            backgroundPositionX: "20%",
+            backgroundPositionY: "0%",
             textAlign: "center",
             minHeight: "200px",
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            fontSize: "32px"
+            fontSize: "32px",
+            borderRadius: "15px",
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)"
           }}>{titleName()}</div>
         <div className="container">
           <ProductsList products={products} />

@@ -1,3 +1,4 @@
+import {CancellationStatus} from "@/types/cancellationsTypes"
 import {OrderStatus} from "@/types/ordersTypes"
 import {ShipmentStatus} from "@/types/shipmentsTypes"
 
@@ -15,7 +16,6 @@ export function getOrderStatusMeaning(status: OrderStatus): string {
   case "cancelled":return "주문취소"
   default:return ""
   }
-
 }
 
 
@@ -46,6 +46,20 @@ export function getShipmentMessage(status: ShipmentStatus): string {
   case "shipping":return "배송중입니다."
   case "delivered":return "배송완료 되었습니다."
   case "cancelled":return "배송취소 되었습니다. "
+  default:return ""
+  }
+}
+
+
+/**
+ * 취소 상태 변환 함수
+ * @param status 취소상태
+ * @returns
+ */
+export function getCancellationStatusMeaning(status: CancellationStatus): string {
+  switch (status) {
+  case "pending":return "취소대기"
+  case "complete":return "처리완료"
   default:return ""
   }
 }

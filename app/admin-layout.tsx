@@ -35,6 +35,13 @@ const AdminLayout = ({
                   {pathname.includes("/admin/users") && (
                     <span>회원 관리</span>
                   )}
+                  {/* 주문취소, 주문확인 */}
+                  {pathname.includes("/admin/orders") && (
+                    <Link href={"/admin/orders"}>주문 관리</Link>
+                  )}
+                  {pathname.includes("/admin/products/giftSet") && (
+                    <Link href={"/admin/products/giftSet"}>선물세트</Link>
+                  )}
                   {pathname.includes("/admin/products/cow") && (
                     <Link href={"/admin/products/cow"}>소고기</Link>
                   )}
@@ -97,6 +104,24 @@ const AdminLayoutMenu = ({
             setTimeout(() => setHeaderMenuOpen?.(), 500)
           }}
         >회원 관리</Link>
+      </li>
+      <li className="px-4 py-2 border-b border-50 lg:border-0">
+        <Link
+          href="/admin/orders"
+          className={`${pathname.includes("/admin/orders") ? "text-yellow-700 " : "text-white "}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
+          onClick={() => {
+            setTimeout(() => setHeaderMenuOpen?.(), 500)
+          }}
+        >주문 관리</Link>
+      </li>
+      <li className="px-4 py-2 border-b border-50 lg:border-0">
+        <Link
+          href="/admin/products/giftSet"
+          className={`${pathname.includes("/admin/products/giftSet") ? "text-yellow-700 " : "text-white "}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
+          onClick={() => {
+            setTimeout(() => setHeaderMenuOpen?.(), 500)
+          }}
+        >선물세트</Link>
       </li>
       <li className="px-4 py-2 border-b border-50 lg:border-0">
         <Link

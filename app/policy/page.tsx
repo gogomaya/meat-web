@@ -7,7 +7,10 @@ const TermsandPolicy = async () => {
   const {user} = await loginCheck(false)
   return (
     <MainLayout user={user}>
-      <TermsAndPolicyTabs />
+      <div className="container">
+        <div className="p-8 flex justify-center text-4xl"><strong>한솔 정책</strong></div>
+        <TermsAndPolicyTabs />
+      </div>
     </MainLayout>
   )
 }

@@ -30,8 +30,11 @@ export const commonServices = {
   ssrCsr: () => {
     return typeof window === "undefined" ? process.env.NEXT_PUBLIC_URL : ""
   },
-  categoriesMenu: (): {cow: string[], imported: string[] , pork: string[], simple: string[]} => {
+  categoriesMenu: (): {giftSet: string[], cow: string[], imported: string[] , pork: string[], simple: string[]} => {
     return {
+      giftSet: [
+        "선물세트"
+      ],
       cow: [
         "구이",
         "국거리/불고기",
@@ -41,10 +44,10 @@ export const commonServices = {
         "뼈"
       ],
       pork: [
-        "돼지고기"
-        // "구이",
-        // "수육",
-        // "찌개",
+        // "돼지고기"
+        "구이",
+        "수육",
+        "찌개"
         // "불고기",
         // "찜"
       ],

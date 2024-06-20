@@ -33,6 +33,7 @@ const Home = async (props: {
           <div className="container py-16">
             <div className="flex flex-col items-center gap-10 my-2 mx-4 md:mx-0">
               <div className="w-full flex flex-col gap-2 max-w-4xl bg-white rounded-lg shadow-md p-6">
+                {/* FIXME: 이거 고치기 */}
                 {/* TODO: 주소API 적용하기  */}
                 <AddressForm user={user} addressInfo={address} firstAddress={firstAddress} />
               </div>

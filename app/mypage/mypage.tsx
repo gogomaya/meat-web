@@ -17,8 +17,8 @@ export const MyPageBanner: React.FC<MyPageBannerProps> = ({title,subTitle}) => {
   return (
     <div className="flex justify-center py-8"
       style={{
-        backgroundImage: "url('/images/Bg.png')",
-        backgroundPosition: "center calc(10% - 620px)",
+        backgroundImage: "url('/images/Bg_3.png')",
+        backgroundPosition: "center calc(50% - 620px)",
         backgroundRepeat: "repeat",
         backgroundSize: "cover",
         textAlign: "center",
@@ -27,11 +27,11 @@ export const MyPageBanner: React.FC<MyPageBannerProps> = ({title,subTitle}) => {
         justifyContent: "center",
         alignItems: "center"
       }}>
-      <div className="text-red-100">마이 페이지</div>
+      <div className="text-red-700 text-4xl">마이 페이지</div>
       { title != ""
         ?
         <p>
-          <span className="text-white">{title}</span> / <span style={{color:"#A51C30",textDecoration:"underline"}}>{subTitle}</span>
+          <span className="text-black">{title}</span> / <span style={{color:"#A51C30",textDecoration:"underline"}}>{subTitle}</span>
         </p>
         :
         <></>
@@ -202,8 +202,8 @@ interface MyPaginationProps {
 }
 
 export const MyPagination: React.FC<MyPaginationProps> = ({domain, page, prev, next, lastPage}) => {
-  console.log("::: MyPagination :::")
-  console.log(`${page}, ${prev}, ${next}, ${lastPage}`)
+  // console.log("::: MyPagination :::")
+  // console.log(`${page}, ${prev}, ${next}, ${lastPage}`)
 
   return (
     <>

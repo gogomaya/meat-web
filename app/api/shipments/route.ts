@@ -53,7 +53,7 @@ export const POST = async (request: NextRequest) => {
     // 마지막으로 삽입된 레코드의 AUTO_INCREMENT 값 가져오기
     const [pk]: [RowDataPacket[], FieldPacket[]] = await mysql.execute("SELECT LAST_INSERT_ID() shipment_pk FROM dual")
     const shipment_pk = pk[0]["shipment_pk"]
-    console.log(`등록된 배송번호 - shipment_pk : ${shipment_pk}`)
+    // console.log(`등록된 배송번호 - shipment_pk : ${shipment_pk}`)
 
     return NextResponse.json({
       message: "Shipment created successfully",

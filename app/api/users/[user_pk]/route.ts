@@ -45,9 +45,9 @@ export const PUT = async (
     const name = formData.get("name")
     const mobile = formData.get("mobile")
 
-    console.log(`user_pk : ${user_pk}`)
-    console.log(`name : ${name}`)
-    console.log(`mobile : ${mobile}`)
+    // console.log(`user_pk : ${user_pk}`)
+    // console.log(`name : ${name}`)
+    // console.log(`mobile : ${mobile}`)
     const mysql = await mysql2Pool()
 
     await mysql.execute(`

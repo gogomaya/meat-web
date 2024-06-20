@@ -28,48 +28,89 @@ const Users = ({user}: {user: User}) => {
     window.addEventListener("message", onMessage)
     return () => window.removeEventListener("message", onMessage)
   }, [])
+  const [isHovered, setIsHovered] = useState(false)
+
   return (
     <div style={{display: "flex", alignItems: "center"}}>
-      <Link id="btn-user" className="text-white" href="" onClick={() => setOpen(user && user.user_pk ? "logout" : "login")}>
+      <Link id="btn-user" className="text-black" href="" onClick={() => setOpen(user && user.user_pk ? "logout" : "login")}>
         <AccountCircleIcon style={{width: "32px", height: "32px", cursor: "pointer"}}/>
       </Link>
       <Dialog open={open === "login"} onClose={() => setOpen("close")} maxWidth="sm" fullWidth>
-        <DialogContent>
+        <DialogContent
+          style={{backgroundImage: "url('/images/Bg_3.png')",
+            //  backgroundColor: "rgba(255, 255, 255)",
+            backgroundBlendMode: "overlay"}}>
           <div className="container">
-            <div style={{textAlign: "center", marginBottom: "20px"}}><strong>로그인</strong></div>
+            <DialogActions style={{justifyContent: "flex-end", position: "relative"}}>
+              <Button
+                onClick={() => setOpen("close")}
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+                style={{
+                  minWidth: "auto",
+                  border: "none",
+                  fontSize: "30px",
+                  cursor: "pointer",
+                  color: "#FEE601",
+                  backgroundColor: "transparent",
+                  padding: "0",
+                  position: "relative",
+                  outline: "none"
+                }}
+              >
+                &times;
+                {isHovered && (
+                  <div
+                    style={{
+                      content: "\"\"",
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                      width: "40px",
+                      height: "40px",
+                      border: "2px solid #FEE601",
+                      borderRadius: "50%",
+                      pointerEvents: "none"
+                    }}
+                  />
+                )}
+              </Button>
+            </DialogActions>
+            {/* <div className="text-center mb-4 py-4"><strong>로그인</strong></div> */}
             <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
               <div style={{marginBottom: "20px", display: "flex", justifyContent: "center"}}>
                 <button
                   style={{
                     fontWeight: activeTab === "member" ? "bold" : "normal",
-                    padding: "15px 30px",
+                    padding: "15px 10px",
                     border: "1px solid #271A11",
                     cursor: "pointer",
                     backgroundColor: activeTab === "member" ? "#271A11" : "#FFFFFF",
                     color: activeTab === "member" ? "#FFFFFF" : "#271A11",
                     transition: "color 0.3s ease, background-color 0.3s ease",
-                    minWidth: "200px",
+                    minWidth: "150px",
                     textAlign: "center"
                   }}
                   onClick={() => handleTabClick("member")}
                 >
-                회원 로그인
+                  회원 로그인
                 </button>
                 <button
                   style={{
                     fontWeight: activeTab === "nonMember" ? "bold" : "normal",
-                    padding: "15px 30px",
+                    padding: "15px 10px",
                     border: "1px solid #271A11",
                     cursor: "pointer",
                     backgroundColor: activeTab === "nonMember" ? "#271A11" : "#FFFFFF",
                     color: activeTab === "nonMember" ? "#FFFFFF" : "#271A11",
                     transition: "color 0.3s ease, background-color 0.3s ease",
-                    minWidth: "190px",
+                    minWidth: "140px",
                     textAlign: "center"
                   }}
                   onClick={() => handleTabClick("nonMember")}
                 >
-                비회원 주문조회
+                  비회원 주문조회
                 </button>
               </div>
               {activeTab === "member" && (
@@ -89,7 +130,7 @@ const Users = ({user}: {user: User}) => {
                     <Image
                       src="/images/naver-login-btn.png"
                       alt="naver-login-btn"
-                      width={260}
+                      width={240}
                       height={100}
                       sizes="100vw"
                       priority
@@ -110,7 +151,7 @@ const Users = ({user}: {user: User}) => {
                     <Image
                       src="/images/kakao-login-btn.png"
                       alt="naver-login-btn"
-                      width={260}
+                      width={240}
                       height={100}
                       sizes="100vw"
                       priority
@@ -131,7 +172,7 @@ const Users = ({user}: {user: User}) => {
                         padding: "12px 20px",
                         marginBottom: "10px",
                         height: "48px",
-                        width: "100%"
+                        width: "200px"
                       }}
                       placeholder="주문번호"
                     />
@@ -145,7 +186,7 @@ const Users = ({user}: {user: User}) => {
                         padding: "12px 20px",
                         marginBottom: "10px",
                         height: "48px",
-                        width: "100%"
+                        width: "200px"
                       }}
                       placeholder="전화번호"
                     />
@@ -157,7 +198,7 @@ const Users = ({user}: {user: User}) => {
                 <strong>처음이신가요?</strong><br />
                 {" "}
                 <span
-                  style={{color: "#e53e3e", cursor: "pointer", transition: "color 0.3s ease"}}
+                  style={{color: "#FF1E27", cursor: "pointer", transition: "color 0.3s ease"}}
                   onClick={() => {
                     let url = "https://kauth.kakao.com/oauth/authorize"
                     url += `?client_id=${process.env.NEXT_PUBLIC_KAKAO_JAVASCRIPT_KEY}`
@@ -168,23 +209,81 @@ const Users = ({user}: {user: User}) => {
                     setOpen("close")
                   }}
                 >
-                  1초 회원가입으로 {" "}
+                  카카오톡 1초 회원가입으로 {" "}
                 </span>
                 입력없이 <br />간편하게 로그인 하세요.
               </div>
             </div>
           </div>
         </DialogContent>
-        <DialogActions className="border" style={{justifyContent: "center"}}>
-          <Button onClick={() => setOpen("close")}>닫기</Button>
-        </DialogActions>
       </Dialog>
-      <Dialog open={open === "logout"} onClose={() => setOpen("close")} maxWidth="xs" fullWidth>
-        <DialogContent>
+      <Dialog open={open === "logout"} onClose={() => setOpen("close")} maxWidth="xs" fullWidth >
+        <DialogContent style={{backgroundImage: "url('/images/Bg_3.png')"}}>
+          <DialogActions style={{justifyContent: "flex-end", position: "relative"}}>
+            <Button
+              onClick={() => setOpen("close")}
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+              style={{
+                minWidth: "auto",
+                border: "none",
+                fontSize: "20px",
+                cursor: "pointer",
+                color: "#FEE601",
+                backgroundColor: "transparent",
+                padding: "0",
+                position: "relative",
+                outline: "none"
+              }}
+            >
+              &times;
+              {isHovered && (
+                <div
+                  style={{
+                    content: "\"\"",
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    width: "40px",
+                    height: "40px",
+                    border: "2px solid #FEE601",
+                    borderRadius: "50%",
+                    pointerEvents: "none"
+                  }}
+                />
+              )}
+            </Button>
+          </DialogActions>
           <div>
             <div className="flex flex-col justify-center item-center">
-              <Button
-                variant="outlined"
+              <div className="flex items-center gap-3 justify-center">
+                <Image
+                  src="/images/cow.png"
+                  alt="Logo"
+                  width={45}
+                  height={45}
+                  sizes="100vw"
+                  className="md:w-16"
+                  priority
+                />
+              </div>
+              <div className="flex items-center justify-center text-red-700 py-4">
+                <strong>{user.name || user.nickname}</strong><span className="text-black">님, 안녕하세요 :)</span>
+              </div>
+              <button type="button"
+                className="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900"
+                onClick={() => {
+                  router.push("/mypage")
+                }}
+                style={{padding: "15px 30px"}}
+              >
+                마이페이지
+              </button>
+            </div>
+            <div className="flex flex-col justify-center item-center">
+              <button type="button"
+                className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
                 onClick={async () => {
                   await usersServices.usersLogout()
                   router.refresh()
@@ -193,24 +292,10 @@ const Users = ({user}: {user: User}) => {
                 style={{marginBottom: "20px", padding: "15px 30px"}}
               >
                 로그아웃
-              </Button>
-            </div>
-            <div className="flex flex-col justify-center item-center">
-              <Button
-                variant="outlined"
-                onClick={() => {
-                  router.push("/mypage")
-                }}
-                style={{padding: "15px 30px"}}
-              >
-                마이페이지
-              </Button>
+              </button>
             </div>
           </div>
         </DialogContent>
-        <DialogActions className="border" style={{justifyContent: "center"}}>
-          <Button onClick={() => setOpen("close")}>닫기</Button>
-        </DialogActions>
       </Dialog>
     </div>
   )

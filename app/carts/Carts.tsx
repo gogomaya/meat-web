@@ -3,7 +3,7 @@ import {useRouter} from "next/navigation"
 import {Button, Checkbox, Divider, IconButton, Typography, Dialog, DialogTitle, DialogActions, Skeleton} from "@mui/material"
 import DeleteIcon from "@mui/icons-material/Delete"
 import Image from "next/image"
-import {useState, useEffect} from "react"
+import {useState, useEffect, useCallback} from "react"
 import {CartProduct} from "@/types/productsTypes"
 import {useForm} from "react-hook-form"
 import _ from "lodash"
@@ -15,23 +15,61 @@ import withReactContent from "sweetalert2-react-content"
 export const CartsDetailContent = ({user}: { user: User }) => {
   const router = useRouter()
   const [open, setOpen] = useState(false)
+  const [totalPrice, setTotalPrice] = useState(0)
+  const [discountedPrice, setDiscountedPrice] = useState(0)
+  const [finalPrice, setFinalPrice] = useState(0)
+  const [shippingFee, setShippingFee] = useState(5000)
+
   const cartProductsForm = useForm<{cartProducts: CartProduct[]}>({
     defaultValues: {
       cartProducts: null as unknown as CartProduct[]
     }
   })
-  const cartProducts = cartProductsForm.getValues("cartProducts")
   const {register} = cartProductsForm
+  let cartProducts = cartProductsForm.getValues("cartProducts") || []
   cartProductsForm.watch("cartProducts")
+
+  // 결제 정보 계산
+  const calc = useCallback(() => {
+    const cartProducts = cartProductsForm.getValues("cartProducts") || []
+    // 총상품금액
+    let calcTotalPrice = 0
+    cartProducts.forEach( (item) => {
+      calcTotalPrice += (Number(item.product.price) * item.quantity)
+    })
+    setTotalPrice(calcTotalPrice)
+    console.log(`totalPrice : ${totalPrice}`)
+
+
+    // 할인 금액
+    let calcDiscountedPrice = 0
+    cartProducts.forEach( (item) => {
+      const productPrice = Number(item.product.price)
+      const discountedPrice = Number(item.product.discounted_price) || 0
+      calcDiscountedPrice += ( (productPrice - discountedPrice) * item.quantity )
+    })
+    setDiscountedPrice(calcDiscountedPrice)
+
+    // 할인 주문 금액
+    let calcOrderPrice = calcTotalPrice - calcDiscountedPrice
+    // 150000원 이상 무료배송
+    if( calcOrderPrice >= 150000 ) setShippingFee(0)
+    else setShippingFee(5000)
+    // 최종 결제 금액
+    let calcFinalPrice = calcOrderPrice + shippingFee
+    setFinalPrice(calcFinalPrice)
+
+  }, [cartProductsForm, shippingFee, totalPrice])
 
   useEffect(() => {
     cartProductsForm.setValue("cartProducts", JSON.parse(localStorage.getItem("cartProducts") || "[]"))
-  }, [cartProductsForm])
+    calc()
+  }, [cartProductsForm, calc])
   if (cartProducts === null) {
     return <Skeleton variant="rectangular" animation="wave" width="100%" height={300} />
   }
   // 전체 상품 금액, 할인 금액, 배송비 계산
-  const shippingFee = 5000
+  // const shippingFee = 5000
 
   // [주문하기] 클릭
   const handleOrderClick = async () => {
@@ -63,7 +101,7 @@ export const CartsDetailContent = ({user}: { user: User }) => {
         window.postMessage({loginPopup: "on"}, "*")
         return
       } else if (result.isDismissed) {
-        console.log("비회원 주문")
+        // console.log("비회원 주문")
         guestOrder = true
       }
       if (result.dismiss === Swal.DismissReason.backdrop) return
@@ -104,13 +142,13 @@ export const CartsDetailContent = ({user}: { user: User }) => {
   const handleCheckedPayClick = async () => {
     const cartProducts = JSON.parse(localStorage.getItem("cartProducts") || "[]")
     const checkedProducts = cartProducts.filter((product: CartProduct ) => product.checked)
-    console.log(checkedProducts)
+    // console.log(checkedProducts)
 
     // product_pk와 quantity 추출
     const productPks = checkedProducts.map((cartProduct : CartProduct) => cartProduct.product.product_pk).join(",")
     const quantityList = checkedProducts.map((cartProduct  : CartProduct) => cartProduct.quantity).join(",")
-    console.log(`productPks : ${productPks}`)
-    console.log(`quantityList : ${quantityList}`)
+    // console.log(`productPks : ${productPks}`)
+    // console.log(`quantityList : ${quantityList}`)
 
     // 회원
     if( user.user_pk ) {
@@ -137,7 +175,7 @@ export const CartsDetailContent = ({user}: { user: User }) => {
         window.postMessage({loginPopup: "on"}, "*")
         return
       } else if (result.isDismissed) {
-        console.log("비회원 주문")
+        // console.log("비회원 주문")
         guestOrder = true
       }
       if (result.dismiss === Swal.DismissReason.backdrop) return
@@ -172,6 +210,7 @@ export const CartsDetailContent = ({user}: { user: User }) => {
 
 
   }
+
 
   return (
     <>
@@ -266,6 +305,7 @@ export const CartsDetailContent = ({user}: { user: User }) => {
                                   const newQuantity = cartProduct.quantity - 1
                                   cartProductsForm.setValue(`cartProducts.${index}.quantity`, newQuantity < 1 ? 1 : newQuantity)
                                   localStorage.setItem("cartProducts", JSON.stringify(cartProducts))
+                                  calc()
                                 }}
                               >
                                 -
@@ -279,6 +319,7 @@ export const CartsDetailContent = ({user}: { user: User }) => {
                                 onBlur={() => {
                                   cartProductsForm.setValue(`cartProducts.${index}.quantity`, cartProduct.quantity < 1 ? 1 : Number(cartProduct.quantity))
                                   localStorage.setItem("cartProducts", JSON.stringify(cartProducts))
+                                  calc()
                                 }}
                               />
                               <button
@@ -288,6 +329,7 @@ export const CartsDetailContent = ({user}: { user: User }) => {
                                   const newQuantity = cartProduct.quantity + 1
                                   cartProductsForm.setValue(`cartProducts.${index}.quantity`, newQuantity)
                                   localStorage.setItem("cartProducts", JSON.stringify(cartProducts))
+                                  calc()
                                 }}
                               >
                                 +
@@ -311,6 +353,7 @@ export const CartsDetailContent = ({user}: { user: User }) => {
                                   localStorage.setItem("cartProducts", JSON.stringify(cartProducts))
                                   cartProductsForm.setValue("cartProducts", cartProducts)
                                   window.postMessage({cartProductsLength: "on"}, "*")
+                                  calc()
                                 }
                               }}
                               style={{color: "#4F3623"}}
@@ -324,61 +367,60 @@ export const CartsDetailContent = ({user}: { user: User }) => {
                   )}
                 </table>
               </div>
-              <div className="cart-mobile flex flex-col md:flex-row md:items-center justify-start space-y-4 py-4 md:space-y-0 md:space-x-2">
-                <Button
-                  variant="contained"
-                  className="btn h-12 w-full md:w-[220px] text-lg md:ml-4"
-                  disabled={!cartProducts.find((cartProduct) => cartProduct.checked)}
-                  // onClick={() => {
-                  //   router.push(`/order?orderProducts=${encodeURIComponent(
-                  //     JSON.stringify(cartProducts.filter((cartProduct) => cartProduct.checked))
-                  //   )}`)
-                  // }}
-                  onClick={handleCheckedPayClick}
-                  style={{backgroundColor: "#A51C30"}}
-                >
-                  <span>선택상품만 결제하기</span>
-                </Button>
-                <div className="w-full md:w-auto">
-                  <Button
-                    variant="contained"
-                    className="btn h-12 w-full md:w-auto text-lg"
-                    disabled={cartProducts.length === 0}
-                    onClick={() => setOpen(true)}
-                    style={{backgroundColor: "#4F3623"}}
-                  >
-                    장바구니 비우기
-                  </Button>
-                  <Dialog
-                    open={open}
-                    onClose={() => setOpen(false)}
-                    aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description"
-                  >
-                    <DialogTitle id="alert-dialog-title">
-                      {"정말 장바구니를 비우시겠습니까?"}
-                    </DialogTitle>
-                    <DialogActions>
-                      <Button onClick={() => setOpen(false)} color="primary">
-                        아니오
-                      </Button>
-                      <Button
-                        onClick={() => {
-                          localStorage.setItem("cartProducts", "[]")
-                          cartProductsForm.setValue("cartProducts", [])
-                          window.postMessage({cartProductsLength: "on"}, "*")
-                          setOpen(false)
-                        }}
-                        color="secondary"
-                        autoFocus
-                      >
-                        네
-                      </Button>
-                    </DialogActions>
-                  </Dialog>
-                </div>
-              </div>
             </div>
+          </div>
+          <div className="product-detail-button flex-col md:flex-row md:items-center justify-start py-4 gap-2">
+            <Button
+              variant="contained"
+              className="btn h-12 w-full md:w-[220px] text-lg md:ml-4"
+              disabled={!cartProducts.find((cartProduct) => cartProduct.checked)}
+              // onClick={() => {
+              //   router.push(`/order?orderProducts=${encodeURIComponent(
+              //     JSON.stringify(cartProducts.filter((cartProduct) => cartProduct.checked))
+              //   )}`)
+              // }}
+              onClick={handleCheckedPayClick}
+              style={{backgroundColor: "#A51C30"}}
+            >
+              <span>선택상품만 결제하기</span>
+            </Button>
+            <Button
+              variant="contained"
+              className="btn h-12 w-full md:w-auto text-lg"
+              disabled={cartProducts.length === 0}
+              onClick={() => setOpen(true)}
+              style={{backgroundColor: "#4F3623"}}
+            >
+              장바구니 비우기
+            </Button>
+            <Dialog
+              open={open}
+              onClose={() => setOpen(false)}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogTitle id="alert-dialog-title">
+                {"정말 장바구니를 비우시겠습니까?"}
+              </DialogTitle>
+              <DialogActions>
+                <Button onClick={() => setOpen(false)} color="primary">
+                  아니오
+                </Button>
+                <Button
+                  onClick={() => {
+                    localStorage.setItem("cartProducts", "[]")
+                    cartProductsForm.setValue("cartProducts", [])
+                    window.postMessage({cartProductsLength: "on"}, "*")
+                    setOpen(false)
+                    calc()
+                  }}
+                  color="secondary"
+                  autoFocus
+                >
+                  네
+                </Button>
+              </DialogActions>
+            </Dialog>
           </div>
         </div>
         <div className="w-full md:w-1/3 pr-8 ml-4">
@@ -387,18 +429,20 @@ export const CartsDetailContent = ({user}: { user: User }) => {
             <div className="mb-4">
               <div className="flex justify-between mb-2">
                 <span>총 상품 금액</span>
-                <span>{_.sumBy(cartProducts, (cartProduct) => {
+                {/* <span>{_.sumBy(cartProducts, (cartProduct) => {
                   return Number(cartProduct.product.discounted_price) * cartProduct.quantity
-                }).toLocaleString()}원</span>
+                }).toLocaleString()}원</span> */}
+                <span>{totalPrice.toLocaleString()}원</span>
               </div>
               <div className="flex justify-between mb-2">
                 <span>할인 금액</span>
-                <span>-{(_.sumBy(cartProducts, (cartProduct) => {
+                {/* <span>-{(_.sumBy(cartProducts, (cartProduct) => {
                   const productPrice = Number(cartProduct.product.price)
                   const discountedPrice = Number(cartProduct.product.discounted_price) || 0
                   return (productPrice - discountedPrice) * cartProduct.quantity
                 }) || 0).toLocaleString()}원
-                </span>
+                </span> */}
+                <span>- {discountedPrice.toLocaleString()}원</span>
               </div>
               <div className="flex justify-between mb-2">
                 <span>배송비</span>
@@ -406,7 +450,7 @@ export const CartsDetailContent = ({user}: { user: User }) => {
               </div>
               <div className="flex justify-between">
                 <span className="font-bold text-lg">최종 결제 금액</span>
-                <span className="font-bold text-lg">
+                {/* <span className="font-bold text-lg">
                   {(
                     (_.sumBy(cartProducts, (cartProduct) => {
                       const productPrice = cartProduct.product ? Number(cartProduct.product.price) : 0
@@ -416,9 +460,13 @@ export const CartsDetailContent = ({user}: { user: User }) => {
                       const productPrice = cartProduct.product ? Number(cartProduct.product.price) : 0
                       const discountedPrice = cartProduct.product ? Number(cartProduct.product.discounted_price) : 0
                       return (productPrice - discountedPrice) * cartProduct.quantity
-                    })) +
+                    })
+                    ) +
                     shippingFee
                   ).toLocaleString()}원
+                </span> */}
+                <span className="font-bold text-lg">
+                  {finalPrice.toLocaleString()}원
                 </span>
               </div>
             </div>
@@ -444,6 +492,13 @@ export const CartsDetailContent = ({user}: { user: User }) => {
 
 // 장바구니에서 상품 삭제
 export const removeFromCart = async (product_pk : number) => {
+  if (typeof window == "undefined") {
+    console.log("로컬 스토리지가 접근되지 않습니다.")
+    return
+  }
+  console.log("주문한 상품 장바구니에서 삭제...")
+  console.log(`product_pk : ${product_pk}`)
+
   // 로컬 스토리지에서 장바구니 데이터 가져오기
   let cartProducts = JSON.parse(localStorage.getItem("cartProducts") || "[]")
 
@@ -460,9 +515,9 @@ export const removeFromCart = async (product_pk : number) => {
     // 장바구니 항목 수 업데이트
     window.postMessage({cartProductsLength: cartProducts.length}, "*")
 
-    console.log("상품이 장바구니에서 삭제되었습니다.")
+    // console.log("상품이 장바구니에서 삭제되었습니다.")
   } else {
-    console.log("해당 상품이 장바구니에 존재하지 않습니다.")
+    // console.log("해당 상품이 장바구니에 존재하지 않습니다.")
   }
 }
 

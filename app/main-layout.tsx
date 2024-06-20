@@ -13,6 +13,10 @@ import {User} from "@/types/usersTypes"
 import {commonServices} from "@/services/commonServices"
 import ExpandLessIcon from "@mui/icons-material/ExpandLess"
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"
+import {usersServices} from "@/services/usersServices"
+import {useRouter} from "next/navigation"
+
+
 
 const MainLayout = ({
   children,
@@ -54,10 +58,16 @@ const MainLayout = ({
     <div className="mx-auto">
       <header
         id="header"
-        className="sticky top-0 z-20 bg-cover bg-center bg-opacity-90 w-full flex justify-center items-center px-4 py-4 md:py-4 md:px-12 text-white transition-opacity -300 border-b border-white"
-        style={{backgroundImage: "url('/images/Bg.png')", backgroundPosition: "center calc(50% - 185px)", opacity: headerOpacity}}
+        className="p-4 sticky top-0 z-20 bg-cover bg-center bg-opacity-90 w-full flex items-center md:px-10 transition-opacity -300 border-b border-yellow-200"
+        style={{
+          backgroundImage: "url('/images/Bg_3.png')",
+          backgroundPosition: "center calc(50% - 38px)",
+          opacity: headerOpacity,
+          backgroundPositionX: "45%",
+          backgroundPositionY: "68%"
+        }}
       >
-        <MainMobileMenu />
+        <MainMobileMenu user={user} />
         <Link href="/">
           <Image
             src="/images/logo.png"
@@ -69,12 +79,12 @@ const MainLayout = ({
             priority
           />
         </Link>
-        <MegaMenu />
+        <MegaMenu user={user} />
         <div className="flex gap-3">
           <MainSearch />
           <Users user={user} />
-          <Link href="/carts" className="text-white">
-            <Badge badgeContent={cartProductsLength} color="primary">
+          <Link href="/carts" className="text-black">
+            <Badge badgeContent={cartProductsLength} color="warning">
               <ShoppingCartIcon className="md:w-8 md:h-8" />
             </Badge>
           </Link>
@@ -115,11 +125,11 @@ export const CsIcon = () => {
   }
 
   return (
-    <div className={`fixed bottom-28 z-1000 right-6 gap-2 flex flex-col justify-center item-center ${isVisible ? "visible" : "hidden"}`}>
+    <div className={`fixed bottom-28 z-1000 right-6 gap-2 flex flex-col justify-center items-center ${isVisible ? "visible" : "hidden"}`}>
       <button onClick={scrollToTop} className="p-1 rounded-full flex items-center justify-center w-16 h-16">
         <ExpandLessIcon style={{fontSize: "32px"}} />
       </button>
-      <Link href="http://pf.kakao.com/_NZDHK">
+      <Link href="http://pf.kakao.com/_xeDxgxkG">
         <Image
           src="/images/quick_kakao.png"
           alt=""
@@ -145,11 +155,12 @@ export const CsIcon = () => {
   )
 }
 
-export const MegaMenu = () => {
+export const MegaMenu = ({user}: {user: User}) => {
   const getMenu = () => {
     return {
       todayMenu: false,
       megaMenu: false,
+      giftSet: false,
       cow: false,
       imported: false,
       pork: false,
@@ -172,50 +183,95 @@ export const MegaMenu = () => {
   return (
     <nav id="header" className="invisible md:visible flex-1 flex justify-center items-center">
       <ul className="flex">
-        {/* <li style={{width: "140px"}} id="todayMenu" className={`relative ${menu.todayMenu ? "text-red-500" : ""}`} onMouseOver={overMenu} onMouseOut={outMenu}>
-          <Link href="/products?is_today=true" className="text-red-600">오늘의 메뉴</Link>
+        {/* <li style={{width: "140px"}} id="giftSet" className={`relative ${menu.todayMenu ? "text-red-500" : ""}`} onMouseOver={overMenu} onMouseOut={outMenu}>
+          <Link href="/products/todayMenu" className="text-red-600">오늘의 메뉴</Link>
+          <ol id="submenu" onMouseOut={outMenu} className={`w-full px-4 py-2 border border-[#FACC15] ${menu.giftSet || menu.todayMenu || menu.cow || menu.pork || menu.simple || menu.imported || menu.board ? "block" : "hidden"}  rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
+            <div className="flex">
+              <div className="item" style={{width: "140px"}}>
+                {categoriesMenu.giftSet.map((category_menu) => (
+                  <li key={category_menu}><Link href={`/products?category=cow&category_menu=${category_menu}`} className="text-black px-2">{category_menu}</Link></li>
+                ))}
+              </div>
+              <div className="item" style={{width: "140px"}}>
+                {categoriesMenu.cow.map((category_menu) => (
+                  <li key={category_menu}><Link href={`/products?category=cow&category_menu=${category_menu}`} className="text-black px-2">{category_menu}</Link></li>
+                ))}
+              </div>
+              <div className="item" style={{width: "140px"}}>
+                {categoriesMenu.pork.map((category_menu) => (
+                  <li key={category_menu}><Link href={`/products?category=pork&category_menu=${category_menu}`} className="text-black">{category_menu}</Link></li>
+                ))}
+              </div>
+              <div className="item" style={{width: "140px"}}>
+                {categoriesMenu.imported.map((category_menu) => (
+                  <li key={category_menu}><Link href={`/products?category=imported&category_menu=${category_menu}`} className="text-black">{category_menu}</Link></li>
+                ))}
+              </div>
+              <div className="item" style={{width: "140px"}}>
+                {categoriesMenu.simple.map((category_menu) => (
+                  <li key={category_menu}><Link href={`/products?category=simple&category_menu=${category_menu}`} className="text-black">{category_menu}</Link></li>
+                ))}
+              </div>
+              <div className="item" style={{width: "140px"}}>
+                <li><Link href="/boards?category=notice" className="text-black">공지사항</Link></li>
+                <li><Link href="/faq" className="text-black">자주하는질문</Link></li>
+                <li><Link href="/boards?category=qna" className="text-black">문의하기</Link></li>
+              </div>
+            </div>
+          </ol>
         </li> */}
-        <li style={{width: "140px"}} id="cow" className="relative" onMouseOver={overMenu} >
-          <Link href="/products?category=cow" className="text-white">소고기🐮</Link>
+        <li style={{width: "140px"}} id="giftSet" className="relative" onMouseOver={overMenu} >
+          <Link href="/products?category=giftSet" className="text-black">선물세트</Link>
+          <ol id="submenu" onMouseOut={outMenu} className={`w-full px-4 py-2 border border-[#FACC15] ${menu.giftSet || menu.todayMenu || menu.cow || menu.pork || menu.simple || menu.imported || menu.board ? "block" : "hidden"}  rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
+            <div className="flex">
+              <div className="item" style={{width: "140px"}}>
+                {categoriesMenu.giftSet.map((category_menu) => (
+                  <li key={category_menu}><Link href={`/products?category=giftSet&category_menu=${category_menu}`} className="text-black px-2">{category_menu}</Link></li>
+                ))}
+              </div>
+              <div className="item" style={{width: "140px"}}>
+                {categoriesMenu.cow.map((category_menu) => (
+                  <li key={category_menu}><Link href={`/products?category=cow&category_menu=${category_menu}`} className="text-black px-2">{category_menu}</Link></li>
+                ))}
+              </div>
+              <div className="item" style={{width: "140px"}}>
+                {categoriesMenu.pork.map((category_menu) => (
+                  <li key={category_menu}><Link href={`/products?category=pork&category_menu=${category_menu}`} className="text-black">{category_menu}</Link></li>
+                ))}
+              </div>
+              <div className="item" style={{width: "140px"}}>
+                {categoriesMenu.imported.map((category_menu) => (
+                  <li key={category_menu}><Link href={`/products?category=imported&category_menu=${category_menu}`} className="text-black">{category_menu}</Link></li>
+                ))}
+              </div>
+              <div className="item" style={{width: "140px"}}>
+                {categoriesMenu.simple.map((category_menu) => (
+                  <li key={category_menu}><Link href={`/products?category=simple&category_menu=${category_menu}`} className="text-black">{category_menu}</Link></li>
+                ))}
+              </div>
+              <div className="item" style={{width: "140px"}}>
+                <li><Link href="/boards?category=notice" className="text-black">공지사항</Link></li>
+                <li><Link href="/faq" className="text-black">자주하는질문</Link></li>
+                <li><Link href="/boards?category=qna" className="text-black">문의하기</Link></li>
+              </div>
+            </div>
+          </ol>
           {/* <ol id="submenu" className={`category-menu-flex flex w-30 absolute border border-[#FACC15] ${menu.cow ? "block" : "hidden"} py-2 rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
             {categoriesMenu.cow.map((category_menu) => (
               <li key={category_menu}><Link href={`/products?category=cow&category_menu=${category_menu}`} className="text-white px-2">{category_menu}</Link></li>
             ))}
           </ol> */}
-          <ol id="submenu" onMouseOut={outMenu} className={`w-full px-4 py-2 border border-[#FACC15] ${menu.todayMenu || menu.cow || menu.pork || menu.simple || menu.imported || menu.board ? "block" : "hidden"}  rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
-            <div className="flex">
-              {/* <div className="item" style={{width: "120px"}}>
-              </div> */}
-              <div className="item" style={{width: "140px"}}>
-                {categoriesMenu.cow.map((category_menu) => (
-                  <li key={category_menu}><Link href={`/products?category=cow&category_menu=${category_menu}`} className="text-white px-2">{category_menu}</Link></li>
-                ))}
-              </div>
-              <div className="item" style={{width: "140px"}}>
-                {categoriesMenu.pork.map((category_menu) => (
-                  <li key={category_menu}><Link href={`/products?category=pork&category_menu=${category_menu}`} className="text-white">{category_menu}</Link></li>
-                ))}
-              </div>
-              <div className="item" style={{width: "140px"}}>
-                {categoriesMenu.imported.map((category_menu) => (
-                  <li key={category_menu}><Link href={`/products?category=imported&category_menu=${category_menu}`} className="text-white">{category_menu}</Link></li>
-                ))}
-              </div>
-              <div className="item" style={{width: "140px"}}>
-                {categoriesMenu.simple.map((category_menu) => (
-                  <li key={category_menu}><Link href={`/products?category=simple&category_menu=${category_menu}`} className="text-white">{category_menu}</Link></li>
-                ))}
-              </div>
-              <div className="item" style={{width: "140px"}}>
-                <li><Link href="/boards?category=notice" className="text-white">공지사항</Link></li>
-                <li><Link href="/faq" className="text-white">자주하는질문</Link></li>
-                <li><Link href="/boards?category=qna" className="text-white">문의하기</Link></li>
-              </div>
-            </div>
-          </ol>
+        </li>
+        <li style={{width: "140px"}} id="cow" className="relative" onMouseOver={overMenu} >
+          <Link href="/products?category=cow" className="text-black">소고기🐮</Link>
+          {/* <ol id="submenu" className={`category-menu-flex flex w-30 absolute border border-[#FACC15] ${menu.cow ? "block" : "hidden"} py-2 rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
+            {categoriesMenu.cow.map((category_menu) => (
+              <li key={category_menu}><Link href={`/products?category=cow&category_menu=${category_menu}`} className="text-white px-2">{category_menu}</Link></li>
+            ))}
+          </ol> */}
         </li>
         <li style={{width: "140px"}} id="pork" className="relative" onMouseOver={overMenu} >
-          <Link href="/products?category=pork" className="text-white">돼지고기🐷</Link>
+          <Link href="/products?category=pork" className="text-black">돼지고기🐷</Link>
           {/* <ol id="submenu" className={`w-18 absolute border border-[#FACC15] ${menu.pork ? "block" : "hidden"} py-2 rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
             {categoriesMenu.pork.map((category_menu) => (
               <li key={category_menu}><Link href={`/products?category=pork&category_menu=${category_menu}`} className="text-white">{category_menu}</Link></li>
@@ -223,7 +279,7 @@ export const MegaMenu = () => {
           </ol> */}
         </li>
         <li style={{width: "140px"}} id="imported" className="relative" onMouseOver={overMenu} >
-          <Link href="/products?category=imported" className="text-white">수입육</Link>
+          <Link href="/products?category=imported" className="text-black">수입육</Link>
           {/* <ol id="submenu" className={`w-18 absolute border border-[#FACC15] ${menu.simple ? "block" : "hidden"} py-2 rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
             {categoriesMenu.simple.map((category_menu) => (
               <li key={category_menu}><Link href={`/products?category=simple&category_menu=${category_menu}`} className="text-white">{category_menu}</Link></li>
@@ -231,7 +287,7 @@ export const MegaMenu = () => {
           </ol> */}
         </li>
         <li style={{width: "140px"}} id="simple" className="relative" onMouseOver={overMenu} >
-          <Link href="/products?category=simple" className="text-white">간편식</Link>
+          <Link href="/products?category=simple" className="text-black">간편식</Link>
           {/* <ol id="submenu" className={`w-18 absolute border border-[#FACC15] ${menu.simple ? "block" : "hidden"} py-2 rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
             {categoriesMenu.simple.map((category_menu) => (
               <li key={category_menu}><Link href={`/products?category=simple&category_menu=${category_menu}`} className="text-white">{category_menu}</Link></li>
@@ -246,13 +302,19 @@ export const MegaMenu = () => {
           </ol>
         </li> */}
         <li style={{width: "140px"}} id="board" className="relative" onMouseOver={overMenu} >
-          <Link href="/boards" className="text-white">고객센터</Link>
+          <Link href="/boards" className="text-black">고객센터</Link>
           {/* <ol id="submenu" className={`w-18 absolute border border-[#FACC15] ${menu.board ? "block" : "hidden"} py-2 rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
             <li><Link href="/boards?category=notice" className="text-white">공지사항</Link></li>
             <li><Link href="/faq" className="text-white">자주하는질문</Link></li>
             <li><Link href="/boards?category=qna" className="text-white">1:1문의하기</Link></li>
           </ol> */}
         </li>
+        {user.is_admin ? (
+          <li style={{width: "140px"}} id="board" className="relative" onMouseOver={overMenu}>
+            <Link href="/admin" className="text-black">관리자</Link>
+          </li>
+        ) : null}
+        {/* 관리자 페이지 연결 */}
       </ul>
     </nav>
   )
@@ -271,7 +333,7 @@ const MainSearch = () => {
   return <>
     <Link
       href=""
-      className="hidden md:block p-0 text-white"
+      className="hidden md:block p-0 text-black"
       onClick={(event: React.MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault()
         setAnchorEl(event.currentTarget)
@@ -291,113 +353,195 @@ const MainSearch = () => {
   </>
 }
 
-const MainMobileMenu = () => {
+const MainMobileMenu = ({user}: { user: User }) => {
   const [open, setOpen] = useState(false)
   const categoriesMenu = commonServices.categoriesMenu()
-  return <>
-    <IconButton style={{display: "none", color:"white"}} className="!block md:!hidden" onClick={() => setOpen(true)}>
-      <MenuIcon />
-    </IconButton>
-    <Drawer
-      className="w-full"
-      open={open}
-      onClose={() => setOpen(false)}
-      PaperProps={{sx: {width: "100%"}}}
-    >
-      <Box className="p-2">
-        <nav>
-          <div className="flex items-center gap-2">
-            <Link href="/users/login">로그인</Link>
-            <Link href="/users/sign-up">회원가입</Link>
-          </div>
-          <span className="flex-1"></span>
-          <IconButton onClick={() => setOpen(false)}>
-            <CloseIcon/>
-          </IconButton>
-        </nav>
-        <SearchBar />
-        <nav>
-          <ul className="items-center">
-            <li>
-              <Accordion>
-                <AccordionSummary>
-                  <Link href="/products?is_today=true">오늘의 메뉴</Link>
-                </AccordionSummary>
-              </Accordion>
-            </li>
-            <li>
-              <Accordion>
-                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  <Link href="/products?category=cow">소고기</Link>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <ol>
-                    {categoriesMenu.cow.map((category_menu) => (
-                      <li key={category_menu}><Link href={`/products?category=cow&category_menu=${category_menu}`}>{category_menu}</Link></li>
-                    ))}
-                  </ol>
-                </AccordionDetails>
-              </Accordion>
-            </li>
-            <li>
-              <Accordion>
-                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  <Link href="/products?category=pork">돼지고기</Link>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <ol>
-                    {categoriesMenu.pork.map((category_menu) => (
-                      <li key={category_menu}><Link href={`/products?category=pork&category_menu=${category_menu}`}>{category_menu}</Link></li>
-                    ))}
-                  </ol>
-                </AccordionDetails>
-              </Accordion>
-            </li>
-            <li>
-              <Accordion>
-                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  <Link href="/products?category=simple">간편식</Link>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <ol>
-                    {categoriesMenu.simple.map((category_menu) => (
-                      <li key={category_menu}><Link href={`/products?category=simple&category_menu=${category_menu}`}>{category_menu}</Link></li>
-                    ))}
-                  </ol>
-                </AccordionDetails>
-              </Accordion>
-            </li>
-            <li>
-              <Accordion>
-                <AccordionSummary>
-                  <Link href="/products">리뷰</Link>
-                </AccordionSummary>
-              </Accordion>
-            </li>
-            <li>
-              <Accordion>
-                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  <Link href="/products">고객센터</Link>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <ol>
-                    <li><Link href="/boards?category=notice">공지사항</Link></li>
-                    <li><Link href="/faq">자주하는질문</Link></li>
-                    <li><Link href="/boards?category=qna">문의하기</Link></li>
-                  </ol>
-                </AccordionDetails>
-              </Accordion>
-            </li>
-          </ul>
-        </nav>
-      </Box>
-    </Drawer>
-  </>
+
+  const handleLinkClick = () => {
+    window.postMessage({loginPopup: "on"}, "*")
+    setOpen(false)
+  }
+
+  return (
+    <div className="flex items-center">
+      <IconButton
+        style={{display: "none", color: "black"}}
+        className="!block md:!hidden gap-3"
+        onClick={() => setOpen(true)}
+      >
+        <MenuIcon />
+      </IconButton>
+      <Drawer
+        className="w-full"
+        open={open}
+        onClose={() => setOpen(false)}
+        PaperProps={{sx: {width: "100%"}}}
+      >
+        <Box className="p-4" style={{backgroundImage: "url('/images/Bg_3.png')", backgroundColor: "rgba(255, 255, 255, 0.9)"}}>
+          <nav>
+            <div className="flex justify-end">
+              <IconButton onClick={() => setOpen(false)}>
+                <CloseIcon />
+              </IconButton>
+            </div>
+            <div className="flex items-center gap-3 px-4">
+              {user.user_pk > 0 ? (
+                <div className="flex items-center gap-8 p-4">
+                  <div>
+                    <Image
+                      src="/images/cow.png"
+                      alt="Logo"
+                      width={80}
+                      height={80}
+                      sizes="100vw"
+                      className="md:w-16"
+                      priority
+                    />
+                  </div>
+                  <div className="flex flex-col gap-3">
+                    <div className="text-red-700">
+                      <strong>{user.name || user.nickname}</strong><span className="text-black">님, 안녕하세요 :)</span>
+                    </div>
+                    <div className="flex justify-end">
+                      <button type="button"
+                        className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+                        onClick={async () => {
+                          await usersServices.usersLogout()
+                          setOpen(false)
+                          window.location.reload()
+                        }}
+                        style={{marginBottom: "20px", padding: "5px 10px"}}
+                      >
+                        로그아웃
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <div
+                    onClick={handleLinkClick}
+                    className="px-4 py-2 bg-yellow-500 text-white rounded-full hover:bg-yellow-600 cursor-pointer"
+                  >
+                    로그인
+                  </div>
+                  <div
+                    onClick={handleLinkClick}
+                    className="px-4 py-2 bg-red-700 text-white rounded-full hover:bg-brown-600 cursor-pointer"
+                  >
+                    회원가입
+                  </div>
+                </>
+              )}
+              <span className="flex-1"></span>
+            </div>
+          </nav>
+          <SearchBar />
+          <nav>
+            <ul className="items-center p-8">
+              <li>
+                <Accordion>
+                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                    <Link href="/products/giftSet">선물세트</Link>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <ol>
+                      {categoriesMenu.giftSet.map((category_menu) => (
+                        <li key={category_menu}>
+                          <Link href={`/products?category=giftSet&category_menu=${category_menu}`}>{category_menu}</Link>
+                        </li>
+                      ))}
+                    </ol>
+                  </AccordionDetails>
+                </Accordion>
+              </li>
+              <li>
+                <Accordion>
+                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                    <Link href="/products?category=cow">소고기</Link>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <ol>
+                      {categoriesMenu.cow.map((category_menu) => (
+                        <li key={category_menu}>
+                          <Link href={`/products?category=cow&category_menu=${category_menu}`}>{category_menu}</Link>
+                        </li>
+                      ))}
+                    </ol>
+                  </AccordionDetails>
+                </Accordion>
+              </li>
+              <li>
+                <Accordion>
+                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                    <Link href="/products?category=pork">돼지고기</Link>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <ol>
+                      {categoriesMenu.pork.map((category_menu) => (
+                        <li key={category_menu}>
+                          <Link href={`/products?category=pork&category_menu=${category_menu}`}>{category_menu}</Link>
+                        </li>
+                      ))}
+                    </ol>
+                  </AccordionDetails>
+                </Accordion>
+              </li>
+              <li>
+                <Accordion>
+                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                    <Link href="/products?category=simple">간편식</Link>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <ol>
+                      {categoriesMenu.simple.map((category_menu) => (
+                        <li key={category_menu}>
+                          <Link href={`/products?category=simple&category_menu=${category_menu}`}>{category_menu}</Link>
+                        </li>
+                      ))}
+                    </ol>
+                  </AccordionDetails>
+                </Accordion>
+              </li>
+              <li>
+                <Accordion>
+                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                    <Link href="/products">고객센터</Link>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <ol>
+                      <li><Link href="/boards?category=notice">공지사항</Link></li>
+                      <li><Link href="/faq">자주하는질문</Link></li>
+                      <li><Link href="/boards?category=qna">문의하기</Link></li>
+                    </ol>
+                  </AccordionDetails>
+                </Accordion>
+              </li>
+            </ul>
+          </nav>
+        </Box>
+      </Drawer>
+      <IconButton className="flex md:!hidden">
+        <Link href="/">
+          <Image
+            src="/images/logo.png"
+            alt="Logo"
+            width={32}
+            height={32}
+            sizes="100vw"
+            className="md:w-16"
+            priority
+          />
+        </Link>
+      </IconButton>
+    </div>
+  )
 }
+
 
 const SearchBar = () => {
   return (
-    <section className="flex items-center bg-gray-100 rounded-full p-1">
+    <section className="flex items-center bg-gray-200 rounded-full p-1">
       <InputBase
         className="flex-1 ml-2"
         placeholder="검색어를 입력해주세요."
@@ -419,45 +563,48 @@ const MainBottom = () => {
   }
   return (
     <section
-      className="section footer bg-cover bg-center bg-no-repeat"
+      className="section footer bg-cover bg-center bg-no-repeat border border-yellow-200 px-8"
       style={{
-        backgroundImage: "url(\"/images/Bg.png\")"
+        backgroundImage: "url(\"/images/Bg_3.png\")",
+        boxShadow: "0 -4px 8px rgba(0, 0, 0, 0.1)"
       }}
     >
-      <div className="bg-transparent p-6 md:p-12 text-white">
+      <div className="bg-transparent p-6 md:p-12">
         <div className="flex footer-menu-link space-x-4">
           <Link href={"https://smartstore.naver.com/hansolmeat1534"}>
-            <div className="footer-menu-content cursor-pointer hover:underline text-white">회사소개</div><span>|</span>
+            <div className="footer-menu-content cursor-pointer hover:underline text-black">회사소개</div>
           </Link>
-          <Link href={"https://smartstore.naver.com/hansolmeat1534"}>
-            <div className="footer-menu-content cursor-pointer hover:underline text-white">이용안내</div><span>|</span>
-          </Link>
-          <Link href={"/policy"}>
-            <div className="footer-menu-content cursor-pointer hover:underline text-white">이용약관</div><span>|</span>
+          <Link href={"/faq"}>
+            <div className="footer-menu-content cursor-pointer hover:underline text-black">이용안내</div>
           </Link>
           <Link href={"/policy"}>
-            <div className="footer-menu-content cursor-pointer hover:underline text-white">개인정보처리방침</div><span>|</span>
+            <div className="footer-menu-content cursor-pointer hover:underline text-black">이용약관</div>
+          </Link>
+          <Link href={"/policy"}>
+            <div className="footer-menu-content cursor-pointer hover:underline text-black">개인정보처리방침</div>
           </Link>
         </div>
         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-          <div className="text-2xl font-bold" style={{textAlign: "left"}}>
+          <div className="text-2xl font-bold text-black" style={{textAlign: "left"}}>
           (주) 한솔축산
           </div>
           <div className="mt-6 md:mt-0 flex justify-center w-full md:w-auto">
-            <Image
-              src="/images/logo.png"
-              alt="한솔축산 로고"
-              width={60}
-              height={60}
-              sizes="100vw"
-              className="w-20 h-20 md:w-24 md:h-24 cursor-pointer"
-              priority
-              onClick={scrollToTop}
-            />
+            <Link href="/home">
+              <Image
+                src="/images/logo.png"
+                alt="한솔축산 로고"
+                width={60}
+                height={60}
+                sizes="100vw"
+                className="w-20 h-20 md:w-24 md:h-24 cursor-pointer"
+                priority
+                onClick={scrollToTop}
+              />
+            </Link>
           </div>
         </div>
         <div className="footer-left space-y-4 mt-6">
-          <div className="footer-info text-sm leading-loose">
+          <div className="footer-info text-lg leading-loose text-black">
             <span className="footer-info-detail block">
               <span className="text-style-1 font-semibold">대표자</span> | 한승구, 박수현
             </span>
@@ -475,7 +622,7 @@ const MainBottom = () => {
             </span>
           </div>
           <div className="footer-info-detail block">
-            <span className="text-style-1">
+            <span className="text-style-1 text-black">
             © 2024 한솔. All right reserved.
             </span>
           </div>

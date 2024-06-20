@@ -3,7 +3,7 @@ import ErrorPage from "@/app/error"
 import MainLayout from "@/app/main-layout"
 import {OrderSuccessContent} from "@/app/order/Order"
 import {loginCheck} from "@/app/users/login/loginCheck"
-import {addressServices} from "@/services/addressService"
+import {addressServices} from "@/services/addressServices"
 import {orderItemsService} from "@/services/orderItemsServices"
 import {ordersServices} from "@/services/ordersServices"
 import {paymentsServices} from "@/services/paymentsServices"
@@ -12,7 +12,7 @@ import {Address, AddressSearchParams} from "@/types/addressTypes"
 import {ResponseApi} from "@/types/commonTypes"
 import {OrderItem, OrderItemSearchParams} from "@/types/orderItemsTypes"
 import {Order, OrderParams} from "@/types/ordersTypes"
-import {Payment} from "@/types/paymentsTypes"
+import {Payment, PaymentSearchParams} from "@/types/paymentsTypes"
 import {User} from "@/types/usersTypes"
 import {redirect} from "next/navigation"
 
@@ -28,8 +28,8 @@ import {redirect} from "next/navigation"
  * @returns
  */
 const PaymentSuccess = async (props: {
-  params: {payment_pk : number,},  // 경로 변수
-  searchParams: {}                // 쿼리 스트링 파라미터
+  params: {payment_pk : number,},     // 경로 변수
+  searchParams: PaymentSearchParams   // 쿼리 스트링 파라미터
 }) => {
   const {user} = await loginCheck(false)
   let order_pk = 0
@@ -127,7 +127,7 @@ const PaymentSuccess = async (props: {
       <div>
         <div className="flex justify-center text-red-100 text-4xl"
           style={{
-            backgroundImage: "url('/images/Bg.png')",
+            backgroundImage: "url('/images/Bg_3.png')",
             backgroundPosition: "center calc(10% - 620px)",
             backgroundRepeat: "repeat",
             backgroundSize: "cover",
