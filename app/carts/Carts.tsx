@@ -353,6 +353,7 @@ export const CartsDetailContent = ({user}: { user: User }) => {
                                   localStorage.setItem("cartProducts", JSON.stringify(cartProducts))
                                   cartProductsForm.setValue("cartProducts", cartProducts)
                                   window.postMessage({cartProductsLength: "on"}, "*")
+                                  calc()
                                 }
                               }}
                               style={{color: "#4F3623"}}
@@ -411,6 +412,7 @@ export const CartsDetailContent = ({user}: { user: User }) => {
                     cartProductsForm.setValue("cartProducts", [])
                     window.postMessage({cartProductsLength: "on"}, "*")
                     setOpen(false)
+                    calc()
                   }}
                   color="secondary"
                   autoFocus
