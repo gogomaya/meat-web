@@ -4,7 +4,7 @@ import React, {useState} from "react"
 
 const TermsOfService: React.FC = () => {
   return (
-    <div className="p-4"><div className="flex justify-center"><strong>한솔 정책</strong></div><div style={{textAlign: "center", marginTop: "20px"}}>
+    <div className="container"><div style={{textAlign: "center", marginTop: "20px"}}>
       <div style={{textAlign: "left", marginTop: "20px", backgroundColor: "#f9f9f9", padding: "20px", borderRadius: "8px", width: "100%"}}>
         <p style={{fontSize: "16px", lineHeight: "1.6", color: "#333"}}>
           <strong style={{color: "#008CBA"}}>제 1 조 (목적)</strong><br />

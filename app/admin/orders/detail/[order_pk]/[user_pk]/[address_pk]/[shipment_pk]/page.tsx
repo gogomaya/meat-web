@@ -153,7 +153,7 @@ const OrderDetail = async (props: {
               <div className="item flex-[3]">
                 <div className="inner p-1">
                   <span className="px-3" id="orderPk">
-                    {userInfo.user.name} | {userInfo.user.nickname}
+                    {userInfo.user.name || userInfo.user.nickname}
                   </span>
                 </div>
               </div>
