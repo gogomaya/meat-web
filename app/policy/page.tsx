@@ -8,6 +8,7 @@ const TermsandPolicy = async () => {
   return (
     <MainLayout user={user}>
       <div className="container">
+        <div className="p-8 flex justify-center text-4xl"><strong>한솔 정책</strong></div>
         <TermsAndPolicyTabs />
       </div>
     </MainLayout>

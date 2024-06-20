@@ -574,7 +574,7 @@ const MainBottom = () => {
           <Link href={"https://smartstore.naver.com/hansolmeat1534"}>
             <div className="footer-menu-content cursor-pointer hover:underline text-black">회사소개</div>
           </Link>
-          <Link href={"https://smartstore.naver.com/hansolmeat1534"}>
+          <Link href={"/faq"}>
             <div className="footer-menu-content cursor-pointer hover:underline text-black">이용안내</div>
           </Link>
           <Link href={"/policy"}>

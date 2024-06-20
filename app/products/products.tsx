@@ -257,7 +257,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
           ))
         ) : (
           <div style={{width: "100%", textAlign: "center", padding: "20px"}}>
-            준비중입니다.
+            상품을 준비중입니다.
           </div>
         )}
       </ol>
@@ -266,9 +266,9 @@ export const ProductsList = ({products}: { products: Product[] }) => {
 }
 
 export const ProductsDetailContent = ({product, user}: { product: Product, user: User }) => {
-  console.log(":::::::::: ProductsDetailContent Component ::::::::::")
-  console.log(":::::::::: product ::::::::::")
-  console.log(product)
+  // console.log(":::::::::: ProductsDetailContent Component ::::::::::")
+  // console.log(":::::::::: product ::::::::::")
+  // console.log(product)
   const [quantity, setQuantity] = React.useState(1)
   const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newQuantity = parseInt(event.target.value)
