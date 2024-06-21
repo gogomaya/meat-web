@@ -64,7 +64,7 @@ const OrderDetail = async (props: {
     // user_pk = order.user_pk
     orderItemsResponse = await orderItemsService.orderItemsRead(searchParams)
     userInfoResponse = await usersServices.usersDetail(user_pk)
-    shipmentResponse = await shipmentsServices.shipmentDetail(shipment_pk)
+    // shipmentResponse = await shipmentsServices.shipmentDetail(shipment_pk)
     userInfo = userInfoResponse.data
     console.log(":::::::::: shipmentInfoResponse ::::::::::")
     console.log(shipmentResponse)

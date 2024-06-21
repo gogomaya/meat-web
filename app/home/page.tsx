@@ -2,7 +2,7 @@ import {ResponseApi} from "@/types/commonTypes"
 import {loginCheck} from "@/app/users/login/loginCheck"
 import MainLayout from "@/app/main-layout"
 // import HomeSwiper from "./swiper"
-import {HomeBanner, HomeBestMenu, HomeCateMenu, HomeWhyUs} from "./home"
+import {HomeBanner, HomeBestMenu, HomeCateMenu, HomePopup, HomeWhyUs} from "./home"
 import {productsServices} from "@/services/productsServices"
 import ErrorPage from "@/app/error"
 import {FaqSection} from "../faq/faq"
@@ -38,6 +38,7 @@ const Home = async (props: {
   return (
     <MainLayout user={user}>
       <div className="w-full">
+        <HomePopup />
         <HomeBanner />
         <HomeCateMenu />
         {/* <HomeSwiper /> */}

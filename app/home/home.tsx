@@ -3,8 +3,99 @@ import {ProductsList, ProductsPagination} from "@/app/products/products"
 import {Product} from "@/types/productsTypes"
 import Image from "next/image"
 import Link from "next/link"
+import React from "react"
 import {useEffect, useRef, useState} from "react"
 import {SwiperSlide} from "swiper/react"
+
+
+// 팝업 이벤트
+export const HomePopup: React.FC = () => {
+  const [isOpen, setIsOpen] = React.useState(true)
+
+  const closePopup = () => {
+    setIsOpen(false)
+  }
+
+  if (!isOpen) {
+    return null
+  }
+
+  const overlayStyle: React.CSSProperties = {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    background: "rgba(0, 0, 0, 0.5)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 99999
+  }
+
+  const contentStyle: React.CSSProperties = {
+    background: "white",
+    padding: "20px",
+    borderRadius: "10px",
+    textAlign: "center",
+    position: "relative",
+    width: "100%",
+    maxWidth: "550px",
+    maxHeight: "80%",
+    overflowY: "auto",
+    backgroundImage: "url(\"/images/Bg_3.png\")"
+
+  }
+
+  const closeButtonStyle: React.CSSProperties = {
+    position: "absolute",
+    top: "10px",
+    right: "10px",
+    background: "none",
+    border: "none",
+    fontSize: "1.5rem",
+    cursor: "pointer"
+  }
+
+  const imageStyle: React.CSSProperties = {
+    width: "100%",
+    height: "auto",
+    borderRadius: "10px"
+  }
+
+  const iconsContainerStyle: React.CSSProperties = {
+    display: "flex",
+    justifyContent: "center",
+    marginTop: "20px"
+  }
+
+  const iconStyle: React.CSSProperties = {
+    width: "50px",
+    height: "50px",
+    margin: "0 10px"
+  }
+
+  return (
+    <div style={overlayStyle}>
+      <div style={contentStyle}>
+        <button style={closeButtonStyle} onClick={closePopup}>
+          &times;
+        </button>
+        <Image
+          src="/images/logo.png"
+          alt=""
+          width={100}
+          height={100}
+          sizes="100vw"
+          priority
+        />
+        <h5>2024 추석 맞이 한솔축산 Grand 오픈!</h5>
+        <p>추석을 맞이하여 한솔축산 홈페이지가 새롭게 오픈하였습니다. <br /> 많은 방문 부탁드립니다!</p>
+      </div>
+    </div>
+  )
+}
+
 
 export const HomeBanner = () => {
   return (
@@ -433,8 +524,6 @@ export const CounterSection: React.FC = () => {
     </div>
   )
 }
-
-
 
 // 기타 section
 export const HomeDunDunRice = () => {
