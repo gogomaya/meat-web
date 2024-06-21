@@ -224,11 +224,27 @@ export const ProductsList = ({products}: { products: Product[] }) => {
                 <strong style={{color: "#000", fontSize: "1.1rem"}}>{product.discounted_price.toLocaleString()}원</strong>
               </p>
               <div style={{display: "flex", flexWrap: "wrap", gap: "10px"}}>
+                {product.etc && (
+                  <button
+                    className="product-button"
+                    style={{
+                      padding: "5px 8px",
+                      backgroundColor: "#000",
+                      color: "#fff",
+                      border: "none",
+                      borderRadius: "20px",
+                      cursor: "pointer",
+                      fontSize: "0.8rem"
+                    }}
+                  >
+                    {product.etc}
+                  </button>
+                )}
                 <button
                   className="product-button"
                   style={{
                     padding: "5px 8px",
-                    backgroundColor: "#000",
+                    backgroundColor: "#A51C30",
                     color: "#fff",
                     border: "none",
                     borderRadius: "20px",
@@ -236,7 +252,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
                     fontSize: "0.8rem"
                   }}
                 >
-                  {product.etc}
+                  진공포장
                 </button>
                 <button
                   className="product-button"
