@@ -909,45 +909,51 @@ export const ProductDetail = ({product}: {product: Product}) => {
 export const ShipDetail = () => {
   return (
     <>
-      <div className="container">
+      <div className="container" style={{margin: "auto", padding: "20px", fontFamily: "Arial, sans-serif", lineHeight: "1.6"}}>
         <div>
-          <strong>교환 및 환불 안내</strong>
-          <div className="mb-4">
-            <div>
-              <span style={{fontWeight: "bold", textDecoration: "underline"}}>1. 상품에 문제가 있는 경우</span><br />
-            받으신 상품이 표시/광고 내용 또는 계약 내용과 다른 경우에는 상품을 받은 날부터 3개월 이내,
-              <br />그 사실을 알게 된 날부터 30일 이내에 교환 및 환불을 요청하실 수 있습니다.
+          <strong style={{fontSize: "24px"}}>교환/환불/반품 안내</strong>
+          <div className="mb-4" style={{marginBottom: "20px"}}>
+            <div style={{marginBottom: "15px"}}>
+              <span style={{fontWeight: "bold", textDecoration: "underline", fontSize: "18px"}}>1. 상품에 문제가 있는 경우</span>
+              <br />
+              받으신 상품이 표시/광고 내용 또는 계약 내용과 다른 경우에는 <strong>배송완료 후 3일 이내</strong>,
+              <br />그 사실을 알게 된 날부터 <strong>3일 이내</strong>에 교환 및 환불을 요청하실 수 있습니다.
               <br />상품의 정확한 상태를 확인할 수 있도록 사진을 함께 보내주시면 더 빠른 상담이 가능합니다.
-              <br /><span>⚠ 배송 상품에 문제가 있는 것으로 확인되면 배송비는 판매자가 부담합니다.</span>
+              <br /><span>결제하신 금액의 환불은 판매자 회수 완료 후 3~10 영업일 이내에 처리됩니다.</span>
+              <br /><span style={{color: "red"}}>⚠ 배송 상품에 문제가 있는 것으로 확인되면 배송비는 판매자가 부담합니다.</span>
             </div>
-            <div>
-              <span style={{fontWeight: "bold", textDecoration: "underline"}}>2. 단순 변심, 주문착오의 경우</span><br />
-            받으신 상품이 표시/광고 내용 또는 계약 내용과 다른 경우에는 상품을 받은 날부터 3개월 이내,
-              <br />그 사실을 알게 된 날부터 30일 이내에 교환 및 환불을 요청하실 수 있습니다.
-              <br />상품의 정확한 상태를 확인할 수 있도록 사진을 함께 보내주시면 더 빠른 상담이 가능합니다.
-              <br /><span>⚠ 배송 상품에 문제가 있는 것으로 확인되면 배송비는 판매자가 부담합니다.</span>
+            <div style={{marginBottom: "15px"}}>
+              <span style={{fontWeight: "bold", textDecoration: "underline", fontSize: "18px"}}>2. 단순 변심, 주문착오, 구매자 개인사정의 경우</span>
+              <br />결제완료 후, <strong>배송전</strong> 상태일 경우, 100% 환불이 가능합니다.
+              <br /><strong>배송후</strong> 상태의 경우, 신선식품 특성상 재판매가 불가해 100% 폐기를 진행합니다.
+              <br /><span>한솔축산 당사의 귀책사유가 아닌 경우, 교환 및 반품이 불가합니다.</span>
             </div>
+            <div style={{fontWeight: "bold", fontSize: "18px"}}>교환은 진행하지 않습니다.</div>
           </div>
         </div>
-        <div className="mb-4">
-          <strong>주문취소 안내</strong>
+        <div className="mb-4" style={{marginBottom: "20px"}}>
+          <strong style={{fontSize: "24px"}}>주문취소 안내</strong>
           <div>
-            <div>
-              <span style={{fontWeight: "bold", textDecoration: "underline"}}>1. 주문 취소 관련</span><br />
-            [배송준비중] 부터는 취소가 불가하니, 반품으로 진행해주세요. (상품에 따라 반품이 불가할 수 있습니다.)
+            <div style={{marginBottom: "15px"}}>
+              <span style={{fontWeight: "bold", textDecoration: "underline", fontSize: "18px"}}>1. 주문 취소 관련</span>
+              <br />
+              [배송준비중] 부터는 취소가 불가하니, 반품으로 진행해주세요. (상품에 따라 반품이 불가할 수 있습니다.)
               <br />주문마감 시간에 임박할수록 취소 기능 시간이 짧아질 수 있습니다.
               <br />비회원은 App 또는 모바일 웹사이트에서 [비회원 주문조회 페이지] 에서 취소가 가능합니다.
-              <br />일부 예약상품은 배송 3~4일 전에만 취소 가능합니다.
+              <br />일부 상품은 배송 전에만 취소 가능합니다.
               <br />주문상품의 부분취소는 불가능합니다. 전체 주문 취소 후 다시 구매 해주세요.
               <br />미성년자 결제 시 법정대리인이 그 거래를 취소할 수 있습니다.
             </div>
           </div>
         </div>
-        <div className="mb-12 py-4">
-          <strong>배송관련 안내</strong>
+        <div className="mb-12 py-4" style={{marginBottom: "48px", padding: "20px 0"}}>
+          <strong style={{fontSize: "24px"}}>배송관련 안내</strong>
           <div>
-            <div>
-            배송 과정 중 기상 악화 및 도로교통 상황에 따라 부득이 지연배송이 발생될 수 있습니다.
+            <div style={{marginBottom: "10px"}}>
+              배송 과정 중 기상 악화 및 도로교통 상황에 따라 부득이 지연배송이 발생될 수 있습니다.
+              <br />저희 제품은 주문/작업/출고 일정이 정해져 있어 출고일 지정이 어렵습니다.
+              <br />제주도 및 도서산간 지역은 추가 배송비가 발생하며, 신선식품 특성상 배송불가한 제품이 있을 수 있습니다.
+              <br />택배사는 로젠택배를 이용합니다.
             </div>
           </div>
         </div>
