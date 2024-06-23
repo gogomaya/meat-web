@@ -757,6 +757,21 @@ const CartOrderButton = ({
         },
         allowOutsideClick: () => !Swal.isLoading()
       }).then((result) => {
+
+        const phoneNumber = result.value.mobile
+        const phoneRegex = /^\d{11}$/ // 11자리 숫자 정규 표현식
+
+        if (!phoneRegex.test(phoneNumber)) {
+          // alert("유효하지 않은 전화번호입니다. 11자리 숫자만 입력해주세요.");
+          MySwal.fire({
+            title: <p className="text-xl">유효하지 않은 전화번호입니다.</p>,
+            text: "11자리 숫자만 입력해주세요.",
+            icon: "error",
+            confirmButtonText: "확인"
+          })
+          return
+        }
+
         if (result.isConfirmed) {
           // 비회원 주문
           router.push(`/guest/order?mobile=${result.value.mobile}&productPks=${product.product_pk}&quantityList=${quantity}`)
@@ -834,7 +849,22 @@ const CartOrderButton = ({
         },
         allowOutsideClick: () => !Swal.isLoading()
       }).then((result) => {
+        const phoneNumber = result.value.mobile
+        const phoneRegex = /^\d{11}$/ // 11자리 숫자 정규 표현식
+
+        if (!phoneRegex.test(phoneNumber)) {
+          // alert("유효하지 않은 전화번호입니다. 11자리 숫자만 입력해주세요.");
+          MySwal.fire({
+            title: <p className="text-xl">유효하지 않은 전화번호입니다.</p>,
+            text: "11자리 숫자만 입력해주세요.",
+            icon: "error",
+            confirmButtonText: "확인"
+          })
+          return
+        }
+
         if (result.isConfirmed) {
+          // TODO: 다시열기
           // 비회원 주문
           router.push(`/guest/order?mobile=${result.value.mobile}&productPks=${productPks}&quantityList=${quantityList}`)
         }

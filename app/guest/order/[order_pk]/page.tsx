@@ -30,7 +30,7 @@ const OrderPay = async (props: {
 }) => {
   const {user} = await loginCheck(false)
   const order_pk = props.params.order_pk
-  const guest = props.searchParams.guest
+  const guest = props.searchParams.guest || 0
   // console.log("주문 등록 완료 후")
   // console.log(":::::::::::::::::: [주문서 작성]:::::::::::::::::: ")
   // console.log ("/ordre/{order_pk}")
@@ -112,7 +112,7 @@ const OrderPay = async (props: {
             alignItems: "center"
           }}>주문서</div>
       </div>
-      <OrderDetailContent order={order} orderItems={orderItems}  />
+      <OrderDetailContent order={order} orderItems={orderItems} guest={guest}  />
     </MainLayout>
   )
 }
