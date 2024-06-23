@@ -63,10 +63,11 @@ export const Post = (props: { setcompany: (arg0: any) => void; company: any }) =
  * @returns
  */
 export const OrderDetailContent = ({
-  order, orderItems
+  order, orderItems, guest
 }: {
   order: Order
   orderItems: OrderItem[]
+  guest: number
 }) => {
   const [isOrderInfoOpen, setIsOrderInfoOpen] = useState(false)
   const [isPersonalInfoOpen, setIsPersonalInfoOpen] = useState(false)
@@ -328,7 +329,7 @@ export const OrderDetailContent = ({
                 <div className="text-2xl font-semibold mb-4 p-2">결제방법</div>
                 <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
                 {/* 토스 결제 위젯 */}
-                <CheckoutPage pay={pay} address_pk={addressPk} />
+                <CheckoutPage pay={pay} address_pk={addressPk} guest={guest} />
               </div>
             </div>
           </div>

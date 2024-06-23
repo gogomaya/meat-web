@@ -11,7 +11,7 @@ const widgetClientKey = "test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm"
 const customerKey = "N2ZORlnbt0pQTNygmDgHw"
 // const paymentWidget = PaymentWidget(widgetClientKey, PaymentWidget.ANONYMOUS) // 비회원 결제
 
-export function CheckoutPage({pay, address_pk}) {
+export function CheckoutPage({pay, address_pk, guest}) {
   const [paymentWidget, setPaymentWidget] = useState(null)
   const paymentMethodsWidgetRef = useRef(null)
   const [price, setPrice] = useState(pay.finalPrice)
@@ -65,6 +65,49 @@ export function CheckoutPage({pay, address_pk}) {
   const handlePaymentRequest = async () => {
     // 결제를 요청하기 전에 orderId, amount를 서버에 저장하세요.
     // 결제 과정에서 악의적으로 결제 금액이 바뀌는 것을 확인하는 용도입니다.
+
+    //
+    const MySwal = withReactContent(Swal)
+    let checkMsg = ""
+    let check = true
+    if( guest && guest == 1 ) {
+      // 비회원 주문
+      if( !pay.customerName ) {
+        checkMsg = "주문자 이름(보내는 분)을 반드시 입력해주세요."
+        check = false
+      }
+      if( !pay.guestRecipient ) {
+        checkMsg = "수령인 이름(받는 분)을 반드시 입력해주세요."
+        check = false
+      }
+      if( !pay.guestMobile ) {
+        checkMsg = "연락처(받는 분)를 반드시 입력해주세요."
+        check = false
+      }
+      if( !pay.guestAddress ) {
+        checkMsg = "배송지 주소를 반드시 입력해주세요."
+        check = false
+      }
+    }
+    else {
+      // 회원 주문
+      if( !pay.customerName ) {
+        checkMsg = "주문자 이름(보내는 분)을 반드시 입력해주세요."
+        check = false
+      }
+    }
+
+    if( !check ) {
+
+      MySwal.fire({
+        title: <p className="text-xl">{checkMsg}</p>,
+        icon: "warning",
+        confirmButtonText: "확인"
+      })
+      return
+
+    }
+
 
     let params = `orderPk=${pay.orderPk}&addressPk=${address_pk}`
     if( pay.customerName ) params += `&guestName=${pay.customerName}`
