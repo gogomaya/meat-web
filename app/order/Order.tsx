@@ -306,7 +306,7 @@ export const OrderDetailContent = ({
                 <div className="text-2xl font-semibold mb-4 p-2">결제방법</div>
                 <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
                 {/* 토스 결제 위젯 */}
-                <CheckoutPage pay={pay} address_pk={addressPk} />
+                <CheckoutPage pay={pay} address_pk={addressPk} guest={undefined} />
                 {/* <div className="flex items-center justify-between py-2">
                   <div className="w-1/4 font-medium">결제수단</div>
                   <div className="w-3/4">
