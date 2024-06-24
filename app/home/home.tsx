@@ -423,7 +423,7 @@ export const HomeWhyUs = () => {
       <div className="container flex flex-col md:flex-row justify-between items-center gap-10">
         <div className="flex flex-col space-y-4 md:w-1/2 md:px-16">
           <div className="why-inner text-lg font-extrabold text-red-700">WHY US?</div>
-          <div className="why-inner text-2xl md:text-4xl font-bold text-black">왜 <span className="text-red-700">&apos;한솔축산&apos;</span> 인가?</div>
+          <div className="why-inner text-2xl md:text-4xl font-bold text-black py-4">왜 <span className="text-red-700">&apos;한솔축산&apos;</span> 인가?</div>
           <div className="why-inner text-lg md:text-xl text-black">
             <span className="text-lg md:text-xl text-red-700 font-bold">&lsquo;신선함을 잇다&rsquo;</span>는 바로 고객과의
             <br />
