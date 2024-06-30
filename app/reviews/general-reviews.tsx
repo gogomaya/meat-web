@@ -90,10 +90,10 @@ const GeneralReviewsForm = ({
     backdrop.close()
   }
   return (
-    <div className="container py-4">
+    <div className="py-4">
       <Button
         variant="outlined"
-        className={`${review.review_pk === 0 ? "btn" : "!bg-[#ed6c02] hover:!bg-[#e65100]"}`}
+        className={`${review.review_pk === 0 ? "btn" : "!bg-[#ed6c02] hover:!bg-[#e65100]"} review-button`}
         onClick={() => {
           if (!user.user_pk) {
             if (confirm("로그인이 필요한 서비스입니다. 로그인 하시겠습니까?")) {
@@ -103,7 +103,6 @@ const GeneralReviewsForm = ({
           }
           setOpen(true)
         }}
-        style={{color: "#A51C30", borderColor: "#FACC15"}}
       >
         {review.review_pk === 0 ? "상품 리뷰 작성하기" : "수정하기"}
       </Button>

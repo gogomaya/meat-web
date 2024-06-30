@@ -416,7 +416,7 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
                 color: "#ff0000"
               }}
             >
-                  Sold out
+              Sold out
             </span>
           ) : null}
         </div>
@@ -448,25 +448,29 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
                   {(Number(product.discounted_price)).toLocaleString()}원
                 </strong>
               )}
-              <div>100g당 { product.per100g }</div>
+              {product.per100g && (
+                <div>100g당 { product.per100g }</div>
+              )}
             </div>
             <div><p>배송사: 로젠택배</p></div>
             {/* <strong className="text-4xl text-red-700">{(Number(product.discounted_price) * quantity).toLocaleString()}원</strong> */}
             <div className="py-6 flex flex-wrap gap-2">
-              <button
-                className="product-button"
-                style={{
-                  padding: "5px 8px",
-                  backgroundColor: "#271A11",
-                  color: "#fff",
-                  border: "none",
-                  borderRadius: "20px",
-                  cursor: "pointer",
-                  fontSize: "0.8rem"
-                }}
-              >
-                {product.etc}
-              </button>
+              {product.etc && (
+                <button
+                  className="product-button"
+                  style={{
+                    padding: "5px 8px",
+                    backgroundColor: "#271A11",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: "20px",
+                    cursor: "pointer",
+                    fontSize: "0.8rem"
+                  }}
+                >
+                  {product.etc}
+                </button>
+              )}
               <button
                 className="product-button"
                 style={{
@@ -487,30 +491,42 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
             {product.origin && (
               <>
                 <div className="py-2"></div>
-                <div className="flex items-center mb-2">
-                  <div className="w-24 mr-5">원산지</div>
-                  <div className="flex-grow">{product.origin}</div>
-                </div>
-                <div className="flex items-center mb-2">
-                  <div className="w-24 mr-5">제품중량</div>
-                  <div className="flex-grow">{product.weight}</div>
-                </div>
-                <div className="flex items-center mb-2">
-                  <div className="w-24 mr-5">제품유형</div>
-                  <div className="flex-grow">{product.type}</div>
-                </div>
-                <div className="flex items-center mb-2">
-                  <div className="w-24 mr-5">부위</div>
-                  <div className="flex-grow">{product.part}</div>
-                </div>
-                <div className="flex items-center mb-2">
-                  <div className="w-24 mr-5">등급</div>
-                  <div className="flex-grow">{product.grade}</div>
-                </div>
-                <div className="flex items-center mb-2">
-                  <div className="w-24 mr-5">포장방법</div>
-                  <div className="flex-grow">{product.etc}</div>
-                </div>
+                {product.origin && (
+                  <div className="flex items-center mb-2">
+                    <div className="w-24 mr-5">원산지</div>
+                    <div className="flex-grow">{product.origin}</div>
+                  </div>
+                )}
+                {product.weight && (
+                  <div className="flex items-center mb-2">
+                    <div className="w-24 mr-5">제품중량</div>
+                    <div className="flex-grow">{product.weight}</div>
+                  </div>
+                )}
+                {product.type && (
+                  <div className="flex items-center mb-2">
+                    <div className="w-24 mr-5">제품유형</div>
+                    <div className="flex-grow">{product.type}</div>
+                  </div>
+                )}
+                {product.part && (
+                  <div className="flex items-center mb-2">
+                    <div className="w-24 mr-5">부위</div>
+                    <div className="flex-grow">{product.part}</div>
+                  </div>
+                )}
+                {product.grade && (
+                  <div className="flex items-center mb-2">
+                    <div className="w-24 mr-5">등급</div>
+                    <div className="flex-grow">{product.grade}</div>
+                  </div>
+                )}
+                {product.etc && (
+                  <div className="flex items-center mb-2">
+                    <div className="w-24 mr-5">포장방법</div>
+                    <div className="flex-grow">{product.etc}</div>
+                  </div>
+                )}
               </>
             )}
           </div>
