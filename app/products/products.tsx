@@ -515,7 +515,7 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
                     <div className="flex-grow">{product.part}</div>
                   </div>
                 )}
-                {product.grade && (
+                {product.grade !== undefined && (
                   <div className="flex items-center mb-2">
                     <div className="w-24 mr-5">등급</div>
                     <div className="flex-grow">{product.grade}</div>
