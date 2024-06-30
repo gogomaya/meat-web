@@ -42,7 +42,7 @@ const Products = async (props: {
         <ProductsDetailContent product={product} user={user} />
         <NavDetail />
         {/* 상품 상세 정보 */}
-        <div id="detail" className="container"><ProductDetail product={product} /></div>
+        <div id="detail" className="container" style={{padding:"2rem"}}><ProductDetail product={product} /></div>
         {/* 리뷰 */}
         <div id="review2" className="container">
           <GeneralReviews
