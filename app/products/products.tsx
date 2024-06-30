@@ -385,6 +385,8 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
     setSelectedOption(event.target.value)
   }
 
+  const gradeOptions = ["1++(no.9)", "1++(no9) 특상"]
+
   return (
     <div className="container mx-auto py-8">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 p-4">
@@ -515,7 +517,7 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
                     <div className="flex-grow">{product.part}</div>
                   </div>
                 )}
-                {product.grade !== undefined && (
+                {product.grade !== undefined && gradeOptions.hasOwnProperty(product.grade) && (
                   <div className="flex items-center mb-2">
                     <div className="w-24 mr-5">등급</div>
                     <div className="flex-grow">{product.grade}</div>
