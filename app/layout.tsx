@@ -24,9 +24,13 @@ const RootLayout = ({
     <html lang="en">
       <head>
         <link rel="icon" href="/images/logo.png" />
+        {/* 모바일 가로스크롤 방지 */}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1"></meta>
+        <meta content="yes" name="apple-mobile-web-app-capable" />
+        <meta content="minimum-scale=1.0, width=device-width, maximum-scale=1, user-scalable=no" name="viewport" />
       </head>
       <body
-        className={`${notoSerifKr.className} min-w-80`}
+        className={`${notoSerifKr.className} min-w-80 overflow-x-hidden`}
       >
         <Backdrop />
         <Toast />
