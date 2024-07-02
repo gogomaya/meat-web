@@ -144,7 +144,16 @@ const CancellationDetail = async (props: {
                     </div>
                     <div className="item flex-[3]">
                       <div className="inner p-1">
-                        <span className="px-3" id="cancelNo">{cancellation.cancellation_pk}</span>
+                        {cancellation?.cancellation_pk ? (
+                          <span className="px-3" id="cancelNo">{cancellation.cancellation_pk}</span>
+                        ) : (
+                          <div className="item flex-[3]">
+                            <div className="inner p-1">
+                              <span className="px-3 text-gray-400">정보 없음</span>
+                            </div>
+                          </div>
+                        )}
+                        {/* <span className="px-3" id="cancelNo">{cancellation.cancellation_pk}</span> */}
                       </div>
                     </div>
                   </div>
@@ -157,7 +166,16 @@ const CancellationDetail = async (props: {
                     </div>
                     <div className="item flex-[3]">
                       <div className="inner p-1">
-                        <span className="px-3">{formatDate(cancellation.created_at)}</span>
+                        {cancellation?.created_at? (
+                          <span className="px-3" id="cancelNo">{formatDate(cancellation.created_at)}</span>
+                        ) : (
+                          <div className="item flex-[3]">
+                            <div className="inner p-1">
+                              <span className="px-3 text-gray-400">정보 없음</span>
+                            </div>
+                          </div>
+                        )}
+                        {/* <span className="px-3">{formatDate(cancellation.created_at)}</span> */}
                       </div>
                     </div>
                   </div>
@@ -170,7 +188,16 @@ const CancellationDetail = async (props: {
                     </div>
                     <div className="item flex-[3]">
                       <div className="inner p-1">
-                        <span className="px-3">
+                        {cancellation?.completed_at? (
+                          <span className="px-3" id="cancelNo">{formatDate(cancellation.completed_at)}</span>
+                        ) : (
+                          <div className="item flex-[3]">
+                            <div className="inner p-1">
+                              <span className="px-3 text-gray-400">정보 없음</span>
+                            </div>
+                          </div>
+                        )}
+                        {/* <span className="px-3">
                           {
                             cancellation.completed_at
                               ?
@@ -179,7 +206,7 @@ const CancellationDetail = async (props: {
                               ""
                           }
 
-                        </span>
+                        </span> */}
                       </div>
                     </div>
                   </div>
@@ -192,7 +219,16 @@ const CancellationDetail = async (props: {
                     </div>
                     <div className="item flex-[3]">
                       <div className="inner p-1">
-                        <span className="px-3">{cancellation.description}</span>
+                        {cancellation?.description? (
+                          <span className="px-3" id="cancelNo">{cancellation.description}</span>
+                        ) : (
+                          <div className="item flex-[3]">
+                            <div className="inner p-1">
+                              <span className="px-3 text-gray-400">정보 없음</span>
+                            </div>
+                          </div>
+                        )}
+                        {/* <span className="px-3">{cancellation.description}</span> */}
                       </div>
                     </div>
                   </div>
