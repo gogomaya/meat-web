@@ -46,7 +46,7 @@ const UpdateTrackingNo: React.FC<UpdateTrackingNoProps> = ({address_pk, shipment
       address_pk: address_pk,
       tracking_no: trackingNo,
       ship_company: "",
-      status: "start"
+      status: "shipping"
     }
 
     try {
