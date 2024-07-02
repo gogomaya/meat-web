@@ -137,9 +137,11 @@ const OrderDetail = async (props: {
                 </div>
               </div>
               <div className="item flex-[3]">
-                <div className="inner p-1">
-                  <span className="px-3">{getOrderStatusMeaning( order.status )}</span>
-                </div>
+                {order.status && (
+                  <div className="inner p-1">
+                    <span className="px-3">{getOrderStatusMeaning(order.status)}</span>
+                  </div>
+                )}
               </div>
             </div>
           </div>
