@@ -442,7 +442,7 @@ const MainMobileMenu = ({user}: { user: User }) => {
               <li>
                 <Accordion>
                   <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                    <Link href="/products/giftSet">선물세트</Link>
+                    <Link href="/products?category=giftSet">선물세트</Link>
                   </AccordionSummary>
                   <AccordionDetails>
                     <ol>
