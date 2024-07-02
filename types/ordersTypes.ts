@@ -7,8 +7,8 @@ export interface Order {
   file_name: any
   order_pk: number
   order_id: string
-  user_pk: number | null   // 회원인 경우 사용자 ID, 비회원인 경우 null
-  // user_pk: number
+  // user_pk: number | null   // 회원인 경우 사용자 ID, 비회원인 경우 null
+  user_pk: number
   shipment_pk: number
   address_pk: number
   title: string // 한우 소고기 외 3건
