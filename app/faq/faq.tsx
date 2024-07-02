@@ -18,7 +18,7 @@ const faqItems = [
   {
     category: "shipment",
     question: "국제 배송을 제공하나요? 그 경우 배송 시간은 얼마나 걸리나요?",
-    answer: "아니오, 국제배송을 제공하고있지 않습니다."
+    answer: "아니오, 국제배송을 제공하고있지 않으며, 국내배송을 우선으로 하고있습니다."
   },
 
   {
@@ -220,7 +220,7 @@ export const FaqSection: React.FC = () => {
     {
       category: "shipment",
       question: "국제 배송을 제공하나요? 그 경우 배송 시간은 얼마나 걸리나요?",
-      answer: "네, 국제 배송을 제공하고 있습니다. 국제 배송은 주문 후 약 7~14일 정도 소요됩니다."
+      answer: "아니오, 국제배송을 제공하고있지 않으며, 국내배송을 우선으로 하고있습니다."
     },
 
     {

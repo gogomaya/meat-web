@@ -23,6 +23,7 @@ import {ordersServices} from "@/services/ordersServices"
 import LocalShippingIcon from "@mui/icons-material/LocalShipping"
 import CreditCardOffIcon from "@mui/icons-material/CreditCardOff"
 import {shipmentsServices} from "@/services/shipmentsServices"
+import {Shipment} from "@/types/shipmentsTypes"
 
 const AdminOrdersList = ({
   orders,
@@ -108,10 +109,23 @@ const AdminOrdersList = ({
       }
     })
   }
-  const handleShipmentDetail = (shipment_pk: number) => {
-    router.push(`/admin/orders/detail/${shipment_pk}`)
+  // const handleShipmentDetail = (shipment_pk: number) => {
+  //   router.push(`/admin/orders/detail/${shipment_pk}`)
+  // }
+
+  const [open, setOpen] = useState(false)
+
+  const handleClickOpen = () => {
+    setOpen(true)
   }
 
+  const handleClose = () => {
+    setOpen(false)
+  }
+
+  const handleShipmentDetail = (shipment_pk: Number) => {
+    handleClickOpen()
+  }
   useEffect(() => {
     setQuery(searchParams.query)
   }, [searchParams.query])
@@ -173,7 +187,7 @@ const AdminOrdersList = ({
                   {/*  결제대기일 때 배송관리 불가 */}
                   {(order.status !== "pending") ? (
                     <TableCell>
-                      <button onClick={()=>handleShipmentDetail(order.shipment_pk)}>
+                      <button onClick={() => handleShipmentDetail(order.shipment_pk)}>
                         <LocalShippingIcon />
                       </button>
                     </TableCell>

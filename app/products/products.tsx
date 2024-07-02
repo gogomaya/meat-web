@@ -606,6 +606,7 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
                 </strong>
               </div>
             </div>
+            {/* 재고수량 표시 */}
           </div>
           <Divider className="bg-gray-800 h-0.5 mb-4" />
           <div>

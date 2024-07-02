@@ -31,7 +31,6 @@ export const GET = async (
   }
 }
 
-
 export const PUT = async (
   request: NextRequest,
   context: { params: { shipment_pk: number } }
@@ -41,10 +40,10 @@ export const PUT = async (
   try {
     const formData = await request.formData()
     const address_pk = formData.get("address_pk")
-    const recipient = formData.get("recipient")
-    const recipient_mobile = formData.get("recipient_mobile")
-    const delivery_request = formData.get("delivery_request") || null
-    const delivery_method = formData.get("delivery_method") || null
+    // const recipient = formData.get("recipient")
+    // const recipient_mobile = formData.get("recipient_mobile")
+    // const delivery_request = formData.get("delivery_request") || null
+    // const delivery_method = formData.get("delivery_method") || null
     const tracking_no = formData.get("tracking_no") || null
     const ship_company = formData.get("ship_company") || null
     const status = formData.get("status") || "pending"
@@ -54,9 +53,9 @@ export const PUT = async (
 
     await mysql.execute(`
       UPDATE shipments
-      SET address_pk = ?, recipient = ?, recipient_mobile = ?, delivery_request = ?, delivery_method = ?, tracking_no = ?, ship_company = ?, status = ?
+      SET address_pk = ?, tracking_no = ?, ship_company = ?, status = ?
       WHERE shipment_pk = ?
-    `, [address_pk, recipient, recipient_mobile, delivery_request, delivery_method, tracking_no, ship_company, status, shipment_pk])
+    `, [address_pk, tracking_no, ship_company, status, shipment_pk])
 
     return NextResponse.json({
       message: "Shipment updated successfully",
@@ -67,7 +66,6 @@ export const PUT = async (
     return NextResponse.error()
   }
 }
-
 
 export const DELETE = async (
   request: NextRequest,
