@@ -23,15 +23,15 @@ const Order = async (props: {
 }) => {
   const {user} = await loginCheck(false)
 
-  console.log("::::::::::: productPks :::::::::::")
+  // console.log("::::::::::: productPks :::::::::::")
   let productPks = props.searchParams.productPks
-  console.log(productPks)
-  console.log("::::::::::: quantityList :::::::::::")
+  // console.log(productPks)
+  // console.log("::::::::::: quantityList :::::::::::")
   let quantityList = props.searchParams.quantityList
-  console.log(quantityList)
-  console.log("::::::::::: user_pk :::::::::::")
+  // console.log(quantityList)
+  // console.log("::::::::::: user_pk :::::::::::")
   const user_pk = user.user_pk
-  console.log(user_pk)
+  // console.log(user_pk)
 
   // 유효성 검사 함수
   const isValidInput = (arr: number[]) => arr?.every((num) => !isNaN(num) && num >= 0)
@@ -50,7 +50,6 @@ const Order = async (props: {
     redirect(url)
   }
   // ================= [에러 리다이렉트] =================
-
 
   const params = {
     user_pk: user_pk,

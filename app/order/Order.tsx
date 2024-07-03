@@ -257,7 +257,7 @@ export const OrderDetailContent = ({
             <div>
               <div className="flex items-center justify-between py-2">
                 <div className="w-1/4 font-medium">보내는 분</div>
-                <div className="w-3/4">{userInfo.name}</div>
+                <div className="w-3/4">{userInfo.name || userInfo.nickname}</div>
               </div>
               <Divider style={{backgroundColor: "#ddd", height: "0.1px"}} />
             </div>
