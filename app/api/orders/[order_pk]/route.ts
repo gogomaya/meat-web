@@ -36,18 +36,19 @@ export const PUT = async (
 ) => {
   const {order_pk} = context.params
   const formData = await request.formData()
-  const {address_pk, guest_name, guest_mobile, status} = Object.fromEntries(formData.entries())
+  const {address_pk, shipment_pk, guest_name, guest_mobile, status} = Object.fromEntries(formData.entries())
 
   const mysql = await mysql2Pool()
   const [result]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
     UPDATE orders
     SET 
         address_pk = ?
+       ,shipment_pk = ?
        ,guest_name = ?
        ,guest_mobile = ?
        ,status = ?
     WHERE order_pk = ?
-  `, [address_pk, guest_name || "",  guest_mobile || "", status, order_pk])
+  `, [address_pk, shipment_pk, guest_name || "",  guest_mobile || "", status, order_pk])
 
   // console.log("result : " + result)
 

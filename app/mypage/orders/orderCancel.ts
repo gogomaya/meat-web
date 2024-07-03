@@ -117,7 +117,10 @@ export const orderCancel = async (searchParams: OrderParams): Promise<CancelResu
         console.log(`orderResponse : ${orderResponse}`)
         console.log(`orderResponse : ${orderResponse.data.status}`)
 
-
+        // TODO: 재고 업데이트 (주문취소)
+        // order_pk 로 order_items 리스트 조회
+        // ➡ 반복 (order_item - product_pk, quantity)
+        // ➡ 상품 재고 (quantity)만큼 감소
 
         return response.json()
       }

@@ -87,6 +87,7 @@ export const orderSuccess = async (searchParams: OrderParams): Promise<PaySucces
   console.log("::::::::::::::: 주문 업데이트 ::::::::::::::")
   console.log(`order_pk : ${order_pk}`)
   console.log(`address_pk : ${address_pk}`)
+  console.log(`shipment_pk : ${shipment_pk}`)
   console.log(`guest_name : ${guest_name}`)
   console.log(`guest_mobile : ${guest_mobile}`)
 
@@ -95,6 +96,7 @@ export const orderSuccess = async (searchParams: OrderParams): Promise<PaySucces
     const order = {
       order_pk: order_pk,
       address_pk: address_pk,
+      shipment_pk: shipment_pk,
       guest_name: guest_name,
       guest_mobile: guest_mobile,
       status: "paid"
@@ -110,6 +112,11 @@ export const orderSuccess = async (searchParams: OrderParams): Promise<PaySucces
   } catch (error) {
     console.error("[결제완료] 주문 업데이트 중 오류 발생:", error)
   }
+
+  // TODO: 재고 업데이트 (결제)
+  // order_pk 로 order_items 리스트 조회
+  // ➡ 반복 (order_item - product_pk, quantity)
+  // ➡ 상품 재고 (quantity)만큼 감소
 
 
   // 결제 등록
