@@ -205,9 +205,46 @@ export const OrderDetailContent = ({
 
   // 전화번호 수정
   const router = useRouter()
+  const [name, setName] = useState(userInfo.name)
   const [mobile, setMobile] = useState(userInfo.mobile)
 
-  const handelUpdate = async () => {
+  const handelUpdateName = async () => {
+    let updatedUser = {
+      user_pk: userInfo.user_pk || 0,
+      id: userInfo.id || "",
+      nickname: userInfo.nickname || "",
+      mobile: userInfo.mobile || "",
+      third_party: userInfo.third_party || "Naver",
+      name: name || ""
+    }
+
+    if (name === "") {
+      const MySwal = withReactContent(Swal)
+      MySwal.fire({
+        title: <p className="text-xl">회원정보 수정 확인</p>,
+        text: "이름을 반드시 입력해주세요.",
+        icon: "warning",
+        confirmButtonText: "확인"
+      })
+      return
+    }
+
+    const userUpdateResult = await usersServices.usersUpdate(updatedUser)
+
+    if (userUpdateResult.data.status === 200) {
+      const MySwal = withReactContent(Swal)
+      MySwal.fire({
+        title: <p className="text-xl">이름 수정 완료</p>,
+        text: "이름을 수정하였습니다.",
+        confirmButtonText: "확인"
+      })
+      // 새로고침
+      router.refresh()
+    }
+  }
+
+
+  const handelUpdateMobile = async () => {
     let updatedUser = {
       user_pk: userInfo.user_pk || 0,
       id: userInfo.id || "",
@@ -255,9 +292,24 @@ export const OrderDetailContent = ({
           <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
           <div className="space-y-4">
             <div>
-              <div className="flex items-center justify-between py-2">
+              <div className="flex items-center justify-between py-2 gap-4">
                 <div className="w-1/4 font-medium">보내는 분</div>
-                <div className="w-3/4">{userInfo.name || userInfo.nickname}</div>
+                <div className="w-3/4">
+                  <input type="text"
+                    id="name"
+                    value={ name }
+                    onChange={ (e) => setName(e.target.value) }
+                    className="w-full p-2 border border-gray-300 rounded"
+                    placeholder="(이름을 반드시 입력해주세요.)"
+                  />
+                </div>
+                <button
+                  type="button"
+                  onClick={handelUpdateName}
+                  className="text-white bg-[#A51C30] hover:bg-[#8B0A1D] font-semibold rounded-md text-sm px-4 py-2.5 w-1/6"
+                >
+                  <span className="text-lg font-normal">수정</span>
+                </button>
               </div>
               <Divider style={{backgroundColor: "#ddd", height: "0.1px"}} />
             </div>
@@ -275,7 +327,7 @@ export const OrderDetailContent = ({
                 </div>
                 <button
                   type="button"
-                  onClick={handelUpdate}
+                  onClick={handelUpdateMobile}
                   className="text-white bg-[#A51C30] hover:bg-[#8B0A1D] font-semibold rounded-md text-sm px-4 py-2.5 w-1/6"
                 >
                   <span className="text-lg font-normal">수정</span>
@@ -630,6 +682,7 @@ export const OrderSuccessContent = ({
   }
 
 
+  const [name, setName] = useState(userInfo.name)
   const [mobile, setMobile] = useState(userInfo.mobile)
 
   const handelUpdate = async () => {
