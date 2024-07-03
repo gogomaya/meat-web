@@ -32,7 +32,7 @@ const OrderPay = async (props: {
   params: {order_pk: number},   // 경로 변수
   searchParams: {guest: number} // 쿼리 스트링 파라미터
 }) => {
-  const {user} = await loginCheck(false)
+  const {user} = await loginCheck(true)
   const order_pk = props.params.order_pk
   const guest = props.searchParams.guest
   console.log("주문 등록 완료 후")
