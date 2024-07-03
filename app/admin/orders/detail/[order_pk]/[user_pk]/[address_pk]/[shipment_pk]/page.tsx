@@ -202,7 +202,7 @@ const OrderDetail = async (props: {
               )}
             </div>
           </div>
-          {/* <div className="box py-4">
+          <div className="box py-4">
             <p className="text-xl font-bold py-3">배송 정보</p>
             <div className="w-full flex flex-wrap flex-col md:flex-row justify-between bg-white border border-solid border-gray-200 my-4">
               <div className="item flex-1 bg-gray-200 text-center">
@@ -212,14 +212,18 @@ const OrderDetail = async (props: {
               </div>
               <div className="item flex-[3]">
                 <div className="inner p-1">
-                  {shipmentInfo?.tracking_no && (
-                    <div>
-                      <UpdateTrackingNo
-                        address_pk={order.address_pk}
-                        shipment_pk={order.shipment_pk}
-                        initialTrackingNo={shipmentInfo.tracking_no}
-                      />
-                    </div>
+                  {shipmentInfo?.tracking_no ? (
+                    <UpdateTrackingNo
+                      address_pk={order.address_pk}
+                      shipment_pk={order.shipment_pk}
+                      initialTrackingNo={shipmentInfo.tracking_no}
+                    />
+                  ) : (
+                    <UpdateTrackingNo
+                      address_pk={order.address_pk}
+                      shipment_pk={order.shipment_pk}
+                      initialTrackingNo={""}
+                    />
                   )}
                 </div>
               </div>
@@ -280,7 +284,7 @@ const OrderDetail = async (props: {
                 </div>
               </div>
             </div>
-          </div> */}
+          </div>
           <p className="text-xl font-bold py-3">구매 목록 상세 정보</p>
           {orderItems.map((item: OrderItem) => (
             <>

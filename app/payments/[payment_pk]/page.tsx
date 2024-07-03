@@ -125,7 +125,7 @@ const PaymentSuccess = async (props: {
   return (
     <MainLayout user={user}>
       <div>
-        <div className="flex justify-center text-red-100 text-4xl"
+        <div className="flex justify-center text-red-700 text-4xl"
           style={{
             backgroundImage: "url('/images/Bg_3.png')",
             backgroundPosition: "center calc(10% - 620px)",
