@@ -52,8 +52,6 @@ const UpdateTrackingNo: React.FC<UpdateTrackingNoProps> = ({address_pk, shipment
     try {
       // 송장번호 업데이트 API 호출
       const trackingNoUpdateResult: ResponseApi = await shipmentsServices.shipmentUpdate(updatedShipmentTrackingNo)
-      console.log(trackingNoUpdateResult)
-
       if (trackingNoUpdateResult.data.status === 200) {
         MySwal.fire({
           title: <p className="text-xl">송장번호 입력 완료</p>,

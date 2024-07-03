@@ -400,7 +400,7 @@ const MainMobileMenu = ({user}: { user: User }) => {
                   </div>
                   <div className="flex flex-col gap-3">
                     <div className="text-red-700">
-                      <strong>{user.name || user.nickname}</strong><span className="text-black">님, 안녕하세요 :)</span>
+                      <strong>{user.name || user.nickname || "고객"}</strong><span className="text-black">님, 안녕하세요 :)</span>
                     </div>
                     <div className="flex justify-end">
                       <button type="button"
