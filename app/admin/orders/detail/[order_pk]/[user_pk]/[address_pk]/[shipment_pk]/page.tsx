@@ -222,9 +222,7 @@ const OrderDetail = async (props: {
               </div>
               <div className="item flex-[3]">
                 <div className="inner p-1">
-                  {/* {shipmentInfo?.tracking_no ? (
-                    <span className="px-3" id="orderPk">{shipmentInfo.tracking_no}</span>
-                  ) : (
+                  {shipmentInfo?.tracking_no && (
                     <div>
                       <UpdateTrackingNo
                         address_pk={order.address_pk}
@@ -232,14 +230,7 @@ const OrderDetail = async (props: {
                         initialTrackingNo={shipmentInfo.tracking_no}
                       />
                     </div>
-                  )} */}
-                  <div>
-                    <UpdateTrackingNo
-                      address_pk={order.address_pk}
-                      shipment_pk={order.shipment_pk}
-                      initialTrackingNo={shipmentInfo.tracking_no}
-                    />
-                  </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -262,7 +253,7 @@ const OrderDetail = async (props: {
                   )} */}
                   <div className="item flex-[3]">
                     <div className="inner p-1">
-                      <span className="px-3 text-gray-400">로젠택배</span>
+                      <span className="px-3 text-black">로젠택배</span>
                     </div>
                   </div>
                 </div>
