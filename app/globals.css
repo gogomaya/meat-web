@@ -673,10 +673,12 @@ html {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   font-family: sans-serif;
+  overflow-x: hidden;
 }
 
 body {
   margin: 0;
+  overflow-x: hidden;
 }
 
 article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
@@ -5230,6 +5232,9 @@ figure {
   grid-column-gap: 16px;
   align-items: center;
   display: flex;
+}
+.review-button {
+  border: 1px solid
 }
 
 .product-button {

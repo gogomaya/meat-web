@@ -31,12 +31,10 @@ const AdressDetail = async (props: {
   let address_pk = 0
 
   const shipment_pk =  props.params.shipment_pk
-  console.log(`shipment_pk: ${shipment_pk}`)
 
   // 배송 정보 조회
   try {
     const shipmentResponse = await shipmentsServices.shipmentDetail(shipment_pk)
-    console.dir(shipmentResponse.data)
     if( shipmentResponse.data.status == 200 ) {
       console.log("배송 정보 조회 성공")
       shipment = shipmentResponse.data.shipment
@@ -101,8 +99,12 @@ const AdressDetail = async (props: {
                   </div>
                 </div>
                 {/* 배송 상태 확인 박스 */}
-                <div className="box flex flex-col gap-3">
-                  <DeliveryStatusLink />
+                <div className="box flex flex-col gap-3"
+                  style={{
+                    opacity: !shipment.tracking_no ? 0.3 : 1
+                  }}
+                >
+                  <DeliveryStatusLink tracking_no={shipment.tracking_no} />
                   <ShipNoCopyButton />
                 </div>
                 {/* 상세 정보 박스 */}

@@ -3,18 +3,18 @@ import {SetStateAction, useEffect, useState} from "react"
 import {Divider, Link, Typography} from "@mui/material"
 import Image from "next/image"
 import DaumPostcode from "react-daum-postcode"
-import {CartProduct} from "@/types/productsTypes"
 import _ from "lodash"
 import {CheckoutPage} from "./toss"
-import {ResponseApi} from "@/types/commonTypes"
-import {ordersServices} from "@/services/ordersServices"
 import React from "react"
 import MainLayout from "../main-layout"
-import {useRouter} from "next/router"
+import {useRouter} from "next/navigation"
 import {Order, OrderParams, OrderSearchParams} from "@/types/ordersTypes"
 import {OrderItem} from "@/types/orderItemsTypes"
 import {User} from "@/types/usersTypes"
 import {Address} from "@/types/addressTypes"
+import withReactContent from "sweetalert2-react-content"
+import Swal from "sweetalert2"
+import {usersServices} from "@/services/usersServices"
 
 // 배송지
 export const Post = (props: { setcompany: (arg0: any) => void; company: any }) => {
@@ -165,8 +165,8 @@ export const OrderDetailContent = ({
                 </td>
                 <td className="p-3 text-center">{orderItem.name}</td>
                 <td className="p-3 text-center">
-                  <span className="line-through">{orderItem.price.toLocaleString()}원</span><br />
-                  <span className="text-[#A51C30] font-bold">{orderItem.discounted_price.toLocaleString()}원</span>
+                  <span className="line-through">{Number(orderItem.price).toLocaleString()}원</span><br />
+                  <span className="text-[#A51C30] font-bold">{Number(orderItem.discounted_price).toLocaleString()}원</span>
                 </td>
                 <td className="p-3 text-center">{orderItem.quantity}</td>
                 <td className="p-3 text-center">
@@ -197,13 +197,51 @@ export const OrderDetailContent = ({
   const handleComplete = (data: any) => {
     setPopup(!popup)
   }
-
-
   // 배송지 선택
   const handleCheckboxChange = (address_pk: number) => {
     console.log(`address_pk (선택한 배송지 번호) : ${address_pk}`)
     setAddressPk(address_pk)
   }
+
+  // 전화번호 수정
+  const router = useRouter()
+  const [mobile, setMobile] = useState(userInfo.mobile)
+
+  const handelUpdate = async () => {
+    let updatedUser = {
+      user_pk: userInfo.user_pk || 0,
+      id: userInfo.id || "",
+      nickname: userInfo.nickname || "",
+      mobile: mobile || "",
+      third_party: userInfo.third_party || "Naver",
+      name: userInfo.name || ""
+    }
+
+    if (mobile === "") {
+      const MySwal = withReactContent(Swal)
+      MySwal.fire({
+        title: <p className="text-xl">회원정보 수정 확인</p>,
+        text: "전화번호를 기호 없이 숫자만 올바르게 입력해주세요.",
+        icon: "warning",
+        confirmButtonText: "확인"
+      })
+      return
+    }
+
+    const userUpdateResult = await usersServices.usersUpdate(updatedUser)
+
+    if (userUpdateResult.data.status === 200) {
+      const MySwal = withReactContent(Swal)
+      MySwal.fire({
+        title: <p className="text-xl">전화번호정보 수정 완료</p>,
+        text: "전화번호 수정을 완료하였습니다.",
+        confirmButtonText: "확인"
+      })
+      // 새로고침
+      router.refresh()
+    }
+  }
+
   return (
     <div className="container mx-auto p-8">
       <div className="p-3 w-full mb-5">
@@ -219,14 +257,29 @@ export const OrderDetailContent = ({
             <div>
               <div className="flex items-center justify-between py-2">
                 <div className="w-1/4 font-medium">보내는 분</div>
-                <div className="w-3/4">{userInfo.name}</div>
+                <div className="w-3/4">{userInfo.name || userInfo.nickname}</div>
               </div>
               <Divider style={{backgroundColor: "#ddd", height: "0.1px"}} />
             </div>
             <div>
-              <div className="flex items-center justify-between py-2">
+              <div className="flex items-center justify-between py-2 gap-4">
                 <div className="w-1/4 font-medium">휴대폰</div>
-                <div className="w-3/4">{userInfo.mobile}</div>
+                <div className="w-3/4">
+                  <input
+                    type="text"
+                    id="mobile"
+                    value={mobile}
+                    onChange={(e) => setMobile(e.target.value)}
+                    className="w-full p-2 border border-gray-300 rounded"
+                  />
+                </div>
+                <button
+                  type="button"
+                  onClick={handelUpdate}
+                  className="text-white bg-[#A51C30] hover:bg-[#8B0A1D] font-semibold rounded-md text-sm px-4 py-2.5 w-1/6"
+                >
+                  <span className="text-lg font-normal">수정</span>
+                </button>
               </div>
               <Divider style={{backgroundColor: "#ddd", height: "0.1px"}} />
             </div>
@@ -239,10 +292,10 @@ export const OrderDetailContent = ({
             <p className="text-lg m-2 text-black">
               총 상품금액: <span className="line-through">{order.total_price?.toLocaleString()}원</span>
             </p>
-            <p className="text-lg m-2 text-black">할인 금액: {totalDiscount.toLocaleString()}원</p>
-            <p className="text-lg m-2 text-black">총 배송비: {totalShipFee.toLocaleString()}원</p>
+            <p className="text-lg m-2 text-black">할인 금액: {Number(totalDiscount).toLocaleString()}원</p>
+            <p className="text-lg m-2 text-black">총 배송비: {Number(totalShipFee).toLocaleString()}원</p>
             <p className="text-lg m-2 text-black">(15만원 결제 시, 무료 배송)</p>
-            <p className="text-lg m-2 font-semibold text-[#A51C30]">최종 결제 금액: {finalPrice.toLocaleString()}원</p>
+            <p className="text-lg m-2 font-semibold text-[#A51C30]">최종 결제 금액: {Number(finalPrice).toLocaleString()}원</p>
           </div>
         </div>
       </div>
@@ -306,7 +359,7 @@ export const OrderDetailContent = ({
                 <div className="text-2xl font-semibold mb-4 p-2">결제방법</div>
                 <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
                 {/* 토스 결제 위젯 */}
-                <CheckoutPage pay={pay} address_pk={addressPk} />
+                <CheckoutPage pay={pay} address_pk={addressPk} guest={undefined} />
                 {/* <div className="flex items-center justify-between py-2">
                   <div className="w-1/4 font-medium">결제수단</div>
                   <div className="w-3/4">
@@ -387,7 +440,7 @@ export const OrderDetailContent = ({
             {isPersonalInfoOpen && (
               <div className="w-full h-80 p-4 text-sm mb-4" style={{overflow:"scroll"}}>
                   수집하는 개인정보의 항목
-                  ① 한솔축산는 구매, 원활한 고객상담, 각종 서비스의 제공을 위해 주문 이용 시 아래와 같은 개인정보를 수집하고 있습니다.
+                  ① 한솔축산은 구매, 원활한 고객상담, 각종 서비스의 제공을 위해 주문 이용 시 아래와 같은 개인정보를 수집하고 있습니다.
                   o 필수수집항목 : 이름, 휴대폰번호, 이메일, 수신자정보(성명,주소,휴대폰번호,이메일), 개인통관고유보호(해외직구상품구매시)
                   o 수집목적 : 상품배송, 선물하기 서비스 제공, 배송지 관리
                   o 보유 및 이용기간 : 회원 탈퇴시 까지(단, 관계 법령에 따름)
@@ -577,6 +630,42 @@ export const OrderSuccessContent = ({
   }
 
 
+  const [mobile, setMobile] = useState(userInfo.mobile)
+
+  const handelUpdate = async () => {
+    let updatedUser = {
+      user_pk: userInfo.user_pk || 0,
+      id: userInfo.id || "",
+      nickname: userInfo.nickname || "",
+      mobile: mobile || "",
+      third_party: userInfo.third_party || "Naver",
+      name: userInfo.name || ""
+    }
+
+    if (mobile === "") {
+      const MySwal = withReactContent(Swal)
+      MySwal.fire({
+        title: <p className="text-xl">회원정보 수정 확인</p>,
+        text: "전화번호를 기호 없이 숫자만 올바르게 입력해주세요.",
+        icon: "warning",
+        confirmButtonText: "확인"
+      })
+      return
+    }
+
+    const userUpdateResult = await usersServices.usersUpdate(updatedUser)
+
+    if (userUpdateResult.data.status === 200) {
+      const MySwal = withReactContent(Swal)
+      MySwal.fire({
+        title: <p className="text-xl">회원정보 수정 완료</p>,
+        text: "회원정보 수정을 완료하였습니다.",
+        confirmButtonText: "확인"
+      })
+      // 새로고침
+    }
+  }
+
   return (
     <div className="container mx-auto p-8">
       <div className="p-3 w-full mb-5">
@@ -615,7 +704,22 @@ export const OrderSuccessContent = ({
             <div>
               <div className="flex items-center justify-between py-2">
                 <div className="w-1/4 font-medium">휴대폰</div>
-                <div className="w-3/4">{userInfo.mobile}</div>
+                <div className="w-3/4">
+                  <input
+                    type="text"
+                    id="mobile"
+                    value={mobile}
+                    onChange={(e) => setMobile(e.target.value)}
+                    className="w-full p-2 border border-gray-300 rounded"
+                  />
+                </div>
+                <button
+                  type="button"
+                  onClick={handelUpdate}
+                  className="text-white bg-[#A51C30] hover:bg-[#8B0A1D] font-semibold rounded-md text-sm px-4 py-2.5 w-1/6"
+                >
+                  <span className="text-lg font-normal">수정하기</span>
+                </button>
               </div>
               <Divider style={{backgroundColor: "#ddd", height: "0.1px"}} />
             </div>

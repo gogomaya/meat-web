@@ -400,7 +400,7 @@ const MainMobileMenu = ({user}: { user: User }) => {
                   </div>
                   <div className="flex flex-col gap-3">
                     <div className="text-red-700">
-                      <strong>{user.name || user.nickname}</strong><span className="text-black">님, 안녕하세요 :)</span>
+                      <strong>{user.name || user.nickname || "고객"}</strong><span className="text-black">님, 안녕하세요 :)</span>
                     </div>
                     <div className="flex justify-end">
                       <button type="button"
@@ -442,7 +442,7 @@ const MainMobileMenu = ({user}: { user: User }) => {
               <li>
                 <Accordion>
                   <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                    <Link href="/products/giftSet">선물세트</Link>
+                    <Link href="/products?category=giftSet">선물세트</Link>
                   </AccordionSummary>
                   <AccordionDetails>
                     <ol>
@@ -604,7 +604,7 @@ const MainBottom = () => {
           </div>
         </div>
         <div className="footer-left space-y-4 mt-6">
-          <div className="footer-info text-lg leading-loose text-black">
+          <div className="footer-info text-lg leading-loose text-black" style={{fontFamily: "Arial, sans-serif"}}>
             <span className="footer-info-detail block">
               <span className="text-style-1 font-semibold">대표자</span> | 한승구, 박수현
             </span>
@@ -613,6 +613,9 @@ const MainBottom = () => {
             </span>
             <span className="footer-info-detail block">
               <span className="text-style-1 font-semibold">사업자등록번호</span> | 405-98-61344
+            </span>
+            <span className="footer-info-detail block">
+              <span className="text-style-1 font-semibold">통신판매업신고 번호</span> | 2022-대전서구-0556호
             </span>
             <span className="footer-info-detail block">
               <span className="text-style-1 font-semibold">이메일</span> | whddlrs1@naver.com

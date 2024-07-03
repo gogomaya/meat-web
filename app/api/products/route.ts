@@ -80,6 +80,7 @@ export const POST = async (request: NextRequest) => {
     "type",
     "part",
     "per100g",
+    "stock",
     "grade",
     "package",
     "is_today",

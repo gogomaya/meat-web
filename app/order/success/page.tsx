@@ -96,7 +96,7 @@ const OrderSuccess = async (props: {
 
   return (
     <>
-      <h3>로딩중</h3>
+      <h3>결제 성공!</h3>
     </>
   )
 }

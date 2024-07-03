@@ -20,6 +20,10 @@ import withReactContent from "sweetalert2-react-content"
 import Swal from "sweetalert2"
 import * as XLSX from "xlsx"
 import {ordersServices} from "@/services/ordersServices"
+import LocalShippingIcon from "@mui/icons-material/LocalShipping"
+import CreditCardOffIcon from "@mui/icons-material/CreditCardOff"
+import {shipmentsServices} from "@/services/shipmentsServices"
+import {Shipment} from "@/types/shipmentsTypes"
 
 const AdminOrdersList = ({
   orders,
@@ -78,7 +82,6 @@ const AdminOrdersList = ({
   //   })
   // }
   const handleOrderDetail = async (order_pk: number, user_pk: number, address_pk: number, shipment_pk: number) => {
-    // alert(`=====user_pk : ${user_pk}`)
     router.push(`/admin/orders/detail/${order_pk}/${user_pk}/${address_pk}/${shipment_pk}`)
   }
   const handleDelete = async (order_pk : number) => {
@@ -106,33 +109,23 @@ const AdminOrdersList = ({
       }
     })
   }
-  // const handleStartShipping = (address_pk:number, shipment_pk: number) => {
-  //   MySwal.fire({
-  //     title: <p>배송관리</p>,
-  //     text: "송장번호를 입력해주세요",
-  //     icon: "info",
-  //     confirmButtonText: "입력",
-  //     showCancelButton: true,
-  //     cancelButtonText: "취소"
-  //   }).then(async (result) => {
-  //     if (result.isConfirmed) {
-  //       // 배송상태 조회
-  //       let orderResponse: ResponseApi = {}
-  //       orderResponse = await ordersServices.ordersDelete(order_pk)
-  //       console.log(orderResponse)
-
-  //       MySwal.fire({
-  //         title: <p>주문요청이 취소되었습니다.</p>,
-  //         didOpen: () => {
-  //           Swal.showLoading()
-  //         }
-  //       })
-
-  //       location.reload()
-  //     }
-  //   })
+  // const handleShipmentDetail = (shipment_pk: number) => {
+  //   router.push(`/admin/orders/detail/${shipment_pk}`)
   // }
 
+  const [open, setOpen] = useState(false)
+
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
+  const handleShipmentDetail = (shipment_pk: Number) => {
+    handleClickOpen()
+  }
   useEffect(() => {
     setQuery(searchParams.query)
   }, [searchParams.query])
@@ -174,38 +167,43 @@ const AdminOrdersList = ({
                 {id: "order_status", label: "주문상태", sort: true},
                 // {id: "shipment_pk", label: "배송번호", sort: true},
                 {id: "created_at", label: "주문등록일자", sort: true},
+                {id: "shipment", label: "배송관리", sort: false},
                 {id: "delete", label: "주문취소", sort: false}
               ]}
             />
             <TableBody>
               {orders.map((order) => (
-                <TableRow key={order.order_pk} onClick={()=>handleOrderDetail(order.order_pk, order.user_pk ?? 0, order.address_pk, order.shipment_pk)} style={{cursor: "pointer"}}>
-                  {/* {getOrderStatusMeaning(order.status) === "결제완료" ? (
+                <TableRow key={order.order_pk} style={{cursor: "pointer"}}>
+                  <TableCell onClick={()=>handleOrderDetail(order.order_pk, order.user_pk ?? 0, order.address_pk, order.shipment_pk)}>{order.order_pk}</TableCell>
+                  {/* <TableCell onClick={()=>handleOrderDetail(order.order_pk)} style={{cursor: "pointer"}}>{order.address_pk}</TableCell> */}
+                  <TableCell onClick={()=>handleOrderDetail(order.order_pk, order.user_pk ?? 0, order.address_pk, order.shipment_pk)}>{order.user_pk}</TableCell>
+                  <TableCell onClick={()=>handleOrderDetail(order.order_pk, order.user_pk ?? 0, order.address_pk, order.shipment_pk)}>{order.title}</TableCell>
+                  <TableCell onClick={()=>handleOrderDetail(order.order_pk, order.user_pk ?? 0, order.address_pk, order.shipment_pk)}>{order.total_quantity}</TableCell>
+                  <TableCell onClick={()=>handleOrderDetail(order.order_pk, order.user_pk ?? 0, order.address_pk, order.shipment_pk)}>{Number(order.total_discount_price).toLocaleString()}</TableCell>
+                  <TableCell onClick={()=>handleOrderDetail(order.order_pk, order.user_pk ?? 0, order.address_pk, order.shipment_pk)}>{order.user_pk ? "회원" : "비회원"}</TableCell>
+                  <TableCell onClick={()=>handleOrderDetail(order.order_pk, order.user_pk ?? 0, order.address_pk, order.shipment_pk)}>{getOrderStatusMeaning(order.status)}</TableCell>
+                  {/* <TableCell>{order.shipment_pk}</TableCell> */}
+                  <TableCell onClick={()=>handleOrderDetail(order.order_pk, order.user_pk ?? 0, order.address_pk, order.shipment_pk)}>{moment(order.created_at).format("YYYY-MM-DD")}</TableCell>
+                  {/*  결제대기일 때 배송관리 불가 */}
+                  {(order.status !== "pending") ? (
                     <TableCell>
-                      <button className="custom-admin-button" onClick={() => handleStartShipping(order.address_pk, order.shipment_pk)}>
-                        배송시작하기
+                      <button onClick={() => handleShipmentDetail(order.shipment_pk)}>
+                        <LocalShippingIcon />
                       </button>
                     </TableCell>
                   ) : (
                     <TableCell></TableCell>
-                  )} */}
-                  <TableCell>{order.order_pk}</TableCell>
-                  {/* <TableCell onClick={()=>handleOrderDetail(order.order_pk)} style={{cursor: "pointer"}}>{order.address_pk}</TableCell> */}
-                  <TableCell>{order.user_pk}</TableCell>
-                  <TableCell>{order.title}</TableCell>
-                  <TableCell>{order.total_quantity}</TableCell>
-                  <TableCell>{Number(order.total_discount_price).toLocaleString()}</TableCell>
-                  <TableCell>{order.guest_mobile ? "비회원" : "회원"}</TableCell>
-                  <TableCell>{getOrderStatusMeaning(order.status)}</TableCell>
-                  {/* <TableCell>{order.shipment_pk}</TableCell> */}
-                  <TableCell>{moment(order.created_at).format("YYYY-MM-DD")}</TableCell>
-                  <TableCell>
-                    <button onClick={()=>handleDelete(order.order_pk)}>
-                      <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                        <path fillRule="evenodd" d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z" clipRule="evenodd" />
-                      </svg>
-                    </button>
-                  </TableCell>
+                  )}
+                  {/* 결제완료, 배송중, 배송완료일 때만 주문취소 가능 */}
+                  {(order.status === "paid" || order.status === "shipping" || order.status === "delivered") ? (
+                    <TableCell>
+                      <button onClick={()=>handleDelete(order.order_pk)}>
+                        <CreditCardOffIcon />
+                      </button>
+                    </TableCell>
+                  ) : (
+                    <TableCell></TableCell>
+                  )}
                 </TableRow>
               ))}
             </TableBody>
