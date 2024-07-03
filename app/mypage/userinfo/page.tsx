@@ -8,8 +8,8 @@ import {usersServices} from "@/services/usersServices"
 import {User} from "@/types/usersTypes"
 import {myPageData} from "../mypageData"
 
-const Home = async () => {
-  const {user} = await loginCheck(false)
+const MypageUserInfo = async () => {
+  const {user} = await loginCheck(true)
   const {bookmarks, addressList, bookmarkCount,addressCount} = await myPageData(user)
   console.dir(user)
   const user_pk = user.user_pk
@@ -45,4 +45,4 @@ const Home = async () => {
   )
 }
 
-export default Home
+export default MypageUserInfo

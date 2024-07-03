@@ -10,10 +10,10 @@ import {AddressSearchParams} from "@/types/addressTypes"
 import {AddressList} from "./address"
 import {myPageData} from "../mypageData"
 
-const Home = async (props: {
+const MyPageAddress = async (props: {
   searchParams: AddressSearchParams
 }) => {
-  const {user} = await loginCheck(false)
+  const {user} = await loginCheck(true)
   const {bookmarkCount,addressCount} = await myPageData(user)
   const searchParams = {
     user_pk: user.user_pk,
@@ -76,4 +76,4 @@ const Home = async (props: {
   )
 }
 
-export default Home
+export default MyPageAddress

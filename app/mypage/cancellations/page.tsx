@@ -10,10 +10,10 @@ import {ResponseApi} from "@/types/commonTypes"
 import {log} from "console"
 import {CancellationList} from "./cancellations"
 
-const Home = async (props: {
+const MyPageCancellations = async (props: {
   searchParams: CancellationSearchParams
 }) => {
-  const {user} = await loginCheck(false)
+  const {user} = await loginCheck(true)
   const {bookmarks, addressList, bookmarkCount,addressCount} = await myPageData(user)
 
   const searchParams = {
@@ -88,4 +88,4 @@ const Home = async (props: {
   )
 }
 
-export default Home
+export default MyPageCancellations
