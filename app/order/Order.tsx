@@ -165,8 +165,8 @@ export const OrderDetailContent = ({
                 </td>
                 <td className="p-3 text-center">{orderItem.name}</td>
                 <td className="p-3 text-center">
-                  <span className="line-through">{orderItem.price.toLocaleString()}원</span><br />
-                  <span className="text-[#A51C30] font-bold">{orderItem.discounted_price.toLocaleString()}원</span>
+                  <span className="line-through">{Number(orderItem.price).toLocaleString()}원</span><br />
+                  <span className="text-[#A51C30] font-bold">{Number(orderItem.discounted_price).toLocaleString()}원</span>
                 </td>
                 <td className="p-3 text-center">{orderItem.quantity}</td>
                 <td className="p-3 text-center">
@@ -292,10 +292,10 @@ export const OrderDetailContent = ({
             <p className="text-lg m-2 text-black">
               총 상품금액: <span className="line-through">{order.total_price?.toLocaleString()}원</span>
             </p>
-            <p className="text-lg m-2 text-black">할인 금액: {totalDiscount.toLocaleString()}원</p>
-            <p className="text-lg m-2 text-black">총 배송비: {totalShipFee.toLocaleString()}원</p>
+            <p className="text-lg m-2 text-black">할인 금액: {Number(totalDiscount).toLocaleString()}원</p>
+            <p className="text-lg m-2 text-black">총 배송비: {Number(totalShipFee).toLocaleString()}원</p>
             <p className="text-lg m-2 text-black">(15만원 결제 시, 무료 배송)</p>
-            <p className="text-lg m-2 font-semibold text-[#A51C30]">최종 결제 금액: {finalPrice.toLocaleString()}원</p>
+            <p className="text-lg m-2 font-semibold text-[#A51C30]">최종 결제 금액: {Number(finalPrice).toLocaleString()}원</p>
           </div>
         </div>
       </div>
