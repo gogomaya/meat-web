@@ -38,7 +38,7 @@ const Home = async (props: {
   return (
     <MainLayout user={user}>
       <div className="w-full">
-        <HomePopup />
+        {/* <HomePopup /> */}
         <HomeBanner />
         <HomeCateMenu />
         {/* <HomeSwiper /> */}
