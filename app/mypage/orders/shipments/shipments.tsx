@@ -10,25 +10,33 @@ import withReactContent from "sweetalert2-react-content"
 * 📱 mobile     :   https://www.ilogen.com/m/personal/tkSearch
 * @returns [버튼] 배송 상태 확인
 */
-export const DeliveryStatusLink = () => {
-  const [href, setHref] = useState("https://www.ilogen.com/web/personal/tkSearch")
+interface DeliveryStatusLinkProps {
+  tracking_no: string | undefined;
+}
+
+export const DeliveryStatusLink: React.FC<DeliveryStatusLinkProps> = ({tracking_no}) => {
+  const [href, setHref] = useState(`https://www.ilogen.com/web/personal/trace/${tracking_no}`)
 
   useEffect(() => {
     const userAgent = typeof window.navigator === "undefined" ? "SSR" : navigator.userAgent
     const isMobile = /iPhone|iPad|iPod|Android/i.test(userAgent)
 
     if (isMobile) {
-      setHref("https://www.ilogen.com/m/personal/tkSearch")
+      setHref(`https://www.ilogen.com/m/personal/trace/${tracking_no}`)
     }
-  }, [])
+  }, [tracking_no])
 
   return (
     <Link
       target="_blank"
       href={href}
-      className="w-full px-4 py-2 py-1 bg-[#A51C30] border-2 border-solid border-white rounded-lg text-center text-white font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200"
+      className={`w-full px-4 py-2 bg-[#A51C30] border-2 border-solid border-white rounded-lg text-center text-white font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 transition-colors duration-200 ${
+        !tracking_no ? "disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed" : ""
+      }`}
     >
-      배송 상태 확인
+      <button disabled={!tracking_no} className="w-full h-full">
+        배송 상태 확인
+      </button>
     </Link>
   )
 }

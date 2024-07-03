@@ -19,7 +19,6 @@ const OrderDetail = async (props: {
   searchParams: OrderSearchParams
 }) => {
   const {user} = await loginCheck(false)
-
   const {bookmarks, addressList, bookmarkCount,addressCount} = await myPageData(user)
 
   let ordersResponse: ResponseApi = {}
@@ -138,7 +137,7 @@ const OrderDetail = async (props: {
               </div>
             </div>
           </div>
-          <div className="box py-4">
+          <div className="box">
             <p className="text-xl font-bold py-3">구매자 정보</p>
             <div className="w-full flex flex-wrap flex-col md:flex-row justify-between bg-white border border-solid border-gray-200 my-4">
               <div className="item flex-1 bg-gray-200 text-center">
