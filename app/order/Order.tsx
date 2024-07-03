@@ -3,14 +3,11 @@ import {SetStateAction, useEffect, useState} from "react"
 import {Divider, Link, Typography} from "@mui/material"
 import Image from "next/image"
 import DaumPostcode from "react-daum-postcode"
-import {CartProduct} from "@/types/productsTypes"
 import _ from "lodash"
 import {CheckoutPage} from "./toss"
-import {ResponseApi} from "@/types/commonTypes"
-import {ordersServices} from "@/services/ordersServices"
 import React from "react"
 import MainLayout from "../main-layout"
-import router, {useRouter} from "next/router"
+import {useRouter} from "next/navigation"
 import {Order, OrderParams, OrderSearchParams} from "@/types/ordersTypes"
 import {OrderItem} from "@/types/orderItemsTypes"
 import {User} from "@/types/usersTypes"
@@ -207,6 +204,7 @@ export const OrderDetailContent = ({
   }
 
   // 전화번호 수정
+  const router = useRouter()
   const [mobile, setMobile] = useState(userInfo.mobile)
 
   const handelUpdate = async () => {
@@ -235,11 +233,12 @@ export const OrderDetailContent = ({
     if (userUpdateResult.data.status === 200) {
       const MySwal = withReactContent(Swal)
       MySwal.fire({
-        title: <p className="text-xl">회원정보 수정 완료</p>,
-        text: "회원정보 수정을 완료하였습니다.",
+        title: <p className="text-xl">전화번호정보 수정 완료</p>,
+        text: "전화번호 수정을 완료하였습니다.",
         confirmButtonText: "확인"
       })
       // 새로고침
+      router.refresh()
     }
   }
 
@@ -630,6 +629,42 @@ export const OrderSuccessContent = ({
 
   }
 
+
+  const [mobile, setMobile] = useState(userInfo.mobile)
+
+  const handelUpdate = async () => {
+    let updatedUser = {
+      user_pk: userInfo.user_pk || 0,
+      id: userInfo.id || "",
+      nickname: userInfo.nickname || "",
+      mobile: mobile || "",
+      third_party: userInfo.third_party || "Naver",
+      name: userInfo.name || ""
+    }
+
+    if (mobile === "") {
+      const MySwal = withReactContent(Swal)
+      MySwal.fire({
+        title: <p className="text-xl">회원정보 수정 확인</p>,
+        text: "전화번호를 기호 없이 숫자만 올바르게 입력해주세요.",
+        icon: "warning",
+        confirmButtonText: "확인"
+      })
+      return
+    }
+
+    const userUpdateResult = await usersServices.usersUpdate(updatedUser)
+
+    if (userUpdateResult.data.status === 200) {
+      const MySwal = withReactContent(Swal)
+      MySwal.fire({
+        title: <p className="text-xl">회원정보 수정 완료</p>,
+        text: "회원정보 수정을 완료하였습니다.",
+        confirmButtonText: "확인"
+      })
+      // 새로고침
+    }
+  }
 
   return (
     <div className="container mx-auto p-8">
