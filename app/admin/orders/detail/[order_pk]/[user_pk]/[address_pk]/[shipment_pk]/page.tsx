@@ -63,14 +63,12 @@ const OrderDetail = async (props: {
   try {
     ordersResponse = await ordersServices.ordersDetail(order_pk)
     order = ordersResponse.data.order
-    // user_pk = order.user_pk
     orderItemsResponse = await orderItemsService.orderItemsRead(searchParams)
-    userInfoResponse = await usersServices.usersDetail(user_pk)
-    shipmentResponse = await shipmentsServices.shipmentDetail(shipment_pk)
-    userInfo = userInfoResponse.data
-    shipmentInfo = shipmentResponse.data.shipment
     orderItems = orderItemsResponse.data.orderItems
-    // console.log(orderItems)
+    userInfoResponse = await usersServices.usersDetail(user_pk)
+    userInfo = userInfoResponse.data
+    // shipmentResponse = await shipmentsServices.shipmentDetail(shipment_pk)
+    // shipmentInfo = shipmentResponse.data.shipment
   } catch (error) {
     console.error(error)
     return <ErrorPage />
