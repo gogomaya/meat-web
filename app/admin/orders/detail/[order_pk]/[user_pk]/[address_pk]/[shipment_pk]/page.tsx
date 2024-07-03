@@ -83,13 +83,10 @@ const OrderDetail = async (props: {
   return (
     <AdminLayout>
       <div className="flex flex-col items-center gap-10 my-2 mx-4 md:mx-0">
-        {/* 컨테이너 */}
         <div className="w-full flex flex-col gap-6 max-w-4xl bg-white shadow-md p-6">
           <span className="text-2xl">주문 상세</span>
-          {/* 상세 정보 박스 */}
-          <div className="box py-4">
+          {/* <div className="box py-4">
             <p className="text-xl font-bold py-3">주문 정보</p>
-            {/* 상세 정보 라인 */}
             <div className="w-full flex flex-wrap flex-col md:flex-row justify-between bg-white border border-solid border-gray-200 my-4">
               <div className="item flex-1 bg-gray-200 text-center">
                 <div className="inner p-1">
@@ -116,7 +113,6 @@ const OrderDetail = async (props: {
                 </div>
               </div>
             </div>
-            {/* 상세 정보 라인 */}
             <div className="w-full flex flex-wrap flex-col md:flex-row justify-between bg-white border border-solid border-gray-200 my-4">
               <div className="item flex-1 bg-gray-200 text-center">
                 <div className="inner p-1">
@@ -129,7 +125,6 @@ const OrderDetail = async (props: {
                 </div>
               </div>
             </div>
-            {/* 상세 정보 라인 */}
             <div className="w-full flex flex-wrap flex-col md:flex-row justify-between bg-white border border-solid border-gray-200 my-4">
               <div className="item flex-1 bg-gray-200 text-center">
                 <div className="inner p-1">
@@ -144,10 +139,9 @@ const OrderDetail = async (props: {
                 )}
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="box py-4">
             <p className="text-xl font-bold py-3">구매자 정보</p>
-            {/* 상세 정보 라인 */}
             <div className="w-full flex flex-wrap flex-col md:flex-row justify-between bg-white border border-solid border-gray-200 my-4">
               <div className="item flex-1 bg-gray-200 text-center">
                 <div className="inner p-1">
@@ -290,18 +284,15 @@ const OrderDetail = async (props: {
               </div>
             </div>
           </div> */}
-          <p className="text-xl font-bold py-3">구매 목록 상세 정보</p>
+          {/* <p className="text-xl font-bold py-3">구매 목록 상세 정보</p>
           {orderItems.map((item: OrderItem) => (
             <>
               <div className="w-full flex flex-col gap-6 max-w-4xl bg-white rounded-lg shadow-md p-6">
                 <div className="w-full flex flex-wrap flex-col md:flex-row justify-between bg-white">
-                  {/* 주문정보 */}
                   <div className="item flex-[2]">
-                    {/* 타이틀 */}
                     <div className="w-full flex justify-between items-center">
                       <div className="item"><span className="text-[#A51C30] font-bold">{item.name}</span></div>
                     </div>
-                    {/* 내용 */}
                     <div className="w-full flex flex-wrap justify-between items-center  px-4 py-2">
                       <div className="item flex-1">
                         <Image
@@ -322,7 +313,6 @@ const OrderDetail = async (props: {
                       </div>
                       <div className="item flex-[2]">
                         <div className="flex flex-col items-between gap-3">
-                          {/* 총 가격 */}
                           <div className="item text-center">
                             <p className="font-bold">
                               <span>{(Number(item.discounted_price) * item.quantity).toLocaleString()}</span>원
@@ -335,7 +325,7 @@ const OrderDetail = async (props: {
                 </div>
               </div>
             </>
-          ))}
+          ))} */}
         </div>
       </div>
     </AdminLayout>
