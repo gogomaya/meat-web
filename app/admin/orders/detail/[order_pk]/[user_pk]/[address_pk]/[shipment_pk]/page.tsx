@@ -83,7 +83,7 @@ const OrderDetail = async (props: {
       <div className="flex flex-col items-center gap-10 my-2 mx-4 md:mx-0">
         <div className="w-full flex flex-col gap-6 max-w-4xl bg-white shadow-md p-6">
           <span className="text-2xl">주문 상세</span>
-          {/* <div className="box py-4">
+          <div className="box py-4">
             <p className="text-xl font-bold py-3">주문 정보</p>
             <div className="w-full flex flex-wrap flex-col md:flex-row justify-between bg-white border border-solid border-gray-200 my-4">
               <div className="item flex-1 bg-gray-200 text-center">
@@ -137,7 +137,7 @@ const OrderDetail = async (props: {
                 )}
               </div>
             </div>
-          </div> */}
+          </div>
           <div className="box py-4">
             <p className="text-xl font-bold py-3">구매자 정보</p>
             <div className="w-full flex flex-wrap flex-col md:flex-row justify-between bg-white border border-solid border-gray-200 my-4">
@@ -282,7 +282,7 @@ const OrderDetail = async (props: {
               </div>
             </div>
           </div> */}
-          {/* <p className="text-xl font-bold py-3">구매 목록 상세 정보</p>
+          <p className="text-xl font-bold py-3">구매 목록 상세 정보</p>
           {orderItems.map((item: OrderItem) => (
             <>
               <div className="w-full flex flex-col gap-6 max-w-4xl bg-white rounded-lg shadow-md p-6">
@@ -323,7 +323,7 @@ const OrderDetail = async (props: {
                 </div>
               </div>
             </>
-          ))} */}
+          ))}
         </div>
       </div>
     </AdminLayout>
