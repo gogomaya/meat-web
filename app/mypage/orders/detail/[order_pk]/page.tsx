@@ -17,7 +17,7 @@ const OrderDetail = async (props: {
   params: { order_pk: number }
   searchParams: OrderSearchParams
 }) => {
-  const {user} = await loginCheck(false)
+  const {user} = await loginCheck(true)
 
   const {bookmarks, addressList, bookmarkCount,addressCount} = await myPageData(user)
 

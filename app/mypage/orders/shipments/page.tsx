@@ -5,8 +5,8 @@ import {DeliveryStatusLink, ShipNoCopyButton} from "./shipments"
 import {myPageData} from "../../mypageData"
 import {ResponseApi} from "@/types/commonTypes"
 
-const MypageShipment = async () => {
-  const {user} = await loginCheck(false)
+const MyPageShipments = async () => {
+  const {user} = await loginCheck(true)
   const {bookmarkCount,addressCount} = await myPageData(user)
 
   return (
@@ -125,4 +125,4 @@ const MypageShipment = async () => {
   )
 }
 
-export default MypageShipment
+export default MyPageShipments

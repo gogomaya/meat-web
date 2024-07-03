@@ -7,7 +7,7 @@ import {MyPageBanner, Side} from "../mypage"
 import {GeneralReviews} from "@/app/reviews/general-reviews"
 import {myPageData} from "../mypageData"
 
-const Home = async (props: {
+const MypageReviews = async (props: {
   params: {product_pk: number},
   searchParams: ReviewsSearchParams
 }) => {
@@ -46,4 +46,4 @@ const Home = async (props: {
   )
 }
 
-export default Home
+export default MypageReviews

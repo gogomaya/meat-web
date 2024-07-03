@@ -14,10 +14,10 @@ import {myPageData} from "../mypageData"
  * @param props
  * @returns
  */
-const Home = async (props: {
+const MyPageOrders = async (props: {
   searchParams: OrderSearchParams
 }) => {
-  const {user} = await loginCheck(false)
+  const {user} = await loginCheck(true)
   const {bookmarks, addressList, bookmarkCount,addressCount} = await myPageData(user)
   const searchParams = {
     user_pk: user.user_pk,
@@ -104,4 +104,4 @@ const Home = async (props: {
   )
 }
 
-export default Home
+export default MyPageOrders

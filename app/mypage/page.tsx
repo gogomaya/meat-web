@@ -4,8 +4,8 @@ import {MyPageBanner, Side} from "./mypage"
 import Link from "next/link"
 import {myPageData} from "./mypageData"
 
-const Home = async () => {
-  const {user} = await loginCheck(false)
+const Mypage = async () => {
+  const {user} = await loginCheck(true)
   const {bookmarks, addressList, bookmarkCount,addressCount} = await myPageData(user)
   return (
     <MainLayout user={user}>
@@ -110,4 +110,4 @@ const Home = async () => {
   )
 }
 
-export default Home
+export default Mypage

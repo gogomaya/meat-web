@@ -18,11 +18,11 @@ import {redirect} from "next/navigation"
  * - 배송 상태에 따른 안내 메시지 처리
  * @returns
  */
-const AdressDetail = async (props: {
+const MyPageShipmentsDetail = async (props: {
   params: {shipment_pk: number},   // 경로 변수
   searchParams: {}              // 쿼리 스트링 파라미터
 }) => {
-  const {user} = await loginCheck(false)
+  const {user} = await loginCheck(true)
   const {bookmarkCount,addressCount} = await myPageData(user)
   let shipment : Shipment = {
     status: "pending"
@@ -200,7 +200,8 @@ const AdressDetail = async (props: {
   )
 }
 
-export default AdressDetail
+export default MyPageShipmentsDetail
+
 function isValidInput(pks: any) {
   throw new Error("Function not implemented.")
 }

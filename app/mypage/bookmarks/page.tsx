@@ -10,10 +10,10 @@ import Link from "next/link"
 import {BookMarkList} from "./bookmarks"
 import {myPageData} from "../mypageData"
 
-const Home = async (props: {
+const MyPageBookmarks = async (props: {
   searchParams: BookmarkSearchParams
 }) => {
-  const {user} = await loginCheck(false)
+  const {user} = await loginCheck(true)
   const {bookmarkCount,addressCount} = await myPageData(user)
 
   const searchParams = {
@@ -70,4 +70,4 @@ const Home = async (props: {
   )
 }
 
-export default Home
+export default MyPageBookmarks
