@@ -211,7 +211,6 @@ export const CartsDetailContent = ({user}: { user: User }) => {
 
   }
 
-
   return (
     <>
       <div className="cart-mobile flex items-center justify-around">
