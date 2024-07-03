@@ -16,6 +16,7 @@ export interface Product {
   type?: string
   part?: string
   per100g?: string
+  stock: number | string
   grade?: string
   package?: string
   is_today: boolean
