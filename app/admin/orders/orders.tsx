@@ -180,7 +180,7 @@ const AdminOrdersList = ({
                   <TableCell onClick={()=>handleOrderDetail(order.order_pk, order.user_pk ?? 0, order.address_pk, order.shipment_pk)}>{order.title}</TableCell>
                   <TableCell onClick={()=>handleOrderDetail(order.order_pk, order.user_pk ?? 0, order.address_pk, order.shipment_pk)}>{order.total_quantity}</TableCell>
                   <TableCell onClick={()=>handleOrderDetail(order.order_pk, order.user_pk ?? 0, order.address_pk, order.shipment_pk)}>{Number(order.total_discount_price).toLocaleString()}</TableCell>
-                  <TableCell onClick={()=>handleOrderDetail(order.order_pk, order.user_pk ?? 0, order.address_pk, order.shipment_pk)}>{order.guest_mobile ? "비회원" : "회원"}</TableCell>
+                  <TableCell onClick={()=>handleOrderDetail(order.order_pk, order.user_pk ?? 0, order.address_pk, order.shipment_pk)}>{order.user_pk ? "비회원" : "회원"}</TableCell>
                   <TableCell onClick={()=>handleOrderDetail(order.order_pk, order.user_pk ?? 0, order.address_pk, order.shipment_pk)}>{getOrderStatusMeaning(order.status)}</TableCell>
                   {/* <TableCell>{order.shipment_pk}</TableCell> */}
                   <TableCell onClick={()=>handleOrderDetail(order.order_pk, order.user_pk ?? 0, order.address_pk, order.shipment_pk)}>{moment(order.created_at).format("YYYY-MM-DD")}</TableCell>
