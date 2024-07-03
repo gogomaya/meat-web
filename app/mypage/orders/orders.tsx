@@ -239,6 +239,7 @@ export const OrderList = ({orders}: OrderListProps) => {
                   <></>
                 }
                 {/* 결제완료, 배송중, 배송완료 */}
+                {/* 로젠택배 https://www.ilogen.com/m/personal/trace/{tracking_no}} 띄우기 */}
                 {order.status == "paid" || order.status == "shipping" || order.status == "delivered"
                   ?
                   <>

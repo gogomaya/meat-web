@@ -282,9 +282,6 @@ export const ProductsList = ({products}: { products: Product[] }) => {
 }
 
 export const ProductsDetailContent = ({product, user}: { product: Product, user: User }) => {
-  // console.log(":::::::::: ProductsDetailContent Component ::::::::::")
-  // console.log(":::::::::: product ::::::::::")
-  // console.log(product)
   const [quantity, setQuantity] = React.useState(1)
   const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newQuantity = parseInt(event.target.value)
@@ -292,6 +289,8 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
       setQuantity(newQuantity)
     }
   }
+  const isLowStock = Number(product.stock) < 5
+  const isQuantityExceeded = quantity > Number(product.stock)
 
   const imageRef = React.useRef<HTMLDivElement | null>(null)
 
@@ -529,6 +528,12 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
                     <div className="flex-grow">{product.etc}</div>
                   </div>
                 )}
+                {/* {product.etc && (
+                  <div className="flex items-center mb-2">
+                    <div className="w-24 mr-5">재고수량</div>
+                    <div className="flex-grow">{Number(product.stock).toLocaleString()}</div>
+                  </div>
+                )} */}
               </>
             )}
           </div>
@@ -607,6 +612,9 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
               </div>
             </div>
             {/* 재고수량 표시 */}
+            {isLowStock || isQuantityExceeded ? (
+              <div className="text-red-700">잔여수량: {product.stock}</div>
+            ) : null}
           </div>
           <Divider className="bg-gray-800 h-0.5 mb-4" />
           <div>
@@ -637,10 +645,10 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
                       height: "50px",
                       color: "white",
                       fontSize: "1.2rem",
-                      opacity: product.is_sold_out ? 0.3 : 1
+                      opacity: product.is_sold_out || isQuantityExceeded ? 0.3 : 1
                     }}
                     className="btn"
-                    disabled={product.is_sold_out}
+                    disabled={product.is_sold_out || isQuantityExceeded}
                   >
                     장바구니
                   </Button>
@@ -654,10 +662,10 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
                       height: "50px",
                       color: "white",
                       fontSize: "1.2rem",
-                      opacity: product.is_sold_out ? 0.3 : 1
+                      opacity: product.is_sold_out || isQuantityExceeded ? 0.3 : 1
                     }}
                     className="btn"
-                    disabled={product.is_sold_out}
+                    disabled={product.is_sold_out || isQuantityExceeded}
                   >
                     구매하기
                   </Button>
@@ -984,7 +992,7 @@ export const ShipDetail = () => {
           <strong style={{fontSize: "24px"}}>주문취소 안내</strong>
           <div>
             <div style={{marginBottom: "15px"}}>
-              <span style={{fontWeight: "bold", textDecoration: "underline", fontSize: "18px"}}>1. 주문 취소 관련</span>
+              {/* <span style={{fontWeight: "bold", textDecoration: "underline", fontSize: "18px"}}>1. 주문 취소 관련</span> */}
               <br />
               [배송준비중] 부터는 취소가 불가하니, 반품으로 진행해주세요. (상품에 따라 반품이 불가할 수 있습니다.)
               <br />주문마감 시간에 임박할수록 취소 기능 시간이 짧아질 수 있습니다.

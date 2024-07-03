@@ -8,6 +8,7 @@ CREATE TABLE `products` (
   -- `discounted_price` int(11) NOT NULL,
   -- `discounted_price` int(11) NOT NULL,
   `description` varchar(500) DEFAULT NULL COMMENT '금액 밑에 간단한 설명',
+  `stock` int(11) NOT NULL DEFAULT 9999,
   `origin` varchar(500) DEFAULT NULL COMMENT '원산지',
   `etc` varchar(500) DEFAULT NULL COMMENT '배송관련 간단 설명',
   `weight` varchar(500) DEFAULT NULL COMMENT '제품중량',

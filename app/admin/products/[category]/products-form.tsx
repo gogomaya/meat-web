@@ -26,7 +26,8 @@ const AdminProductsForm = ({
     defaultValues: {
       ...product,
       price: product.price === 0 ? "" : product.price,
-      discounted_price: product.discounted_price === 0 ? "" : product.discounted_price
+      discounted_price: product.discounted_price === 0 ? "" : product.discounted_price,
+      stock: product.stock === 0 ? "" : product.stock
     },
     resolver: yupResolver(yup.object().shape({
       product_pk: yup.number().required(),
@@ -35,6 +36,7 @@ const AdminProductsForm = ({
       category_menu: yup.string().required("메뉴를 선택해 주세요."),
       price: yup.mixed<number | string>().required(),
       discounted_price: yup.mixed<number | string>().required(),
+      stock: yup.mixed<number | string>().required(),
       is_today: yup.boolean().default(product.is_today),
       is_best: yup.boolean().default(product.is_best),
       is_sold_out: yup.boolean().default(product.is_sold_out),
@@ -124,7 +126,7 @@ const AdminProductsForm = ({
             <FormHelperText>{errors.category_menu.message}</FormHelperText>
           )}
         </FormControl>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-4">
           <TextField
             className="!mt-8"
             autoFocus
@@ -165,6 +167,20 @@ const AdminProductsForm = ({
             {...register("discounted_price")}
             // error={!!errors.discounted_price}
             // helperText={errors.discounted_price && errors.discounted_price.message}
+          />
+          <TextField
+            className="!mt-8"
+            label="* 재고수량"
+            placeholder="초기값 9999"
+            fullWidth
+            type="number"
+            variant="standard"
+            InputLabelProps={{
+              shrink: true
+            }}
+            {...register("stock")}
+            error={!!errors.price}
+            helperText={errors.price && errors.price.message}
           />
           <FormControl variant="standard" error={!!errors.grade} fullWidth className="!mt-8">
             <InputLabel shrink>등급</InputLabel>

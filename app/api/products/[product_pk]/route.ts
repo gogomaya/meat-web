@@ -114,6 +114,7 @@ export const PATCH = async (
     "type",
     "part",
     "per100g",
+    "stock",
     "grade",
     "package",
     "is_today",
