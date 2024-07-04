@@ -829,11 +829,11 @@ const CartOrderButton = ({
     const MySwal = withReactContent(Swal)
     MySwal.fire({
       title: "알림",
-      text: type === "CART" ? "장바구니에 추가하였습니다. 장바구니로 이동하시겠습니까?" : "장바구니에 있는 상품과 함께 주문하시겠습니까?",
+      text: type === "CART" ? "장바구니에 추가하였습니다. 장바구니로 이동하시겠습니까?" : "장바구니에 있는 상품과 함께 주문하시겠습니까? 아니오를 클릭하시면 선택하신 상품만 주문됩니다.",
       icon: "question",
       showCancelButton: true,
-      confirmButtonText: "장바구니에 있는 상품과 함께 주문하기",
-      cancelButtonText: "해당 상품만 주문하기"
+      confirmButtonText: "예",
+      cancelButtonText: "아니오"
     }).then((result) => {
       if (result.isConfirmed) {
         if (type === "CART") {
