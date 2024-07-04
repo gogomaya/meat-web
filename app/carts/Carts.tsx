@@ -89,7 +89,7 @@ export const CartsDetailContent = ({user}: { user: User }) => {
       // 👩‍💼 회원가입 유도 체크
       const result = await MySwal.fire({
         title: "회원가입 후 주문하기",
-        text: "회원가입 시, 더 편리하게 이용하실 수 있습니다.",
+        text: "로그인 시, 더 편리하게 이용하실 수 있습니다.",
         icon: "warning",
         showCancelButton: true,
         confirmButtonText: "회원가입",
@@ -162,7 +162,7 @@ export const CartsDetailContent = ({user}: { user: User }) => {
       // 👩‍💼 회원가입 유도 체크
       const result = await MySwal.fire({
         title: "회원가입 후 주문하기",
-        text: "회원가입 시, 더 편리하게 이용하실 수 있습니다.",
+        text: "로그인 시, 더 편리하게 이용하실 수 있습니다.",
         icon: "warning",
         showCancelButton: true,
         confirmButtonText: "회원가입",
@@ -191,12 +191,28 @@ export const CartsDetailContent = ({user}: { user: User }) => {
         confirmButtonText: "구매하기",
         cancelButtonText: "취소",
         showLoaderOnConfirm: true,
+        // preConfirm: async (mobile) => {
+        //   try {
+        //     // TODO: 전화번호 검증 로직 필요
+        //     return {mobile: mobile}
+        //   } catch (error) {
+        //   }
+        // },
         preConfirm: async (mobile) => {
           try {
-            // TODO: 전화번호 검증 로직 필요
-            return {mobile: mobile}
+            // 전화번호 정규식 패턴
+            const phoneRegex = /^(010\d{8})$/
+
+            // 전화번호가 정규식 패턴에 맞는지 검증
+            if (phoneRegex.test(mobile)) {
+              return {mobile: mobile}
+            } else {
+              throw new Error("유효하지 않은 전화번호 형식입니다")
+            }
           } catch (error) {
-            //
+            console.error(error)
+            // 에러 메시지를 사용자에게 보여주기 위해 반환
+            return Swal.showValidationMessage("기호없이 전화번호를 입력해주세요.")
           }
         },
         allowOutsideClick: () => !Swal.isLoading()
@@ -207,8 +223,25 @@ export const CartsDetailContent = ({user}: { user: User }) => {
         }
       })
     }
+  }
 
-
+  const handleClearCart = () => {
+    Swal.fire({
+      title: "정말 장바구니를 비우시겠습니까?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "네",
+      cancelButtonText: "아니오"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.setItem("cartProducts", "[]")
+        cartProductsForm.setValue("cartProducts", [])
+        window.postMessage({cartProductsLength: "on"}, "*")
+        calc()
+      }
+    })
   }
 
   return (
@@ -387,12 +420,13 @@ export const CartsDetailContent = ({user}: { user: User }) => {
               variant="contained"
               className="btn h-12 w-full md:w-auto text-lg"
               disabled={cartProducts.length === 0}
-              onClick={() => setOpen(true)}
+              onClick={handleClearCart}
+              // onClick={() => setOpen(true)}
               style={{backgroundColor: "#4F3623"}}
             >
               장바구니 비우기
             </Button>
-            <Dialog
+            {/* <Dialog
               open={open}
               onClose={() => setOpen(false)}
               aria-labelledby="alert-dialog-title"
@@ -419,7 +453,7 @@ export const CartsDetailContent = ({user}: { user: User }) => {
                   네
                 </Button>
               </DialogActions>
-            </Dialog>
+            </Dialog> */}
           </div>
         </div>
         <div className="w-full md:w-1/3 pr-8 ml-4">

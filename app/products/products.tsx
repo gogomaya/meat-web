@@ -694,60 +694,38 @@ const CartOrderButton = ({
   type: "CART" | "ORDER"
 }) => {
   const router = useRouter()
-  const [open, setOpen] = React.useState(false)
+
   // 🛒 장바구니 추가
   const addCartOrderList = async (product: Product, quantity: number) => {
     try {
-      // 로컬 스토리지에서 장바구니 데이터를 가져오기
       let cartProducts: CartProduct[] = JSON.parse(localStorage.getItem("cartProducts") || "[]")
-
-      // 장바구니에서 동일한 product_pk가 있는지 찾기
-      const cartProduct = _.find(cartProducts, (cartProduct: CartProduct) => {
-        return cartProduct.product.product_pk === product.product_pk
-      })
+      const cartProduct = _.find(cartProducts, (cartProduct: CartProduct) => cartProduct.product.product_pk === product.product_pk)
 
       if (cartProduct) {
-        // 동일한 product_pk가 있으면 수량을 1 증가시키기
         cartProduct.quantity += 1
       } else {
-        // 동일한 product_pk가 없으면 새로운 상품 추가
-        cartProducts.push({
-          product,
-          quantity,
-          checked: true
-        })
+        cartProducts.push({product, quantity, checked: true})
       }
 
-      // 로컬 스토리지에 장바구니 데이터 저장
       localStorage.setItem("cartProducts", JSON.stringify(cartProducts))
-
-      // 장바구니 항목 수 업데이트
       window.postMessage({cartProductsLength: cartProducts.length}, "*")
     } catch (error) {
-      // 오류 발생 시 경고 메시지 표시 및 로컬 스토리지 초기화
       alert("알 수 없는 오류가 발생하였습니다. 다시 시도 해주세요.")
       localStorage.setItem("cartProducts", "")
     }
   }
 
-  // 한 상품 주문
-  const orderOne = async (product_pk:number, quantity:number) => {
+  const orderOne = async (product_pk: number, quantity: number) => {
     console.log(`product_pk : ${product_pk}`)
     console.log(`quantity : ${quantity}`)
 
-    // 회원
-    if( user.user_pk ) {
-      // alert("회원")
+    if (user.user_pk) {
       router.push(`/order?productPks=${product.product_pk}&quantityList=${quantity}`)
-    }
-    // 비회원
-    else {
+    } else {
       const MySwal = withReactContent(Swal)
-
-      // 👩‍💼 회원가입 유도 체크
       const result = await MySwal.fire({
         title: "회원가입 후 주문하기",
-        text: "회원가입 시, 더 편리하게 이용하실 수 있습니다.",
+        text: "로그인 시, 더 편리하게 이용하실 수 있습니다.",
         icon: "warning",
         showCancelButton: true,
         confirmButtonText: "회원가입",
@@ -767,86 +745,52 @@ const CartOrderButton = ({
         title: "비회원 주문",
         text: "전화번호를 입력해주세요. (- 기호없이 : 01012341234 )",
         input: "text",
-        inputAttributes: {
-          autocapitalize: "off"
-        },
+        inputAttributes: {autocapitalize: "off"},
         showCancelButton: true,
         confirmButtonText: "구매하기",
         cancelButtonText: "취소",
         showLoaderOnConfirm: true,
         preConfirm: async (mobile) => {
-          try {
-            // TODO: 전화번호 검증 로직 필요
-            return {mobile: mobile}
-          } catch (error) {
-            //
+          const phoneRegex = /^\d{11}$/ // 11자리 숫자 정규 표현식
+          if (!phoneRegex.test(mobile)) {
+            MySwal.showValidationMessage("유효하지 않은 전화번호입니다. 11자리 숫자만 입력해주세요.")
+            return null
           }
+          return {mobile}
         },
         allowOutsideClick: () => !Swal.isLoading()
       }).then((result) => {
-
-        const phoneNumber = result.value.mobile
-        const phoneRegex = /^\d{11}$/ // 11자리 숫자 정규 표현식
-
-        if (!phoneRegex.test(phoneNumber)) {
-          // alert("유효하지 않은 전화번호입니다. 11자리 숫자만 입력해주세요.");
-          MySwal.fire({
-            title: <p className="text-xl">유효하지 않은 전화번호입니다.</p>,
-            text: "11자리 숫자만 입력해주세요.",
-            icon: "error",
-            confirmButtonText: "확인"
-          })
-          return
-        }
-
         if (result.isConfirmed) {
-          // 비회원 주문
           router.push(`/guest/order?mobile=${result.value.mobile}&productPks=${product.product_pk}&quantityList=${quantity}`)
         }
       })
-
     }
-
-
   }
 
-  // 장바구니 포함 주문
   const orderWithCart = async () => {
-    // 구매하기 -> 알림 -> 예 -> 장바구니까지 주문
-    // 로컬 스토리지에서 cartProducts 가져오기
     const storedCartProducts = JSON.parse(localStorage.getItem("cartProducts") || "[]")
-
-    // 빈 배열인지 확인
     if (storedCartProducts.length === 0) {
       alert("장바구니가 비어 있습니다.")
       return
     }
 
-    // product_pk와 quantity 추출 및 문자열 병합
-    const productPks = storedCartProducts.map((cartProduct : CartProduct ) => cartProduct.product.product_pk).join(",")
-    const quantityList = storedCartProducts.map((cartProduct: CartProduct ) => cartProduct.quantity).join(",")
-    console.log(`productPks : ${productPks}`)
-    console.log(`quantityList : ${quantityList}`)
-    console.log(`/order?productPks=${productPks}&quantityList=${quantityList}`)
+    const productPks = storedCartProducts.map((cartProduct: CartProduct) => cartProduct.product.product_pk).join(",")
+    const quantityList = storedCartProducts.map((cartProduct: CartProduct) => cartProduct.quantity).join(",")
 
-    // 회원
-    if( user.user_pk ) {
+    if (user.user_pk) {
       router.push(`/order?productPks=${productPks}&quantityList=${quantityList}`)
-    }
-    // 비회원
-    else {
+    } else {
       const MySwal = withReactContent(Swal)
-
-      // 👩‍💼 회원가입 유도 체크
       const result = await MySwal.fire({
         title: "회원가입 후 주문하기",
-        text: "회원가입 시, 더 편리하게 이용하실 수 있습니다.",
+        text: "로그인 시, 더 편리하게 이용하실 수 있습니다.",
         icon: "warning",
         showCancelButton: true,
         confirmButtonText: "회원가입",
         confirmButtonColor: "#271A11",
         cancelButtonText: "비회원 주문"
       })
+
       if (result.isConfirmed) {
         window.postMessage({loginPopup: "on"}, "*")
         return
@@ -859,97 +803,64 @@ const CartOrderButton = ({
         title: "비회원 주문",
         text: "전화번호를 입력해주세요. (- 기호없이 : 01012341234 )",
         input: "text",
-        inputAttributes: {
-          autocapitalize: "off"
-        },
+        inputAttributes: {autocapitalize: "off"},
         showCancelButton: true,
         confirmButtonText: "구매하기",
         cancelButtonText: "취소",
         showLoaderOnConfirm: true,
         preConfirm: async (mobile) => {
-          try {
-            // TODO: 전화번호 검증 로직 필요
-            return {mobile: mobile}
-          } catch (error) {
-            //
+          const phoneRegex = /^\d{11}$/ // 11자리 숫자 정규 표현식
+          if (!phoneRegex.test(mobile)) {
+            MySwal.showValidationMessage("유효하지 않은 전화번호입니다. 11자리 숫자만 입력해주세요.")
+            return null
           }
+          return {mobile}
         },
         allowOutsideClick: () => !Swal.isLoading()
       }).then((result) => {
-        const phoneNumber = result.value.mobile
-        const phoneRegex = /^\d{11}$/ // 11자리 숫자 정규 표현식
-
-        if (!phoneRegex.test(phoneNumber)) {
-          // alert("유효하지 않은 전화번호입니다. 11자리 숫자만 입력해주세요.");
-          MySwal.fire({
-            title: <p className="text-xl">유효하지 않은 전화번호입니다.</p>,
-            text: "11자리 숫자만 입력해주세요.",
-            icon: "error",
-            confirmButtonText: "확인"
-          })
-          return
-        }
-
         if (result.isConfirmed) {
-          // TODO: 다시열기
-          // 비회원 주문
           router.push(`/guest/order?mobile=${result.value.mobile}&productPks=${productPks}&quantityList=${quantityList}`)
         }
       })
     }
-
   }
+
+  const handleButtonClick = () => {
+    const MySwal = withReactContent(Swal)
+    MySwal.fire({
+      title: "알림",
+      text: type === "CART" ? "장바구니에 추가하였습니다. 장바구니로 이동하시겠습니까?" : "장바구니에 있는 상품과 함께 주문하시겠습니까?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonText: "장바구니에 있는 상품과 함께 주문하기",
+      cancelButtonText: "해당 상품만 주문하기"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if (type === "CART") {
+          addCartOrderList(product, quantity)
+          router.push("/carts")
+        } else if (type === "ORDER") {
+          addCartOrderList(product, quantity)
+          orderWithCart()
+        }
+      } else if (result.isDismissed) {
+        if (type === "CART") {
+          addCartOrderList(product, quantity)
+        } else if (type === "ORDER") {
+          orderOne(product.product_pk, quantity)
+        }
+      }
+    })
+  }
+
   return (
     <div>
       {React.cloneElement(children, {
         onClick: () => {
           children.props.onClick?.()
-          setOpen(true)
+          handleButtonClick()
         }
       })}
-      <Dialog open={open} onClose={() => setOpen(false)}>
-        <DialogTitle>알림</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            {type === "CART" ?
-              "장바구니에 추가하였습니다. 장바구니로 이동하시겠습니까?" :
-              "장바구니에 있는 상품과 함께 주문하시겠습니까? 아니오를 클릭하시면 선택하신 상품만 주문됩니다."
-            }
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          {/* [아니오] */}
-          <Button onClick={() => {
-            setOpen(false)
-            if( type === "CART" ) {
-              addCartOrderList(product, quantity)
-            }
-            if (type === "ORDER") {
-              // 구매하기 -> 알림 -> 아니오 -> 한상품만
-              orderOne(product.product_pk, quantity)
-              // router.push(`/order?productPks=${product.product_pk}&quantityList=${quantity}`)
-            }
-          }} color="primary">
-            아니오
-          </Button>
-          {/* [예] */}
-          <Button onClick={() => {
-            setOpen(false)
-            if (type === "CART") {
-              addCartOrderList(product, quantity)
-              // 장바구니로 이동
-              router.push("/carts")
-            }
-            // 구매하기 -> 알림 -> 예 -> 장바구니 포함 주문
-            if( type === "ORDER") {
-              addCartOrderList(product, quantity)
-              orderWithCart()
-            }
-          }} color="primary" autoFocus>
-            예
-          </Button>
-        </DialogActions>
-      </Dialog>
     </div>
   )
 }
