@@ -19,20 +19,33 @@ interface UpdateTrackingNoProps {
 
 const UpdateTrackingNo: React.FC<UpdateTrackingNoProps> = ({address_pk, shipment_pk, initialTrackingNo}) => {
   const [trackingNo, setTrackingNo] = useState(initialTrackingNo)
-  const [editMode, setEditMode] = useState(false)  // 수정 모드 상태
+  const [newTrackingNo, setNewTrackingNo] = useState(trackingNo)
+  const [isEditing, setIsEditing] = useState(false)
   const router = useRouter()
 
+  const handleEditClick = () => {
+    setIsEditing(true)
+  }
+
+  const handleSaveClick = () => {
+    setIsEditing(false)
+  }
+
+  const handleCancelClick = () => {
+    setIsEditing(false)
+    setNewTrackingNo(trackingNo)
+  }
+
   // 송장번호가 변경될 때 editMode 상태 업데이트
-  useEffect(() => {
-    setTrackingNo(initialTrackingNo)
-    setEditMode(true)
-  }, [initialTrackingNo])
+  // useEffect(() => {
+  //   setTrackingNo(initialTrackingNo)
+  //   setIsEditing(false)
+  // }, [initialTrackingNo])
 
   const handleShipmentTrackingNoUpdate = async () => {
-    // 입력 값이 비어 있는지 확인 => 잘못입력했을 경우 수정용으로 빈값도 입력가능하게 함
-    if (trackingNo === "") {
+    if (newTrackingNo === "") {
       MySwal.fire({
-        title: <p className="text-xl">배송지 수정 확인</p>,
+        title: <p className="text-xl">송장번호 확인</p>,
         text: "송장번호를 입력해 주세요.",
         icon: "warning",
         confirmButtonText: "확인"
@@ -41,10 +54,10 @@ const UpdateTrackingNo: React.FC<UpdateTrackingNoProps> = ({address_pk, shipment
     }
 
     // 업데이트할 송장 정보 설정
-    const updatedShipmentTrackingNo: Omit<Shipment, "created_at"> = {
+    let updatedShipmentTrackingNo: Omit<Shipment, "created_at"> = {
       shipment_pk: shipment_pk,
       address_pk: address_pk,
-      tracking_no: trackingNo,
+      tracking_no: newTrackingNo,
       ship_company: "",
       status: "shipping"
     }
@@ -57,10 +70,8 @@ const UpdateTrackingNo: React.FC<UpdateTrackingNoProps> = ({address_pk, shipment
           title: <p className="text-xl">송장번호 입력 완료</p>,
           text: "송장번호 입력을 완료하였습니다.",
           confirmButtonText: "확인"
-        }).then(() => {
-          setEditMode(true)
-          // router.refresh()
         })
+        return
       } else {
         MySwal.fire({
           title: <p className="text-xl">오류 발생</p>,
@@ -80,50 +91,90 @@ const UpdateTrackingNo: React.FC<UpdateTrackingNoProps> = ({address_pk, shipment
   }
 
   return (
-    <div className="flex gap-3 items-center">
-      {editMode ? (
+    <div className="flex items-center justify-between py-2 gap-4">
+      {isEditing ? (
+        <input
+          type="text"
+          id="trackingNo"
+          value={newTrackingNo}
+          onChange={(e) => setNewTrackingNo(e.target.value)}
+          placeholder="송장번호를 바르게 입력해주세요.)"
+          className="w-full p-2 border border-gray-300 rounded"
+        />
+      ) : (
+        <span>{initialTrackingNo}</span>
+      )}
+      {isEditing ? (
         <>
-          <input
-            type="text"
-            value={trackingNo}
-            onChange={(e) => setTrackingNo(e.target.value)}
-            placeholder="송장번호 입력"
-            className="px-3 py-1 border rounded"
-          />
           <button
-            onClick={handleShipmentTrackingNoUpdate}
-            className="px-2 py-1 bg-blue-600 text-white rounded"
+            type="button"
+            onClick={() => { handleShipmentTrackingNoUpdate(); handleSaveClick() }}
+            className="text-white bg-[#A51C30] hover:bg-[#8B0A1D] font-semibold rounded-md text-sm px-4 py-2.5 w-1/6"
           >
-            수정
+            <span className="text-lg font-normal">저장</span>
           </button>
-          {/* <button
-            onClick={() => setEditMode(false)}
-            className="px-2 py-1 bg-gray-600 text-white rounded"
+          <button
+            type="button"
+            onClick={handleCancelClick}
+            className="text-gray-700 bg-gray-200 hover:bg-gray-300 font-semibold rounded-md text-sm px-4 py-2.5 w-1/6"
           >
-            취소
-          </button> */}
+            <span className="text-lg font-normal">취소</span>
+          </button>
         </>
       ) : (
-        <>
-          <span><input
-            type="text"
-            value={trackingNo}
-            onChange={(e) => setTrackingNo(e.target.value)}
-            placeholder="송장번호 입력"
-            className="px-3 py-1 border rounded"
-          /></span>
-          <button
-            onClick={() => {
-              setEditMode(true)
-              handleShipmentTrackingNoUpdate()
-            }}
-            className="px-2 py-1 bg-green-600 text-white rounded"
-          >
-            입력
-          </button>
-        </>
+        <button
+          type="button"
+          onClick={handleEditClick}
+          className="text-white bg-[#A51C30] hover:bg-[#8B0A1D] font-semibold rounded-md text-sm px-4 py-2.5 w-1/6"
+        >
+          <span className="text-lg font-normal">수정</span>
+        </button>
       )}
     </div>
+    // <div className="flex gap-3 items-center">
+    //   {editMode ? (
+    //     <>
+    //       <input
+    //         type="text"
+    //         value={trackingNo}
+    //         onChange={(e) => setTrackingNo(e.target.value)}
+    //         placeholder="송장번호 입력"
+    //         className="px-3 py-1 border rounded"
+    //       />
+    //       <button
+    //         onClick={handleShipmentTrackingNoUpdate}
+    //         className="px-2 py-1 bg-blue-600 text-white rounded"
+    //       >
+    //         입력
+    //       </button>
+    //       <button
+    //         onClick={() => setEditMode(false)}
+    //         className="px-2 py-1 bg-gray-600 text-white rounded"
+    //       >
+    //         취소
+    //       </button>
+    //     </>
+    //   ) : (
+    //     <>
+    //       <span><input
+    //         type="text"
+    //         value={trackingNo}
+    //         onChange={(e) => setTrackingNo(e.target.value)}
+    //         placeholder="송장번호 입력"
+    //         className="px-3 py-1 border rounded"
+    //       /></span>
+    //       <button
+    //         onClick={() => {
+    //           setEditMode(true)
+    //           handleShipmentTrackingNoUpdate()
+    //         }}
+    //         className="px-2 py-1 bg-green-600 text-white rounded"
+    //       >
+    //         수정
+    //       </button>
+    //     </>
+    //   )}
+    // </div>
   )
 }
 

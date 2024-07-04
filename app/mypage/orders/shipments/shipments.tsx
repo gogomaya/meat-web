@@ -41,7 +41,7 @@ export const DeliveryStatusLink: React.FC<DeliveryStatusLinkProps> = ({tracking_
   )
 }
 
-export const ShipNoCopyButton = () => {
+export const ShipNoCopyButton = ({disabled}: { disabled: boolean }) => {
   // 클릭 핸들러
   const handleCopy = () => {
     const shipNoElement = document.getElementById("shipNo")
@@ -66,7 +66,10 @@ export const ShipNoCopyButton = () => {
   return (
     <button
       onClick={handleCopy}
-      className="w-full px-4 py-2 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-center text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200"
+      disabled={disabled}
+      className={`w-full px-4 py-2 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-center text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200 ${
+        disabled ? "disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed" : ""
+      }`}
     >
       운송장 번호 복사
     </button>
