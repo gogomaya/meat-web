@@ -30,7 +30,7 @@ const MyPageShipments = async () => {
                 {/* 배송 상태 확인 박스 */}
                 <div className="box flex flex-col gap-3">
                   <DeliveryStatusLink tracking_no={""} />
-                  <ShipNoCopyButton />
+                  {/* <ShipNoCopyButton disabled={!shipment.tracking_no}/> */}
                 </div>
                 {/* 상세 정보 박스 */}
                 <div className="box py-4">

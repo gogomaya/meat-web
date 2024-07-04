@@ -119,6 +119,12 @@ export const orderSuccess = async (searchParams: OrderParams): Promise<PaySucces
   // ➡ 상품 재고 (quantity)만큼 감소
 
 
+  // TODO: 장바구니 비우기 (결제 완료)
+  // order_pk로 order_items 리스트 조회
+  // -> 반복 (order_item - product_pk, quantity)
+  // -> 장바구니 비우기
+
+
   // 결제 등록
   try {
     const payment = {

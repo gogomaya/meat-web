@@ -66,8 +66,8 @@ const OrderDetail = async (props: {
     orderItems = orderItemsResponse.data.orderItems
     userInfoResponse = await usersServices.usersDetail(user_pk)
     userInfo = userInfoResponse.data
-    // shipmentResponse = await shipmentsServices.shipmentDetail(shipment_pk)
-    // shipmentInfo = shipmentResponse.data.shipment
+    shipmentResponse = await shipmentsServices.shipmentDetail(shipment_pk)
+    shipmentInfo = shipmentResponse.data.shipment
   } catch (error) {
     console.error(error)
     return <ErrorPage />
@@ -205,19 +205,21 @@ const OrderDetail = async (props: {
           <div className="box py-4">
             <p className="text-xl font-bold py-3">배송 정보</p>
             <div className="w-full flex flex-wrap flex-col md:flex-row justify-between bg-white border border-solid border-gray-200 my-4">
-              <div className="item flex-1 bg-gray-200 text-center">
+              <div className="item flex-1 bg-gray-200 text-center flex items-center justify-center">
                 <div className="inner p-1">
                   <span className="font-bold">송장번호</span>
                 </div>
               </div>
-              <div className="item flex-[3]">
-                <div className="inner p-1">
+              <div className="item flex-[3] flex items-center">
+                <div className="inner p-1 w-full">
                   {shipmentInfo?.tracking_no ? (
                     <UpdateTrackingNo
                       address_pk={order.address_pk}
                       shipment_pk={order.shipment_pk}
                       initialTrackingNo={shipmentInfo.tracking_no}
                     />
+                  ) : order?.status === "pending" ? (
+                    <div>결제 대기 상품입니다. 송장번호를 입력할 수 없습니다.</div>
                   ) : (
                     <UpdateTrackingNo
                       address_pk={order.address_pk}

@@ -8,7 +8,7 @@ const ErrorPage = ({
   message?: string
 }) => {
   return (
-    <div className="h-full flex flex-col justify-center items-center">
+    <div className="h-full flex flex-col justify-center items-center" style={{backgroundImage: "url('/images/Bg_3.png')"}}>
       {message ? (
         <div className="text-2xl font-bold">{message}</div>
       ) : (
