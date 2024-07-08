@@ -66,12 +66,14 @@ const OrderDetail = async (props: {
     orderItems = orderItemsResponse.data.orderItems
     userInfoResponse = await usersServices.usersDetail(user_pk)
     userInfo = userInfoResponse.data
+    // 서버 런타임 오류나는 지점 => TODO 에러처리
     shipmentResponse = await shipmentsServices.shipmentDetail(shipment_pk)
     shipmentInfo = shipmentResponse.data.shipment
   } catch (error) {
     console.error(error)
     return <ErrorPage />
   }
+
   const formatNumber = (number: number) => {
     const formattedNumber = number.toLocaleString()
     return formattedNumber
