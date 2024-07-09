@@ -183,7 +183,7 @@ const AdminOrdersList = ({
                   <TableCell>{order.user_pk ? "회원" : "비회원"}</TableCell>
                   <TableCell>{getOrderStatusMeaning(order.status)}</TableCell>
                   {/* <TableCell>{order.shipment_pk}</TableCell> */}
-                  <TableCell onClick={()=>handleOrderDetail(order.order_pk, order.user_pk ?? 0, order.address_pk, order.shipment_pk)}>{moment(order.created_at).format("YYYY-MM-DD")}</TableCell>
+                  <TableCell>{moment(order.created_at).format("YYYY-MM-DD")}</TableCell>
                   {/*  결제대기일 때 배송관리 불가 */}
                   {(order.status !== "pending") ? (
                     <TableCell style={{cursor: "pointer"}}>
