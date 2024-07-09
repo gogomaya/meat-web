@@ -13,6 +13,8 @@ import {myPageData} from "@/app/mypage/mypageData"
 import AdminLayout from "@/app/admin-layout"
 import {shipmentsServices} from "@/services/shipmentsServices"
 import UpdateTrackingNo from "../../../../shipment"
+import {addressServices} from "@/services/addressServices"
+import {Address} from "@/types/addressTypes"
 
 const OrderDetail = async (props: {
   params: { order_pk: number, user_pk: number, address_pk: number, shipment_pk: number }
@@ -25,6 +27,7 @@ const OrderDetail = async (props: {
   let userInfoResponse: ResponseApi = {}
   let shipmentResponse: ResponseApi = {}
   let orderItemsResponse: ResponseApi = {}
+  let addressResponse: ResponseApi = {}
 
   let order_pk = props.params.order_pk
   let user_pk = props.params.user_pk
@@ -49,6 +52,16 @@ const OrderDetail = async (props: {
     discount: 0,
     total_discount_price: 0
   }
+  let addressInfo : Address = {
+    address_pk: 0,
+    mobile: "",
+    recipient: "",
+    address: "",
+    address_detail: "",
+    delivery_request: "",
+    delivery_method: "",
+    created_at: ""
+  }
 
   const searchParams = {
     order_pk : order_pk,
@@ -69,6 +82,9 @@ const OrderDetail = async (props: {
     // 서버 런타임 오류나는 지점 => TODO 에러처리
     shipmentResponse = await shipmentsServices.shipmentDetail(shipment_pk)
     shipmentInfo = shipmentResponse.data.shipment
+    addressResponse = await addressServices.addressDetail(address_pk)
+    addressInfo = addressResponse.data
+    console.log(`$ 배송 주소조회 성공: ${addressResponse}`)
   } catch (error) {
     console.error(error)
     return <ErrorPage />
@@ -136,6 +152,66 @@ const OrderDetail = async (props: {
                     <span className="px-3">{getOrderStatusMeaning(order.status)}</span>
                   </div>
                 )}
+              </div>
+            </div>
+          </div>
+          <div className="box py-4">
+            <p className="text-xl font-bold py-3">배송지 정보</p>
+            <div className="w-full flex flex-wrap flex-col md:flex-row justify-between bg-white border border-solid border-gray-200 my-4">
+              <div className="item flex-1 bg-gray-200 text-center flex items-center justify-center">
+                <div className="inner p-1">
+                  <span className="font-bold">받는 사람</span>
+                </div>
+              </div>
+              <div className="item flex-[3] flex items-center">
+                <div className="inner p-1 w-full">
+                  {addressInfo?.recipient ? (
+                    <span className="font-bold">{addressInfo.recipient}</span>
+                  ) : (
+                    <span className="font-bold">유저이름</span>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="w-full flex flex-wrap flex-col md:flex-row justify-between bg-white border border-solid border-gray-200 my-4">
+              <div className="item flex-1 bg-gray-200 text-center">
+                <div className="inner p-1">
+                  <span className="font-bold">배송지 주소</span>
+                </div>
+              </div>
+              <div className="item flex-[3]">
+                <div className="inner p-1">
+                  <div className="item flex-[3]">
+                    <div className="inner p-1">
+                      {addressInfo?.address? (
+                        <span className="px-3" id="orderPk">{addressInfo.address}</span>
+                      ) : (
+                        <div className="item flex-[3]">
+                          <div className="inner p-1">
+                            <span className="px-3 text-gray-400">정보없음</span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="w-full flex flex-wrap flex-col md:flex-row justify-between bg-white border border-solid border-gray-200 my-4">
+              <div className="item flex-1 bg-gray-200 text-center">
+                <div className="inner p-1">
+                  <span className="font-bold">기본 배송지 여부</span>
+                </div>
+              </div>
+              <div className="item flex-[3]">
+                <div className="inner p-1">
+                  <span className="px-3" id="orderPk">기본 배송지</span>
+                  <div className="item flex-[3]">
+                    <div className="inner p-1">
+                      <span className="px-3 text-gray-400">정보 없음</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -289,7 +365,7 @@ const OrderDetail = async (props: {
               </div>
             </div>
           </div>
-          <p className="text-xl font-bold py-3">구매 목록 상세 정보</p>
+          <p className="text-xl font-bold py-3">구매 상품 상세 정보</p>
           {orderItems.map((item: OrderItem) => (
             <>
               <div className="w-full flex flex-col gap-6 max-w-4xl bg-white rounded-lg shadow-md p-6">
