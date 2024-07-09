@@ -62,7 +62,6 @@ const OrderDetail = async (props: {
     delivery_method: "",
     created_at: ""
   }
-
   const searchParams = {
     order_pk : order_pk,
     rowsPerPage: null,
@@ -83,8 +82,7 @@ const OrderDetail = async (props: {
     shipmentResponse = await shipmentsServices.shipmentDetail(shipment_pk)
     shipmentInfo = shipmentResponse.data.shipment
     addressResponse = await addressServices.addressDetail(address_pk)
-    addressInfo = addressResponse.data
-    console.log(`$ 배송 주소조회 성공: ${addressResponse}`)
+    addressInfo = addressResponse.data.address
   } catch (error) {
     console.error(error)
     return <ErrorPage />
@@ -158,18 +156,26 @@ const OrderDetail = async (props: {
           <div className="box py-4">
             <p className="text-xl font-bold py-3">배송지 정보</p>
             <div className="w-full flex flex-wrap flex-col md:flex-row justify-between bg-white border border-solid border-gray-200 my-4">
-              <div className="item flex-1 bg-gray-200 text-center flex items-center justify-center">
+              <div className="item flex-1 bg-gray-200 text-center">
                 <div className="inner p-1">
                   <span className="font-bold">받는 사람</span>
                 </div>
               </div>
-              <div className="item flex-[3] flex items-center">
-                <div className="inner p-1 w-full">
-                  {addressInfo?.recipient ? (
-                    <span className="font-bold">{addressInfo.recipient}</span>
-                  ) : (
-                    <span className="font-bold">유저이름</span>
-                  )}
+              <div className="item flex-[3]">
+                <div className="inner p-1">
+                  <div className="item flex-[3]">
+                    <div className="inner p-1">
+                      {addressInfo?.recipient ? (
+                        <span className="px-3" id="orderPk">{addressInfo.recipient}</span>
+                      ) : (
+                        <div className="item flex-[3]">
+                          <div className="inner p-1">
+                            <span className="px-3 text-gray-400">정보없음</span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -183,8 +189,8 @@ const OrderDetail = async (props: {
                 <div className="inner p-1">
                   <div className="item flex-[3]">
                     <div className="inner p-1">
-                      {addressInfo?.address? (
-                        <span className="px-3" id="orderPk">{addressInfo.address}</span>
+                      {addressInfo?.address && addressInfo?.address_detail ? (
+                        <span className="px-3" id="orderPk">{`${addressInfo.address} ${addressInfo.address_detail}`}</span>
                       ) : (
                         <div className="item flex-[3]">
                           <div className="inner p-1">
@@ -205,10 +211,17 @@ const OrderDetail = async (props: {
               </div>
               <div className="item flex-[3]">
                 <div className="inner p-1">
-                  <span className="px-3" id="orderPk">기본 배송지</span>
                   <div className="item flex-[3]">
                     <div className="inner p-1">
-                      <span className="px-3 text-gray-400">정보 없음</span>
+                      {addressInfo?.is_primary? (
+                        <span className="px-3" id="orderPk">기본 배송지</span>
+                      ) : (
+                        <div className="item flex-[3]">
+                          <div className="inner p-1">
+                            <span className="px-3 text-gray-400">기타 배송지</span>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
