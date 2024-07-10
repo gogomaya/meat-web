@@ -105,7 +105,7 @@ const MyPageShipmentsDetail = async (props: {
                   }}
                 >
                   <DeliveryStatusLink tracking_no={shipment.tracking_no} />
-                  <ShipNoCopyButton />
+                  <ShipNoCopyButton disabled={!shipment.tracking_no}/>
                 </div>
                 {/* 상세 정보 박스 */}
                 <div className="box py-4">

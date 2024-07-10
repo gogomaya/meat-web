@@ -3,7 +3,7 @@ import MainLayout from "@/app/main-layout"
 import {CartsDetailContent} from "./Carts"
 
 const Cart = async () => {
-  const {user} = await loginCheck(false)
+  const {user} = await loginCheck(true)
   return (
     <MainLayout user={user}>
       <div>

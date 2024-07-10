@@ -167,27 +167,27 @@ const AdminOrdersList = ({
                 {id: "order_status", label: "주문상태", sort: true},
                 // {id: "shipment_pk", label: "배송번호", sort: true},
                 {id: "created_at", label: "주문등록일자", sort: true},
-                {id: "shipment", label: "배송관리", sort: false},
+                {id: "shipment", label: "상세보기", sort: false},
                 {id: "delete", label: "주문취소", sort: false}
               ]}
             />
             <TableBody>
               {orders.map((order) => (
-                <TableRow key={order.order_pk} style={{cursor: "pointer"}}>
-                  <TableCell onClick={()=>handleOrderDetail(order.order_pk, order.user_pk ?? 0, order.address_pk, order.shipment_pk)}>{order.order_pk}</TableCell>
+                <TableRow key={order.order_pk}>
+                  <TableCell>{order.order_pk}</TableCell>
                   {/* <TableCell onClick={()=>handleOrderDetail(order.order_pk)} style={{cursor: "pointer"}}>{order.address_pk}</TableCell> */}
-                  <TableCell onClick={()=>handleOrderDetail(order.order_pk, order.user_pk ?? 0, order.address_pk, order.shipment_pk)}>{order.user_pk}</TableCell>
-                  <TableCell onClick={()=>handleOrderDetail(order.order_pk, order.user_pk ?? 0, order.address_pk, order.shipment_pk)}>{order.title}</TableCell>
-                  <TableCell onClick={()=>handleOrderDetail(order.order_pk, order.user_pk ?? 0, order.address_pk, order.shipment_pk)}>{order.total_quantity}</TableCell>
-                  <TableCell onClick={()=>handleOrderDetail(order.order_pk, order.user_pk ?? 0, order.address_pk, order.shipment_pk)}>{Number(order.total_discount_price).toLocaleString()}</TableCell>
-                  <TableCell onClick={()=>handleOrderDetail(order.order_pk, order.user_pk ?? 0, order.address_pk, order.shipment_pk)}>{order.user_pk ? "회원" : "비회원"}</TableCell>
-                  <TableCell onClick={()=>handleOrderDetail(order.order_pk, order.user_pk ?? 0, order.address_pk, order.shipment_pk)}>{getOrderStatusMeaning(order.status)}</TableCell>
+                  <TableCell>{order.user_pk}</TableCell>
+                  <TableCell>{order.title}</TableCell>
+                  <TableCell>{order.total_quantity}</TableCell>
+                  <TableCell>{Number(order.total_discount_price).toLocaleString()}</TableCell>
+                  <TableCell>{order.user_pk ? "회원" : "비회원"}</TableCell>
+                  <TableCell>{getOrderStatusMeaning(order.status)}</TableCell>
                   {/* <TableCell>{order.shipment_pk}</TableCell> */}
-                  <TableCell onClick={()=>handleOrderDetail(order.order_pk, order.user_pk ?? 0, order.address_pk, order.shipment_pk)}>{moment(order.created_at).format("YYYY-MM-DD")}</TableCell>
+                  <TableCell>{moment(order.created_at).format("YYYY-MM-DD")}</TableCell>
                   {/*  결제대기일 때 배송관리 불가 */}
                   {(order.status !== "pending") ? (
-                    <TableCell>
-                      <button onClick={() => handleShipmentDetail(order.shipment_pk)}>
+                    <TableCell style={{cursor: "pointer"}}>
+                      <button  onClick={()=>handleOrderDetail(order.order_pk, order.user_pk ?? 0, order.address_pk, order.shipment_pk)}>
                         <LocalShippingIcon />
                       </button>
                     </TableCell>
@@ -196,7 +196,7 @@ const AdminOrdersList = ({
                   )}
                   {/* 결제완료, 배송중, 배송완료일 때만 주문취소 가능 */}
                   {(order.status === "paid" || order.status === "shipping" || order.status === "delivered") ? (
-                    <TableCell>
+                    <TableCell style={{cursor: "pointer"}}>
                       <button onClick={()=>handleDelete(order.order_pk)}>
                         <CreditCardOffIcon />
                       </button>

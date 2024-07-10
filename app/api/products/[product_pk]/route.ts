@@ -136,3 +136,28 @@ export const PATCH = async (
     result: "productsUpdate"
   })
 }
+
+export const PUT = async (
+  request: NextRequest,
+  context: { params: { product_pk: number } }
+) => {
+  const {product_pk} = context.params
+  const formData = await request.formData()
+  const stockData = Object.fromEntries(formData.entries())
+  const {stock} = stockData
+
+  const mysql = await mysql2Pool()
+  const [result]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
+    UPDATE products
+    SET 
+      stock = ?
+    WHERE product_pk = ?
+  `, [stock, product_pk])
+
+  console.log("result : " + result)
+
+  return NextResponse.json({
+    result: "상품 재고가 성공적으로 수정되었습니다",
+    status: 200
+  })
+}

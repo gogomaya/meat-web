@@ -21,7 +21,7 @@ import RedirectErrorPage from "../redirect/redirect"
 const Order = async (props: {
   searchParams: { productPks: string; quantityList: string };
 }) => {
-  const {user} = await loginCheck(false)
+  const {user} = await loginCheck(true)
 
   // console.log("::::::::::: productPks :::::::::::")
   let productPks = props.searchParams.productPks

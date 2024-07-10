@@ -111,7 +111,8 @@ export const OrderDetailContent = ({
   console.log(`addressList[0].address_pk (기본 배송지 번호) : ${addressList[0].address_pk}`)
 
   const totalDiscount = order.discount
-  const totalShipFee = Number(order?.total_price) >= 150000 ? 0 : 5000
+  // const totalShipFee = Number(order?.total_price) >= 150000 ? 0 : 5000
+  const totalShipFee = 0
   // const totalShipFee = order.shipfee
   const finalPrice = Number(order?.total_price) - totalDiscount + totalShipFee
 
@@ -203,11 +204,42 @@ export const OrderDetailContent = ({
     setAddressPk(address_pk)
   }
 
-  // 전화번호 수정
+  // 이름 및 전화번호 수정
   const router = useRouter()
+  const [isNameEditing, setIsNameEditing] = useState(false)
+  const [isEditing, setIsEditing] = useState(false)
   const [name, setName] = useState(userInfo.name)
+  const [newName, setNewName] = useState(name)
   const [mobile, setMobile] = useState(userInfo.mobile)
+  const [newMobile, setNewMobile] = useState(mobile)
 
+  // 이름 수정
+  const handleNameEditClick = () => {
+    setIsNameEditing(true)
+  }
+
+  const handleNameSaveClick = () => {
+    setIsNameEditing(false)
+  }
+
+  const handleNameCancelClick = () => {
+    setIsNameEditing(false)
+    setNewName(name)
+  }
+
+
+  const handleEditClick = () => {
+    setIsEditing(true)
+  }
+
+  const handleSaveClick = () => {
+    setIsEditing(false)
+  }
+
+  const handleCancelClick = () => {
+    setIsEditing(false)
+    setNewMobile(mobile)
+  }
   const handelUpdateName = async () => {
     let updatedUser = {
       user_pk: userInfo.user_pk || 0,
@@ -215,14 +247,14 @@ export const OrderDetailContent = ({
       nickname: userInfo.nickname || "",
       mobile: userInfo.mobile || "",
       third_party: userInfo.third_party || "Naver",
-      name: name || ""
+      name: newName || ""
     }
 
     if (name === "") {
       const MySwal = withReactContent(Swal)
       MySwal.fire({
-        title: <p className="text-xl">회원정보 수정 확인</p>,
-        text: "이름을 반드시 입력해주세요.",
+        title: <p className="text-xl">주문자 정보 확인</p>,
+        text: "보내는 분 성함을 반드시 입력해주세요.",
         icon: "warning",
         confirmButtonText: "확인"
       })
@@ -232,24 +264,23 @@ export const OrderDetailContent = ({
     const userUpdateResult = await usersServices.usersUpdate(updatedUser)
 
     if (userUpdateResult.data.status === 200) {
-      const MySwal = withReactContent(Swal)
-      MySwal.fire({
-        title: <p className="text-xl">이름 수정 완료</p>,
-        text: "이름을 수정하였습니다.",
-        confirmButtonText: "확인"
-      })
+      // const MySwal = withReactContent(Swal)
+      // MySwal.fire({
+      //   title: <p className="text-xl">이름 수정 완료</p>,
+      //   text: "이름을 수정하였습니다.",
+      //   confirmButtonText: "확인"
+      // })
       // 새로고침
       router.refresh()
     }
   }
-
 
   const handelUpdateMobile = async () => {
     let updatedUser = {
       user_pk: userInfo.user_pk || 0,
       id: userInfo.id || "",
       nickname: userInfo.nickname || "",
-      mobile: mobile || "",
+      mobile: newMobile || "",
       third_party: userInfo.third_party || "Naver",
       name: userInfo.name || ""
     }
@@ -268,12 +299,12 @@ export const OrderDetailContent = ({
     const userUpdateResult = await usersServices.usersUpdate(updatedUser)
 
     if (userUpdateResult.data.status === 200) {
-      const MySwal = withReactContent(Swal)
-      MySwal.fire({
-        title: <p className="text-xl">전화번호정보 수정 완료</p>,
-        text: "전화번호 수정을 완료하였습니다.",
-        confirmButtonText: "확인"
-      })
+      // const MySwal = withReactContent(Swal)
+      // MySwal.fire({
+      //   title: <p className="text-xl">전화번호정보 수정 완료</p>,
+      //   text: "전화번호 수정을 완료하였습니다.",
+      //   confirmButtonText: "확인"
+      // })
       // 새로고침
       router.refresh()
     }
@@ -288,28 +319,52 @@ export const OrderDetailContent = ({
       </div>
       <div className="flex flex-col md:flex-row items-start md:items-start mb-8 gap-6">
         <div className="w-full md:w-3/4 pr-4 bg-white p-3">
-          <div className="text-2xl font-semibold mb-4">주문자 정보</div>
+          <div className="text-2xl font-semibold mb-4">주문자 정보 <span className="px-4 text-red-700 text-sm">수정 시 회원정보도 동일하게 업데이트 됩니다.</span></div>
           <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
           <div className="space-y-4">
             <div>
               <div className="flex items-center justify-between py-2 gap-4">
                 <div className="w-1/4 font-medium">보내는 분</div>
                 <div className="w-3/4">
-                  <input type="text"
-                    id="name"
-                    value={ name }
-                    onChange={ (e) => setName(e.target.value) }
-                    className="w-full p-2 border border-gray-300 rounded"
-                    placeholder="(이름을 반드시 입력해주세요.)"
-                  />
+                  {isNameEditing ? (
+                    <input
+                      type="text"
+                      id="name"
+                      value={newName}
+                      onChange={(e) => setNewName(e.target.value)}
+                      placeholder="(보내는 분 성함을 입력해주세요.)"
+                      className="w-full p-2 border border-gray-300 rounded"
+                    />
+                  ) : (
+                    <span>{newName}</span>
+                  )}
                 </div>
-                <button
-                  type="button"
-                  onClick={handelUpdateName}
-                  className="text-white bg-[#A51C30] hover:bg-[#8B0A1D] font-semibold rounded-md text-sm px-4 py-2.5 w-1/6"
-                >
-                  <span className="text-lg font-normal">수정</span>
-                </button>
+                {isNameEditing ? (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => { handelUpdateName(); handleNameSaveClick() }}
+                      className="text-white bg-[#A51C30] hover:bg-[#8B0A1D] font-semibold rounded-md text-sm px-4 py-2.5 w-1/6"
+                    >
+                      <span className="text-lg font-normal">저장</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleNameCancelClick}
+                      className="text-gray-700 bg-gray-200 hover:bg-gray-300 font-semibold rounded-md text-sm px-4 py-2.5 w-1/6"
+                    >
+                      <span className="text-lg font-normal">취소</span>
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={handleNameEditClick}
+                    className="text-white bg-[#A51C30] hover:bg-[#8B0A1D] font-semibold rounded-md text-sm px-4 py-2.5 w-1/6"
+                  >
+                    <span className="text-lg font-normal">수정</span>
+                  </button>
+                )}
               </div>
               <Divider style={{backgroundColor: "#ddd", height: "0.1px"}} />
             </div>
@@ -317,21 +372,45 @@ export const OrderDetailContent = ({
               <div className="flex items-center justify-between py-2 gap-4">
                 <div className="w-1/4 font-medium">휴대폰</div>
                 <div className="w-3/4">
-                  <input
-                    type="text"
-                    id="mobile"
-                    value={mobile}
-                    onChange={(e) => setMobile(e.target.value)}
-                    className="w-full p-2 border border-gray-300 rounded"
-                  />
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      id="mobile"
+                      value={newMobile}
+                      onChange={(e) => setNewMobile(e.target.value)}
+                      placeholder="(전화번호를 기호(-) 없이 바르게 입력해주세요.)"
+                      className="w-full p-2 border border-gray-300 rounded"
+                    />
+                  ) : (
+                    <span>{newMobile}</span>
+                  )}
                 </div>
-                <button
-                  type="button"
-                  onClick={handelUpdateMobile}
-                  className="text-white bg-[#A51C30] hover:bg-[#8B0A1D] font-semibold rounded-md text-sm px-4 py-2.5 w-1/6"
-                >
-                  <span className="text-lg font-normal">수정</span>
-                </button>
+                {isEditing ? (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => { handelUpdateMobile(); handleSaveClick() }}
+                      className="text-white bg-[#A51C30] hover:bg-[#8B0A1D] font-semibold rounded-md text-sm px-4 py-2.5 w-1/6"
+                    >
+                      <span className="text-lg font-normal">저장</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleCancelClick}
+                      className="text-gray-700 bg-gray-200 hover:bg-gray-300 font-semibold rounded-md text-sm px-4 py-2.5 w-1/6"
+                    >
+                      <span className="text-lg font-normal">취소</span>
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={handleEditClick}
+                    className="text-white bg-[#A51C30] hover:bg-[#8B0A1D] font-semibold rounded-md text-sm px-4 py-2.5 w-1/6"
+                  >
+                    <span className="text-lg font-normal">수정</span>
+                  </button>
+                )}
               </div>
               <Divider style={{backgroundColor: "#ddd", height: "0.1px"}} />
             </div>
@@ -404,7 +483,6 @@ export const OrderDetailContent = ({
               ))
             }
           </div>
-
           <div className="py-8">
             <div className="flex">
               <div className="w-full">
@@ -517,8 +595,6 @@ export const OrderDetailContent = ({
     </div>
   )
 }
-
-
 
 
 /**
