@@ -81,7 +81,7 @@ export const ordersServices = {
 
       const orderPkResponse = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/orders/max`, {})
       const data = await orderPkResponse.json()
-      const order_pk = data.order_pk
+      const order_pk = await data.order_pk
 
       console.log(`::::::::::::::::: 주문 항목 등록 - order_pk : ${order_pk} :::::::::::::::::`)
 
