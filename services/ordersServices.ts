@@ -79,8 +79,9 @@ export const ordersServices = {
         body: formData
       })
 
-      const orderPkResponse = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/orders/max`, {})
-      const data = await orderPkResponse.json()
+      // const orderPkResponse = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/orders/max`, {})
+      // const data = await orderPkResponse.json()
+      const data = await response.json()
       const order_pk = await data.order_pk
 
       console.log(`::::::::::::::::: 주문 항목 등록 - order_pk : ${order_pk} :::::::::::::::::`)
