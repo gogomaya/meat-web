@@ -219,10 +219,17 @@ export const orderSuccess = async (searchParams: OrderParams): Promise<PaySucces
   console.log(`order_id  : ${order_id}`)
   console.log(`amount  : ${amount}`)
 
+  // const widgetSecretKey = "test_gsk_docs_OaPz8L5KdmQXkzRz3y47BMw6";   // 👩‍💻 개발
+  const widgetSecretKey = "live_gsk_4yKeq5bgrpWK5Y4ga16LVGX0lzW6"      // 💻 운영
+  const encryptedSecretKey =
+    "Basic " + Buffer.from(widgetSecretKey + ":").toString("base64")
+
   fetch("https://api.tosspayments.com/v1/payments/confirm", {
     method: "POST",
     headers: {
-      Authorization: "Basic dGVzdF9nc2tfZG9jc19PYVB6OEw1S2RtUVhrelJ6M3k0N0JNdzY6",
+      // Authorization: "Basic dGVzdF9nc2tfZG9jc19PYVB6OEw1S2RtUVhrelJ6M3k0N0JNdzY6", // 👩‍💻 개발 (테스트)
+      Authorization: encryptedSecretKey,                                              // 💻 운영
+      // Authorization: "Basic bGl2ZV9nc2tfNHlLZXE1YmdycFdLNVk0Z2ExNkxWR1gwbHpXNjo=",
       "Content-Type": "application/json"
     },
     body: JSON.stringify({

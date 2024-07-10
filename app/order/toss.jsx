@@ -1,14 +1,18 @@
 "use client"
 import React, {useEffect, useRef, useState} from "react"
 import {loadPaymentWidget, ANONYMOUS} from "@tosspayments/payment-widget-sdk"
-import {nanoid} from "nanoid"
 import Swal from "sweetalert2"
 import withReactContent from "sweetalert2-react-content"
+import {v4 as uuidv4} from "uuid"
 
 // 구매자의 고유 아이디를 불러와서 customerKey로 설정하세요.
 // 이메일・전화번호와 같이 유추가 가능한 값은 안전하지 않습니다.
-const widgetClientKey = "test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm"
-const customerKey = "N2ZORlnbt0pQTNygmDgHw"
+
+// ⚡토스 - 결제위젯 연동 키 - 클라이언트 키
+// const widgetClientKey = "test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm" // 👩‍💻 개발
+const widgetClientKey = "live_gck_0RnYX2w532w57XvePjNgVNeyqApQ"      // 💻 운영
+const customerKey = uuidv4()
+
 // const paymentWidget = PaymentWidget(widgetClientKey, PaymentWidget.ANONYMOUS) // 비회원 결제
 
 export function CheckoutPage({pay, address_pk, guest}) {

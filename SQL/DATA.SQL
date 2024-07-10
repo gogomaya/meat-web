@@ -342,3 +342,25 @@ INSERT INTO `cancellations` (`order_pk`, `type`, `status`, `description`, `is_co
 (8, 'cancel', 'pending', '고객 변심', 0, 0, NULL, NULL, NULL, '2024-06-08 17:25:00', NULL),
 (9, 'return', 'pending', '사이즈 문제로 인한 반품', 0, 0, NULL, NULL, NULL, '2024-06-09 12:40:00', NULL),
 (10, 'cancel', 'complete', '관리자에 의해 취소됨', 1, 0, NULL, NULL, NULL, '2024-06-10 14:50:00', '2024-06-11 10:20:00');
+
+
+
+---
+SELECT *
+FROM products
+;
+
+UPDATE products
+   SET discounted_price = 100
+      ,price = 100
+;
+
+
+
+
+
+
+
+
+
+
