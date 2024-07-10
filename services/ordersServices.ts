@@ -81,8 +81,8 @@ export const ordersServices = {
 
       // const orderPkResponse = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/orders/max`, {})
       // const data = await orderPkResponse.json()
-      const data = await response.json()
-      const order_pk = await data.order_pk
+      const result = await commonServices.responseJson(response)
+      const order_pk = await result.data.order_pk
 
       console.log(`::::::::::::::::: 주문 항목 등록 - order_pk : ${order_pk} :::::::::::::::::`)
 
@@ -95,8 +95,7 @@ export const ordersServices = {
         console.log(`itemResult : ${itemResult}`)
 
       }
-
-      return await commonServices.responseJson(response)
+      return result
     } catch (error) {
       console.log("주문서 등록 프로세스 중 에러 : orderCreate")
       return {error}
