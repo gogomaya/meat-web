@@ -81,5 +81,21 @@ export const productsServices = {
     } catch (error) {
       return {error}
     }
+  },
+  productStockUpdate: async (product: Product): Promise<ResponseApi> => {
+    const product_pk = product.product_pk
+    const stock = product.stock
+
+    // 재고 수량 추가
+    const formData = new FormData()
+    formData.append("stock", String(stock))
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/products/${product_pk}`, {
+      method: "PUT",
+      body: formData
+    })
+
+    const result = await commonServices.responseJson(response)
+    return result
   }
 }
