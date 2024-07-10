@@ -248,12 +248,12 @@ export const FaqSection: React.FC = () => {
     {
       category: "product",
       question: "제품의 재고 상황은 어떻게 확인할 수 있나요?",
-      answer: "제품의 재고 상황은 각 제품 페이지에서 확인하실 수 있습니다."
+      answer: "제품의 재고 상황은 각 제품 상세 페이지에서 확인하실 수 있습니다."
     },
     {
       category: "product",
       question: "상품의 세부 정보 및 사양은 어디에서 확인할 수 있나요?",
-      answer: "상품의 세부 정보와 사양은 각 제품 페이지에서 확인하실 수 있습니다."
+      answer: "상품의 세부 정보와 사양은 각 제품 상세 페이지에서 확인하실 수 있습니다."
     },
     {
       category: "product",

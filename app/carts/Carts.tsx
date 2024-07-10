@@ -73,9 +73,14 @@ export const CartsDetailContent = ({user}: { user: User }) => {
 
   // [주문하기] 클릭
   const handleOrderClick = async () => {
+    const availableProducts = cartProducts.filter((item) => !item.product.is_sold_out)
+    if (availableProducts.length === 0) {
+      alert("주문할 수 있는 상품이 없습니다. 장바구니 수량을 다시 확인해주세요.")
+      return
+    }
     // product_pk와 quantity 추출
-    const productPks = cartProducts.map((cartProduct) => cartProduct.product.product_pk).join(",")
-    const quantityList = cartProducts.map((cartProduct) => cartProduct.quantity).join(",")
+    const productPks = availableProducts.map((cartProduct) => cartProduct.product.product_pk).join(",")
+    const quantityList = availableProducts.map((cartProduct) => cartProduct.quantity).join(",")
 
     // 회원
     if( user.user_pk ) {
@@ -298,6 +303,7 @@ export const CartsDetailContent = ({user}: { user: User }) => {
                               onBlur={() => {
                                 localStorage.setItem("cartProducts", JSON.stringify(cartProducts))
                               }}
+                              disabled={cartProduct.product.is_sold_out} // 품절이면 체크박스 비활성화
                             />
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
@@ -508,7 +514,7 @@ export const CartsDetailContent = ({user}: { user: User }) => {
             <Button
               variant="contained"
               className="btn w-full h-16 text-2xl"
-              disabled={cartProducts.length === 0}
+              disabled={cartProducts.length === 0 || cartProducts.every((item) => item.product.is_sold_out)} // 장바구니에 상품이 없거나 모든 상품이 품절인 경우
               onClick={handleOrderClick}
               style={{backgroundColor: "#A51C30"}}
             >
