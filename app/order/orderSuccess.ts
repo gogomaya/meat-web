@@ -159,7 +159,7 @@ export const orderSuccess = async (searchParams: OrderParams): Promise<PaySucces
       }
       // 재고 수량이 주문량보다 많을 시 주문성공 한번 더 막기
       if (product.stock < quantity) {
-        throw new Error(`해당 수량만큼 재고가 없습니다. 상품의 재고를 다시 확인해주세요. ${product_pk}.`)
+        throw new Error(`해당 수량만큼 재고가 없습니다. 상품 수량을 다시 확인해주세요. ${product_pk}.`)
       }
       const updatedProduct = {
         ...product,
@@ -168,8 +168,6 @@ export const orderSuccess = async (searchParams: OrderParams): Promise<PaySucces
       // 재고 업데이트 API 호출
       const uuid = uuidv4()
       const productsUpdateResult = await productsServices.productStockUpdate(updatedProduct)
-      console.log("❤❤❤❤❤productsUpdateResult❤❤❤❤❤❤❤")
-      console.log(productsUpdateResult)
 
       const responseStatus = productsUpdateResult.data.status
       if (responseStatus === 200) {
