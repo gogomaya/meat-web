@@ -450,7 +450,13 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
                 </strong>
               )}
               {product.per100g && (
-                <div>100g당 { product.per100g }</div>
+                <div>
+                  100g당 {
+                    typeof product.per100g === "number"
+                      ? Number(product.per100g).toLocaleString()
+                      : product.per100g
+                  }
+                </div>
               )}
             </div>
             <div><p>배송사: 로젠택배</p></div>

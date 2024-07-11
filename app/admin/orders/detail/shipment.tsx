@@ -111,7 +111,7 @@ const UpdateTrackingNo: React.FC<UpdateTrackingNoProps> = ({address_pk, shipment
             onClick={() => { handleShipmentTrackingNoUpdate(); handleSaveClick() }}
             className="text-white bg-[#A51C30] hover:bg-[#8B0A1D] font-semibold rounded-md text-sm px-4 py-2.5 w-1/6"
           >
-            <span className="text-lg font-normal">저장</span>
+            <span className="text-lg font-normal">수정</span>
           </button>
           <button
             type="button"
@@ -127,7 +127,7 @@ const UpdateTrackingNo: React.FC<UpdateTrackingNoProps> = ({address_pk, shipment
           onClick={handleEditClick}
           className="text-white bg-[#A51C30] hover:bg-[#8B0A1D] font-semibold rounded-md text-sm px-4 py-2.5 w-1/6"
         >
-          <span className="text-lg font-normal">수정</span>
+          <span className="text-lg font-normal">입력</span>
         </button>
       )}
     </div>
