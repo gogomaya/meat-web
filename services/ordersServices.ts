@@ -80,6 +80,7 @@ export const ordersServices = {
       })
 
       // const orderPkResponse = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/orders/max`, {})
+      // 캐싱되는 시간의 MAX값 가져와서 오류난 듯
       // const data = await orderPkResponse.json()
       const result = await commonServices.responseJson(response)
       const order_pk = await result.data.order_pk
