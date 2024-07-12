@@ -384,7 +384,7 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
     setSelectedOption(event.target.value)
   }
 
-  const gradeOptions = ["1++(no.9)", "1++(no9) 특상"]
+  const gradeOptions = [" ", "1++(no.9)", "1++(no9) 특상"]
 
   return (
     <div className="container mx-auto py-8">

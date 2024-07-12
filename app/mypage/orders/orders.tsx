@@ -35,7 +35,7 @@ export const CancelButton: React.FC<OrderProps> = ({order}) => {
           <h3 className="text-2xl font-bold mb-6">정말로 주문을 취소하시겠습니까?</h3>
           <p className="text-base font-normal">
             -배송 전, 관리자 승인 후 환불 처리가 진행됩니다. <br />
-            -배송 후, 고객센터 문의 후 환불 절차가 진행될 수 있습니다. <br />
+            -배송 후, 신선식품 특성상 환불이 불가합니다. <br />
           </p>
           <p className="text-lg">
             문의) &nbsp;
@@ -57,7 +57,6 @@ export const CancelButton: React.FC<OrderProps> = ({order}) => {
         const cancelResult = await orderCancel(params)
         console.log(`cancelResult : ${cancelResult}`)
         console.dir(cancelResult)
-
 
 
 
