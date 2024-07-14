@@ -88,15 +88,15 @@ const OrderDetail = async (props: {
     return <ErrorPage />
   }
 
+  const formatNumber = (number: number) => {
+    const formattedNumber = number.toLocaleString()
+    return formattedNumber
+  }
+
   function formatMobileNumber(mobile: string) {
     if (!mobile) return ""
     // 01012345678 -> 010-1234-5678 형식으로 변환
     return mobile.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3")
-  }
-
-  const formatNumber = (number: number) => {
-    const formattedNumber = number.toLocaleString()
-    return formattedNumber
   }
 
   return (
