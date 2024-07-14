@@ -29,7 +29,8 @@ const CancellationDetail = async (props: {
     is_confirmed: false,
     is_refund: false,
     created_at: "",
-    ordered_at: ""
+    ordered_at: "",
+    user_pk: ""
   }
   try {
     cancellationResponse = await cancellationsServices.cancellationDetail(cancellation_pk)

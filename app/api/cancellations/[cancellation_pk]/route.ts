@@ -40,8 +40,6 @@ export const GET = async (
 }
 
 
-
-
 export const PUT = async (
   request: NextRequest,
   context: { params: { cancellation_pk: number } }
@@ -61,24 +59,12 @@ export const PUT = async (
     const bank_name = formData.get("bank_name")
     const depositor = formData.get("depositor")
 
-    console.log(`is_confirmed : ${is_confirmed}`)
-    console.log(`is_refund : ${is_refund}`)
-
-
     const mysql = await mysql2Pool()
 
     await mysql.execute(
       `
         UPDATE cancellations
-        SET order_pk = ?
-          , type = ?
-          , status = ?
-          , description = ?
-          , is_confirmed = ?
-          , is_refund = ?
-          , account_number = ?
-          , bank_name = ?
-          , depositor = ?
+        SET order_pk = ?, type = ?, status = ?, description = ?, is_confirmed = ?, is_refund = ?, account_number = ?, bank_name = ?, depositor = ?
         WHERE cancellation_pk = ?
       `,
       [

@@ -24,7 +24,6 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping"
 import CreditCardOffIcon from "@mui/icons-material/CreditCardOff"
 import {shipmentsServices} from "@/services/shipmentsServices"
 import {Shipment} from "@/types/shipmentsTypes"
-import {Address} from "@/types/addressTypes"
 
 const AdminOrdersList = ({
   orders,
@@ -48,7 +47,6 @@ const AdminOrdersList = ({
       "(비회원)전화번호": order.guest_mobile,
       "주문상태": getOrderStatusMeaning(order.status),
       "주문등록일자": moment(order.created_at).format("YYYY-MM-DD")
-      // TODO: 배송정보, 구매자 정보 info 넣기
     }))
 
     // 엑셀 시트 생성
@@ -59,7 +57,6 @@ const AdminOrdersList = ({
     // 엑셀 파일 다운로드
     XLSX.writeFile(wb, "주문목록.xlsx")
   }
-
   const customButtonStyle = {
     backgroundColor: "blue",
     color: "white",
@@ -159,19 +156,15 @@ const AdminOrdersList = ({
             <EnhancedTabledHead
               searchParams={searchParams}
               headCells={[
-                // {id: "shipment_start", label: "배송상태", sort: true},
                 {id: "order_pk", label: "주문번호", sort: true},
-                // {id: "address_pk", label: "주소지", sort: true},
                 {id: "user_pk", label: "주문자 회원번호", sort: true},
                 {id: "title", label: "주문내역", sort: true},
                 {id: "total_quantity", label: "총 수량", sort: true},
                 {id: "total_discount_price", label: "총가격", sort: true},
                 {id: "guest_mobile", label: "회원여부", sort: true},
                 {id: "order_status", label: "주문상태", sort: true},
-                // {id: "shipment_pk", label: "배송번호", sort: true},
                 {id: "created_at", label: "주문등록일자", sort: true},
                 {id: "shipment", label: "상세보기", sort: false}
-                // {id: "delete", label: "주문취소", sort: false}
               ]}
             />
             <TableBody>
