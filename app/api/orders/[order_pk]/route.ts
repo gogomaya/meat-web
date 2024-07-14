@@ -8,7 +8,7 @@ export const GET = async (
   context: {params: {order_pk: number}}
 ) => {
   const {order_pk} = context.params
-  // console.log(`order_pk : ${order_pk}`)
+  console.log(`order_pk : ${order_pk}`)
 
   const mysql = await mysql2Pool()
   const [order]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`

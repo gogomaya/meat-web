@@ -11,6 +11,11 @@ import {OrderItem, OrderItemSearchParams} from "@/types/orderItemsTypes"
 import {User} from "@/types/usersTypes"
 import Swal from "sweetalert2"
 import withReactContent from "sweetalert2-react-content"
+import {productsServices} from "@/services/productsServices"
+import {ordersServices} from "@/services/ordersServices"
+import {orderItemsService} from "@/services/orderItemsServices"
+import {ResponseApi} from "@/types/commonTypes"
+import {Order} from "@/types/ordersTypes"
 
 export const CartsDetailContent = ({user}: { user: User }) => {
   const router = useRouter()
@@ -68,11 +73,10 @@ export const CartsDetailContent = ({user}: { user: User }) => {
   if (cartProducts === null) {
     return <Skeleton variant="rectangular" animation="wave" width="100%" height={300} />
   }
-  // 전체 상품 금액, 할인 금액, 배송비 계산
-  // const shippingFee = 5000
 
   // [주문하기] 클릭
   const handleOrderClick = async () => {
+    // const availableProducts = cartProducts.filter((item) => !item.product.is_sold_out)
     const availableProducts = cartProducts.filter((item) => !item.product.is_sold_out)
     if (availableProducts.length === 0) {
       alert("주문할 수 있는 상품이 없습니다. 장바구니 수량을 다시 확인해주세요.")
@@ -143,11 +147,20 @@ export const CartsDetailContent = ({user}: { user: User }) => {
 
   }
 
+  // 상품재고 가져오기
+
+  const fetchProductStock = async (product_pk: number) => {
+    // 상품 재고 조회 API 호출
+    const productResult = await productsServices.productsDetail(product_pk)
+    const product = productResult.data.product
+    alert(`재고수량: ${product.stock} 입니다. 상품 물량을 다시 확인해주세요.`)
+    // return product.stock
+  }
+
   // [선택한상품만 결제하기] 클릭
   const handleCheckedPayClick = async () => {
     const cartProducts = JSON.parse(localStorage.getItem("cartProducts") || "[]")
     const checkedProducts = cartProducts.filter((product: CartProduct ) => product.checked)
-    // console.log(checkedProducts)
 
     // product_pk와 quantity 추출
     const productPks = checkedProducts.map((cartProduct : CartProduct) => cartProduct.product.product_pk).join(",")
@@ -338,13 +351,15 @@ export const CartsDetailContent = ({user}: { user: User }) => {
                             <div className="flex items-center text-center">
                               <button
                                 type="button"
-                                className="px-2 py-1 border border-gray-300 rounded-l-md"
+                                className={`px-2 py-1 border border-gray-300 rounded-l-md ${cartProduct.quantity <= 1 ? "opacity-50 cursor-not-allowed" : ""}`}
                                 onClick={() => {
                                   const newQuantity = cartProduct.quantity - 1
-                                  cartProductsForm.setValue(`cartProducts.${index}.quantity`, newQuantity < 1 ? 1 : newQuantity)
+                                  if (newQuantity < 1) return
+                                  cartProductsForm.setValue(`cartProducts.${index}.quantity`, newQuantity)
                                   localStorage.setItem("cartProducts", JSON.stringify(cartProducts))
                                   calc()
                                 }}
+                                disabled={cartProduct.quantity <= 1}
                               >
                                 -
                               </button>
@@ -355,23 +370,30 @@ export const CartsDetailContent = ({user}: { user: User }) => {
                                 className="w-16 p-1 border border-gray-300 text-center"
                                 min="1"
                                 onBlur={() => {
-                                  cartProductsForm.setValue(`cartProducts.${index}.quantity`, cartProduct.quantity < 1 ? 1 : Number(cartProduct.quantity))
+                                  const newQuantity = cartProduct.quantity < 1 ? 1 : Number(cartProduct.quantity)
+                                  cartProductsForm.setValue(`cartProducts.${index}.quantity`, newQuantity)
                                   localStorage.setItem("cartProducts", JSON.stringify(cartProducts))
                                   calc()
                                 }}
                               />
                               <button
                                 type="button"
-                                className="px-2 py-1 border border-gray-300 rounded-r-md"
+                                className={`px-2 py-1 border border-gray-300 rounded-r-md ${Number(cartProduct.quantity) >= Number(cartProduct.product.stock) ? "opacity-50 cursor-not-allowed" : ""}`}
                                 onClick={() => {
                                   const newQuantity = cartProduct.quantity + 1
+                                  if (newQuantity > Number(cartProduct.product.stock)) return
                                   cartProductsForm.setValue(`cartProducts.${index}.quantity`, newQuantity)
                                   localStorage.setItem("cartProducts", JSON.stringify(cartProducts))
                                   calc()
                                 }}
+                                disabled={Number(cartProduct.quantity) >= Number(cartProduct.product.stock)}
                               >
                                 +
                               </button>
+                              <button onClick={() => fetchProductStock(cartProduct.product.product_pk)}>재고확인</button>
+                              {/* {Number(cartProduct.quantity) >= Number(cartProduct.product.stock) && (
+                                <span className="text-red-500 ml-2">재고 수량: {cartProduct.product.stock}</span>
+                              )} */}
                             </div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">

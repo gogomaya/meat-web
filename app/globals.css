@@ -18,6 +18,9 @@ html, body {
   position: relative;
   display: inline-block;
 }
+.highlight-red-background {
+  background-color: red;
+}
 
 .highlight-underline::after,
 .highlight-underline.hovered::after {

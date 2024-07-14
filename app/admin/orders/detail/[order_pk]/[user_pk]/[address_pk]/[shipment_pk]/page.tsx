@@ -92,6 +92,11 @@ const OrderDetail = async (props: {
     const formattedNumber = number.toLocaleString()
     return formattedNumber
   }
+  function formatMobileNumber(mobile: string) {
+    if (!mobile) return ""
+    // 01012345678 -> 010-1234-5678 형식으로 변환
+    return mobile.replace(/(\d{3})(\d{4})(\d{4})/, "$1-$2-$3")
+  }
 
   return (
     <AdminLayout>
@@ -206,6 +211,30 @@ const OrderDetail = async (props: {
             <div className="w-full flex flex-wrap flex-col md:flex-row justify-between bg-white border border-solid border-gray-200 my-4">
               <div className="item flex-1 bg-gray-200 text-center">
                 <div className="inner p-1">
+                  <span className="font-bold">수취인 전화번호</span>
+                </div>
+              </div>
+              <div className="item flex-[3]">
+                <div className="inner p-1">
+                  <div className="item flex-[3]">
+                    <div className="inner p-1">
+                      {addressInfo?.mobile && addressInfo?.mobile ? (
+                        <span className="px-3" id="orderPk">{formatMobileNumber(addressInfo.mobile)}</span>
+                      ) : (
+                        <div className="item flex-[3]">
+                          <div className="inner p-1">
+                            <span className="px-3 text-gray-400">정보없음</span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="w-full flex flex-wrap flex-col md:flex-row justify-between bg-white border border-solid border-gray-200 my-4">
+              <div className="item flex-1 bg-gray-200 text-center">
+                <div className="inner p-1">
                   <span className="font-bold">기본 배송지 여부</span>
                 </div>
               </div>
@@ -261,7 +290,7 @@ const OrderDetail = async (props: {
               {userInfo?.user?.mobile ? (
                 <div className="item flex-[3]">
                   <div className="inner p-1">
-                    <span className="px-3">{userInfo.user.mobile}</span>
+                    <span className="px-3">{formatMobileNumber(userInfo.user.mobile)}</span>
                   </div>
                 </div>
               ) : (

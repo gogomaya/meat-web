@@ -1,6 +1,6 @@
 "use client"
 import {SetStateAction, useEffect, useState} from "react"
-import {Divider, Link, Typography} from "@mui/material"
+import {Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Link, Modal, Typography} from "@mui/material"
 import Image from "next/image"
 import DaumPostcode from "react-daum-postcode"
 import _ from "lodash"
@@ -11,10 +11,11 @@ import {useRouter} from "next/navigation"
 import {Order, OrderParams, OrderSearchParams} from "@/types/ordersTypes"
 import {OrderItem} from "@/types/orderItemsTypes"
 import {User} from "@/types/usersTypes"
-import {Address} from "@/types/addressTypes"
+import {Address, AddressSearchParams} from "@/types/addressTypes"
 import withReactContent from "sweetalert2-react-content"
 import Swal from "sweetalert2"
 import {usersServices} from "@/services/usersServices"
+import MyPageAddress from "../mypage/address/page"
 
 // 배송지
 export const Post = (props: { setcompany: (arg0: any) => void; company: any }) => {
@@ -310,6 +311,17 @@ export const OrderDetailContent = ({
     }
   }
 
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+
+  const handleOpenDialog = (e: { preventDefault: () => void }) => {
+    e.preventDefault()
+    setIsDialogOpen(true)
+  }
+
+  const handleCloseDialog = () => {
+    setIsDialogOpen(false)
+  }
+
   return (
     <div className="container mx-auto p-8">
       <div className="p-3 w-full mb-5">
@@ -432,7 +444,43 @@ export const OrderDetailContent = ({
       </div>
       <div className="flex flex-col md:flex-row items-start md:items-start mb-8 gap-6">
         <div className="w-full md:w-3/4 pr-4 p-3">
-          <div className="text-2xl font-semibold mb-4">배송 정보</div>
+          <div className="flex items-center justify-between">
+            <div className="text-2xl font-semibold mb-4">배송 정보</div>
+            <div className="flex flex-col items-center gap-10 my-2 mx-4 md:mx-0">
+              <div className="w-full flex gap-6 max-w-4xl">
+                {/* <a
+                  href="/mypage/address/create"
+                  onClick={handleOpenDialog}
+                  className="ml-auto w-full flex justify-center items-center gap-2 px-4 py-2 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200"
+                >
+                  <svg className="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 7.757v8.486M7.757 12h8.486M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                  </svg>
+                  <span>새 배송지 등록</span>
+                </a> */}
+                <Link
+                  href={"/mypage/address/create"}
+                  className="no-underline ml-auto w-full flex justify-center items-center gap-2 px-4 py-2 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200"
+                >
+                  <svg className="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 7.757v8.486M7.757 12h8.486M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                  </svg>
+                  <span>새 배송지 등록</span>
+                </Link>
+              </div>
+              <Dialog open={isDialogOpen} onClose={handleCloseDialog}>
+                <DialogTitle>새 배송지 추가</DialogTitle>
+                <DialogContent>
+                  <div>배송지 추가</div>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleCloseDialog} color="primary">
+                    닫기
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </div>
+          </div>
           <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
           <div className="space-y-4">
             <div>
@@ -825,8 +873,8 @@ export const OrderSuccessContent = ({
           <div className="space-y-4">
             <div>
               <div className="flex items-center justify-between py-2">
-                <div className="w-1/4 font-medium">보내는 분</div>
-                <div className="w-3/4">{userInfo.name}</div>
+                <div className="w-1/4 font-medium">성명 또는 닉네임</div>
+                <div className="w-3/4">{userInfo.name || userInfo.nickname}</div>
               </div>
               <Divider style={{backgroundColor: "#ddd", height: "0.1px"}} />
             </div>

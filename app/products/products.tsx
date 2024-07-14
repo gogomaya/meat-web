@@ -1029,7 +1029,7 @@ export const NavDetail = () => {
             handleMouseHover()
             handleMouseClick("ship")
           }}
-          className={`p-2 flex-1 bg-white text-center ${isHovered ? "highlight-underline" : ""} ${isClicked === "ship" ? "text-red-500" : ""}`}
+          className={`p-2 flex-1 bg-white text-center ${isHovered ? "highlight-underline" : ""} ${isClicked === "ship" ? "backgroundColor: red" : ""}`}
           style={{
             borderTop: "3px solid #271A11",
             borderBottom: "3px solid #271A11",

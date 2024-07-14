@@ -128,69 +128,6 @@ export const orderSuccess = async (searchParams: OrderParams): Promise<PaySucces
     console.error("[결제완료] 주문 업데이트 중 오류 발생:", error)
   }
 
-  // TODO: 재고 업데이트 (결제) - 여기 결제 성공됐을 때 맞음?
-  // order_pk 로 order_items 리스트 조회
-  // ➡ 반복 (order_item - product_pk, quantity)
-  // ➡ 상품 재고 (quantity)만큼 감소
-  try {
-    const searchParams = {
-      order_pk : order_pk,
-      rowsPerPage: null,
-      page: null,
-      orderColumn: "order_pk",
-      orderDirection: "desc",
-      query: ""
-    } as OrderItemSearchParams
-    // order_pk로 order_items 리스트 조회
-    const orderItemsResult: ResponseApi = await orderItemsService.orderItemsRead(searchParams)
-    const orderItems = orderItemsResult.data.orderItems
-
-    if (!Array.isArray(orderItems) || orderItems.length === 0) {
-      throw new Error("주어진 order_pk로 orderItem을 조회할 수 없습니다")
-    }
-
-    // 각 order_item에 대해 재고 업데이트
-    for (const orderItem of orderItems) {
-      const {product_pk, quantity} = orderItem
-      const productResult = await productsServices.productsDetail(product_pk)
-      const product = productResult.data.product
-      if (!product) {
-        throw new Error(`상품을 조회할 수 없습니다: ${product_pk}`)
-      }
-      // 재고 수량이 주문량보다 많을 시 주문성공 한번 더 막기
-      if (product.stock < quantity) {
-        throw new Error(`해당 수량만큼 재고가 없습니다. 상품 수량을 다시 확인해주세요. ${product_pk}.`)
-      }
-      const updatedProduct = {
-        ...product,
-        stock: product.stock - quantity
-      }
-      // 재고 업데이트 API 호출
-      const uuid = uuidv4()
-      const productsUpdateResult = await productsServices.productStockUpdate(updatedProduct)
-
-      const responseStatus = productsUpdateResult.data.status
-      if (responseStatus === 200) {
-        console.log("재고 업데이트 성공!!")
-        if(product.stock === 0) {
-          product.is_sold_out = true
-        }
-      } else {
-        throw new Error(`해당 상품 재고를 업데이트 할 수 없습니다 : ${product_pk}.`)
-      }
-    }
-  } catch (error) {
-    console.log("[결제완료] 재고 업데이트 중 오류 발생:", error)
-  }
-
-  // 채널톡 이용해 카카오톡으로 주문완료 알림 전달
-  // ChannelIO('track', 'OrderRequest');
-
-  // TODO: 장바구니 비우기 (결제 완료)
-  // order_pk로 order_items 리스트 조회
-  // -> 반복 (order_item - product_pk, quantity)
-  // -> 장바구니 비우기
-
 
   // 결제 등록
   try {
@@ -257,6 +194,113 @@ export const orderSuccess = async (searchParams: OrderParams): Promise<PaySucces
       console.error("Fetch error:", error)
     })
 
+  // 재고 업데이트 (결제)
+  // order_pk 로 order_items 리스트 조회
+  // ➡ 반복 (order_item - product_pk, quantity)
+  // ➡ 상품 재고 (quantity)만큼 감소
+  try {
+    const searchParams = {
+      order_pk : order_pk,
+      rowsPerPage: null,
+      page: null,
+      orderColumn: "order_pk",
+      orderDirection: "desc",
+      query: ""
+    } as OrderItemSearchParams
+    // order_pk로 order_items 리스트 조회
+    const orderItemsResult: ResponseApi = await orderItemsService.orderItemsRead(searchParams)
+    const orderItems = orderItemsResult.data.orderItems
+
+    if (!Array.isArray(orderItems) || orderItems.length === 0) {
+      throw new Error("주어진 order_pk로 orderItem을 조회할 수 없습니다")
+    }
+
+    // 각 order_item에 대해 재고 업데이트
+    for (const orderItem of orderItems) {
+      const {product_pk, quantity} = orderItem
+      const productResult = await productsServices.productsDetail(product_pk)
+      const product = productResult.data.product
+      if (!product) {
+        throw new Error(`상품을 조회할 수 없습니다: ${product_pk}`)
+      }
+      // 재고 수량이 주문량보다 많을 시 주문성공 한번 더 막기
+      if (product.stock < quantity) {
+        throw new Error(`해당 수량만큼 재고가 없습니다. 상품 수량을 다시 확인해주세요. ${product_pk}.`)
+      }
+      const updatedProduct = {
+        ...product,
+        stock: product.stock - quantity
+      }
+      // 재고 업데이트 API 호출
+      const uuid = uuidv4()
+      const productsUpdateResult = await productsServices.productStockUpdate(updatedProduct)
+
+      const responseStatus = productsUpdateResult.data.status
+      if (responseStatus === 200) {
+        console.log("재고 업데이트 성공!!")
+        if(product.stock === 0) {
+          product.is_sold_out = true
+        }
+      } else {
+        throw new Error(`해당 상품 재고를 업데이트 할 수 없습니다 : ${product_pk}.`)
+      }
+    }
+  } catch (error) {
+    console.log("[결제완료] 재고 업데이트 중 오류 발생:", error)
+  }
+  // TODO: 채널톡 이용해 카카오톡으로 주문완료 알림 전달
+  // ChannelIO('track', 'OrderRequest');
+
+  // TODO: 장바구니 비우기 (결제 완료)
+  // order_pk로 order_items 리스트 조회
+  // -> 반복 (order_item - product_pk, quantity)
+  // -> 장바구니 비우기
+  try {
+    const searchParams = {
+      order_pk : order_pk,
+      rowsPerPage: null,
+      page: null,
+      orderColumn: "order_pk",
+      orderDirection: "desc",
+      query: ""
+    } as OrderItemSearchParams
+    // order_pk로 order_items 리스트 조회
+    const orderItemsResult: ResponseApi = await orderItemsService.orderItemsRead(searchParams)
+    const orderItems = orderItemsResult.data.orderItems
+
+    if (!Array.isArray(orderItems) || orderItems.length === 0) {
+      throw new Error("주어진 order_pk로 orderItem을 조회할 수 없습니다")
+    }
+
+    // 각 order_item에 대해 장바구니 업데이트
+    for (const orderItem of orderItems) {
+      const {product_pk, quantity} = orderItem
+      const productResult = await productsServices.productsDetail(product_pk)
+      const product = productResult.data.product
+      if (!product) {
+        throw new Error(`상품을 조회할 수 없습니다: ${product_pk}`)
+      }
+      const updatedProduct = {
+        ...product,
+        stock: product.stock - quantity
+      }
+      // 재고 업데이트 API 호출
+      const uuid = uuidv4()
+      const productsUpdateResult = await productsServices.productStockUpdate(updatedProduct)
+
+      const responseStatus = productsUpdateResult.data.status
+      if (responseStatus === 200) {
+        console.log("장바구니 업데이트 성공!!")
+        if(product.stock === 0) {
+          product.is_sold_out = true
+        }
+      } else {
+        throw new Error(`장바구니 수량을 업데이트 할 수 없습니다  : ${product_pk}.`)
+      }
+    }
+  } catch (error) {
+    console.log("[결제완료] 장바구니 업데이트 중 오류 발생:", error)
+  }
 
   // ⚡ 토스 결제 상태 확인 요청
   // const paymentKey = payment_key

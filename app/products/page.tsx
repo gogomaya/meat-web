@@ -43,7 +43,7 @@ const Products = async (props: {
     } else if (searchParams.category) {
       return categoryName[searchParams.category as ProductCategory]
     }
-    return "상품 리스트"
+    return "상품 목록"
   }
   return (
     <MainLayout user={user}>
