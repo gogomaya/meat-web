@@ -10,16 +10,13 @@ export const GET = async (request: NextRequest) => {
     const orderColumn = searchParams.get("orderColumn") || "address_pk"
     const orderDirection = searchParams.get("orderDirection") || "desc"
     const query = searchParams.get("query") || ""
-    const user_pk = searchParams.get("user_pk") || ""
-
 
     const mysql = await mysql2Pool()
 
     const [total_rows]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
       SELECT COUNT(*) AS total_rows
       FROM cancellations
-      WHERE order_pk IN ( SELECT order_pk FROM orders WHERE user_pk = ? )
-    `, [user_pk])
+    `, [])
 
     const [cancellations]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
       SELECT c.* 
@@ -28,10 +25,9 @@ export const GET = async (request: NextRequest) => {
             ,c.status as status
             ,o.status as order_status
       FROM cancellations c JOIN orders o ON (c.order_pk = o.order_pk)
-      WHERE c.order_pk IN ( SELECT order_pk FROM orders WHERE user_pk = ? )
-      ORDER BY ${orderColumn} ${orderDirection}
+      ORDER BY o.${orderColumn} ${orderDirection}
       LIMIT ?, ?
-    `, [user_pk, page, rowsPerPage])
+    `, [page, rowsPerPage])
 
 
     return NextResponse.json({

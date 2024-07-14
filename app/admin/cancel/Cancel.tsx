@@ -1,34 +1,25 @@
 "use client"
-import {AwaitedReactNode, JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal, useEffect, useState} from "react"
-import {useRouter} from "next/navigation"
-import {Paper, Table, TableBody, TableCell, TableContainer, TableRow} from "@mui/material"
-import {IconButton, InputBase, Button} from "@mui/material"
-import SearchIcon from "@mui/icons-material/Search"
-import {EnhancedTabledHead, EnhancedTablePagination} from "@/components/common/Table"
-import {User} from "@/types/usersTypes"
-import {ResponseApi, SearchParams} from "@/types/commonTypes"
-import {usersServices} from "@/services/usersServices"
-import {backdrop} from "@/components/common/Backdrop"
-import {toastError} from "@/components/common/Toast"
-import moment from "moment"
-import {Order} from "@/types/ordersTypes"
-import {OrderItem, OrderItemSearchParams} from "@/types/orderItemsTypes"
-import {orderItemsService} from "@/services/orderItemsServices"
-import orders from "@/app/mypage/orders/orders"
 import {getOrderStatusMeaning} from "@/app/mypage/orders/ordersUtils"
-import withReactContent from "sweetalert2-react-content"
-import Swal from "sweetalert2"
-import * as XLSX from "xlsx"
-import {ordersServices} from "@/services/ordersServices"
-import LocalShippingIcon from "@mui/icons-material/LocalShipping"
+import {EnhancedTabledHead, EnhancedTablePagination} from "@/components/common/Table"
+import {Cancellation, CancellationSearchParams} from "@/types/cancellationsTypes"
+import {SearchParams} from "@/types/commonTypes"
 import CreditCardOffIcon from "@mui/icons-material/CreditCardOff"
+import LocalShippingIcon from "@mui/icons-material/LocalShipping"
+import SearchIcon from "@mui/icons-material/Search"
+import {IconButton, InputBase, Paper, Table, TableBody, TableCell, TableContainer, TableRow} from "@mui/material"
+import moment from "moment"
+import {useRouter} from "next/navigation"
+import {useEffect, useState} from "react"
+import Swal from "sweetalert2"
+import withReactContent from "sweetalert2-react-content"
+import {orderCancel} from "./orderCancel"
 
 const AdminCancelList = ({
-  orders,
+  cancels,
   total_rows,
   searchParams
 }: {
-  orders: Order[]
+  cancels: Cancellation[]
   total_rows: number
   searchParams: SearchParams
 }) => {
@@ -47,50 +38,45 @@ const AdminCancelList = ({
   const router = useRouter()
   const [query, setQuery] = useState(searchParams.query)
   const MySwal = withReactContent(Swal)
-  const handleOrderDetail = async (order_pk: number, user_pk: number, address_pk: number, shipment_pk: number) => {
-    router.push(`/admin/orders/detail/${order_pk}/${user_pk}/${address_pk}/${shipment_pk}`)
-  }
-  const handleDelete = async (order_pk : number) => {
+
+
+  const handleCancel = async (cancellation_pk : number, order_pk : number) => {
     MySwal.fire({
-      title: <p>정말로 삭제하시겠습니까?</p>,
-      text: "주문이 취소되면, 되돌릴 수 없습니다.",
+      title: <p>주문 취소 승인</p>,
+      text: "주문 취소를 승인합니다. 주문 취소 처리 및 결제가 환불 처리됩니다.",
       icon: "warning",
-      confirmButtonText: "삭제",
+      confirmButtonText: "주문취소",
       showCancelButton: true,
       cancelButtonText: "취소"
     }).then(async (result) => {
       if (result.isConfirmed) {
-        let orderResponse: ResponseApi = {}
-        orderResponse = await ordersServices.ordersDelete(order_pk)
-        console.log(orderResponse)
 
-        MySwal.fire({
-          title: <p>주문요청이 취소되었습니다.</p>,
-          didOpen: () => {
-            Swal.showLoading()
-          }
-        })
+        // TODO: 주문 취소 요청
+        const params = {
+          cancellation_pk : cancellation_pk,
+          order_pk : order_pk
+        } as CancellationSearchParams
+        const cancelResult = await orderCancel(params)
+        console.log(`cancelResult : ${cancelResult}`)
+        console.dir(cancelResult)
 
         location.reload()
       }
     })
   }
-  const [open, setOpen] = useState(false)
 
-  const handleClickOpen = () => {
-    setOpen(true)
+
+  const handleOrderDetail = () => {
+
   }
 
-  const handleClose = () => {
-    setOpen(false)
-  }
 
-  const handleShipmentDetail = (shipment_pk: Number) => {
-    handleClickOpen()
-  }
+
   useEffect(() => {
     setQuery(searchParams.query)
   }, [searchParams.query])
+
+
   return (
     <div>
       <form
@@ -118,45 +104,34 @@ const AdminCancelList = ({
             <EnhancedTabledHead
               searchParams={searchParams}
               headCells={[
-                {id: "order_pk", label: "주문번호", sort: true},
-                {id: "user_pk", label: "주문자 회원번호", sort: true},
+                {id: "cancellation_pk", label: "취소번호", sort: true},
+                {id: "user_pk", label: "취소 회원번호", sort: true},
                 {id: "total_discount_price", label: "총가격", sort: true},
-                {id: "total_quantity", label: "회원여부", sort: true},
-                {id: "order_status", label: "주문상태", sort: true},
-                {id: "created_at", label: "주문등록일자", sort: true},
+                {id: "cancellation_status", label: "주문상태", sort: true},
+                {id: "created_at", label: "취소등록일자", sort: true},
                 {id: "title", label: "상세보기", sort: true},
                 {id: "delete", label: "주문취소", sort: false}
               ]}
             />
             <TableBody>
-              {orders.map((order) => (
-                <TableRow key={order.order_pk}>
-                  <TableCell>{order.title}</TableCell>
-                  <TableCell>{order.total_quantity}</TableCell>
-                  <TableCell>{Number(order.total_discount_price).toLocaleString()}</TableCell>
-                  <TableCell>{order.user_pk ? "회원" : "비회원"}</TableCell>
-                  <TableCell>{getOrderStatusMeaning(order.status)}</TableCell>
-                  <TableCell>{moment(order.created_at).format("YYYY-MM-DD")}</TableCell>
-                  {/*  결제대기일 때 배송관리 불가 */}
-                  {(order.status !== "pending") ? (
-                    <TableCell style={{cursor: "pointer"}}>
-                      <button  onClick={()=>handleOrderDetail(order.order_pk, order.user_pk ?? 0, order.address_pk, order.shipment_pk)}>
-                        <LocalShippingIcon />
-                      </button>
-                    </TableCell>
-                  ) : (
-                    <TableCell></TableCell>
-                  )}
-                  {/* 결제완료일 때만 취소 가능/ 배송중, 배송완료일 때만 주문취소 불가 */}
-                  {(order.status === "paid") ? (
-                    <TableCell style={{cursor: "pointer"}}>
-                      <button onClick={()=>handleDelete(order.order_pk)}>
-                        <CreditCardOffIcon />
-                      </button>
-                    </TableCell>
-                  ) : (
-                    <TableCell></TableCell>
-                  )}
+              {cancels.map((cancel) => (
+                <TableRow key={cancel.cancellation_pk}>
+                  <TableCell>{cancel.cancellation_pk}</TableCell>
+                  <TableCell>{cancel.user_pk}</TableCell>
+                  <TableCell>{Number(cancel.total_discount_price).toLocaleString()}</TableCell>
+                  <TableCell>{cancel.status}</TableCell>
+                  <TableCell>{moment(cancel.created_at).format("YYYY-MM-DD")}</TableCell>
+                  <TableCell style={{cursor: "pointer"}}>
+                    <button  onClick={()=>handleOrderDetail()}>
+                      {/* TODO: 취소 상세 보기에 어울리는 아이콘으로 */}
+                      <LocalShippingIcon />
+                    </button>
+                  </TableCell>
+                  <TableCell style={{cursor: "pointer"}}>
+                    <button onClick={()=>handleCancel(cancel.cancellation_pk, cancel.order_pk)}>
+                      <CreditCardOffIcon />
+                    </button>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

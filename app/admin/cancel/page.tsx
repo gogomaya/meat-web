@@ -16,25 +16,30 @@ const AdminCancel = async (props: {searchParams: SearchParams}) => {
     orderDirection: props.searchParams.orderDirection || "desc",
     query: props.searchParams.query || ""
   } as SearchParams
-  let ordersResponse: ResponseApi = {}
   let cancelResponse: ResponseApi = {}
-  let orders = []
-  let cancellations = []
+  let cancels: Cancellation[] = []
   let lastPage = 0
   try {
-    ordersResponse = await ordersServices.ordersRead(searchParams)
-    orders = ordersResponse.data.orders
-    cancelResponse = await cancellationsServices.cancellationRead(searchParams)
-    // cancels = cancelResponse.data.cancels
-    lastPage = Math.ceil(ordersResponse.data.total_rows / searchParams.rowsPerPage) - 1
+    cancelResponse = await cancellationsServices.cancellationAll(searchParams)
+    lastPage = Math.ceil(cancelResponse.data.total_rows / searchParams.rowsPerPage) - 1
+    console.log(`cancelResponse.data : ${cancelResponse.data}`)
+    console.log(`cancellations : ${cancelResponse.data.cancellations}`)
+
+    if( cancelResponse.data &&  cancelResponse.data.cancellations ) {
+      cancels = cancelResponse.data.cancellations
+      console.dir(cancelResponse.data.cancellations)
+    }
+
   } catch (error) {
     console.error(error)
     return <ErrorPage />
-  }  return (
+  }
+
+  return (
     <AdminLayout>
       <AdminCancelList
-        orders={ordersResponse.data.orders}
-        total_rows={ordersResponse.data.total_rows}
+        cancels={cancels}
+        total_rows={cancelResponse.data.total_rows}
         searchParams={searchParams}
       />
     </AdminLayout>

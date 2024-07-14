@@ -4,6 +4,7 @@ export type CancellationStatus = "pending" | "complete"
 // 취소대기, 처리완료
 
 export interface Cancellation {
+  user_pk: string;
   total_discount_price: string;
   total_count: string;
   title: string;
@@ -23,8 +24,8 @@ export interface Cancellation {
 }
 
 export interface CancellationSearchParams extends SearchParams {
-  cancellation_pk?: number;
-  order_pk?: number;
+  cancellation_pk: number;
+  order_pk: number;
   type?: "cancel" | "return";
   status?: "pending" | "complete";
   description?: string;
