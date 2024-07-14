@@ -622,7 +622,7 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
               <div className="text-red-700">잔여수량: {product.stock}</div>
             ) : null}
           </div>
-          <div className="text-red-700">재고수량 {product.stock}</div>
+          {/* <div className="text-red-700">재고수량 {product.stock}</div> */}
           <Divider className="bg-gray-800 h-0.5 mb-4" />
           <div>
             <div className="flex flex-col items-end mb-4 lg:w-1/2 ml-auto py-2 gap-1">

@@ -27,7 +27,7 @@ const MainLayout = ({
 }) => {
   const [cartProductsLength, setCartProductsLength] = useState(0)
   const [headerOpacity, setHeaderOpacity] = useState(1)
-
+  const userStatus = user.user_pk ? true : false
   useEffect(() => {
     const getCartProducts = () => {
       const cartProducts = JSON.parse(localStorage.getItem("cartProducts") || "[]")
@@ -53,6 +53,12 @@ const MainLayout = ({
       window.removeEventListener("scroll", handleScroll)
     }
   }, [])
+
+  const [open, setOpen] = useState(false)
+  const handleLinkClick = () => {
+    window.postMessage({loginPopup: "on"}, "*")
+    setOpen(false)
+  }
 
   return (
     <div className="mx-auto">
@@ -83,11 +89,17 @@ const MainLayout = ({
         <div className="flex gap-3">
           <MainSearch />
           <Users user={user} />
-          <Link href="/carts" className="text-black">
-            <Badge badgeContent={cartProductsLength} color="warning">
-              <ShoppingCartIcon className="md:w-8 md:h-8" />
+          {userStatus ? (
+            <Link href="/carts" className="text-black">
+              <Badge badgeContent={cartProductsLength} color="warning">
+                <ShoppingCartIcon className="md:w-8 md:h-8" />
+              </Badge>
+            </Link>
+          ) : (
+            <Badge badgeContent={0} color="warning">
+              <ShoppingCartIcon onClick={handleLinkClick} className="md:w-8 md:h-8" />
             </Badge>
-          </Link>
+          )}
         </div>
       </header>
       <main>{children}</main>
