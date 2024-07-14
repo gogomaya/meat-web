@@ -238,7 +238,7 @@ export const AddressUpdateForm = ({user, addressInfo}: AddressProps ) => {
           value={recipient}
           onChange={(e) => setRecipient(e.target.value)}
         />
-        <div className="flex flex-wrap flex-col md:flex-row">
+        <div className="flex flex-wrap flex-col md:flex-row gap-2">
           <div className="item flex-[3]">
             <input className="w-full rounded-md py-2.5 px-4 border text-sm outline-[#007bff]"
               type="text" id="address" placeholder="주소"

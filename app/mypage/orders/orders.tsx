@@ -12,6 +12,8 @@ import {myPageAddCart} from "../mypage"
 import {ResponseApi} from "@/types/commonTypes"
 import {ordersServices} from "@/services/ordersServices"
 import {orderCancel} from "./orderCancel"
+import {useRouter} from "next/navigation"
+import {productsServices} from "@/services/productsServices"
 
 
 interface OrderProps {
@@ -140,6 +142,71 @@ export const OrderList = ({orders}: OrderListProps) => {
     })
   }
 
+  /**
+   * TODO: 결제하기 클릭 시, order_pk로 orderItems > orderItem 돌면서
+   * product_pk로 product 조회후, stock 이 quantity 보다 많으면
+   * 주문할 수 없는 상품이 있습니다. 상품 수량을 다시 확인해주세요 > 장바구니(/carts)로 넘겨주기 > 맞으면 주문(/order) 로 그대로
+   * */
+  const fetchOrderItems = async (order_pk: number) => {
+    // 주문 항목 조회 API 호출
+    let ordersResponse: ResponseApi = {}
+    let orderItemsResponse: ResponseApi = {}
+    let orderItems = []
+    let order : Order = {
+      order_pk: 0,
+      user_pk: 0,
+      address_pk: 0,
+      shipment_pk: 0,
+      title: "",
+      total_count: 0,
+      status: "pending",
+      created_at: "",
+      file_name: undefined,
+      order_id: "",
+      shipfee: 0,
+      discount: 0,
+      total_discount_price: 0
+    }
+    const searchParams = {
+      order_pk : order_pk,
+      rowsPerPage: null,
+      page: null,
+      orderColumn: "order_pk",
+      orderDirection: "desc",
+      query: ""
+    } as OrderItemSearchParams
+
+    ordersResponse = await ordersServices.ordersDetail(order_pk)
+    order = ordersResponse.data.order
+    orderItemsResponse = await orderItemsService.orderItemsRead(searchParams)
+    orderItems = orderItemsResponse.data.orderItems
+
+    return orderItems
+  }
+
+  const fetchProductStock = async (product_pk: number) => {
+    // 상품 재고 조회 API 호출
+    const productResult = await productsServices.productsDetail(product_pk)
+    const product = productResult.data.product
+    return product.stock
+  }
+
+  const handleCheckout = async (order_pk: number, router: any) => {
+    const orderItems = await fetchOrderItems(order_pk)
+    for (const item of orderItems) {
+      const stock = await fetchProductStock(item.product_pk)
+      console.log(`+++++++상품 재고 : ${stock}`)
+      if (stock < item.quantity) {
+        alert("주문할 수 없는 상품이 있습니다. 상품 수량을 다시 확인해주세요.")
+        router.push("/carts")
+        return
+      }
+    }
+    console.log("주문 가능. 재고 모두 있음.")
+    router.push(`/order/${order_pk}`)
+  }
+  const router = useRouter()
+
   return (
     <div className="flex flex-col items-center gap-10 my-2 mx-4 md:mx-0">
       {orders.map((order) => (
@@ -226,16 +293,16 @@ export const OrderList = ({orders}: OrderListProps) => {
             <div className="item flex-1">
               <div className="flex flex-col flex-wrap items-center gap-4 px-8 py-2">
                 {/* 결제대기 */}
-                {order.status == "pending"
-                  ?
-                  <Link
-                    href={`/order/${order.order_pk}`}
-                    className="w-full px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-center text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200"
-                  >
-                    결제하기
-                  </Link>
-                  :
-                  <></>
+                {order.status === "pending"
+                  ? (
+                    <button
+                      onClick={() => handleCheckout(order.order_pk, router)}
+                      className="w-full px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] rounded-lg text-center text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200"
+                    >
+                      결제하기
+                    </button>
+                  )
+                  : null
                 }
                 {/* 결제완료, 배송중, 배송완료 */}
                 {/* 로젠택배 https://www.ilogen.com/m/personal/trace/{tracking_no}} 띄우기 */}
@@ -303,7 +370,6 @@ const OrderItemTable: React.FC<OrderItemTableProps> = ({order}) => {
 
       }
     }
-
     fetchOrderItems()
   }, [order.order_pk])
 
