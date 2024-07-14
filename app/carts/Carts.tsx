@@ -19,7 +19,6 @@ import {Order} from "@/types/ordersTypes"
 
 export const CartsDetailContent = ({user}: { user: User }) => {
   const router = useRouter()
-  const [open, setOpen] = useState(false)
   const [totalPrice, setTotalPrice] = useState(0)
   const [discountedPrice, setDiscountedPrice] = useState(0)
   const [finalPrice, setFinalPrice] = useState(0)

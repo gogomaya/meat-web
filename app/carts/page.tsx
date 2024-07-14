@@ -1,6 +1,7 @@
 import {loginCheck} from "@/app/users/login/loginCheck"
 import MainLayout from "@/app/main-layout"
 import {CartsDetailContent} from "./Carts"
+import {useState} from "react"
 
 const Cart = async () => {
   const {user} = await loginCheck(true)

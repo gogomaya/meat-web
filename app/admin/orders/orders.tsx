@@ -24,6 +24,7 @@ import LocalShippingIcon from "@mui/icons-material/LocalShipping"
 import CreditCardOffIcon from "@mui/icons-material/CreditCardOff"
 import {shipmentsServices} from "@/services/shipmentsServices"
 import {Shipment} from "@/types/shipmentsTypes"
+import {Address} from "@/types/addressTypes"
 
 const AdminOrdersList = ({
   orders,
@@ -47,6 +48,7 @@ const AdminOrdersList = ({
       "(비회원)전화번호": order.guest_mobile,
       "주문상태": getOrderStatusMeaning(order.status),
       "주문등록일자": moment(order.created_at).format("YYYY-MM-DD")
+      // TODO: 배송정보, 구매자 정보 info 넣기
     }))
 
     // 엑셀 시트 생성
@@ -57,6 +59,7 @@ const AdminOrdersList = ({
     // 엑셀 파일 다운로드
     XLSX.writeFile(wb, "주문목록.xlsx")
   }
+
   const customButtonStyle = {
     backgroundColor: "blue",
     color: "white",
