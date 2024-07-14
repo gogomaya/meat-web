@@ -75,6 +75,18 @@ export const cancellationsServices = {
 
     const result = await commonServices.responseJson(response)
     return result
+  },
+
+  cancellationAll: async (searchParams: SearchParams): Promise<ResponseApi> => {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/admin/cancellations?` + new URLSearchParams({
+      ...searchParams
+    }))
+
+    const result = await commonServices.responseJson(response)
+    return result
   }
+
+
+
 }
 
