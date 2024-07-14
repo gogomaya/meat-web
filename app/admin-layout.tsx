@@ -128,6 +128,15 @@ const AdminLayoutMenu = ({
       </li>
       <li className="px-4 py-2 border-b border-50 lg:border-0">
         <Link
+          href="/admin/cancel"
+          className={`${pathname.includes("/admin/cancel") ? "text-yellow-700 " : "text-white "}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
+          onClick={() => {
+            setTimeout(() => setHeaderMenuOpen?.(), 500)
+          }}
+        >취소내역</Link>
+      </li>
+      <li className="px-4 py-2 border-b border-50 lg:border-0">
+        <Link
           href="/admin/products/giftSet"
           className={`${pathname.includes("/admin/products/giftSet") ? "text-yellow-700 " : "text-white "}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
           onClick={() => {
