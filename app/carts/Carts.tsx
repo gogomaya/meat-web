@@ -152,7 +152,7 @@ export const CartsDetailContent = ({user}: { user: User }) => {
     // 상품 재고 조회 API 호출
     const productResult = await productsServices.productsDetail(product_pk)
     const product = productResult.data.product
-    alert(`재고수량: ${product.stock} 입니다. 상품 물량을 다시 확인해주세요.`)
+    alert(`재고수량: ${product.stock} 입니다. 상품 물량을 확인해주세요.`)
     // return product.stock
   }
 

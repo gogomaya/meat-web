@@ -50,7 +50,6 @@ export const orderCancel = async (searchParams: CancellationSearchParams): Promi
     return cancelResult
   }
 
-
   const paymentKey = payment.payment_key           // 결제 키
 
   // ---------------------------------------------------------------------------------------
