@@ -13,7 +13,7 @@ export function getOrderStatusMeaning(status: OrderStatus): string {
   case "paid":return "결제완료"
   case "shipping":return "배송중"
   case "delivered":return "배송완료"
-  // case "cancelling":return "취소요청중"
+  case "cancelling":return "취소중"
   case "cancelled":return "취소완료"
   default:return ""
   }

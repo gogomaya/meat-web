@@ -50,13 +50,13 @@ const AdminCancelList = ({
       cancelButtonText: "취소"
     }).then(async (result) => {
       if (result.isConfirmed) {
-
         // TODO: 주문 취소 요청
         const params = {
           cancellation_pk : cancellation_pk,
           order_pk : order_pk
         } as CancellationSearchParams
         const cancelResult = await orderCancel(params)
+        console.log("★★★★★★★★★★★★★★★★★★★★★★★")
         console.log(`cancelResult : ${cancelResult}`)
         console.dir(cancelResult)
 

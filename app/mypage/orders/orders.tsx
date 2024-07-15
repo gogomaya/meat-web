@@ -37,7 +37,7 @@ export const CancelButton: React.FC<OrderProps> = ({order}) => {
           <h3 className="text-2xl font-bold mb-6">정말로 주문을 취소하시겠습니까?</h3>
           <p className="text-base font-normal">
             -배송 전, 관리자 승인 후 환불 처리가 진행됩니다. <br />
-            -배송 후, 신선식품 특성상 환불이 불가합니다. <br />
+            -배송 후, 신선식품 특성상 환불이 불가합니다. 폐기해주시면 감사드리겠습니다. <br />
           </p>
           <p className="text-lg">
             문의) &nbsp;
@@ -322,10 +322,10 @@ export const OrderList = ({orders}: OrderListProps) => {
                   <></>
                 }
                 {/* 주문취소 */}
-                {order.status == "cancelled"
+                {order.status == "cancelling"
                   ?
                   <span className="w-full px-4 py-1 bg-transparent outline-none border-2 border-solid border-[#A51C30] text-center text-[#A51C30] font-medium active:scale-95 hover:bg-[#A51C30] hover:text-white hover:border-transparent focus:bg-[#A51C30] focus:text-white focus:border-transparent focus:ring-2 focus:ring-[#A51C30] focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
-                    취소된 주문
+                    취소중
                   </span>
                   : <></>
                 }

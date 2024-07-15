@@ -5,6 +5,7 @@ import {productsServices} from "@/services/productsServices"
 import {Cancellation, CancellationSearchParams} from "@/types/cancellationsTypes"
 import {ResponseApi} from "@/types/commonTypes"
 import {OrderItemSearchParams} from "@/types/orderItemsTypes"
+import {Order} from "@/types/ordersTypes"
 import {Payment} from "@/types/paymentsTypes"
 import {redirect} from "next/navigation"
 import {v4 as uuidv4} from "uuid"
@@ -55,10 +56,16 @@ export const orderCancel = async (searchParams: CancellationSearchParams): Promi
   // ---------------------------------------------------------------------------------------
 
   // 주문 취소 승인 요청
+  // * orders - [UPDATE] (status - cancelled)
+  const orderDetailResponse: ResponseApi = await cancellationsServices.cancellationDetail(order_pk)
+  alert(orderDetailResponse.data)
+  let order : Order = await orderDetailResponse.data.order
+  order.status = "cancelled"
   // * cancellations - [UPDATE] (취소 - is_confirmed:1 )
   const cancelDetailResponse: ResponseApi = await cancellationsServices.cancellationDetail(cancellation_pk)
   let cancel : Cancellation = await cancelDetailResponse.data.cancellation
   cancel.is_confirmed = true
+  cancel.status = "complete"
   const cancelResponse: ResponseApi = await cancellationsServices.cancellationUpdate(cancel)
   console.log(`cancelResponse : ${cancelResponse}`)
   console.log(`cancelResponse - status : ${cancelResponse.data.status}`)

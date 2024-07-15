@@ -1,6 +1,6 @@
 import {SearchParams} from "./commonTypes"
 
-export type OrderStatus = "pending" | "paid" | "shipping" | "delivered" | "cancelled"
+export type OrderStatus = "pending" | "paid" | "shipping" | "delivered" | "cancelling" | "cancelled"
 //결제대기, 결제완료, 배송중,배송완료,주문취소
 
 export interface Order {
