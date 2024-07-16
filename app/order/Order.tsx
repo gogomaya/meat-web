@@ -965,19 +965,19 @@ export const OrderSuccessContent = ({
                 <div className="text-2xl font-semibold mb-4 p-2">결제 수단</div>
                 <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
                 <div className="space-y-4">
+                  {/* TODO:  결제수단 컬럼 지정할 것 */}
                   <div>
                     <div className="flex items-center justify-between py-2">
                       <div className="w-1/4 font-medium">결제수단 선택</div>
-                      {/* TODO:  결제수단 컬럼 지정할 것 */}
                       <div className="w-3/4">-</div>
                     </div>
                     <Divider style={{backgroundColor: "#ddd", height: "0.1px"}} />
                   </div>
+                  {/* TODO: 현금 영수증 신청 정보만 등로하면 될 지? */}
+                  {/* TODO: 신용/현금 분리 처리 할 것인지 그냥 무조건 입력 받을건지 */}
                   <div>
                     <div className="flex items-center justify-between py-2">
                       <div className="w-1/4 font-medium">현금 영수증 신청</div>
-                      {/* TODO: 현금 영수증 신청 정보만 등로하면 될 지? */}
-                      {/* TODO: 신용/현금 분리 처리 할 것인지 그냥 무조건 입력 받을건지 */}
                       <div className="w-3/4">-</div>
                     </div>
                     <Divider style={{backgroundColor: "#ddd", height: "0.1px"}} />

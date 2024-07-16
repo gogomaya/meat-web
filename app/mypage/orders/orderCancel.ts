@@ -40,7 +40,7 @@ export const orderCancel = async (searchParams: OrderParams): Promise<CancelResu
     // 주문 상태 변경
     const orderDetailResponse: ResponseApi = await ordersServices.ordersDetail(order_pk)
     let order : Order = await orderDetailResponse.data.order
-    order.status = "cancelled"
+    order.status = "cancelling"
     const orderResponse: ResponseApi = await ordersServices.ordersUpdate(order)
     console.log(`orderResponse : ${orderResponse}`)
     console.log(`orderResponse : ${orderResponse.data.status}`)
