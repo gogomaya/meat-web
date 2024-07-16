@@ -1,5 +1,5 @@
 "use client"
-import {getOrderStatusMeaning} from "@/app/mypage/orders/ordersUtils"
+import {getCancellationStatusMeaning, getOrderStatusMeaning} from "@/app/mypage/orders/ordersUtils"
 import {EnhancedTabledHead, EnhancedTablePagination} from "@/components/common/Table"
 import {Cancellation, CancellationSearchParams} from "@/types/cancellationsTypes"
 import {SearchParams} from "@/types/commonTypes"
@@ -107,7 +107,7 @@ const AdminCancelList = ({
                 {id: "cancellation_pk", label: "취소번호", sort: true},
                 {id: "user_pk", label: "취소 회원번호", sort: true},
                 {id: "total_discount_price", label: "총가격", sort: true},
-                {id: "cancellation_status", label: "주문상태", sort: true},
+                {id: "cancellation_status", label: "취소상태", sort: true},
                 {id: "created_at", label: "취소등록일자", sort: true},
                 {id: "title", label: "상세보기", sort: true},
                 {id: "delete", label: "주문취소", sort: false}
@@ -119,7 +119,7 @@ const AdminCancelList = ({
                   <TableCell>{cancel.cancellation_pk}</TableCell>
                   <TableCell>{cancel.user_pk}</TableCell>
                   <TableCell>{Number(cancel.total_discount_price).toLocaleString()}</TableCell>
-                  <TableCell>{cancel.status}</TableCell>
+                  <TableCell>{getCancellationStatusMeaning(cancel.status)}</TableCell>
                   <TableCell>{moment(cancel.created_at).format("YYYY-MM-DD")}</TableCell>
                   <TableCell style={{cursor: "pointer"}}>
                     <button  onClick={()=>handleOrderDetail()}>

@@ -330,8 +330,6 @@ export const orderSuccess = async (searchParams: OrderParams): Promise<PaySucces
   //   console.error("Fetch error:", error);
   // });
 
-
-
   result = shipmentResult && orderResult && paymentResult
   // 결과
   const paySuccessResult = {

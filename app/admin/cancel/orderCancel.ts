@@ -5,6 +5,7 @@ import {productsServices} from "@/services/productsServices"
 import {Cancellation, CancellationSearchParams} from "@/types/cancellationsTypes"
 import {ResponseApi} from "@/types/commonTypes"
 import {OrderItemSearchParams} from "@/types/orderItemsTypes"
+import {Order} from "@/types/ordersTypes"
 import {Payment} from "@/types/paymentsTypes"
 import {redirect} from "next/navigation"
 import {v4 as uuidv4} from "uuid"
@@ -84,11 +85,14 @@ export const orderCancel = async (searchParams: CancellationSearchParams): Promi
     })
   })
     .then(async (response) => {
+      // 여기서부터 코드를 안탐
+      console.log("★★★★★★★★★★★★★★")
+      console.log(response)
+
       if (!response.ok) {
         return response.json().then(async (error) => {
           console.log(":::::::::::: ⚡ 결제 취소 실패 ::::::::::::")
           // TODO: 결제 취소 실패 비즈니스 로직을 구현하세요.
-
         })
       }
 
@@ -98,6 +102,11 @@ export const orderCancel = async (searchParams: CancellationSearchParams): Promi
         // * cancellations - [UPDATE] (취소 - status:complete, is_refund:1 )
         cancel.is_refund = true
         cancel.status = "complete"
+        // * orders - [UPDATE] (status - cancelled)
+        // const orderDetailResponse: ResponseApi = await cancellationsServices.cancellationDetail(order_pk)
+        // alert(orderDetailResponse.data)
+        // let order : Order = await orderDetailResponse.data.order
+        // order.status = "cancelled"
         const cancelResponse: ResponseApi = await cancellationsServices.cancellationUpdate(cancel)
         console.log(`cancelResponse : ${cancelResponse}`)
         console.log(`cancelResponse - status : ${cancelResponse.data.status}`)
@@ -160,7 +169,6 @@ export const orderCancel = async (searchParams: CancellationSearchParams): Promi
         } catch (error) {
           console.log("[결제완료] 재고 업데이트 중 오류 발생:", error)
         }
-
         return response.json()
       }
     })
@@ -172,6 +180,66 @@ export const orderCancel = async (searchParams: CancellationSearchParams): Promi
     })
 
   // ⚡ 토스 결제 취소 성공 확인
+  cancel.is_refund = true
+  cancel.status = "complete"
+
+  // TODO: 재고 업데이트 (주문취소)
+  // order_pk 로 order_items 리스트 조회
+  // ➡ 반복 (order_item - product_pk, quantity)
+  // ➡ 상품 재고 (quantity)만큼 증가
+  try {
+    const searchParams = {
+      order_pk : order_pk,
+      rowsPerPage: null,
+      page: null,
+      orderColumn: "order_pk",
+      orderDirection: "desc",
+      query: ""
+    } as OrderItemSearchParams
+    // order_pk로 order_items 리스트 조회
+    const orderItemsResult: ResponseApi = await orderItemsService.orderItemsRead(searchParams)
+    const orderItems = orderItemsResult.data.orderItems
+
+    if (!Array.isArray(orderItems) || orderItems.length === 0) {
+      throw new Error("주어진 order_pk로 orderItem을 조회할 수 없습니다")
+    }
+
+    // 각 order_item에 대해 재고 업데이트
+    for (const orderItem of orderItems) {
+      const {product_pk, quantity} = orderItem
+      const productResult = await productsServices.productsDetail(product_pk)
+      const product = productResult.data.product
+      if (!product) {
+        throw new Error(`상품을 조회할 수 없습니다: ${product_pk}`)
+      }
+      // 재고 수량이 주문량보다 많을 시 주문성공 한번 더 막기
+      if (product.stock < quantity) {
+        throw new Error(`해당 수량만큼 재고가 없습니다. 상품의 재고를 다시 확인해주세요. ${product_pk}.`)
+      }
+      const updatedProduct = {
+        ...product,
+        stock: product.stock + quantity
+      }
+      // 재고 업데이트 API 호출
+      const uuid = uuidv4()
+      const productsUpdateResult = await productsServices.productStockUpdate(updatedProduct)
+      console.log("❤❤❤❤❤productsUpdateResult❤❤❤❤❤❤❤")
+      console.log(productsUpdateResult)
+
+      const responseStatus = productsUpdateResult.data.status
+      if (responseStatus === 200) {
+        console.log("재고 업데이트 성공!!")
+        // 재고 수량 한번 더 확인
+        if(product.stock > 0) {
+          product.is_sold_out = false
+        }
+      } else {
+        throw new Error(`해당 상품 재고를 업데이트 할 수 없습니다 : ${product_pk}.`)
+      }
+    }
+  } catch (error) {
+    console.log("[결제완료] 재고 업데이트 중 오류 발생:", error)
+  }
 
   return cancelResult
 }
