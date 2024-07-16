@@ -267,7 +267,7 @@ export const CartsDetailContent = ({user}: { user: User }) => {
         <div className="w-full md:w-2/3 flex flex-col p-4 m-8">
           <div className="my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 py-4">
             <div className="py-4 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-              <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+              <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg hidden md:block">
                 <table className="min-w-full divide-y divide-gray-200 text-center">
                   <thead style={{backgroundColor: "#271A11"}} className="text-white text-center">
                     <tr>
@@ -426,6 +426,126 @@ export const CartsDetailContent = ({user}: { user: User }) => {
                   )}
                 </table>
               </div>
+              {/* 모바일 */}
+              <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg block md:hidden">
+                <div className="min-w-full divide-y divide-gray-200 text-center">
+                  {cartProducts.length === 0 ? (
+                    <div className="bg-white divide-y divide-gray-200">
+                      <div>
+                        <div className="flex justify-center items-center">장바구니가 비었습니다.</div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="bg-white">
+                      {cartProducts.map((cartProduct, index) => (
+                        <>
+                          <div key={cartProduct.product.product_pk} className="flex items-center justify-between p-4 bg-white">
+                            <div className="flex items-center">
+                              <Checkbox
+                                {...register(`cartProducts.${index}.checked`)}
+                                checked={cartProduct.checked}
+                                className="rounded border-gray-300 focus:ring-indigo-500 h-4 w-4 text-indigo-600"
+                                onBlur={() => {
+                                  localStorage.setItem("cartProducts", JSON.stringify(cartProducts))
+                                }}
+                                disabled={cartProduct.product.is_sold_out} // 품절이면 체크박스 비활성화
+                              />
+                            </div>
+                            <div className="flex items-center px-4">
+                              <div className="flex-shrink-0 h-12 w-12">
+                                <Image
+                                  src={`/${process.env.NEXT_PUBLIC_UPLOAD_IMAGES}/products/${encodeURIComponent(String(cartProduct.product.image_file_name))}`}
+                                  alt="상품 이미지"
+                                  width={48}
+                                  height={48}
+                                  className="rounded"
+                                />
+                              </div>
+                              <div className="ml-4">
+                                <div className="text-sm font-medium text-gray-900">{cartProduct.product.name}</div>
+                              </div>
+                            </div>
+                            <div className="flex items-center text-center">
+                              <button
+                                type="button"
+                                className={`px-2 py-1 border border-gray-300 rounded-l-md ${cartProduct.quantity <= 1 ? "opacity-50 cursor-not-allowed" : ""}`}
+                                onClick={() => {
+                                  const newQuantity = cartProduct.quantity - 1
+                                  if (newQuantity < 1) return
+                                  cartProductsForm.setValue(`cartProducts.${index}.quantity`, newQuantity)
+                                  localStorage.setItem("cartProducts", JSON.stringify(cartProducts))
+                                  calc()
+                                }}
+                                disabled={cartProduct.quantity <= 1}
+                              >
+                              -
+                              </button>
+                              <input
+                                type="number"
+                                value={cartProduct.quantity}
+                                {...register(`cartProducts.${index}.quantity`)}
+                                className="w-16 p-1 border border-gray-300 text-center"
+                                min="1"
+                                onBlur={() => {
+                                  const newQuantity = cartProduct.quantity < 1 ? 1 : Number(cartProduct.quantity)
+                                  cartProductsForm.setValue(`cartProducts.${index}.quantity`, newQuantity)
+                                  localStorage.setItem("cartProducts", JSON.stringify(cartProducts))
+                                  calc()
+                                }}
+                              />
+                              <button
+                                type="button"
+                                className={`px-2 py-1 border border-gray-300 rounded-r-md ${Number(cartProduct.quantity) >= Number(cartProduct.product.stock) ? "opacity-50 cursor-not-allowed" : ""}`}
+                                onClick={() => {
+                                  const newQuantity = cartProduct.quantity + 1
+                                  if (newQuantity > Number(cartProduct.product.stock)) return
+                                  cartProductsForm.setValue(`cartProducts.${index}.quantity`, newQuantity)
+                                  localStorage.setItem("cartProducts", JSON.stringify(cartProducts))
+                                  calc()
+                                }}
+                                disabled={Number(cartProduct.quantity) >= Number(cartProduct.product.stock)}
+                              >
+                              +
+                              </button>
+                              <button
+                                onClick={() => fetchProductStock(cartProduct.product.product_pk)}
+                                className="ml-4 text-indigo-600 hover:text-indigo-800 transition-colors duration-200"
+                              >
+                              재고확인
+                              </button>
+                            </div>
+                          </div>
+                          <div className="flex items-center justify-between p-4">
+                            <div className="text-lg font-semibold text-gray-800">
+                              {cartProduct.product.discounted_price !== undefined ? (
+                                <span>{(Number(cartProduct.product.discounted_price) * cartProduct.quantity).toLocaleString()}원</span>
+                              ) : (
+                                <span className="text-gray-500">가격 정보 없음</span>
+                              )}
+                            </div>
+                            <div>
+                              <IconButton
+                                onClick={() => {
+                                  if (window.confirm("선택한 상품을 장바구니에서 삭제하시겠습니까?")) {
+                                    cartProducts.splice(index, 1)
+                                    localStorage.setItem("cartProducts", JSON.stringify(cartProducts))
+                                    cartProductsForm.setValue("cartProducts", cartProducts)
+                                    window.postMessage({cartProductsLength: "on"}, "*")
+                                    calc()
+                                  }
+                                }}
+                                className="text-red-600 hover:text-red-800 transition-colors duration-200"
+                              >
+                                <DeleteIcon />
+                              </IconButton>
+                            </div>
+                          </div></>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+              {/* 모바일 끝 */}
             </div>
           </div>
           <div className="product-detail-button flex-col md:flex-row md:items-center justify-start py-4 gap-2">
