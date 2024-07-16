@@ -66,7 +66,24 @@ export const CartsDetailContent = ({user}: { user: User }) => {
   }, [cartProductsForm, shippingFee, totalPrice])
 
   useEffect(() => {
-    cartProductsForm.setValue("cartProducts", JSON.parse(localStorage.getItem("cartProducts") || "[]"))
+    const cartProducts = JSON.parse(localStorage.getItem("cartProducts") || "[]")
+    const getProductsStock = async () => {
+      for(let i=0; i < cartProducts.length; i++) {
+        const cartProduct = cartProducts[i]
+        const fetchProductStock = async (product_pk: number) => {
+          const productResult = await productsServices.productsDetail(product_pk)
+          const product = productResult.data.product
+          return product.stock
+        }
+        cartProduct.product.stock = await fetchProductStock(cartProduct.product.product_pk)
+      }
+      cartProductsForm.setValue("cartProducts", cartProducts)
+    }
+    getProductsStock()
+  }, [cartProductsForm])
+  useEffect(() => {
+    const cartProducts = JSON.parse(localStorage.getItem("cartProducts") || "[]")
+    cartProductsForm.setValue("cartProducts", cartProducts)
     calc()
   }, [cartProductsForm, calc])
   if (cartProducts === null) {
@@ -146,15 +163,6 @@ export const CartsDetailContent = ({user}: { user: User }) => {
 
   }
 
-  // 상품재고 가져오기
-
-  const fetchProductStock = async (product_pk: number) => {
-    // 상품 재고 조회 API 호출
-    const productResult = await productsServices.productsDetail(product_pk)
-    const product = productResult.data.product
-    alert(`재고수량: ${product.stock} 입니다. 상품 물량을 다시 확인해주세요.`)
-    // return product.stock
-  }
 
   // [선택한상품만 결제하기] 클릭
   const handleCheckedPayClick = async () => {
@@ -389,7 +397,8 @@ export const CartsDetailContent = ({user}: { user: User }) => {
                               >
                                 +
                               </button>
-                              <button onClick={() => fetchProductStock(cartProduct.product.product_pk)}>재고확인</button>
+                              <span>재고확인 !! {cartProduct.product.stock}</span>
+                              {/* <button onClick={() => fetchProductStock(cartProduct.product.product_pk)}>재고확인</button> */}
                               {/* {Number(cartProduct.quantity) >= Number(cartProduct.product.stock) && (
                                 <span className="text-red-500 ml-2">재고 수량: {cartProduct.product.stock}</span>
                               )} */}
@@ -440,7 +449,7 @@ export const CartsDetailContent = ({user}: { user: User }) => {
                       {cartProducts.map((cartProduct, index) => (
                         <>
                           <div key={cartProduct.product.product_pk} className="flex gap-3 bg-white p-4">
-                            <div className="flex items-center">
+                            <div className="flex">
                               <Checkbox
                                 {...register(`cartProducts.${index}.checked`)}
                                 checked={cartProduct.checked}

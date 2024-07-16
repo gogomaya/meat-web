@@ -6,6 +6,9 @@ import {Paper, Breadcrumbs, Drawer} from "@mui/material"
 import MenuIcon from "@mui/icons-material/Menu"
 import LogoutIcon from "@mui/icons-material/Logout"
 import {usersServices} from "@/services/usersServices"
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
+import {faGift, faCow, faP, faGlobe, faUtensils, faMagic} from "@fortawesome/free-solid-svg-icons"
+
 
 const AdminLayout = ({
   children
@@ -119,15 +122,6 @@ const AdminLayoutMenu = ({
       </li>
       <li className="px-4 py-2 border-b border-50 lg:border-0">
         <Link
-          href="/admin/qna"
-          className={`${pathname.includes("/admin/qna") ? "text-yellow-700 " : "text-white "}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
-          onClick={() => {
-            setTimeout(() => setHeaderMenuOpen?.(), 500)
-          }}
-        >문의 관리</Link>
-      </li>
-      <li className="px-4 py-2 border-b border-50 lg:border-0">
-        <Link
           href="/admin/cancel"
           className={`${pathname.includes("/admin/cancel") ? "text-yellow-700 " : "text-white "}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
           onClick={() => {
@@ -137,49 +131,78 @@ const AdminLayoutMenu = ({
       </li>
       <li className="px-4 py-2 border-b border-50 lg:border-0">
         <Link
-          href="/admin/products/giftSet"
-          className={`${pathname.includes("/admin/products/giftSet") ? "text-yellow-700 " : "text-white "}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
+          href="/admin/qna"
+          className={`${pathname.includes("/admin/qna") ? "text-yellow-700 " : "text-white "}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
           onClick={() => {
             setTimeout(() => setHeaderMenuOpen?.(), 500)
           }}
-        >선물세트</Link>
+        >문의 관리</Link>
       </li>
-      <li className="px-4 py-2 border-b border-50 lg:border-0">
-        <Link
-          href="/admin/products/cow"
-          className={`${pathname.includes("/admin/products/cow") ? "text-yellow-700 " : "text-white "}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
-          onClick={() => {
-            setTimeout(() => setHeaderMenuOpen?.(), 500)
-          }}
-        >소고기</Link>
-      </li>
-      <li className="px-4 py-2 border-b border-50 lg:border-0">
-        <Link
-          href="/admin/products/pork"
-          className={`${pathname.includes("/admin/products/pork") ? "text-yellow-700 " : "text-white "}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
-          onClick={() => {
-            setTimeout(() => setHeaderMenuOpen?.(), 500)
-          }}
-        >돼지고기</Link>
-      </li>
-      <li className="px-4 py-2 border-b border-50 lg:border-0">
-        <Link
-          href="/admin/products/imported"
-          className={`${pathname.includes("/admin/products/imported") ? "text-yellow-700 " : "text-white "}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
-          onClick={() => {
-            setTimeout(() => setHeaderMenuOpen?.(), 500)
-          }}
-        >수입육</Link>
-      </li>
-      <li className="px-4 py-2 border-b border-50 lg:border-0">
-        <Link
-          href="/admin/products/simple"
-          className={`${pathname.includes("/admin/products/simple") ? "text-yellow-700 " : "text-white "}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
-          onClick={() => {
-            setTimeout(() => setHeaderMenuOpen?.(), 500)
-          }}
-        >간편식</Link>
-      </li>
+      <ul className="bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+        <span className="block text-xl font-bold text-white bg-yellow-500 py-2 px-4">
+          상품관리
+        </span>
+        <li className="flex items-center px-4 py-2 border-b border-gray-700 lg:border-0">
+          <FontAwesomeIcon icon={faGift} className="text-yellow-500 mr-3" />
+          <Link
+            href="/admin/products/giftSet"
+            className={`${pathname.includes("/admin/products/giftSet") ? "text-yellow-700 " : "text-white "}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
+            onClick={() => {
+              setTimeout(() => setHeaderMenuOpen?.(), 500)
+            }}
+          >
+            선물세트
+          </Link>
+        </li>
+        <li className="flex items-center px-4 py-2 border-b border-gray-700 lg:border-0">
+          <FontAwesomeIcon icon={faCow} className="text-yellow-500 mr-3" />
+          <Link
+            href="/admin/products/cow"
+            className={`${pathname.includes("/admin/products/cow") ? "text-yellow-700 " : "text-white "}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
+            onClick={() => {
+              setTimeout(() => setHeaderMenuOpen?.(), 500)
+            }}
+          >
+            소고기
+          </Link>
+        </li>
+        <li className="flex items-center px-4 py-2 border-b border-gray-700 lg:border-0">
+          <FontAwesomeIcon icon={faMagic} className="text-yellow-500 mr-3" />
+          <Link
+            href="/admin/products/pork"
+            className={`${pathname.includes("/admin/products/pork") ? "text-yellow-700 " : "text-white "}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
+            onClick={() => {
+              setTimeout(() => setHeaderMenuOpen?.(), 500)
+            }}
+          >
+            돼지고기
+          </Link>
+        </li>
+        <li className="flex items-center px-4 py-2 border-b border-gray-700 lg:border-0">
+          <FontAwesomeIcon icon={faGlobe} className="text-yellow-500 mr-3" />
+          <Link
+            href="/admin/products/imported"
+            className={`${pathname.includes("/admin/products/imported") ? "text-yellow-700 " : "text-white "}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
+            onClick={() => {
+              setTimeout(() => setHeaderMenuOpen?.(), 500)
+            }}
+          >
+            수입육
+          </Link>
+        </li>
+        <li className="flex items-center px-4 py-2 border-gray-700 lg:border-0">
+          <FontAwesomeIcon icon={faUtensils} className="text-yellow-500 mr-3" />
+          <Link
+            href="/admin/products/simple"
+            className={`${pathname.includes("/admin/products/simple") ? "text-yellow-700 " : "text-white "}block no-underline hover:text-yellow-600 text-sm lg:text-base`}
+            onClick={() => {
+              setTimeout(() => setHeaderMenuOpen?.(), 500)
+            }}
+          >
+            간편식
+          </Link>
+        </li>
+      </ul>
     </ul>
   )
 }

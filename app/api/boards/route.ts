@@ -13,6 +13,7 @@ export const GET = async (request: NextRequest) => {
   const orderDirection = searchParams.get("orderDirection") || "desc"
   const query = searchParams.get("query") || ""
   const category = searchParams.get("category") || ""
+  const product_pk = searchParams.get("product_pk") || ""
 
   const mysql = await mysql2Pool()
   const [total_rows]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
@@ -21,8 +22,9 @@ export const GET = async (request: NextRequest) => {
   from boards
   where
     category = ? and
+    ("" = ? or product_pk = ?) and
     ("" = ? or title like concat("%", ?, "%"))
-`, [category, query, query])
+`, [category, product_pk, product_pk, query, query])
   const [rows]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
     select
       b.board_pk, b.category, b.user_pk, b.product_pk, b.title, b.created_at,
@@ -32,10 +34,11 @@ export const GET = async (request: NextRequest) => {
     from boards b
     where
       b.category = ? and
+      ("" = ? or product_pk = ?) and
       ("" = ? or b.title like concat("%", ?, "%"))
     order by ${orderColumn} ${orderDirection}
     limit ?, ?
-  `, [category, query, query, page, rowsPerPage])
+  `, [category, product_pk, product_pk, query, query, page, rowsPerPage])
   return NextResponse.json({
     boards: rows,
     total_rows: total_rows[0].total_rows
