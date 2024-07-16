@@ -80,7 +80,8 @@ export const BoardsList = ({
   return (
     <div className="container flex flex-col py-4 mx-8 py-6">
       <div className="my-2 overflow-x-auto sm:-mx-6 lg:-mx-8  py-4">
-        <div className="py-4 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+        {/* PC용 */}
+        <div className="py-4 align-middle inline-block min-w-full sm:px-6 lg:px-8 hidden md:block">
           <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
             <table className="min-w-full divide-y divide-gray-200">
               <thead style={{backgroundColor: "#271A11"}} className="text-white">
@@ -228,6 +229,125 @@ export const BoardsList = ({
             </table>
           </div>
         </div>
+        {/* 모바일용 */}
+        <div className="py-4 align-middle inline-block min-w-full sm:px-6 lg:px-8 block md:hidden">
+          <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+            <div className="min-w-full divide-y divide-gray-200">
+              {boardsForm.getValues("boards").length === 0 ? (
+                <div className="bg-white divide-y divide-gray-200">
+                  <div className="py-4 flex justify-center items-center text-gray-500">등록된 게시물이 없습니다.</div>
+                </div>
+              ) : (
+                boardsForm.getValues("boards").map((board, index) => (
+                  <div key={board.board_pk} className="bg-white divide-y divide-gray-200">
+                    <div className="transition-all hover:bg-gray-50 flex flex-col p-4">
+                      <div className="text-sm text-gray-900 mb-2 gap-3 flex items-center justify-between">
+                        <span
+                          className="cursor-pointer"
+                          onClick={() => boardsDetail(board, index)}
+                        >
+                          {board.board_pk}
+                        </span>
+                        {boardsMessage.category === "qna" && (
+                          <span className={`px-2 py-1 text-xs leading-5 font-semibold rounded-full ${board.replies_count ? "bg-gray-900" : "bg-yellow-500"} text-white`}>
+                            {board.replies_count ? "완료" : "대기"}
+                          </span>
+                        )}
+                      </div>
+                      <div className="text-sm text-gray-900 mb-2">
+                        {!boardsSearchParams.product_pk && board.product_pk ? (
+                          <div className="mb-1">
+                            <Link href={`/products/${board.product_pk}`}>{board.product_name}</Link>
+                          </div>
+                        ) : null}
+                        <span
+                          className="cursor-pointer"
+                          onClick={() => boardsDetail(board, index)}
+                        >
+                          {board.title}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        {boardsMessage.category === "qna" && (
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="text-sm text-gray-500">{board.user_name}</span>
+                          </div>
+                        )}
+                        <div className="text-sm text-gray-500">{moment(board.created_at).format("YYYY-MM-DD")}</div>
+                      </div>
+                    </div>
+                    {board.openDetail && (
+                      <div className="p-4 bg-gray-50">
+                        {board.contents ? (
+                          <div>
+                            <div className="py-6">
+                              <div
+                                className="leading-7 ck-content [&>h2]:text-2xl [&>h3]:text-xl [&>h4]:text-lg"
+                                dangerouslySetInnerHTML={{__html: board.contents}}
+                              />
+                            </div>
+                            {board.boards_replies?.length === 0 ? (
+                              <div className="relative">
+                                {user.user_pk === board.user_pk && (
+                                  <div className="ml-4 mb-4">
+                                    <BoardsForm
+                                      user={user}
+                                      board={board}
+                                      boardsRead={boardsRead}
+                                      boardsMessage={boardsMessage}
+                                    />
+                                  </div>
+                                )}
+                                {user.is_admin && (
+                                  <div className="absolute right-0 top-0 mr-4 mb-4">
+                                    <BoardsRepliesForm
+                                      user={user}
+                                      boards_reply={{
+                                        board_pk: board.board_pk,
+                                        board_reply_pk: 0,
+                                        user_pk: user.user_pk,
+                                        contents: ""
+                                      }}
+                                      boardsRead={boardsRead}
+                                      boardsMessage={boardsMessage}
+                                    />
+                                  </div>
+                                )}
+                              </div>
+                            ) : (
+                              <div>
+                                <Divider className="my-4" sx={{border: "1px solid secondary"}} />
+                                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+                                  <div
+                                    className="text-sm text-gray-900 sm:col-span-2"
+                                    dangerouslySetInnerHTML={{__html: board.boards_replies?.[0].contents.replaceAll("\n", "<br />") || ""}}
+                                  />
+                                </div>
+                                {user.is_admin && (
+                                  <div className="ml-4 mb-4">
+                                    <BoardsRepliesForm
+                                      user={user}
+                                      boards_reply={board.boards_replies?.[0]}
+                                      boardsRead={boardsRead}
+                                      boardsMessage={boardsMessage}
+                                    />
+                                  </div>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        ) : (
+                          <div className="py-12 flex justify-center items-center text-gray-500">본인 또는 관리자만 읽을 수 있습니다.</div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+        </div>
+        {/* 모바일 끝 */}
         {boardsForm.getValues("boards").length ? (
           <BoardsPagination
             searchParams={boardsSearchParams}
