@@ -323,15 +323,15 @@ export const BoardsList = ({
                                     dangerouslySetInnerHTML={{__html: board.boards_replies?.[0].contents.replaceAll("\n", "<br />") || ""}}
                                   />
                                 </div>
-                                {user.is_admin && (
-                                  <div className="ml-4 mb-4">
+                                {user.is_admin && board.boards_replies && board.boards_replies.length > 0 && (
+                                  <span className="ml-4 mb-4">
                                     <BoardsRepliesForm
                                       user={user}
-                                      boards_reply={board.boards_replies?.[0]}
+                                      boards_reply={board.boards_replies[0]} // 첫 번째 요소가 존재함이 보장됨
                                       boardsRead={boardsRead}
                                       boardsMessage={boardsMessage}
                                     />
-                                  </div>
+                                  </span>
                                 )}
                               </div>
                             )}
