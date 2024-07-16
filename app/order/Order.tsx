@@ -138,47 +138,90 @@ export const OrderDetailContent = ({
 
   const renderOrderItems = () => {
     return (
-      <table className="w-full p-4 mx-12">
-        <thead>
-          <tr>
-            <th className="py-2">상품사진</th>
-            <th className="py-2">상품명</th>
-            <th className="py-2">가격</th>
-            <th className="py-2">수량</th>
-            <th className="py-2">총금액</th>
-          </tr>
-        </thead>
-        <tbody>
-          {/*
-            Check the top-level render call using <tbody>. See https://reactjs.org/link/warning-keys for more information.
-            반복문 바로 아래 tr 에라 줘야 경고 안뜸.
-           */}
-          {
-            orderItems.map((orderItem, index) => (
-              <tr key={orderItem.order_item_pk}>
-                <td className="flex justify-center p-3">
+      <div className="hidden md:block">
+        <table className="w-full p-4 mx-12">
+          <thead>
+            <tr>
+              <th className="py-2">상품사진</th>
+              <th className="py-2">상품명</th>
+              <th className="py-2">가격</th>
+              <th className="py-2">수량</th>
+              <th className="py-2">총금액</th>
+            </tr>
+          </thead>
+          <tbody>
+            {/*
+              Check the top-level render call using <tbody>. See https://reactjs.org/link/warning-keys for more information.
+              반복문 바로 아래 tr 에라 줘야 경고 안뜸.
+            */}
+            {
+              orderItems.map((orderItem, index) => (
+                <tr key={orderItem.order_item_pk}>
+                  <td className="flex justify-center p-3">
+                    <Image
+                      src={`/${process.env.NEXT_PUBLIC_UPLOAD_IMAGES}/products/${encodeURIComponent(String(orderItem.image_file_name))}`}
+                      alt=""
+                      width={100}
+                      height={30}
+                      sizes="100vw"
+                      priority />
+                  </td>
+                  <td className="p-3 text-center">{orderItem.name}</td>
+                  <td className="p-3 text-center">
+                    <span className="line-through">{Number(orderItem.price).toLocaleString()}원</span><br />
+                    <span className="text-[#A51C30] font-bold">{Number(orderItem.discounted_price).toLocaleString()}원</span>
+                  </td>
+                  <td className="p-3 text-center">{orderItem.quantity}</td>
+                  <td className="p-3 text-center">
+                    <span className="text-[#A51C30] font-bold">{(Number(orderItem.discounted_price)*orderItem.quantity).toLocaleString()}원</span>
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    )
+  }
+
+  const renderMobileOrderItems = () => {
+    return (
+      <div className="block md:hidden space-y-4">
+        {
+          orderItems.map((orderItem, index) => (
+            <div key={orderItem.order_item_pk} className="border p-4 rounded-lg shadow-sm">
+              <div className="flex items-center space-x-4">
+                <div className="flex-shrink-0">
                   <Image
                     src={`/${process.env.NEXT_PUBLIC_UPLOAD_IMAGES}/products/${encodeURIComponent(String(orderItem.image_file_name))}`}
-                    alt=""
+                    alt={orderItem.name}
                     width={100}
                     height={30}
                     sizes="100vw"
-                    priority />
-                </td>
-                <td className="p-3 text-center">{orderItem.name}</td>
-                <td className="p-3 text-center">
-                  <span className="line-through">{Number(orderItem.price).toLocaleString()}원</span><br />
-                  <span className="text-[#A51C30] font-bold">{Number(orderItem.discounted_price).toLocaleString()}원</span>
-                </td>
-                <td className="p-3 text-center">{orderItem.quantity}</td>
-                <td className="p-3 text-center">
-                  <span className="text-[#A51C30] font-bold">{(Number(orderItem.discounted_price)*orderItem.quantity).toLocaleString()}원</span>
-                </td>
-              </tr>
-            ))
-          }
-        </tbody>
-      </table>
+                    priority
+                    className="rounded"
+                  />
+                </div>
+                <div className="flex-1">
+                  <div className="text-lg font-semibold">{orderItem.name}</div>
+                  <div className="text-gray-500">
+                    <span className="line-through">{Number(orderItem.price).toLocaleString()}원</span>
+                  </div>
+                  <div className="text-[#A51C30] font-bold">
+                    {Number(orderItem.discounted_price).toLocaleString()}원
+                  </div>
+                </div>
+              </div>
+              <div className="mt-4 flex justify-between items-center">
+                <div className="text-gray-600">수량: {orderItem.quantity}</div>
+                <div className="text-[#A51C30] font-bold">
+                  최종금액: {(Number(orderItem.discounted_price) * orderItem.quantity).toLocaleString()}원
+                </div>
+              </div>
+            </div>
+          ))
+        }
+      </div>
     )
   }
 
@@ -328,6 +371,7 @@ export const OrderDetailContent = ({
         <div className="text-2xl font-semibold mb-4">주문상품</div>
         <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
         {renderOrderItems()}
+        {renderMobileOrderItems()}
       </div>
       <div className="flex flex-col md:flex-row items-start md:items-start mb-8 gap-6">
         <div className="w-full md:w-3/4 pr-4 bg-white p-3">
@@ -715,47 +759,89 @@ export const OrderSuccessContent = ({
 
   const renderOrderItems = () => {
     return (
-      <table className="w-full">
-        <thead>
-          <tr>
-            <th className="py-2">상품사진</th>
-            <th className="py-2">상품명</th>
-            <th className="py-2">가격</th>
-            <th className="py-2">수량</th>
-            <th className="py-2">총금액</th>
-          </tr>
-        </thead>
-        <tbody>
-          {/*
-            Check the top-level render call using <tbody>. See https://reactjs.org/link/warning-keys for more information.
-            반복문 바로 아래 tr 에라 줘야 경고 안뜸.
-           */}
-          {
-            orderItems?.map((orderItem, index) => (
-              <tr key={orderItem.order_item_pk}>
-                <td className="flex justify-center">
+      <div className="hidden md:block">
+        <table className="w-full">
+          <thead>
+            <tr>
+              <th className="py-2">상품사진</th>
+              <th className="py-2">상품명</th>
+              <th className="py-2">가격</th>
+              <th className="py-2">수량</th>
+              <th className="py-2">총금액</th>
+            </tr>
+          </thead>
+          <tbody>
+            {/*
+              Check the top-level render call using <tbody>. See https://reactjs.org/link/warning-keys for more information.
+              반복문 바로 아래 tr 에라 줘야 경고 안뜸.
+            */}
+            {
+              orderItems?.map((orderItem, index) => (
+                <tr key={orderItem.order_item_pk}>
+                  <td className="flex justify-center">
+                    <Image
+                      src={`/${process.env.NEXT_PUBLIC_UPLOAD_IMAGES}/products/${encodeURIComponent(String(orderItem.image_file_name))}`}
+                      alt=""
+                      width={100}
+                      height={30}
+                      sizes="100vw"
+                      priority />
+                  </td>
+                  <td className="p-3 text-center">{orderItem.name}</td>
+                  <td className="p-3 text-center">
+                    <span className="line-through">{orderItem.price.toLocaleString()}원</span><br />
+                    <span className="text-[#A51C30] font-bold">{orderItem.discounted_price.toLocaleString()}원</span>
+                  </td>
+                  <td className="p-3 text-center">{orderItem.quantity}</td>
+                  <td className="p-3 text-center">
+                    <span className="text-[#A51C30] font-bold">{(Number(orderItem.discounted_price)*orderItem.quantity).toLocaleString()}원</span>
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    )
+  }
+  const renderMobileOrderItems = () => {
+    return (
+      <div className="block md:hidden space-y-4">
+        {
+          orderItems.map((orderItem, index) => (
+            <div key={orderItem.order_item_pk} className="border p-4 rounded-lg shadow-sm">
+              <div className="flex items-center space-x-4">
+                <div className="flex-shrink-0">
                   <Image
                     src={`/${process.env.NEXT_PUBLIC_UPLOAD_IMAGES}/products/${encodeURIComponent(String(orderItem.image_file_name))}`}
-                    alt=""
+                    alt={orderItem.name}
                     width={100}
                     height={30}
                     sizes="100vw"
-                    priority />
-                </td>
-                <td className="p-3 text-center">{orderItem.name}</td>
-                <td className="p-3 text-center">
-                  <span className="line-through">{orderItem.price.toLocaleString()}원</span><br />
-                  <span className="text-[#A51C30] font-bold">{orderItem.discounted_price.toLocaleString()}원</span>
-                </td>
-                <td className="p-3 text-center">{orderItem.quantity}</td>
-                <td className="p-3 text-center">
-                  <span className="text-[#A51C30] font-bold">{(Number(orderItem.discounted_price)*orderItem.quantity).toLocaleString()}원</span>
-                </td>
-              </tr>
-            ))
-          }
-        </tbody>
-      </table>
+                    priority
+                    className="rounded"
+                  />
+                </div>
+                <div className="flex-1">
+                  <div className="text-lg font-semibold">{orderItem.name}</div>
+                  <div className="text-gray-500">
+                    <span className="line-through">{Number(orderItem.price).toLocaleString()}원</span>
+                  </div>
+                  <div className="text-[#A51C30] font-bold">
+                    {Number(orderItem.discounted_price).toLocaleString()}원
+                  </div>
+                </div>
+              </div>
+              <div className="mt-4 flex justify-between items-center">
+                <div className="text-gray-600">수량: {orderItem.quantity}</div>
+                <div className="text-[#A51C30] font-bold">
+                  최종금액: {(Number(orderItem.discounted_price) * orderItem.quantity).toLocaleString()}원
+                </div>
+              </div>
+            </div>
+          ))
+        }
+      </div>
     )
   }
 
@@ -864,6 +950,7 @@ export const OrderSuccessContent = ({
         <div className="text-2xl font-semibold mb-4">주문상품</div>
         <Divider style={{backgroundColor: "#4A4A4A", height: "3px", marginBottom: "1rem"}} />
         {renderOrderItems()}
+        {renderMobileOrderItems()}
       </div>
       {/*  */}
       <div className="flex flex-col md:flex-row items-start md:items-start mb-8 gap-6">
