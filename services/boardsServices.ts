@@ -28,6 +28,17 @@ export const boardsServices = {
       throw error
     }
   },
+  // 관리자 - qna 페이지
+  boardsAdminRead: async (searchParams: SearchParams): Promise<ResponseApi> => {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/admin/qna?` + new URLSearchParams({
+        ...searchParams
+      }))
+      return await commonServices.responseJson(response)
+    } catch (error) {
+      throw error
+    }
+  },
   boardsDetail: async (board_pk: number): Promise<ResponseApi> => {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/boards/${board_pk}`)

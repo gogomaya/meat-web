@@ -29,7 +29,6 @@ const Products = async (props: {
     category: "qna",
     product_pk: props.params.product_pk
   } as BoardsSearchParams
-  console.log(boardsSearchParams)
   const productResponse: ResponseApi = await productsServices.productsDetail(props.params.product_pk)
   const reviewsResponse: ResponseApi = await reviewsServices.reviewsRead(reviewsSearchParams)
   const boardsResponse: ResponseApi = await boardsServices.boardsRead(boardsSearchParams)
