@@ -373,15 +373,16 @@ export const CartsDetailContent = ({user}: { user: User }) => {
                               <input
                                 type="number"
                                 value={cartProduct.quantity}
-                                {...register(`cartProducts.${index}.quantity`)}
+                                {...register(`cartProducts.${index}.quantity`, {
+                                  onChange: (e) => {
+                                    const newQuantity = e.target.value < 1 ? 1 : Number(e.target.value)
+                                    cartProductsForm.setValue(`cartProducts.${index}.quantity`, newQuantity)
+                                    localStorage.setItem("cartProducts", JSON.stringify(cartProducts))
+                                    calc()
+                                  }
+                                })}
                                 className="w-16 p-1 border border-gray-300 text-center"
                                 min="1"
-                                onBlur={() => {
-                                  const newQuantity = cartProduct.quantity < 1 ? 1 : Number(cartProduct.quantity)
-                                  cartProductsForm.setValue(`cartProducts.${index}.quantity`, newQuantity)
-                                  localStorage.setItem("cartProducts", JSON.stringify(cartProducts))
-                                  calc()
-                                }}
                               />
                               <button
                                 type="button"
@@ -397,11 +398,11 @@ export const CartsDetailContent = ({user}: { user: User }) => {
                               >
                                 +
                               </button>
-                              <span>재고확인 !! {cartProduct.product.stock}</span>
+                              {/* <span>재고확인 : {cartProduct.product.stock}</span> */}
                               {/* <button onClick={() => fetchProductStock(cartProduct.product.product_pk)}>재고확인</button> */}
-                              {/* {Number(cartProduct.quantity) >= Number(cartProduct.product.stock) && (
+                              {Number(cartProduct.quantity) >= Number(cartProduct.product.stock) && (
                                 <span className="text-red-500 ml-2">재고 수량: {cartProduct.product.stock}</span>
-                              )} */}
+                              )}
                             </div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
