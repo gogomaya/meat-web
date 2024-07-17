@@ -7,7 +7,7 @@ import SearchIcon from "@mui/icons-material/Search"
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline"
 import CloseIcon from "@mui/icons-material/Close"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
-import {Accordion, AccordionDetails, AccordionSummary, Badge, Box, Divider, Drawer, IconButton, InputBase, Menu, MenuList, Typography} from "@mui/material"
+import {Accordion, AccordionDetails, AccordionSummary, Badge, Box, Button, Divider, Drawer, IconButton, InputBase, Menu, MenuList, Typography} from "@mui/material"
 import Users from "@/components/users/users"
 import {User} from "@/types/usersTypes"
 import {commonServices} from "@/services/commonServices"
@@ -390,7 +390,7 @@ const MainMobileMenu = ({user}: { user: User }) => {
         PaperProps={{sx: {width: "100%"}}}
       >
         <Box className="p-4" style={{backgroundImage: "url('/images/Bg_3.png')", backgroundColor: "rgba(255, 255, 255, 0.9)"}}>
-          <nav>
+          <nav className="py-4">
             <div className="flex justify-end">
               <IconButton onClick={() => setOpen(false)}>
                 <CloseIcon />
@@ -414,9 +414,16 @@ const MainMobileMenu = ({user}: { user: User }) => {
                     <div className="text-red-700">
                       <strong>{user.name || user.nickname || "고객"}</strong><span className="text-black">님, 안녕하세요 :)</span>
                     </div>
-                    <div className="flex justify-end">
+                    <div className="flex justify-between gap-2">
                       <button type="button"
-                        className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+                        className="focus:outline-none text-white bg-yellow-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+                        onClick={handleLinkClick}
+                        style={{marginBottom: "20px", padding: "5px 10px"}}
+                      >
+                        장바구니
+                      </button>
+                      <button type="button"
+                        className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
                         onClick={async () => {
                           await usersServices.usersLogout()
                           setOpen(false)
@@ -433,15 +440,21 @@ const MainMobileMenu = ({user}: { user: User }) => {
                 <>
                   <div
                     onClick={handleLinkClick}
-                    className="px-4 py-2 bg-yellow-500 text-white rounded-full hover:bg-yellow-600 cursor-pointer"
+                    className="px-2 py-2 bg-yellow-500 text-white rounded-full hover:bg-yellow-600 cursor-pointer"
                   >
                     로그인
                   </div>
                   <div
                     onClick={handleLinkClick}
-                    className="px-4 py-2 bg-red-700 text-white rounded-full hover:bg-brown-600 cursor-pointer"
+                    className="px-2 py-2 bg-red-700 text-white rounded-full hover:bg-brown-600 cursor-pointer"
                   >
                     회원가입
+                  </div>
+                  <div
+                    onClick={handleLinkClick}
+                    className="px-2 py-2 bg-gray-500 text-white rounded-full hover:bg-yellow-600 cursor-pointer">
+                    {/* 모바일 비회원도 주문할 수 있도록 장바구니로 가기 */}
+                      장바구니
                   </div>
                 </>
               )}
