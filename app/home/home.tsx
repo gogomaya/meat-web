@@ -248,7 +248,7 @@ export const HomeCateMenu = () => {
           <div className="bg-image absolute inset-0 bg-cover bg-center bg-no-repeat" style={{backgroundImage: "linear-gradient(to bottom, #271a11, rgba(0, 0, 0, 0) 67%), url('/images/Rectangle 6.png')"}}></div>
           <div className="absolute inset-0 bg-black bg-opacity-10 hover:bg-opacity-20 transition duration-300 rounded-lg"></div>
           <div className="relative flex flex-col justify-center items-center h-full text-white p-2 gap-10">
-            <div className="click-mobile-version home-cate-mobile text-lg md:text-4xl font-bold mb-4 text-center">한우 투뿔 꽃등심 부채살</div>
+            <div className="click-mobile-version home-cate-mobile text-lg md:text-3xl font-bold mb-4 text-center">한우 투뿔 꽃등심 부채살</div>
             <Link href="/products?category=cow">
               <button className="text-xs md:text-xl home-cate-mobile flex items-center justify-between gap-2 w-full p-2 md:py-2 md:px-4 bg-black text-white rounded hover:bg-gray-800 transition duration-300">
                 <span>&#39;소고기&#39; 바로가기</span>
@@ -290,7 +290,7 @@ export const HomeCateMenu = () => {
               <div className="absolute inset-0 bg-black bg-opacity-10 hover:bg-opacity-20 transition duration-300 rounded-lg"></div>
               <div className="relative flex flex-col justify-center items-center h-full text-white p-2">
                 <div className="text-xs md:text-2xl font-bold text-center text-yellow-400">가장 신선한</div>
-                <div className="text-xs md:text-2xl font-bold mb-2 text-center">🥩 육회 & 육사시미</div>
+                <div className="text-xs md:text-xl font-bold mb-2 text-center">🥩 육회 & 육사시미</div>
                 <Link href="/products?category=cow&category_menu=육회/사시미">
                   <button className="text-xs md:text-base flex items-center justify-between gap-2 w-full p-2 md:py-2 md:px-4 bg-black text-white rounded hover:bg-gray-800 transition duration-300 text-sm md:text-base">
                     <span>&#39;육회&#39; 바로가기</span>

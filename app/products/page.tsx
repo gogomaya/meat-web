@@ -48,12 +48,11 @@ const Products = async (props: {
   return (
     <MainLayout user={user}>
       <div className="pb-16">
-        <div className="flex justify-center text-black py-8"
+        <div className="flex justify-center text-black py-16"
           style={{
             backgroundImage: "url('/images/Bg_3.png')",
             backgroundRepeat: "repeat-x",
             backgroundSize: "cover",
-            // backgroundPosition: "center",
             backgroundPositionX: "20%",
             backgroundPositionY: "0%",
             textAlign: "center",
@@ -63,8 +62,32 @@ const Products = async (props: {
             alignItems: "center",
             fontSize: "32px",
             borderRadius: "15px",
-            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)"
-          }}>{titleName()}</div>
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+            padding: "20px",
+            color: "#333"
+          }}>
+          <div style={{
+            fontSize: "48px",
+            marginBottom: "20px"
+          }}>
+            {titleName()}
+          </div>
+          <div style={{
+            backgroundColor: "rgba(255, 255, 255, 0.8)",
+            padding: "15px",
+            borderRadius: "10px",
+            marginTop: "20px",
+            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+            lineHeight: "1.5",
+            fontSize: "16px",
+            maxWidth: "600px"
+          }}>
+            <strong>구매 시 참고사항</strong>
+            <p>식당에서 제공되는 1인분의 양은 일반적으로 150g이며, 서울의 경우 최근에는 120g 정도입니다.</p>
+            <p>특상 제품은 오마카세에서 제공되는 고기 품질입니다.</p>
+            <p>일반 제품은 고급 한우 식당에서 제공되는 고기 품질입니다.</p>
+          </div>
+        </div>
         <div className="container">
           <ProductsList products={products} />
           {total_rows ? (

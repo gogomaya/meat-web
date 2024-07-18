@@ -417,7 +417,7 @@ const MainMobileMenu = ({user}: { user: User }) => {
                     <div className="flex justify-between gap-2">
                       <button type="button"
                         className="focus:outline-none text-white bg-yellow-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-                        onClick={handleLinkClick}
+                        onClick={() => window.location.href = "/carts"}
                         style={{marginBottom: "20px", padding: "5px 10px"}}
                       >
                         장바구니
@@ -566,12 +566,12 @@ const MainMobileMenu = ({user}: { user: User }) => {
 
 const SearchBar = () => {
   return (
-    <section className="flex items-center bg-gray-200 rounded-full p-1">
+    <section className="flex items-center bg-white shadow-lg rounded-full p-2">
       <InputBase
-        className="flex-1 ml-2"
+        className="flex-1 ml-3 text-gray-700 placeholder-gray-500 focus:outline-none"
         placeholder="검색어를 입력해주세요."
       />
-      <IconButton type="button">
+      <IconButton type="button" className="text-gray-500 hover:text-gray-700 focus:outline-none">
         <SearchIcon />
       </IconButton>
     </section>

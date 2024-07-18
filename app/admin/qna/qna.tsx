@@ -78,7 +78,7 @@ export const AdminQnaList = ({
     boardsForm.setValue("total_rows", total_rows)
   }, [boardsForm, boards, total_rows])
   return (
-    <div className="container flex flex-col py-4 mx-8 py-6">
+    <div className="container flex flex-col mx-8 py-6">
       <div className="my-2 overflow-x-auto sm:-mx-6 lg:-mx-8  py-4">
         {/* PC용 */}
         <div className="py-4 align-middle inline-block min-w-full sm:px-6 lg:px-8 hidden md:block">
@@ -374,29 +374,11 @@ const BoardsForm = ({
     <>
       {boardsMessage.category === "qna" || user.is_admin ? (
         <button
-          className="product-button"
-          style={{
-            padding: "5px 8px",
-            backgroundColor: "#000",
-            color: "#fff",
-            border: "none",
-            borderRadius: "8px",
-            cursor: "pointer",
-            fontSize: "0.8rem",
-            width: "76px"
-          }}
           onClick={() => {
-            if (!user.user_pk) {
-              if (confirm("로그인이 필요한 서비스입니다. 로그인 하시겠습니까?")) {
-                window.postMessage({loginPopup: "on"}, "*")
-              }
-              return
-            }
             setOpen(true)
             backdrop.open()
           }}
         >
-          {board.board_pk === 0 ? boardsMessage.buttonCreateTitle : boardsMessage.buttonUpdateTitle}
         </button>
       ) : null}
       <Dialog open={open} onClose={() => setOpen(false)} maxWidth="lg" fullWidth

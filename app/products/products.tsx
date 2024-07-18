@@ -155,20 +155,19 @@ export const ProductsList = ({products}: { products: Product[] }) => {
         </FormControl>
       </div> */}
     </section>
-    <div className="container">
-      <ol className="product-list-mobile" style={{display: "flex", flexWrap: "wrap", gap: "30px", padding: "10px"}}>
+    <div>
+      <ol className="product-list-mobile" style={{display: "flex", flexWrap: "wrap"}}>
         {products.length > 0 ? (
           products.map((product) => (
             <li
               key={product.product_pk}
               className="product-item"
               style={{
-                padding: "15px",
+                padding: "10px",
                 width: "calc(25% - 25px)",
-                borderRadius: "5px",
+                borderRadius: "2px",
                 border: "2px solid #271A11",
                 transition: "transform 0.3s, opacity 0.3s",
-                // opacity: 0,
                 transform: "translateY(20px)"
               }}
               onMouseEnter={enlargeImage}
@@ -226,7 +225,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
               <div style={{display: "flex", flexWrap: "wrap", gap: "10px"}}>
                 {product.etc && (
                   <button
-                    className="product-button"
+                    className="product-button hidden md:block"
                     style={{
                       padding: "5px 8px",
                       backgroundColor: "#000",
@@ -241,7 +240,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
                   </button>
                 )}
                 <button
-                  className="product-button"
+                  className="product-button hidden md:block"
                   style={{
                     padding: "5px 8px",
                     backgroundColor: "#A51C30",
@@ -255,7 +254,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
                   진공포장
                 </button>
                 <button
-                  className="product-button"
+                  className="product-button hidden md:block"
                   style={{
                     padding: "5px 8px",
                     backgroundColor: "#FACC15",

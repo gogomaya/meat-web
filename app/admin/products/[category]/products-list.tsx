@@ -10,6 +10,8 @@ import {EnhancedTabledHead, EnhancedTablePagination} from "@/components/common/T
 import {ProductCategory, Product, ProductsSearchParams} from "@/types/productsTypes"
 import {commonServices} from "@/services/commonServices"
 import moment from "moment"
+import ArrowCircleUpIcon from "@mui/icons-material/ArrowCircleUp"
+import ArrowCircleDownIcon from "@mui/icons-material/ArrowCircleDown"
 
 const AdminProductsList = ({
   products,
@@ -75,7 +77,8 @@ const AdminProductsList = ({
                 {id: "name", label: "이름", sort: true},
                 {id: "category_menu", label: "메뉴", sort: false},
                 {id: "price", label: "금액", sort: true},
-                {id: "created_at", label: "작성시간", sort: true}
+                {id: "created_at", label: "작성시간", sort: true},
+                {id: "order", label: "순서변경", sort: true}
               ]}
             />
             <TableBody>
@@ -101,6 +104,10 @@ const AdminProductsList = ({
                   <TableCell>{product.category_menu}</TableCell>
                   <TableCell>{(product.price).toLocaleString()}원</TableCell>
                   <TableCell>{moment(product.created_at).format("YYYY-MM-DD")}</TableCell>
+                  <TableCell>
+                    <ArrowCircleUpIcon/>
+                    <ArrowCircleDownIcon/>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

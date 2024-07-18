@@ -438,9 +438,9 @@ export const CartsDetailContent = ({user}: { user: User }) => {
               </div>
               {/* 모바일 시작*/}
               <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg block md:hidden">
-                <div className="min-w-full divide-y divide-gray-200 text-center">
+                <div className="min-w-full divide-y divide-gray-200 text-center" style={{backgroundImage: "url('/images/Bg_3.png')"}}>
                   {cartProducts.length === 0 ? (
-                    <div className="bg-white divide-y divide-gray-200">
+                    <div className="bg-white divide-y divide-gray-200" style={{backgroundImage: "url('/images/Bg_3.png')"}}>
                       <div>
                         <div className="flex justify-center items-center">장바구니가 비었습니다.</div>
                       </div>
@@ -449,7 +449,7 @@ export const CartsDetailContent = ({user}: { user: User }) => {
                     <div className="bg-white">
                       {cartProducts.map((cartProduct, index) => (
                         <>
-                          <div key={cartProduct.product.product_pk} className="flex gap-3 bg-white p-4">
+                          <div key={cartProduct.product.product_pk} className="flex gap-3 bg-white p-4" style={{backgroundImage: "url('/images/Bg_3.png')"}}>
                             <div className="flex">
                               <Checkbox
                                 {...register(`cartProducts.${index}.checked`)}
