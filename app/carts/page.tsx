@@ -4,7 +4,7 @@ import {CartsDetailContent} from "./Carts"
 import {useState} from "react"
 
 const Cart = async () => {
-  const {user} = await loginCheck(true)
+  const {user} = await loginCheck(false)
   return (
     <MainLayout user={user}>
       <div>

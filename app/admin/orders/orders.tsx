@@ -5,26 +5,17 @@ import {Paper, Table, TableBody, TableCell, TableContainer, TableRow} from "@mui
 import {IconButton, InputBase, Button} from "@mui/material"
 import SearchIcon from "@mui/icons-material/Search"
 import {EnhancedTabledHead, EnhancedTablePagination} from "@/components/common/Table"
-import {User} from "@/types/usersTypes"
 import {ResponseApi, SearchParams} from "@/types/commonTypes"
-import {usersServices} from "@/services/usersServices"
-import {backdrop} from "@/components/common/Backdrop"
-import {toastError} from "@/components/common/Toast"
 import moment from "moment"
 import {Order} from "@/types/ordersTypes"
-import {OrderItem, OrderItemSearchParams} from "@/types/orderItemsTypes"
-import {orderItemsService} from "@/services/orderItemsServices"
-import orders from "@/app/mypage/orders/orders"
 import {getOrderStatusMeaning} from "@/app/mypage/orders/ordersUtils"
 import withReactContent from "sweetalert2-react-content"
 import Swal from "sweetalert2"
 import * as XLSX from "xlsx"
 import {ordersServices} from "@/services/ordersServices"
 import LocalShippingIcon from "@mui/icons-material/LocalShipping"
-import CreditCardOffIcon from "@mui/icons-material/CreditCardOff"
-import {shipmentsServices} from "@/services/shipmentsServices"
-import {Shipment} from "@/types/shipmentsTypes"
-import {Address} from "@/types/addressTypes"
+
+import SmsIcon from "@mui/icons-material/Sms"
 
 const AdminOrdersList = ({
   orders,
@@ -191,7 +182,7 @@ const AdminOrdersList = ({
                   {(order.status !== "pending") ? (
                     <TableCell style={{cursor: "pointer"}}>
                       <button  onClick={()=>handleOrderDetail(order.order_pk, order.user_pk ?? 0, order.address_pk, order.shipment_pk)}>
-                        <LocalShippingIcon />
+                        <SmsIcon />
                       </button>
                     </TableCell>
                   ) : (

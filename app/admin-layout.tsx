@@ -2,12 +2,13 @@
 import {useState} from "react"
 import {usePathname, useRouter} from "next/navigation"
 import Link from "next/link"
-import {Paper, Breadcrumbs, Drawer} from "@mui/material"
+import {Paper, Breadcrumbs, Drawer, Dialog, DialogTitle, DialogContent, TextField, Button, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, DialogActions} from "@mui/material"
 import MenuIcon from "@mui/icons-material/Menu"
 import LogoutIcon from "@mui/icons-material/Logout"
 import {usersServices} from "@/services/usersServices"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faGift, faCow, faP, faGlobe, faUtensils, faMagic} from "@fortawesome/free-solid-svg-icons"
+import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd"
 
 
 const AdminLayout = ({
@@ -100,6 +101,7 @@ const AdminLayoutMenu = ({
   setHeaderMenuOpen?: Function
 }) => {
   const pathname = usePathname()
+  const [open, setOpen] = useState(false)
   return (
     <ul className={`${prefix === "lg" ? "hidden lg:block bg-[#383838] w-[150px] h-full text-white": "w-[300px]"}`}>
       <li className="px-4 py-2 border-b border-50 lg:border-0">
@@ -139,9 +141,107 @@ const AdminLayoutMenu = ({
         >문의 관리</Link>
       </li>
       <ul className="bg-gray-800 rounded-lg shadow-lg overflow-hidden">
-        <span className="block text-xl font-bold text-white bg-yellow-500 py-2 px-4">
-          상품관리
-        </span>
+        <div className="flex items-center">
+          <span className="block text-xl font-bold text-white bg-yellow-500 py-2 px-4">
+            상품관리
+          </span>
+          <PlaylistAddIcon
+            className="ml-2 cursor-pointer"
+            onClick={() => setOpen(true)}
+          />
+        </div>
+        {/* 1차메뉴 조정 */}
+        <Dialog open={open} onClose={() => setOpen(false)}>
+          <form onSubmit={(event) => {
+            event.preventDefault()
+          }}>
+            <DialogTitle>메뉴 조정</DialogTitle>
+            <DialogContent>
+              <div>
+                <Paper className="p-4 mb-4 flex justify-between">
+                  <TextField
+                    autoFocus
+                    label="이름"
+                    placeholder="한글명"
+                    fullWidth
+                    variant="standard"
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                  />
+                  <TextField
+                    className="!ml-4"
+                    label="URL 영문주소"
+                    placeholder="영문명"
+                    fullWidth
+                    variant="standard"
+                    InputLabelProps={{
+                      shrink: true
+                    }}
+                  />
+                  <Button
+                    className="!ml-4 !bg-[#1976d2] hover:!bg-[#1565c0]"
+                    variant="contained"
+                    type="submit"
+                  >등록</Button>
+                </Paper>
+                <Paper className="p-4">
+                  <TableContainer>
+                    <Table>
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>이름</TableCell>
+                          <TableCell>URL 영문주소</TableCell>
+                          <TableCell>
+                            <Button
+                              className="!bg-[#ed6c02] hover:!bg-[#e65100]"
+                              variant="contained"
+                            >순서 변경</Button>
+                          </TableCell>
+                          <TableCell>삭제</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      {/* <TableBody>
+                        {brands.map((brand, index) => (
+                          <TableRow key={brand.brand_pk}>
+                            <TableCell>{brand.name}</TableCell>
+                            <TableCell>{brand.id}</TableCell>
+                            <TableCell>
+                              <ArrowCircleUpIcon
+                                className={`${index === 0 ? "text-black/20" : "cursor-pointer"}`}
+                                onClick={() => {
+                                  if (index === 0) return
+                                  orderChange(index, -1)
+                                }}
+                              />
+                              <ArrowCircleDownIcon
+                                className={`ml-1 ${index === brands.length - 1 ? "text-black/20" : "cursor-pointer"}`}
+                                onClick={() => {
+                                  if (index === brands.length - 1) return
+                                  orderChange(index, 1)
+                                }}
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <Button
+                                className="!bg-[#d32f2f] hover:!bg-[#d32f2f]/[.4]"
+                                variant="contained"
+                                onClick={() => brandsDelete(brand)}
+                              >삭제</Button>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody> */}
+                    </Table>
+                  </TableContainer>
+                </Paper>
+              </div>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={() => setOpen(false)}>닫기</Button>
+            </DialogActions>
+          </form>
+        </Dialog>
         <li className="flex items-center px-4 py-2 border-b border-gray-700 lg:border-0">
           <FontAwesomeIcon icon={faGift} className="text-yellow-500 mr-3" />
           <Link

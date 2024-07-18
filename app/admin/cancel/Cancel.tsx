@@ -13,6 +13,7 @@ import {useEffect, useState} from "react"
 import Swal from "sweetalert2"
 import withReactContent from "sweetalert2-react-content"
 import {orderCancel} from "./orderCancel"
+import SmsIcon from "@mui/icons-material/Sms"
 
 const AdminCancelList = ({
   cancels,
@@ -123,15 +124,16 @@ const AdminCancelList = ({
                   <TableCell>{moment(cancel.created_at).format("YYYY-MM-DD")}</TableCell>
                   <TableCell style={{cursor: "pointer"}}>
                     <button  onClick={()=>handleOrderDetail()}>
-                      {/* TODO: 취소 상세 보기에 어울리는 아이콘으로 */}
-                      <LocalShippingIcon />
+                      <SmsIcon />
                     </button>
                   </TableCell>
-                  <TableCell style={{cursor: "pointer"}}>
-                    <button onClick={()=>handleCancel(cancel.cancellation_pk, cancel.order_pk)}>
-                      <CreditCardOffIcon />
-                    </button>
-                  </TableCell>
+                  {cancel.status === "pending" && (
+                    <TableCell style={{cursor: "pointer"}}>
+                      <button onClick={()=>handleCancel(cancel.cancellation_pk, cancel.order_pk)}>
+                        <CreditCardOffIcon />
+                      </button>
+                    </TableCell>
+                  )}
                 </TableRow>
               ))}
             </TableBody>
