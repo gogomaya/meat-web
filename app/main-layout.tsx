@@ -7,14 +7,16 @@ import SearchIcon from "@mui/icons-material/Search"
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline"
 import CloseIcon from "@mui/icons-material/Close"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
-import {Accordion, AccordionDetails, AccordionSummary, Badge, Box, Button, Divider, Drawer, IconButton, InputBase, Menu, MenuList, Typography} from "@mui/material"
+import {Accordion, AccordionDetails, AccordionSummary, Badge, Box, Button, Collapse, Divider, Drawer, IconButton, InputAdornment, InputBase, Menu, MenuList, TextField, Typography} from "@mui/material"
 import Users from "@/components/users/users"
 import {User} from "@/types/usersTypes"
 import {commonServices} from "@/services/commonServices"
 import ExpandLessIcon from "@mui/icons-material/ExpandLess"
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"
 import {usersServices} from "@/services/usersServices"
+import {useNavigate} from "react-router-dom"
 import {useRouter} from "next/navigation"
+import router from "next/router"
 
 
 
@@ -86,7 +88,7 @@ const MainLayout = ({
           />
         </Link>
         <MegaMenu user={user} />
-        <div className="flex gap-3">
+        <div className="flex items-center gap-3">
           <MainSearch />
           <Users user={user} />
           {userStatus ? (
@@ -340,29 +342,101 @@ export const loading = () => {
   )
 }
 
+// 원래 검색기능
+// const MainSearch = () => {
+//   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+//   return <>
+//     <Link
+//       href=""
+//       className="hidden md:block p-0 text-black"
+//       onClick={(event: React.MouseEvent<HTMLAnchorElement>) => {
+//         event.preventDefault()
+//         setAnchorEl(event.currentTarget)
+//       }}
+//     >
+//       <SearchIcon className="w-[32px] h-[32px]" />
+//     </Link>
+//     <Menu
+//       anchorEl={anchorEl}
+//       open={Boolean(anchorEl)}
+//       onClose={() => setAnchorEl(null)}
+//     >
+//       <MenuList>
+//         <SearchBar />
+//       </MenuList>
+//     </Menu>
+//   </>
+// }
+
 const MainSearch = () => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-  return <>
-    <Link
-      href=""
-      className="hidden md:block p-0 text-black"
-      onClick={(event: React.MouseEvent<HTMLAnchorElement>) => {
-        event.preventDefault()
-        setAnchorEl(event.currentTarget)
-      }}
-    >
-      <SearchIcon className="w-[32px] h-[32px]" />
-    </Link>
-    <Menu
-      anchorEl={anchorEl}
-      open={Boolean(anchorEl)}
-      onClose={() => setAnchorEl(null)}
-    >
-      <MenuList>
-        <SearchBar />
-      </MenuList>
-    </Menu>
-  </>
+  const [searchTerm, setSearchTerm] = useState<string>("")
+  const [showSearch, setShowSearch] = useState<boolean>(false)
+
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value)
+  }
+  const router = useRouter()
+
+  const handleButtonClick = () => {
+    if (showSearch) {
+      router.push(`/search?query=${searchTerm}`)
+    } else {
+      setShowSearch(true)
+    }
+  }
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleButtonClick()
+    }
+  }
+
+  return (
+    <div style={{display: "flex", alignItems: "center"}}>
+      {!showSearch && (
+        <IconButton onClick={handleButtonClick}>
+          <SearchIcon />
+        </IconButton>
+      )}
+      <Collapse in={showSearch} timeout="auto" unmountOnExit>
+        <Box ml={2}>
+          <TextField
+            variant="outlined"
+            placeholder="검색어를 입력해주세요."
+            onChange={handleSearch}
+            onKeyDown={handleKeyDown}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={handleButtonClick}>
+                    <SearchIcon />
+                  </IconButton>
+                </InputAdornment>
+              ),
+              sx: {
+                height: "32px",
+                padding: "0 14px",
+                fontSize: "0.875rem"
+              }
+            }}
+            sx={{
+              width: "330px",
+              backgroundColor: "white",
+              borderRadius: "4px",
+              boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+              ".MuiOutlinedInput-root": {
+                height: "42px",
+                minHeight: "42px"
+              },
+              ".MuiOutlinedInput-input": {
+                padding: "0",
+                fontSize: "0.875rem"
+              }
+            }}
+          />
+        </Box>
+      </Collapse>
+    </div>
+  )
 }
 
 const MainMobileMenu = ({user}: { user: User }) => {

@@ -205,7 +205,7 @@ const AdminOrdersList = ({
           <EnhancedTablePagination total_rows={total_rows} searchParams={searchParams} />
         </TableContainer>
       </Paper>
-      <div className="flex justify-start py-4">
+      {/* <div className="flex justify-start py-4">
         <button
           onClick={handleDownloadExcel}
           className="py-4"
@@ -224,7 +224,7 @@ const AdminOrdersList = ({
         >
           결제완료 주문 목록 Excel 다운로드
         </button>
-      </div>
+      </div> */}
     </div>
   )
 }

@@ -156,7 +156,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
       </div> */}
     </section>
     <div>
-      <ol className="product-list-mobile" style={{display: "flex", flexWrap: "wrap"}}>
+      <ol className="product-list-mobile" style={{display: "flex", flexWrap: "wrap", gap: "12px"}}>
         {products.length > 0 ? (
           products.map((product) => (
             <li
@@ -165,7 +165,7 @@ export const ProductsList = ({products}: { products: Product[] }) => {
               style={{
                 padding: "10px",
                 width: "calc(25% - 25px)",
-                borderRadius: "2px",
+                borderRadius: "5px",
                 border: "2px solid #271A11",
                 transition: "transform 0.3s, opacity 0.3s",
                 transform: "translateY(20px)"
