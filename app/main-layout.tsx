@@ -88,7 +88,7 @@ const MainLayout = ({
           />
         </Link>
         <MegaMenu user={user} />
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5">
           <MainSearch />
           <Users user={user} />
           {userStatus ? (
@@ -342,32 +342,6 @@ export const loading = () => {
   )
 }
 
-// 원래 검색기능
-// const MainSearch = () => {
-//   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-//   return <>
-//     <Link
-//       href=""
-//       className="hidden md:block p-0 text-black"
-//       onClick={(event: React.MouseEvent<HTMLAnchorElement>) => {
-//         event.preventDefault()
-//         setAnchorEl(event.currentTarget)
-//       }}
-//     >
-//       <SearchIcon className="w-[32px] h-[32px]" />
-//     </Link>
-//     <Menu
-//       anchorEl={anchorEl}
-//       open={Boolean(anchorEl)}
-//       onClose={() => setAnchorEl(null)}
-//     >
-//       <MenuList>
-//         <SearchBar />
-//       </MenuList>
-//     </Menu>
-//   </>
-// }
-
 const MainSearch = () => {
   const [searchTerm, setSearchTerm] = useState<string>("")
   const [showSearch, setShowSearch] = useState<boolean>(false)
@@ -379,7 +353,11 @@ const MainSearch = () => {
 
   const handleButtonClick = () => {
     if (showSearch) {
-      router.push(`/search?query=${searchTerm}`)
+      if (searchTerm) {
+        router.push(`/search?query=${searchTerm}`)
+      } else {
+        setShowSearch(false)
+      }
     } else {
       setShowSearch(true)
     }
@@ -391,10 +369,10 @@ const MainSearch = () => {
   }
 
   return (
-    <div style={{display: "flex", alignItems: "center"}}>
+    <div className="flex items-center">
       {!showSearch && (
         <IconButton onClick={handleButtonClick}>
-          <SearchIcon />
+          <SearchIcon style={{color: "black"}}/>
         </IconButton>
       )}
       <Collapse in={showSearch} timeout="auto" unmountOnExit>
@@ -535,7 +513,6 @@ const MainMobileMenu = ({user}: { user: User }) => {
               <span className="flex-1"></span>
             </div>
           </nav>
-          <SearchBar />
           <nav>
             <ul className="items-center p-8">
               <li>
@@ -633,24 +610,25 @@ const MainMobileMenu = ({user}: { user: User }) => {
           />
         </Link>
       </IconButton>
+      {/* <SearchBar /> */}
     </div>
   )
 }
 
 
-const SearchBar = () => {
-  return (
-    <section className="flex items-center bg-white shadow-lg rounded-full p-2">
-      <InputBase
-        className="flex-1 ml-3 text-gray-700 placeholder-gray-500 focus:outline-none"
-        placeholder="검색어를 입력해주세요."
-      />
-      <IconButton type="button" className="text-gray-500 hover:text-gray-700 focus:outline-none">
-        <SearchIcon />
-      </IconButton>
-    </section>
-  )
-}
+// const SearchBar = () => {
+//   return (
+//     <section className="flex items-center bg-white shadow-lg rounded-full p-2">
+//       <InputBase
+//         className="flex-1 ml-3 text-gray-700 placeholder-gray-500 focus:outline-none"
+//         placeholder="검색어를 입력해주세요."
+//       />
+//       <IconButton type="button" className="text-gray-500 hover:text-gray-700 focus:outline-none">
+//         <SearchIcon />
+//       </IconButton>
+//     </section>
+//   )
+// }
 
 const MainBottom = () => {
 
@@ -668,21 +646,26 @@ const MainBottom = () => {
         boxShadow: "0 -4px 8px rgba(0, 0, 0, 0.1)"
       }}
     >
-      <div className="bg-transparent p-6 md:p-12">
+      <div className="bg-transparent p-4 md:p-12">
         <div className="flex footer-menu-link space-x-4">
           <Link href={"https://smartstore.naver.com/hansolmeat1534"}>
-            <div className="footer-menu-content cursor-pointer hover:underline text-black">회사소개</div>
+            <div className="footer-menu-content cursor-pointer hover:underline text-black whitespace-nowrap">회사소개</div>
           </Link>
           <Link href={"/faq"}>
-            <div className="footer-menu-content cursor-pointer hover:underline text-black">이용안내</div>
+            <div className="footer-menu-content cursor-pointer hover:underline text-black whitespace-nowrap">이용안내</div>
           </Link>
           <Link href={"/policy"}>
-            <div className="footer-menu-content cursor-pointer hover:underline text-black">이용약관</div>
+            <div className="footer-menu-content cursor-pointer hover:underline text-black whitespace-nowrap">이용약관</div>
           </Link>
           <Link href={"/policy"}>
-            <div className="footer-menu-content cursor-pointer hover:underline text-black">개인정보처리방침</div>
+            <div className="footer-menu-content cursor-pointer hover:underline text-black whitespace-nowrap">개인정보처리방침</div>
           </Link>
         </div>
+        <style jsx>{`
+          .footer-menu-content {
+            white-space: nowrap;
+          }
+        `}</style>
         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <div className="text-2xl font-bold text-black" style={{textAlign: "left"}}>
           (주) 한솔축산
