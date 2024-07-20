@@ -73,19 +73,22 @@ const Products = async (props: {
             {titleName()}
           </div>
         </div>
-        <div className="container flex flex-col justify-center items-center">
+        <div className="container flex flex-col py-8">
           <div style={{
             padding: "20px",
-            borderRadius: "10px", // Smoother border radius
+            borderRadius: "10px",
             marginTop: "30px",
             marginBottom: "20px",
             lineHeight: "1.5",
             fontSize: "16px",
             textAlign: "center",
             border: "2px solid #FACC15",
-            backgroundColor: "rgba(255, 255, 255, 0.95)", // Lighter background color
+            backgroundColor: "rgba(255, 255, 255, 0.95)",
             backgroundImage: "url('/images/Bg_3.png')",
-            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)" // Adding a subtle shadow
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+            maxWidth: "650px",
+            width: "95%",
+            margin: "0 auto"
           }}>
             <strong className="py-3 text-black" style={{
               display: "block",
@@ -107,6 +110,10 @@ const Products = async (props: {
             <ProductsPagination searchParams={searchParams} total_rows={total_rows} />
           ) : null}
         </div>
+        <ProductsList products={products} />
+        {total_rows ? (
+          <ProductsPagination searchParams={searchParams} total_rows={total_rows} />
+        ) : null}
       </div>
     </MainLayout>
   )

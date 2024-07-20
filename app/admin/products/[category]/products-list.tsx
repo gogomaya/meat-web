@@ -29,6 +29,10 @@ const AdminProductsList = ({
   const [category_menu, set_category_menu] = useState(searchParams.category_menu)
   const [query, setQuery] = useState(searchParams.query)
   const categoriesMenu = commonServices.categoriesMenu()
+  const orderChange = (index: number, add: number) => {
+    const currentCategory = products.splice(index, 1)
+    products.splice(index + add, 0, products[0])
+  }
   useEffect(() => {
     setQuery(searchParams.query)
   }, [searchParams.query])
@@ -82,7 +86,7 @@ const AdminProductsList = ({
               ]}
             />
             <TableBody>
-              {products.map((product) => (
+              {products.map((product, index) => (
                 <TableRow key={product.product_pk}>
                   <TableCell>{product.product_pk}</TableCell>
                   <TableCell>
@@ -105,8 +109,20 @@ const AdminProductsList = ({
                   <TableCell>{(product.price).toLocaleString()}원</TableCell>
                   <TableCell>{moment(product.created_at).format("YYYY-MM-DD")}</TableCell>
                   <TableCell>
-                    <ArrowCircleUpIcon/>
-                    <ArrowCircleDownIcon/>
+                    <ArrowCircleUpIcon
+                      className={`${index === 0 ? "text-black/20" : "cursor-pointer"}`}
+                      onClick={() => {
+                        if (index === 0) return
+                        orderChange(index, -1)
+                      }}
+                    />
+                    <ArrowCircleDownIcon
+                      className={`ml-1 ${index === products.length - 1 ? "text-black/20" : "cursor-pointer"}`}
+                      onClick={() => {
+                        if (index === products.length - 1) return
+                        orderChange(index, 1)
+                      }}
+                    />
                   </TableCell>
                 </TableRow>
               ))}
