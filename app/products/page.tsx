@@ -110,10 +110,6 @@ const Products = async (props: {
             <ProductsPagination searchParams={searchParams} total_rows={total_rows} />
           ) : null}
         </div>
-        <ProductsList products={products} />
-        {total_rows ? (
-          <ProductsPagination searchParams={searchParams} total_rows={total_rows} />
-        ) : null}
       </div>
     </MainLayout>
   )
