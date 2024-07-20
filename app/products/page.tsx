@@ -73,23 +73,34 @@ const Products = async (props: {
             {titleName()}
           </div>
         </div>
-        <div className="container" style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column"}}>
+        <div className="container flex flex-col justify-center items-center">
           <div style={{
             padding: "20px",
-            borderRadius: "5px",
+            borderRadius: "10px", // Smoother border radius
             marginTop: "30px",
             marginBottom: "20px",
             lineHeight: "1.5",
             fontSize: "16px",
             textAlign: "center",
             border: "2px solid #FACC15",
-            backgroundColor: "rgba(255, 255, 255, 0.8)",
-            backgroundImage: "url('/images/Bg_3.png')"
+            backgroundColor: "rgba(255, 255, 255, 0.95)", // Lighter background color
+            backgroundImage: "url('/images/Bg_3.png')",
+            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)" // Adding a subtle shadow
           }}>
-            <strong className="py-3 text-black" style={{display: "block", marginBottom: "10px", fontSize: "18px"}}>구매 시 참고사항</strong>
-            <p className="text-black" style={{marginBottom: "10px"}}>식당에서 제공되는 1인분의 양은 일반적으로 150g이며, 서울의 경우 최근에는 120g 정도입니다.</p>
-            <p className="text-black" style={{marginBottom: "10px"}}>특상 제품은 오마카세에서 제공되는 고기 품질입니다.</p>
-            <p className="text-black" style={{marginBottom: "10px"}}>일반 제품은 고급 한우 식당에서 제공되는 고기 품질입니다.</p>
+            <strong className="py-3 text-black" style={{
+              display: "block",
+              marginBottom: "10px",
+              fontSize: "18px"
+            }}>📌 구매 시 참고사항</strong>
+            <p className="text-black" style={{marginBottom: "10px"}}>
+              🍽️ 식당에서 제공되는 1인분의 양은 일반적으로 150g이며, 서울의 경우 최근에는 120g 정도입니다.
+            </p>
+            <p className="text-black" style={{marginBottom: "10px"}}>
+              🥩 특상 제품은 오마카세에서 제공되는 고기 품질입니다.
+            </p>
+            <p className="text-black" style={{marginBottom: "10px"}}>
+              🍖 일반 제품은 고급 한우 식당에서 제공되는 고기 품질입니다.
+            </p>
           </div>
           <ProductsList products={products} />
           {total_rows ? (
