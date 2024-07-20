@@ -6,6 +6,7 @@ import ErrorPage from "@/app/error"
 import AdminCancelList from "./Cancel"
 import {cancellationsServices} from "@/services/cancellationsServices"
 import {Cancellation} from "@/types/cancellationsTypes"
+import {categoriesServices} from "@/services/categoriesServices"
 
 const AdminCancel = async (props: {searchParams: SearchParams}) => {
   const loginChecked = await adminCheck(true)
@@ -34,9 +35,10 @@ const AdminCancel = async (props: {searchParams: SearchParams}) => {
     console.error(error)
     return <ErrorPage />
   }
+  const categoriesResponse: ResponseApi = await categoriesServices.categoriesList()
 
   return (
-    <AdminLayout>
+    <AdminLayout categories={categoriesResponse.data.categories}>
       <AdminCancelList
         cancels={cancels}
         total_rows={cancelResponse.data.total_rows}

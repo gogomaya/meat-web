@@ -39,26 +39,29 @@ const Search = async (props: {searchParams: SearchParams}) => {
           marginBottom: "20px"
         }}>검색결과
         </div>
+      </div>
+      <div className="container">
         <div style={{
-          backgroundColor: "rgba(255, 255, 255, 0.8)",
-          padding: "15px",
-          borderRadius: "10px",
-          marginTop: "20px",
-          boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+          padding: "20px",
+          borderRadius: "5px",
+          marginTop: "30px",
+          marginBottom: "20px",
           lineHeight: "1.5",
           fontSize: "16px",
-          maxWidth: "600px"
+          textAlign: "center",
+          border: "2px dashed #A51C30",
+          backgroundColor: "rgba(255, 255, 255, 0.8)"
         }}>
-          <strong>구매 시 참고사항</strong>
-          <p>식당에서 제공되는 1인분의 양은 일반적으로 150g이며, 서울의 경우 최근에는 120g 정도입니다.</p>
-          <p>특상 제품은 오마카세에서 제공되는 고기 품질입니다.</p>
-          <p>일반 제품은 고급 한우 식당에서 제공되는 고기 품질입니다.</p>
+          <strong className="py-3 text-black" style={{display: "block", marginBottom: "10px", fontSize: "18px"}}>구매 시 참고사항</strong>
+          <p className="text-black" style={{marginBottom: "10px"}}>식당에서 제공되는 1인분의 양은 일반적으로 150g이며, 서울의 경우 최근에는 120g 정도입니다.</p>
+          <p className="text-black" style={{marginBottom: "10px"}}>특상 제품은 오마카세에서 제공되는 고기 품질입니다.</p>
+          <p className="text-black" style={{marginBottom: "10px"}}>일반 제품은 고급 한우 식당에서 제공되는 고기 품질입니다.</p>
         </div>
+        <ProductsSearchList
+          products={response.data.products}
+          total_rows={response.data.total_rows}
+          searchParams={searchParams} />
       </div>
-      <ProductsSearchList
-        products={response.data.products}
-        total_rows={response.data.total_rows}
-        searchParams={searchParams} />
     </MainLayout>
   )
 }

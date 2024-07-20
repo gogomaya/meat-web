@@ -3,6 +3,7 @@ import {usersServices} from "@/services/usersServices"
 import {adminCheck} from "@/app/users/login/loginCheck"
 import AdminLayout from "@/app/admin-layout"
 import AdminUsersList from "./users"
+import {categoriesServices} from "@/services/categoriesServices"
 
 const AdminUsers = async (props: {searchParams: SearchParams}) => {
   const loginChecked = await adminCheck(true)
@@ -14,8 +15,10 @@ const AdminUsers = async (props: {searchParams: SearchParams}) => {
     query: props.searchParams.query || ""
   } as SearchParams
   const response: ResponseApi = await usersServices.usersRead(loginChecked, searchParams)
+  const categoriesResponse: ResponseApi = await categoriesServices.categoriesList()
+
   return (
-    <AdminLayout>
+    <AdminLayout categories={categoriesResponse.data.categories}>
       <div></div>
       <AdminUsersList
         users={response.data.users}

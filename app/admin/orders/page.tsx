@@ -5,9 +5,13 @@ import {adminCheck} from "@/app/users/login/loginCheck"
 import AdminLayout from "@/app/admin-layout"
 import AdminOrdersList from "./orders"
 import ErrorPage from "@/app/error"
+import {categoriesServices} from "@/services/categoriesServices"
 
 const AdminOrders = async (props: {searchParams: SearchParams}) => {
   const loginChecked = await adminCheck(true)
+  const categoriesResponse: ResponseApi = await categoriesServices.categoriesList()
+  console.log("※※※※※※※※※※※※※※")
+  console.log(categoriesResponse.data.categories)
   const searchParams = {
     rowsPerPage: Number(props.searchParams.rowsPerPage) || 10,
     page: Number(props.searchParams.page) || 0,
@@ -26,7 +30,7 @@ const AdminOrders = async (props: {searchParams: SearchParams}) => {
     console.error(error)
     return <ErrorPage />
   }  return (
-    <AdminLayout>
+    <AdminLayout categories={categoriesResponse.data.categories}>
       <div></div>
       <AdminOrdersList
         orders={ordersResponse.data.orders}

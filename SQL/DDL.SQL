@@ -83,8 +83,13 @@ CREATE TABLE `orders` (
 	`created_at`	DATETIME	NOT NULL	DEFAULT current_timestamp()
 );
 
-
-
+DROP TABLE IF EXISTS `categories`;
+CREATE TABLE `categories` (
+  `category_pk` INT(11)	NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `name` VARCHAR(255) NOT NULL,
+  `id` VARCHAR(255) NOT NULL UNIQUE,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
 
 --------------------------- [order_items] ---------------------------

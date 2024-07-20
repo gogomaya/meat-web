@@ -1,7 +1,6 @@
 import {SearchParams} from "./commonTypes"
 
-export type ProductCategory = "cow" | "pork" | "simple"
-
+export type ProductCategory = "giftSet" | "cow" | "pork" | "imported" | "simple"
 export interface Product {
   product_pk: number
   name: string

@@ -5,6 +5,7 @@ import {ProductsSearchParams} from "@/types/productsTypes"
 import {BoardsSearchParams} from "@/types/boardsTypes"
 import AdminLayout from "@/app/admin-layout"
 import {AdminQnaList} from "./qna"
+import {categoriesServices} from "@/services/categoriesServices"
 
 const Products = async (props: {
   params: {product_pk: number},
@@ -19,8 +20,10 @@ const Products = async (props: {
   } as BoardsSearchParams
   const boardsResponse: ResponseApi = await boardsServices.boardsAdminRead(boardsSearchParams)
   const {boards, total_rows: boards_total_rows} = boardsResponse.data
+  const categoriesResponse: ResponseApi = await categoriesServices.categoriesList()
+
   return (
-    <AdminLayout>
+    <AdminLayout categories={categoriesResponse.data.categories}>
       <div>
         <AdminQnaList
           user={user}

@@ -15,6 +15,7 @@ import {shipmentsServices} from "@/services/shipmentsServices"
 import UpdateTrackingNo from "../../../../shipment"
 import {addressServices} from "@/services/addressServices"
 import {Address} from "@/types/addressTypes"
+import {categoriesServices} from "@/services/categoriesServices"
 
 const OrderDetail = async (props: {
   params: { order_pk: number, user_pk: number, address_pk: number, shipment_pk: number }
@@ -98,9 +99,10 @@ const OrderDetail = async (props: {
     const formattedNumber = number.toLocaleString()
     return formattedNumber
   }
+  const categoriesResponse: ResponseApi = await categoriesServices.categoriesList()
 
   return (
-    <AdminLayout>
+    <AdminLayout categories={categoriesResponse.data.categories}>
       <div className="flex flex-col items-center gap-10 my-2 mx-4 md:mx-0">
         <div className="w-full flex flex-col gap-6 max-w-4xl bg-white shadow-md p-6">
           <span className="text-2xl">주문 상세</span>

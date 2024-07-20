@@ -4,6 +4,7 @@ import {ProductCategory, ProductsSearchParams} from "@/types/productsTypes"
 import {productsServices} from "@/services/productsServices"
 import AdminLayout from "@/app/admin-layout"
 import AdminProductsList from "./products-list"
+import {categoriesServices} from "@/services/categoriesServices"
 
 const AdminProducts = async (props: {
   params: {category: ProductCategory}, searchParams: ProductsSearchParams
@@ -19,8 +20,9 @@ const AdminProducts = async (props: {
     category_menu: props.searchParams.category_menu || ""
   } as ProductsSearchParams
   const response: ResponseApi = await productsServices.productsRead(searchParams)
+  const categoriesResponse: ResponseApi = await categoriesServices.categoriesList()
   return (
-    <AdminLayout>
+    <AdminLayout categories={categoriesResponse.data.categories}>
       <AdminProductsList
         products={response.data.products}
         total_rows={response.data.total_rows}

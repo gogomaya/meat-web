@@ -28,6 +28,8 @@ const RootLayout = ({
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1"></meta>
         <meta content="yes" name="apple-mobile-web-app-capable" />
         <meta content="minimum-scale=1.0, width=device-width, maximum-scale=1, user-scalable=no" name="viewport" />
+        {/* 구글 사이트 등록 */}
+        <meta name="google-site-verification" content="j44_zipfpz0VmBMAcic04MKOShkonDN8RxjpYfUyqzs" />
       </head>
       <body
         className={`${notoSerifKr.className} min-w-80 overflow-x-hidden`}
