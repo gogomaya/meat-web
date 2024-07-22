@@ -47,7 +47,8 @@ export const adminCheck = async (isPage: boolean): Promise<LoginChecked> => {
     } else {
       throw {
         status: 500,
-        message: "관리자만 접근 가능합니다."
+        message: "관리자만 접근 가능합니다.",
+        redirectTo: "/home"
       }
     }
   }
