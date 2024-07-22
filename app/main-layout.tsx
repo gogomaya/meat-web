@@ -15,6 +15,8 @@ import ExpandLessIcon from "@mui/icons-material/ExpandLess"
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"
 import {usersServices} from "@/services/usersServices"
 import {useRouter} from "next/navigation"
+import {toast, ToastContainer} from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 
 const MainLayout = ({
@@ -340,6 +342,80 @@ const MainSearch = () => {
   )
 }
 
+const MainMobileSearch = () => {
+  const [searchTerm, setSearchTerm] = useState<string>("")
+  const [error, setError] = useState<boolean>(false)
+  const router = useRouter()
+
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value)
+    if (event.target.value) {
+      setError(false)
+    }
+  }
+
+  const handleButtonClick = () => {
+    if (searchTerm) {
+      router.push(`/search?query=${searchTerm}`)
+    } else {
+      setError(true)
+    }
+  }
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleButtonClick()
+    }
+  }
+
+  return (
+    <div className="flex items-center block md:hidden">
+      <Box ml={2}>
+        <TextField
+          variant="outlined"
+          placeholder={error ? "검색어를 한글자 이상 입력해주세요" : "검색어를 입력해주세요."}
+          onChange={handleSearch}
+          onKeyDown={handleKeyDown}
+          value={searchTerm}
+          error={error}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={handleButtonClick}>
+                  <SearchIcon />
+                </IconButton>
+              </InputAdornment>
+            ),
+            sx: {
+              height: "32px",
+              padding: "0 14px",
+              fontSize: "0.875rem",
+              borderColor: error ? "red" : "initial"
+            }
+          }}
+          sx={{
+            width: "230px",
+            backgroundColor: "white",
+            borderRadius: "4px",
+            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+            ".MuiOutlinedInput-root": {
+              height: "42px",
+              minHeight: "42px",
+              "& fieldset": {
+                borderColor: error ? "red" : "initial"
+              }
+            },
+            ".MuiOutlinedInput-input": {
+              padding: "0",
+              fontSize: "0.875rem"
+            }
+          }}
+        />
+      </Box>
+    </div>
+  )
+}
+
 const MainMobileMenu = ({user}: { user: User }) => {
   const [open, setOpen] = useState(false)
   const categoriesMenu = commonServices.categoriesMenu()
@@ -533,7 +609,7 @@ const MainMobileMenu = ({user}: { user: User }) => {
           />
         </Link>
       </IconButton>
-      {/* <SearchBar /> */}
+      <MainMobileSearch />
     </div>
   )
 }
