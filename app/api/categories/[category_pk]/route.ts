@@ -16,9 +16,9 @@ export const DELETE = async (
       category_pk = ?
     limit 0, 1
   `, [context.params.category_pk])
-  if (rows.length) {
+  if (rows.length > 1) {
     return NextResponse.json({
-      message: "해당 브랜드의 모든 상품을 삭제 후에 다시 시도 하세요."
+      message: "해당 메뉴의 모든 상품을 삭제 후에 다시 시도 하세요."
     }, {status: 500})
   }
   await mysql.execute(`
@@ -26,6 +26,39 @@ export const DELETE = async (
     where category_pk = ?
   `, [context.params.category_pk])
   return NextResponse.json({
-    result: "brandsDelete"
+    result: "categoriesDelete"
   })
+}
+
+
+export const PUT = async (
+  request: NextRequest,
+  context: { params: { category_pk: number } }
+) => {
+  const {category_pk} = context.params
+
+  try {
+    const formData = await request.formData()
+    const name = formData.get("name") || null
+    const id = formData.get("id") || null
+
+    // console.log(`pyment_pk : ${payment_pk}`)
+    const mysql = await mysql2Pool()
+
+    await mysql.execute(`
+      UPDATE categories
+      SET 
+        name = ?,
+        id = ?
+      WHERE category_pk = ?
+    `, [name, id, category_pk])
+
+    return NextResponse.json({
+      message: "Category updated successfully",
+      status: 200
+    })
+  } catch (error) {
+    console.error("Error occurred while updating Category:", error)
+    return NextResponse.error()
+  }
 }

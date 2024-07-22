@@ -16,19 +16,15 @@ import * as yup from "yup"
 import {backdrop} from "@/components/common/Backdrop"
 import {toastError, toastSuccess} from "@/components/common/Toast"
 
-const AdminCategories = (props: {categories: Category[]}) => {
+const AdminCategories = (props: { categories: Category[] }) => {
   const router = useRouter()
   const [open, setOpen] = useState(false)
+  const [editOpen, setEditOpen] = useState(false)
+  const [name, setName] = useState("")
+  const [id, setId] = useState("")
+  const [editCategory, setEditCategory] = useState<Category | null>(null)
   const [categories, setCategories] = useState([...props.categories])
-  const brandForm = useForm<Category>({
-    resolver: yupResolver(yup.object().shape({
-      category_pk: yup.number().required().default(0),
-      name: yup.string().required("이름을 입력해 주세요.").min(3, "이름은 최소 3자 이상입니다."),
-      id: yup.string().required("URL 영문주소를 입력해 주세요.").min(3, "URL 영문주소는 최소 3자 이상입니다.")
-        .matches(/^[a-z\-]+$/, "URL 영문주소 소문자와 -문자만 가능합니다.")
-    }))
-  })
-  const {register, formState: {errors}} = brandForm
+
   const categoryForm = useForm<Category>({
     resolver: yupResolver(yup.object().shape({
       category_pk: yup.number().required().default(0),
@@ -37,11 +33,11 @@ const AdminCategories = (props: {categories: Category[]}) => {
         .matches(/^[a-z\-]+$/, "URL 영문주소 소문자와 -문자만 가능합니다.")
     }))
   })
-  const orderChange = (index: number, add: number) => {
-    const currentCategory = categories.splice(index, 1)
-    categories.splice(index + add, 0, categories[0])
-  }
+
+  const {register, formState: {errors}} = categoryForm
   const categoryFormSubmit = categoryForm.handleSubmit(() => {})
+
+  // 신메뉴 등록
   const categoriesCreate = async () => {
     const category = categoryForm.getValues()
     categoryForm.clearErrors()
@@ -52,15 +48,17 @@ const AdminCategories = (props: {categories: Category[]}) => {
     if (response.error) {
       toastError(response.error)
     } else {
-      toastSuccess("브랜드가 추가 되었습니다.")
+      toastSuccess("메뉴가 추가 되었습니다.")
       setOpen(false)
       categoryForm.reset()
       router.refresh()
     }
     backdrop.close()
   }
+
+  // 메뉴 삭제
   const categoriesDelete = async (category: Category) => {
-    if (!window.confirm(`${category.name} 브랜드를 삭제 하시겠습니까?`)) return
+    if (!window.confirm(`${category.name} 메뉴를 삭제 하시겠습니까?`)) return
     backdrop.open()
     const response: ResponseApi = await categoriesServices.categoriesDelete(category.category_pk)
     if (response.error) {
@@ -70,8 +68,17 @@ const AdminCategories = (props: {categories: Category[]}) => {
     }
     backdrop.close()
   }
+
+  // 메뉴 화살표로 순서 변경
+  const orderChange = (index: number, add: number) => {
+    const currentCategory = categories.splice(index, 1)
+    categories.splice(index + add, 0, currentCategory[0])
+    setCategories([...categories])
+  }
+
+  // 메뉴 순서 최종 확정
   const categoriesOrder = async () => {
-    if (!window.confirm("브랜드 순서를 변경 하시겠습니까?")) return
+    if (!window.confirm("메뉴 순서를 변경 하시겠습니까?")) return
     backdrop.open()
     const response: ResponseApi = await categoriesServices.categoriesOrder(categories)
     if (response.error) {
@@ -83,9 +90,41 @@ const AdminCategories = (props: {categories: Category[]}) => {
     }
     backdrop.close()
   }
+
+  // 메뉴 이름 변경
+  const categoriesUpdate = async () => {
+    if (editCategory === null) return
+    const updatedCategory = {...editCategory, name, id}
+    if (!window.confirm(`${updatedCategory.name} 메뉴를 변경하시겠습니까?`)) return
+    backdrop.open()
+    const response: ResponseApi = await categoriesServices.categoriesUpdate(updatedCategory)
+    if (response.error) {
+      toastError(response.error)
+    } else {
+      router.refresh()
+    }
+    backdrop.close()
+    setEditOpen(false)
+  }
+
   useEffect(() => {
     setCategories(props.categories)
   }, [props])
+
+  const handleEditClickOpen = (category: Category) => {
+    setEditCategory(category)
+    setName(category.name)
+    setId(category.id)
+    setEditOpen(true)
+  }
+
+  const handleEditClose = () => {
+    setEditOpen(false)
+    setName("")
+    setId("")
+    setEditCategory(null)
+  }
+
   return (
     <>
       <span>상품 메뉴</span>
@@ -149,6 +188,7 @@ const AdminCategories = (props: {categories: Category[]}) => {
                           >순서 변경</Button>
                         </TableCell>
                         <TableCell>삭제</TableCell>
+                        <TableCell>편집</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -179,6 +219,13 @@ const AdminCategories = (props: {categories: Category[]}) => {
                               onClick={() => categoriesDelete(category)}
                             >삭제</Button>
                           </TableCell>
+                          <TableCell>
+                            <Button
+                              className="!bg-[#d32f2f] hover:!bg-[#d32f2f]/[.4]"
+                              variant="contained"
+                              onClick={() => handleEditClickOpen(category)}
+                            >편집</Button>
+                          </TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
@@ -191,6 +238,38 @@ const AdminCategories = (props: {categories: Category[]}) => {
             <Button onClick={() => setOpen(false)}>닫기</Button>
           </DialogActions>
         </form>
+      </Dialog>
+
+      <Dialog open={editOpen} onClose={handleEditClose}>
+        <DialogTitle>메뉴명 편집</DialogTitle>
+        <DialogContent>
+          <TextField
+            margin="dense"
+            label="Name"
+            type="text"
+            fullWidth
+            variant="standard"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <TextField
+            margin="dense"
+            label="URL영문주소"
+            type="text"
+            fullWidth
+            variant="standard"
+            value={id}
+            onChange={(e) => setId(e.target.value)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleEditClose} color="primary">
+            취소
+          </Button>
+          <Button onClick={categoriesUpdate} color="primary">
+            수정
+          </Button>
+        </DialogActions>
       </Dialog>
     </>
   )

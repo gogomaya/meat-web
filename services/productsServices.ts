@@ -65,6 +65,17 @@ export const productsServices = {
       return {error}
     }
   },
+  productsOrder: async (products: Product[]): Promise<ResponseApi> => {
+    try {
+      const response = await fetch("/api/products/order", {
+        method: "PATCH",
+        body: JSON.stringify(products)
+      })
+      return await commonServices.responseJson(response)
+    } catch (error) {
+      return {error}
+    }
+  },
   productsUpdate: async (product: Product, uuid: string): Promise<ResponseApi> => {
     try {
       const formData = new FormData()

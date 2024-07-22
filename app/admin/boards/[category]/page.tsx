@@ -11,7 +11,6 @@ const AdminBoards = async (props: {
 }) => {
   await adminCheck(true)
   const categoriesResponse: ResponseApi = await categoriesServices.categoriesList()
-  alert(categoriesResponse.data)
   const searchParams = {
     rowsPerPage: Number(props.searchParams.rowsPerPage) || 10,
     page: Number(props.searchParams.page) || 0,

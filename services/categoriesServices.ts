@@ -32,6 +32,18 @@ export const categoriesServices = {
       return {error}
     }
   },
+  categoriesUpdate: async (category: Omit<Category, "created_at">): Promise<ResponseApi> => {
+    const category_pk = category.category_pk
+    const formData = new FormData()
+    if (category.name) formData.append("name", category.name)
+    if (category.id) formData.append("id", category.id)
+    const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/categories/${category_pk}`, {
+      method: "PUT",
+      body: formData
+    })
+    const result = await commonServices.responseJson(response)
+    return result
+  },
   categoriesOrder: async (categories: Category[]): Promise<ResponseApi> => {
     try {
       const response = await fetch("/api/categories/order", {

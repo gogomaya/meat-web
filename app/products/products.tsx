@@ -105,19 +105,6 @@ export const ProductSubtitle = () => {
 }
 
 export const ProductsList = ({products}: { products: Product[] }) => {
-  const enlargeImage = (event: React.MouseEvent<HTMLLIElement>) => {
-    const img = event.currentTarget.querySelector("img") as HTMLElement
-    if (img) {
-      img.style.transform = "scale(1.01)"
-    }
-  }
-
-  const shrinkImage = (event: React.MouseEvent<HTMLLIElement>) => {
-    const img = event.currentTarget.querySelector("img") as HTMLElement
-    if (img) {
-      img.style.transform = "scale(1)"
-    }
-  }
 
   React.useEffect(() => {
     const items = document.querySelectorAll(".product-item") as NodeListOf<HTMLElement>
@@ -170,8 +157,6 @@ export const ProductsList = ({products}: { products: Product[] }) => {
                 transition: "transform 0.3s, opacity 0.3s",
                 transform: "translateY(20px)"
               }}
-              onMouseEnter={enlargeImage}
-              onMouseLeave={shrinkImage}
             >
               <Link
                 href={`/products/${product.product_pk}`}
@@ -383,7 +368,7 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
     setSelectedOption(event.target.value)
   }
 
-  const gradeOptions = [" ", "1++(no.9)", "1++(no9) 특상"]
+  const gradeOptions = ["등급없음", "1++(no.9)", "1++(no9) 특상"]
 
   return (
     <div className="container mx-auto py-8">
@@ -521,7 +506,7 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
                     <div className="flex-grow">{product.part}</div>
                   </div>
                 )}
-                {product.grade !== undefined && gradeOptions.hasOwnProperty(product.grade) && (
+                {product.grade !== undefined && product.grade !== "등급없음" && gradeOptions.hasOwnProperty(product.grade) && (
                   <div className="flex items-center mb-2">
                     <div className="w-24 mr-5">등급</div>
                     <div className="flex-grow">{product.grade}</div>
