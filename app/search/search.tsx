@@ -69,7 +69,7 @@ export const ProductsSearchList = ({
 
   return (
     <><section className="flex justify-between items-center py-4 rounded-lg">
-      <div className="container text-lg font-semibold">
+      <div className="container text-lg font-semibold flex justify-end">
         상품이 모두 <strong>{products.length}</strong>개 있습니다.
       </div>
     </section>

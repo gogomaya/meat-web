@@ -5,6 +5,7 @@ import {productsServices} from "@/services/productsServices"
 import {ResponseApi} from "@/types/commonTypes"
 import ErrorPage from "@/app/error"
 import {ProductCategory, ProductsSearchParams} from "@/types/productsTypes"
+import {categoriesServices} from "@/services/categoriesServices"
 
 const Products = async (props: {
   searchParams: ProductsSearchParams
@@ -28,23 +29,46 @@ const Products = async (props: {
     return <ErrorPage />
   }
   const {products, total_rows} = productsResponse.data
+  let categoryResponse:  ResponseApi = {}
+  categoryResponse = await categoriesServices.categoriesList()
+
   const titleName = () => {
-    const categoryName = {
-      giftSet: "선물세트",
-      cow: "소고기",
-      pork: "돼지고기",
-      imported: "수입육",
-      simple: "간편식"
+    const categoryName = categoryResponse.data.categories
+    let category = null
+
+    if (searchParams.category) {
+      category = categoryName.find((category: { id: string }) => category.id === searchParams.category)
     }
+
     if (searchParams.is_today) {
       return "오늘의 메뉴"
     } else if (searchParams.category_menu) {
-      return searchParams.category_menu
-    } else if (searchParams.category) {
-      return categoryName[searchParams.category as ProductCategory]
+      if (category && category.name === searchParams.category_menu) {
+        return category.name
+      }
+      return category ? `${category.name}/${searchParams.category_menu}` : "상품목록"
+    } else if (category) {
+      return category.name
     }
-    return "상품 목록"
+    return "상품목록"
   }
+  // const titleName = () => {
+  //   const categoryName = {
+  //     giftSet: "선물세트",
+  //     cow: "소고기",
+  //     pork: "돼지고기",
+  //     imported: "수입육",
+  //     simple: "간편식"
+  //   }
+  //   if (searchParams.is_today) {
+  //     return "오늘의 메뉴"
+  //   } else if (searchParams.category_menu) {
+  //     return searchParams.category_menu
+  //   } else if (searchParams.category) {
+  //     return categoryName[searchParams.category as ProductCategory]
+  //   }
+  //   return "상품 목록"
+  // }
   return (
     <MainLayout user={user}>
       <div className="pb-16">

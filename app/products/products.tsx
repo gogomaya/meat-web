@@ -20,9 +20,6 @@ export const ProductsSearch = ({products, searchParams}: {products: Product[], s
   const router = useRouter()
   return (
     <section className="flex justify-between items-center py-4 rounded-lg">
-      <span className="container text-lg font-semibold">
-        상품이 모두 <strong>{products.length}</strong>개 있습니다.
-      </span>
       <div className="container flex justify-end p-2">
         <FormControl className="w-48">
           <InputLabel>상품정렬</InputLabel>
