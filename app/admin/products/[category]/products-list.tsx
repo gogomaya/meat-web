@@ -12,6 +12,13 @@ import {commonServices} from "@/services/commonServices"
 import moment from "moment"
 import ArrowCircleUpIcon from "@mui/icons-material/ArrowCircleUp"
 import ArrowCircleDownIcon from "@mui/icons-material/ArrowCircleDown"
+import {backdrop} from "@/components/common/Backdrop"
+import {toastError} from "@/components/common/Toast"
+import {ResponseApi} from "@/types/commonTypes"
+import {productsServices} from "@/services/productsServices"
+import {useForm} from "react-hook-form"
+import {yupResolver} from "@hookform/resolvers/yup"
+import * as yup from "yup"
 
 const AdminProductsList = ({
   products,
@@ -29,9 +36,27 @@ const AdminProductsList = ({
   const [category_menu, set_category_menu] = useState(searchParams.category_menu)
   const [query, setQuery] = useState(searchParams.query)
   const categoriesMenu = commonServices.categoriesMenu()
+  const [newproducts, setNewProducts] = useState(products)
+  const [open, setOpen] = useState(false)
+
+  // 상품순서 화살표 변경
   const orderChange = (index: number, add: number) => {
-    const currentCategory = products.splice(index, 1)
-    products.splice(index + add, 0, products[0])
+    const currentProduct = newproducts.splice(index, 1)
+    newproducts.splice(index + add, 0, currentProduct[0])
+    setNewProducts([...newproducts])
+  }
+  // 상품순서 최종확인
+  const productsOrder = async () => {
+    if (!window.confirm("상품 순서를 변경 하시겠습니까?")) return
+    backdrop.open()
+    const response: ResponseApi = await productsServices.productsOrder(newproducts)
+    if (response.error) {
+      toastError(response.error)
+    } else {
+      setOpen(false)
+      router.refresh()
+    }
+    backdrop.close()
   }
   useEffect(() => {
     setQuery(searchParams.query)
@@ -39,7 +64,7 @@ const AdminProductsList = ({
   return (
     <div>
       <form
-        className="mb-4 flex justify-between"
+        className="mb-4 flex justify-between gap-2"
         onSubmit={(event) => {
           event.preventDefault()
           router.push(`?query=${query}&category_menu=${category_menu}`)
@@ -53,7 +78,7 @@ const AdminProductsList = ({
               onChange={(event) => set_category_menu(event.target.value)}
             >
               <MenuItem value="">전체</MenuItem>
-              {categoriesMenu[category].map((menu, index) => (
+              {categoriesMenu[category]?.map((menu, index) => (
                 <MenuItem key={index} value={menu}>{menu}</MenuItem>
               ))}
             </Select>
@@ -70,6 +95,22 @@ const AdminProductsList = ({
             <SearchIcon />
           </IconButton>
         </Paper>
+        <Button
+          sx={{
+            backgroundColor: "#f57c00",
+            color: "#fff",
+            "&:hover": {
+              backgroundColor: "#e64a19"
+            },
+            padding: "8px 16px",
+            borderRadius: "4px",
+            textTransform: "none"
+          }}
+          variant="contained"
+          onClick={productsOrder}
+        >
+          순서변경
+        </Button>
       </form>
       <Paper className="hidden md:block">
         <TableContainer>
@@ -86,7 +127,7 @@ const AdminProductsList = ({
               ]}
             />
             <TableBody>
-              {products.map((product, index) => (
+              {newproducts.map((product, index) => (
                 <TableRow key={product.product_pk}>
                   <TableCell>{product.product_pk}</TableCell>
                   <TableCell>
@@ -117,9 +158,9 @@ const AdminProductsList = ({
                       }}
                     />
                     <ArrowCircleDownIcon
-                      className={`ml-1 ${index === products.length - 1 ? "text-black/20" : "cursor-pointer"}`}
+                      className={`ml-1 ${index === newproducts.length - 1 ? "text-black/20" : "cursor-pointer"}`}
                       onClick={() => {
-                        if (index === products.length - 1) return
+                        if (index === newproducts.length - 1) return
                         orderChange(index, 1)
                       }}
                     />
@@ -135,7 +176,7 @@ const AdminProductsList = ({
         <TableContainer>
           <Table>
             <TableBody>
-              {products.map((product) => (
+              {newproducts.map((product) => (
                 <TableRow key={product.product_pk}>
                   <TableCell>
                     <div className="flex items-center">

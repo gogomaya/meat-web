@@ -6,46 +6,94 @@ import {fileUpload} from "@/app/api/ckeditor5/upload-images/route"
 import {EmptyObject} from "@/types/commonTypes"
 import {adminCheck} from "@/app/users/login/loginCheck"
 
+// 원래 쿼리
+// export const GET = async (request: NextRequest) => {
+//   const searchParams = request.nextUrl.searchParams;
+//   const rowsPerPage = Number(searchParams.get("rowsPerPage")) || 10;
+//   const page = (Number(searchParams.get("page")) || 0) * rowsPerPage;
+//   const orderColumn = searchParams.get("orderColumn") || "product_order";
+//   const orderDirection = searchParams.get("orderDirection") || "desc";
+//   const query = searchParams.get("query") || "";
+//   const category = searchParams.get("category") || "";
+//   const category_menu = searchParams.get("category_menu") || "";
+//   const is_today = searchParams.get("is_today") === "true";
+
+//   const mysql = await mysql2Pool();
+
+//   const [totalRows]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
+//     SELECT COUNT(*) AS total_rows
+//     FROM products
+//     WHERE
+//       (TRIM(? = '') OR name LIKE CONCAT('%', ?, '%'))
+//       AND (TRIM(? = '') OR category LIKE CONCAT('%', ?, '%'))
+//       AND (TRIM(? = '') OR category_menu LIKE CONCAT('%', ?, '%'))
+//       AND (TRIM(? = '') OR is_today = ?)
+//   `, [query, query, category, category, category_menu, category_menu, is_today, is_today]);
+
+//   const [rows]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
+//     SELECT
+//       p.*,
+//       pi.file_name AS image_file_name,
+//       po.product_order
+//     FROM products p
+//     LEFT JOIN products_images pi ON p.product_pk = pi.product_pk AND pi.uuid IS NULL
+//     LEFT JOIN products_order po ON p.product_pk = po.product_pk
+//     WHERE
+//       (TRIM(? = '') OR p.name LIKE CONCAT('%', ?, '%'))
+//       AND (TRIM(? = '') OR p.category LIKE CONCAT('%', ?, '%'))
+//       AND (TRIM(? = '') OR p.category_menu LIKE CONCAT('%', ?, '%'))
+//       AND (TRIM(? = '') OR p.is_today = ?)
+//     ORDER BY po.prodct ${mysql.escapeId(orderColumn)} ${orderDirection}
+//     LIMIT ?, ?
+//   `, [query, query, category, category, category_menu, category_menu, is_today, is_today, page, rowsPerPage]);
+
+//   return NextResponse.json({
+//     products: rows,
+//     total_rows: totalRows[0].total_rows
+//   });
+// };
+
 export const GET = async (request: NextRequest) => {
   const searchParams = request.nextUrl.searchParams
   const rowsPerPage = Number(searchParams.get("rowsPerPage")) || 10
-  const page = (Number(searchParams.get("page")) * rowsPerPage) || 0
-  const orderColumn = searchParams.get("orderColumn") || "product_pk"
-  const orderDirection = searchParams.get("orderDirection") || "desc"
+  const page = (Number(searchParams.get("page")) || 0) * rowsPerPage
   const query = searchParams.get("query") || ""
   const category = searchParams.get("category") || ""
   const category_menu = searchParams.get("category_menu") || ""
   const is_today = searchParams.get("is_today") === "true"
 
   const mysql = await mysql2Pool()
-  const [total_rows]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
-  select
-    count(*) as total_rows
-  from products
-  where
-    ("" = ? or name like concat("%", ?, "%"))
-    and ("" = ? or category like concat("%", ?, "%"))
-    and ("" = ? or category_menu like concat("%", ?, "%"))
-    and ("" = ? or is_today = ?)
-`, [query, query, category, category, category_menu, category_menu, is_today, is_today])
+
+  const [totalRows]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
+    SELECT COUNT(*) AS total_rows
+    FROM products
+    WHERE
+      (TRIM(?) = '' OR name LIKE CONCAT('%', ?, '%'))
+      AND (TRIM(?) = '' OR category LIKE CONCAT('%', ?, '%'))
+      AND (TRIM(?) = '' OR category_menu LIKE CONCAT('%', ?, '%'))
+      AND (TRIM(?) = '' OR is_today = ?)
+  `, [query, query, category, category, category_menu, category_menu, is_today, is_today])
+
   const [rows]: [RowDataPacket[], FieldPacket[]] = await mysql.execute(`
-    select
-      p.*, pi.file_name as image_file_name
-    from products p
-    left outer join products_images pi
-    on
-      p.product_pk = pi.product_pk and isnull(pi.uuid)
-    where
-      ("" = ? or name like concat("%", ?, "%"))
-      and ("" = ? or category like concat("%", ?, "%"))
-      and ("" = ? or category_menu like concat("%", ?, "%"))
-      and ("" = ? or is_today = ?)
-    order by ${orderColumn} ${orderDirection}
-    limit ?, ?
+    SELECT
+      p.*,
+      pi.file_name AS image_file_name,
+      po.product_order
+    FROM products p
+    LEFT JOIN products_images pi ON p.product_pk = pi.product_pk AND pi.uuid IS NULL
+    LEFT JOIN products_order po ON p.product_pk = po.product_pk
+    WHERE
+      (TRIM(?) = '' OR p.name LIKE CONCAT('%', ?, '%'))
+      AND (TRIM(?) = '' OR p.category LIKE CONCAT('%', ?, '%'))
+      AND (TRIM(?) = '' OR p.category_menu LIKE CONCAT('%', ?, '%'))
+      AND (TRIM(?) = '' OR p.is_today = ?)
+    ORDER BY po.product_order ASC
+    LIMIT ?, ?
   `, [query, query, category, category, category_menu, category_menu, is_today, is_today, page, rowsPerPage])
+
   return NextResponse.json({
     products: rows,
-    total_rows: total_rows[0].total_rows
+    total_rows: totalRows[0].total_rows
   })
 }
 

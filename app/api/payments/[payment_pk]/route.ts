@@ -46,7 +46,7 @@ export const PUT = async (
     const status = formData.get("status")
     const pay_id = formData.get("pay_id") || null
 
-    // console.log(`payment_pk : ${payment_pk}`)
+    // console.log(`pyment_pk : ${payment_pk}`)
     const mysql = await mysql2Pool()
 
     await mysql.execute(`
@@ -64,9 +64,6 @@ export const PUT = async (
     return NextResponse.error()
   }
 }
-
-
-
 
 
 export const DELETE = async (

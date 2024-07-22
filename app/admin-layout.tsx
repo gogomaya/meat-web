@@ -150,7 +150,7 @@ const AdminLayoutMenu = ({
             onClick={() => {
               setTimeout(() => setHeaderMenuOpen?.(), 500)
             }}
-          >★ {category.name}</Link>
+          >- {category.name}</Link>
         </li>
       ))}
     </ul>
