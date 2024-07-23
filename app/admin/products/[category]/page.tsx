@@ -11,7 +11,7 @@ const AdminProducts = async (props: {
 }) => {
   await adminCheck(true)
   const searchParams = {
-    rowsPerPage: Number(props.searchParams.rowsPerPage) || 10,
+    rowsPerPage: Number(props.searchParams.rowsPerPage) || 100,
     page: Number(props.searchParams.page) || 0,
     orderColumn: props.searchParams.orderColumn || "product_pk",
     orderDirection: props.searchParams.orderDirection || "desc",
