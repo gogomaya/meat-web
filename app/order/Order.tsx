@@ -112,8 +112,8 @@ export const OrderDetailContent = ({
   console.log(`addressList[0].address_pk (기본 배송지 번호) : ${addressList[0].address_pk}`)
 
   const totalDiscount = order.discount
-  // const totalShipFee = Number(order?.total_price) >= 150000 ? 0 : 5000
-  const totalShipFee = 0
+  const totalShipFee = Number(order?.total_price) >= 150000 ? 0 : 5000
+  // const totalShipFee = 0
   // const totalShipFee = order.shipfee
   const finalPrice = Number(order?.total_price) - totalDiscount + totalShipFee
 
