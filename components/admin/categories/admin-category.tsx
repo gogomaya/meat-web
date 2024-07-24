@@ -128,10 +128,10 @@ const AdminCategories = (props: { categories: Category[] }) => {
   return (
     <>
       <span>상품 메뉴</span>
-      <PlaylistAddIcon
+      {/* <PlaylistAddIcon
         className="ml-2 cursor-pointer"
         onClick={() => setOpen(true)}
-      />
+      /> */}
       <Dialog open={open} onClose={() => setOpen(false)}>
         <form onSubmit={(event) => {
           event.preventDefault()
