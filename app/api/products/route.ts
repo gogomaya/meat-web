@@ -150,6 +150,14 @@ export const POST = async (request: NextRequest) => {
       ?, ?
     )
   `, [result.insertId, fileName])
+  // products_order 최초 생성 = 상품등록시
+  await mysql.execute(`
+    insert into products_order (
+      product_pk, product_order
+    ) values (
+      ?, ?
+    )
+  `, [result.insertId, result.insertId])
 
   await deleteNotUsedImages(result.insertId, uuid, product.contents)
 

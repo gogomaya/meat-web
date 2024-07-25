@@ -307,6 +307,7 @@ const MainSearch = () => {
             placeholder="검색어를 입력해주세요."
             onChange={handleSearch}
             onKeyDown={handleKeyDown}
+            autoFocus
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">

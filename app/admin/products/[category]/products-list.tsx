@@ -39,9 +39,16 @@ const AdminProductsList = ({
   const [newproducts, setNewProducts] = useState(products)
   const [open, setOpen] = useState(false)
 
-  // 상품순서 화살표 변경
+  // 상품순서 화살표 변경 : product_pk 에다 index add를 해야함
+  // const orderChange = (index: number, add: number) => {
+  //   const currentProduct = newproducts.splice(index, 1)
+  //   newproducts.splice(index + add, 0, currentProduct[0])
+  //   setNewProducts([...newproducts])
+  // }
   const orderChange = (index: number, add: number) => {
     const currentProduct = newproducts.splice(index, 1)
+    // 1. product_order = product_pk
+    // newproducts에서 product_order 꺼내서 index와 매치
     newproducts.splice(index + add, 0, currentProduct[0])
     setNewProducts([...newproducts])
   }
@@ -49,7 +56,14 @@ const AdminProductsList = ({
   const productsOrder = async () => {
     if (!window.confirm("상품 순서를 변경 하시겠습니까?")) return
     backdrop.open()
-    const response: ResponseApi = await productsServices.productsOrder(newproducts)
+    const sortedProductPKs = newproducts.map((product) => product.product_pk).sort((a, b) => a - b)
+    // newproducts 내 product_pk에 따라 product_order를 설정
+    const productsOrder = newproducts.map((product, i) => ({
+      product_pk: product.product_pk,
+      product_order: sortedProductPKs[i]
+    }))
+    const response: ResponseApi = await productsServices.productsOrder(productsOrder)
+
     if (response.error) {
       toastError(response.error)
     } else {
@@ -176,8 +190,9 @@ const AdminProductsList = ({
         <TableContainer>
           <Table>
             <TableBody>
-              {newproducts.map((product) => (
+              {newproducts.filter((product) => product !== undefined).map((product, index) => (
                 <TableRow key={product.product_pk}>
+                  <TableCell>{product.product_pk}</TableCell>
                   <TableCell>
                     <div className="flex items-center">
                       <Link href={`${pathname}/detail/${product.product_pk}`}>
@@ -194,7 +209,25 @@ const AdminProductsList = ({
                       <Link className="ml-4" href={`${pathname}/detail/${product.product_pk}`}>{product.name}</Link>
                     </div>
                   </TableCell>
+                  <TableCell>{product.category_menu}</TableCell>
                   <TableCell>{(product.price).toLocaleString()}원</TableCell>
+                  <TableCell>{moment(product.created_at).format("YYYY-MM-DD")}</TableCell>
+                  <TableCell>
+                    <ArrowCircleUpIcon
+                      className={`${index === 0 ? "text-black/20" : "cursor-pointer"}`}
+                      onClick={() => {
+                        if (index === 0) return
+                        orderChange(product.product_pk, -1)
+                      }}
+                    />
+                    <ArrowCircleDownIcon
+                      className={`ml-1 ${index === newproducts.length - 1 ? "text-black/20" : "cursor-pointer"}`}
+                      onClick={() => {
+                        if (index === newproducts.length - 1) return
+                        orderChange(product.product_pk, 1)
+                      }}
+                    />
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

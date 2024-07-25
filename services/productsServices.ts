@@ -65,11 +65,22 @@ export const productsServices = {
       return {error}
     }
   },
-  productsOrder: async (products: Product[]): Promise<ResponseApi> => {
+  // productsOrder: async (products: Product[]): Promise<ResponseApi> => {
+  //   try {
+  //     const response = await fetch("/api/products/order", {
+  //       method: "PATCH",
+  //       body: JSON.stringify(products)
+  //     })
+  //     return await commonServices.responseJson(response)
+  //   } catch (error) {
+  //     return {error}
+  //   }
+  // },
+  productsOrder: async (productsOrder: { product_pk: number, product_order: number }[]): Promise<ResponseApi> => {
     try {
       const response = await fetch("/api/products/order", {
         method: "PATCH",
-        body: JSON.stringify(products)
+        body: JSON.stringify(productsOrder)
       })
       return await commonServices.responseJson(response)
     } catch (error) {
