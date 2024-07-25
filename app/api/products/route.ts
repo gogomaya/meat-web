@@ -87,7 +87,7 @@ export const GET = async (request: NextRequest) => {
       AND (TRIM(?) = '' OR p.category LIKE CONCAT('%', ?, '%'))
       AND (TRIM(?) = '' OR p.category_menu LIKE CONCAT('%', ?, '%'))
       AND (TRIM(?) = '' OR p.is_today = ?)
-    ORDER BY po.product_order ASC
+    ORDER BY po.product_order DESC
     LIMIT ?, ?
   `, [query, query, category, category, category_menu, category_menu, is_today, is_today, page, rowsPerPage])
 
