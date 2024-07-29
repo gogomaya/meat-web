@@ -56,7 +56,7 @@ const AdminProductsList = ({
   const productsOrder = async () => {
     if (!window.confirm("상품 순서를 변경 하시겠습니까?")) return
     backdrop.open()
-    const sortedProductPKs = newproducts.map((product) => product.product_pk).sort((a, b) => a - b)
+    const sortedProductPKs = newproducts.map((product) => product.product_pk).sort((a, b) => b - a)
     // newproducts 내 product_pk에 따라 product_order를 설정
     const productsOrder = newproducts.map((product, i) => ({
       product_pk: product.product_pk,
