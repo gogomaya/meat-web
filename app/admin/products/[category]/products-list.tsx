@@ -137,7 +137,7 @@ const AdminProductsList = ({
                 {id: "category_menu", label: "메뉴", sort: false},
                 {id: "price", label: "금액", sort: true},
                 {id: "created_at", label: "작성시간", sort: true},
-                {id: "order", label: "순서변경", sort: true}
+                {id: "order", label: "노출순서", sort: true}
               ]}
             />
             <TableBody>
