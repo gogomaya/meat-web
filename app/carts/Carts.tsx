@@ -1,21 +1,17 @@
 "use client"
 import {useRouter} from "next/navigation"
-import {Button, Checkbox, Divider, IconButton, Typography, Dialog, DialogTitle, DialogActions, Skeleton} from "@mui/material"
+import {Button, Checkbox, IconButton, Skeleton} from "@mui/material"
 import DeleteIcon from "@mui/icons-material/Delete"
 import Image from "next/image"
 import {useState, useEffect, useCallback} from "react"
 import {CartProduct} from "@/types/productsTypes"
 import {useForm} from "react-hook-form"
 import _ from "lodash"
-import {OrderItem, OrderItemSearchParams} from "@/types/orderItemsTypes"
+import {OrderItem} from "@/types/orderItemsTypes"
 import {User} from "@/types/usersTypes"
 import Swal from "sweetalert2"
 import withReactContent from "sweetalert2-react-content"
 import {productsServices} from "@/services/productsServices"
-import {ordersServices} from "@/services/ordersServices"
-import {orderItemsService} from "@/services/orderItemsServices"
-import {ResponseApi} from "@/types/commonTypes"
-import {Order} from "@/types/ordersTypes"
 
 export const CartsDetailContent = ({user}: { user: User }) => {
   const router = useRouter()
@@ -131,7 +127,6 @@ export const CartsDetailContent = ({user}: { user: User }) => {
       }
       if (result.dismiss === Swal.DismissReason.backdrop) return
 
-
       MySwal.fire({
         title: "비회원 주문",
         text: "전화번호를 입력해주세요. (- 기호없이 : 01012341234 )",
@@ -162,7 +157,6 @@ export const CartsDetailContent = ({user}: { user: User }) => {
 
 
   }
-
 
   // [선택한상품만 결제하기] 클릭
   const handleCheckedPayClick = async () => {

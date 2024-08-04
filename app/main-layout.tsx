@@ -4,10 +4,9 @@ import Image from "next/image"
 import Link from "next/link"
 import MenuIcon from "@mui/icons-material/Menu"
 import SearchIcon from "@mui/icons-material/Search"
-import WorkOutlineIcon from "@mui/icons-material/WorkOutline"
 import CloseIcon from "@mui/icons-material/Close"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
-import {Accordion, AccordionDetails, AccordionSummary, Badge, Box, Button, Collapse, Divider, Drawer, IconButton, InputAdornment, InputBase, Menu, MenuList, TextField, Typography} from "@mui/material"
+import {Accordion, AccordionDetails, AccordionSummary, Badge, Box, Collapse, Drawer, IconButton, InputAdornment, TextField} from "@mui/material"
 import Users from "@/components/users/users"
 import {User} from "@/types/usersTypes"
 import {commonServices} from "@/services/commonServices"
@@ -15,7 +14,6 @@ import ExpandLessIcon from "@mui/icons-material/ExpandLess"
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart"
 import {usersServices} from "@/services/usersServices"
 import {useRouter} from "next/navigation"
-import {toast, ToastContainer} from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 
 
@@ -111,7 +109,6 @@ const MainLayout = ({
 }
 
 export default MainLayout
-
 
 export const CsIcon = () => {
   const [isVisible, setIsVisible] = useState(false)
@@ -256,14 +253,6 @@ export const MegaMenu = ({user}: {user: User}) => {
         {/* 관리자 페이지 연결 */}
       </ul>
     </nav>
-  )
-}
-
-export const loading = () => {
-  return (
-    <div data-w-id="10b5160c-e47e-9440-7d20-e9b9b40a9855" className="preloader">
-      <div className="preloader-lottie-animation" data-w-id="10b5160c-e47e-9440-7d20-e9b9b40a9856" data-animation-type="lottie" data-src="https://assets-global.website-files.com/6564340f7b64a3bebf176e50/65704989fc28f3d8c4a2d42b_Zaisop%20Logo.json" data-loop="0" data-direction="1" data-autoplay="1" data-is-ix2-target="0" data-renderer="svg" data-default-duration="1.5833333333333333" data-duration="0"></div>
-    </div>
   )
 }
 
@@ -426,6 +415,10 @@ const MainMobileMenu = ({user}: { user: User }) => {
     setOpen(false)
   }
 
+  const handleMenuItemClick = () => {
+    setOpen(false)
+  }
+
   return (
     <div className="flex items-center">
       <IconButton
@@ -466,7 +459,7 @@ const MainMobileMenu = ({user}: { user: User }) => {
                     <div className="text-red-700">
                       <strong>{user.name || user.nickname || "고객"}</strong><span className="text-black">님, 안녕하세요 :)</span>
                     </div>
-                    <div className="flex justify-between gap-2">
+                    <div className="flex justify-between gap-1">
                       <button type="button"
                         className="focus:outline-none text-white bg-yellow-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
                         onClick={() => window.location.href = "/carts"}
@@ -486,6 +479,15 @@ const MainMobileMenu = ({user}: { user: User }) => {
                         로그아웃
                       </button>
                     </div>
+                    {user.is_admin ? (
+                      <button type="button"
+                        className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+                        style={{marginBottom: "20px", padding: "5px 10px"}}
+                        onClick={() => window.location.href = "/admin"}
+                      >
+                        관리자
+                      </button>
+                    ) : null}
                   </div>
                 </div>
               ) : (
@@ -518,13 +520,13 @@ const MainMobileMenu = ({user}: { user: User }) => {
               <li>
                 <Accordion>
                   <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                    <Link href="/products?category=giftSet">선물세트</Link>
+                    <Link href="/products?category=giftSet" onClick={handleMenuItemClick}>선물세트</Link>
                   </AccordionSummary>
                   <AccordionDetails>
                     <ol>
                       {categoriesMenu.giftSet.map((category_menu) => (
                         <li key={category_menu}>
-                          <Link href={`/products?category=giftSet&category_menu=${category_menu}`}>{category_menu}</Link>
+                          <Link href={`/products?category=giftSet&category_menu=${category_menu}`} onClick={handleMenuItemClick}>{category_menu}</Link>
                         </li>
                       ))}
                     </ol>
@@ -534,13 +536,13 @@ const MainMobileMenu = ({user}: { user: User }) => {
               <li>
                 <Accordion>
                   <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                    <Link href="/products?category=cow">소고기</Link>
+                    <Link href="/products?category=cow" onClick={handleMenuItemClick}>소고기</Link>
                   </AccordionSummary>
                   <AccordionDetails>
                     <ol>
                       {categoriesMenu.cow.map((category_menu) => (
                         <li key={category_menu}>
-                          <Link href={`/products?category=cow&category_menu=${category_menu}`}>{category_menu}</Link>
+                          <Link href={`/products?category=cow&category_menu=${category_menu}`} onClick={handleMenuItemClick}>{category_menu}</Link>
                         </li>
                       ))}
                     </ol>
@@ -550,13 +552,13 @@ const MainMobileMenu = ({user}: { user: User }) => {
               <li>
                 <Accordion>
                   <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                    <Link href="/products?category=pork">돼지고기</Link>
+                    <Link href="/products?category=pork" onClick={handleMenuItemClick}>돼지고기</Link>
                   </AccordionSummary>
                   <AccordionDetails>
                     <ol>
                       {categoriesMenu.pork.map((category_menu) => (
                         <li key={category_menu}>
-                          <Link href={`/products?category=pork&category_menu=${category_menu}`}>{category_menu}</Link>
+                          <Link href={`/products?category=pork&category_menu=${category_menu}`} onClick={handleMenuItemClick}>{category_menu}</Link>
                         </li>
                       ))}
                     </ol>
@@ -566,13 +568,13 @@ const MainMobileMenu = ({user}: { user: User }) => {
               <li>
                 <Accordion>
                   <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                    <Link href="/products?category=simple">간편식</Link>
+                    <Link href="/products?category=simple" onClick={handleMenuItemClick}>간편식</Link>
                   </AccordionSummary>
                   <AccordionDetails>
                     <ol>
                       {categoriesMenu.simple.map((category_menu) => (
                         <li key={category_menu}>
-                          <Link href={`/products?category=simple&category_menu=${category_menu}`}>{category_menu}</Link>
+                          <Link href={`/products?category=simple&category_menu=${category_menu}`} onClick={handleMenuItemClick}>{category_menu}</Link>
                         </li>
                       ))}
                     </ol>
@@ -582,13 +584,13 @@ const MainMobileMenu = ({user}: { user: User }) => {
               <li>
                 <Accordion>
                   <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                    <Link href="/products">고객센터</Link>
+                    <Link href="/products" onClick={handleMenuItemClick}>고객센터</Link>
                   </AccordionSummary>
                   <AccordionDetails>
                     <ol>
-                      <li><Link href="/boards?category=notice">공지사항</Link></li>
-                      <li><Link href="/faq">자주하는질문</Link></li>
-                      <li><Link href="/boards?category=qna">문의하기</Link></li>
+                      <li><Link href="/boards?category=notice" onClick={handleMenuItemClick}>공지사항</Link></li>
+                      <li><Link href="/faq" onClick={handleMenuItemClick}>자주하는질문</Link></li>
+                      <li><Link href="/boards?category=qna" onClick={handleMenuItemClick}>문의하기</Link></li>
                     </ol>
                   </AccordionDetails>
                 </Accordion>
@@ -614,6 +616,7 @@ const MainMobileMenu = ({user}: { user: User }) => {
     </div>
   )
 }
+
 
 
 // const SearchBar = () => {
