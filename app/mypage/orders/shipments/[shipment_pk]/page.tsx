@@ -164,7 +164,7 @@ const MyPageShipmentsDetail = async (props: {
                     </div>
                   </div>
                   {/* 상세 정보 라인 */}
-                  <div className="w-full flex flex-wrap flex-col md:flex-row justify-between bg-white border border-solid border-gray-200 my-4">
+                  {/* <div className="w-full flex flex-wrap flex-col md:flex-row justify-between bg-white border border-solid border-gray-200 my-4">
                     <div className="item flex-1 bg-gray-200 text-center">
                       <div className="inner p-1">
                         <span className="font-bold">요청 사항</span>
@@ -175,9 +175,9 @@ const MyPageShipmentsDetail = async (props: {
                         <span className="px-3">{address.delivery_request}</span>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                   {/* 상세 정보 라인 */}
-                  <div className="w-full flex flex-wrap flex-col md:flex-row justify-between bg-white border border-solid border-gray-200 my-4">
+                  {/* <div className="w-full flex flex-wrap flex-col md:flex-row justify-between bg-white border border-solid border-gray-200 my-4">
                     <div className="item flex-1 bg-gray-200 text-center">
                       <div className="inner p-1">
                         <span className="font-bold">수령 방법</span>
@@ -188,7 +188,7 @@ const MyPageShipmentsDetail = async (props: {
                         <span className="px-3">{address.delivery_method}</span>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
 
               </div>

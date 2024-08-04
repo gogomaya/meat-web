@@ -66,12 +66,9 @@ const AdminCancelList = ({
     })
   }
 
-
   const handleOrderDetail = () => {
 
   }
-
-
 
   useEffect(() => {
     setQuery(searchParams.query)
@@ -110,7 +107,7 @@ const AdminCancelList = ({
                 {id: "total_discount_price", label: "총가격", sort: true},
                 {id: "cancellation_status", label: "취소상태", sort: true},
                 {id: "created_at", label: "취소등록일자", sort: true},
-                {id: "title", label: "상세보기", sort: true},
+                // {id: "title", label: "상세보기", sort: true},
                 {id: "delete", label: "주문취소", sort: false}
               ]}
             />
@@ -122,11 +119,11 @@ const AdminCancelList = ({
                   <TableCell>{Number(cancel.total_discount_price).toLocaleString()}</TableCell>
                   <TableCell>{getCancellationStatusMeaning(cancel.status)}</TableCell>
                   <TableCell>{moment(cancel.created_at).format("YYYY-MM-DD")}</TableCell>
-                  <TableCell style={{cursor: "pointer"}}>
+                  {/* <TableCell style={{cursor: "pointer"}}>
                     <button  onClick={()=>handleOrderDetail()}>
                       <SmsIcon />
                     </button>
-                  </TableCell>
+                  </TableCell> */}
                   {cancel.status === "pending" && (
                     <TableCell style={{cursor: "pointer"}}>
                       <button onClick={()=>handleCancel(cancel.cancellation_pk, cancel.order_pk)}>
