@@ -30,7 +30,6 @@ const AdminCancel = async (props: {searchParams: SearchParams}) => {
       cancels = cancelResponse.data.cancellations
       console.dir(cancelResponse.data.cancellations)
     }
-
   } catch (error) {
     console.error(error)
     return <ErrorPage />

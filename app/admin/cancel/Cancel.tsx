@@ -4,7 +4,6 @@ import {EnhancedTabledHead, EnhancedTablePagination} from "@/components/common/T
 import {Cancellation, CancellationSearchParams} from "@/types/cancellationsTypes"
 import {SearchParams} from "@/types/commonTypes"
 import CreditCardOffIcon from "@mui/icons-material/CreditCardOff"
-import LocalShippingIcon from "@mui/icons-material/LocalShipping"
 import SearchIcon from "@mui/icons-material/Search"
 import {IconButton, InputBase, Paper, Table, TableBody, TableCell, TableContainer, TableRow} from "@mui/material"
 import moment from "moment"
@@ -13,7 +12,7 @@ import {useEffect, useState} from "react"
 import Swal from "sweetalert2"
 import withReactContent from "sweetalert2-react-content"
 import {orderCancel} from "./orderCancel"
-import SmsIcon from "@mui/icons-material/Sms"
+
 
 const AdminCancelList = ({
   cancels,
@@ -51,17 +50,13 @@ const AdminCancelList = ({
       cancelButtonText: "취소"
     }).then(async (result) => {
       if (result.isConfirmed) {
-
-        // TODO: 주문 취소 요청
+        console.log("$$$$취소 승인 시작$$$$$")
         const params = {
           cancellation_pk : cancellation_pk,
           order_pk : order_pk
         } as CancellationSearchParams
         const cancelResult = await orderCancel(params)
-        console.log(`cancelResult : ${cancelResult}`)
-        console.dir(cancelResult)
-
-        location.reload()
+        window.location.reload()
       }
     })
   }
