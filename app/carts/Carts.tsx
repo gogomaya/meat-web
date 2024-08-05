@@ -221,7 +221,6 @@ export const CartsDetailContent = ({user}: { user: User }) => {
           try {
             // 전화번호 정규식 패턴
             const phoneRegex = /^(010\d{8})$/
-
             // 전화번호가 정규식 패턴에 맞는지 검증
             if (phoneRegex.test(mobile)) {
               return {mobile: mobile}
@@ -273,9 +272,9 @@ export const CartsDetailContent = ({user}: { user: User }) => {
                 <table className="min-w-full divide-y divide-gray-200 text-center">
                   <thead style={{backgroundColor: "#271A11"}} className="text-white text-center">
                     <tr>
-                      <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-center">
+                      {/* <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-center">
                         선택
-                      </th>
+                      </th> */}
                       <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-center">
                         번호
                       </th>
@@ -308,7 +307,7 @@ export const CartsDetailContent = ({user}: { user: User }) => {
                     <tbody className="bg-white divide-y divide-gray-200">
                       {cartProducts.map((cartProduct, index) => (
                         <tr key={cartProduct.product.product_pk}>
-                          <td className="px-6 py-4 whitespace-nowrap">
+                          {/* <td className="px-6 py-4 whitespace-nowrap">
                             <Checkbox
                               {...register(`cartProducts.${index}.checked`)}
                               checked={cartProduct.checked}
@@ -319,7 +318,7 @@ export const CartsDetailContent = ({user}: { user: User }) => {
                               }}
                               disabled={cartProduct.product.is_sold_out} // 품절이면 체크박스 비활성화
                             />
-                          </td>
+                          </td> */}
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="text-sm text-gray-900">{index + 1}</div>
                           </td>
@@ -432,18 +431,16 @@ export const CartsDetailContent = ({user}: { user: User }) => {
               </div>
               {/* 모바일 시작*/}
               <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg block md:hidden">
-                <div className="min-w-full divide-y divide-gray-200 text-center" style={{backgroundImage: "url('/images/Bg_3.png')"}}>
+                <div className="min-w-full divide-y divide-gray-200 text-center">
                   {cartProducts.length === 0 ? (
-                    <div className="bg-white divide-y divide-gray-200" style={{backgroundImage: "url('/images/Bg_3.png')"}}>
-                      <div>
-                        <div className="flex justify-center items-center">장바구니가 비었습니다.</div>
-                      </div>
+                    <div className="bg-white divide-y divide-gray-200 h-[200px] flex justify-center items-center" style={{backgroundImage: "url('/images/Bg_3.png')"}}>
+                      <div>장바구니가 비었습니다.</div>
                     </div>
                   ) : (
                     <div className="bg-white">
                       {cartProducts.map((cartProduct, index) => (
                         <>
-                          <div key={cartProduct.product.product_pk} className="flex gap-3 bg-white p-4" style={{backgroundImage: "url('/images/Bg_3.png')"}}>
+                          <div key={cartProduct.product.product_pk} className="flex gap-3 bg-white p-4">
                             <div className="flex">
                               <Checkbox
                                 {...register(`cartProducts.${index}.checked`)}
@@ -555,7 +552,7 @@ export const CartsDetailContent = ({user}: { user: User }) => {
             </div>
           </div>
           <div className="product-detail-button flex-col md:flex-row md:items-center justify-start py-4 gap-2">
-            <Button
+            {/* <Button
               variant="contained"
               className="btn h-12 w-full md:w-[220px] text-lg md:ml-4"
               disabled={!cartProducts.find((cartProduct) => cartProduct.checked)}
@@ -568,8 +565,8 @@ export const CartsDetailContent = ({user}: { user: User }) => {
               style={{backgroundColor: "#A51C30"}}
             >
               <span>선택상품만 결제하기</span>
-            </Button>
-            <Button
+            </Button> */}
+            {/* <Button
               variant="contained"
               className="btn h-12 w-full md:w-auto text-lg"
               disabled={cartProducts.length === 0}
@@ -578,7 +575,7 @@ export const CartsDetailContent = ({user}: { user: User }) => {
               style={{backgroundColor: "#4F3623"}}
             >
               장바구니 비우기
-            </Button>
+            </Button> */}
             {/* <Dialog
               open={open}
               onClose={() => setOpen(false)}
@@ -631,7 +628,7 @@ export const CartsDetailContent = ({user}: { user: User }) => {
                 <span>- {discountedPrice.toLocaleString()}원</span>
               </div>
               <div className="flex justify-between mb-2">
-                <span>배송비</span>
+                <span>배송비 (15만원 이상 무료 배송)</span>
                 <span>{shippingFee.toLocaleString()}원</span>
               </div>
               <div className="flex justify-between">
@@ -657,18 +654,26 @@ export const CartsDetailContent = ({user}: { user: User }) => {
               </div>
             </div>
           </div>
-          <div className="flex items-center justify-center pl-4 py-2">
+          <div className="flex flex-col items-center justify-center pl-4 py-2 gap-2">
             <Button
               variant="contained"
               className="btn w-full h-16 text-2xl"
-              disabled={cartProducts.length === 0 || cartProducts.every((item) => item.product.is_sold_out)} // 장바구니에 상품이 없거나 모든 상품이 품절인 경우
+              disabled={cartProducts.length === 0}
+              onClick={handleClearCart}
+              style={{backgroundColor: "#4F3623"}}
+            >
+              장바구니 비우기
+            </Button>
+            <Button
+              variant="contained"
+              className="btn w-full h-16 text-2xl"
+              disabled={cartProducts.length === 0 || cartProducts.every((item) => item.product.is_sold_out) || cartProducts.some((item) => Number(item.quantity) > Number(item.product.stock))}
               onClick={handleOrderClick}
               style={{backgroundColor: "#A51C30"}}
             >
               주문하기
             </Button>
           </div>
-
         </div>
       </div>
     </>
