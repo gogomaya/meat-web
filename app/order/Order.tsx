@@ -481,7 +481,7 @@ export const OrderDetailContent = ({
             </p>
             <p className="text-lg m-2 text-black">할인 금액: {Number(totalDiscount).toLocaleString()}원</p>
             <p className="text-lg m-2 text-black">총 배송비: {Number(totalShipFee).toLocaleString()}원</p>
-            <p className="text-lg m-2 text-black">(15만원 결제 시, 무료 배송)</p>
+            <p className="text-lg m-2 text-black">(5만원 결제 시, 무료 배송)</p>
             <p className="text-lg m-2 font-semibold text-[#A51C30]">최종 결제 금액: {Number(finalPrice).toLocaleString()}원</p>
           </div>
         </div>

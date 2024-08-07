@@ -628,7 +628,7 @@ export const CartsDetailContent = ({user}: { user: User }) => {
                 <span>- {discountedPrice.toLocaleString()}원</span>
               </div>
               <div className="flex justify-between mb-2">
-                <span>배송비 (15만원 이상 무료 배송)</span>
+                <span>배송비 (5만원 이상 무료 배송)</span>
                 <span>{shippingFee.toLocaleString()}원</span>
               </div>
               <div className="flex justify-between">
