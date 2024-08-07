@@ -193,7 +193,7 @@ export const MegaMenu = ({user}: {user: User}) => {
   return (
     <nav id="header" className="invisible md:visible flex-1 flex justify-center items-center">
       <ul className="flex">
-        <li style={{width: "140px"}} id="giftSet" className="relative" onMouseOver={overMenu} >
+        <li style={{width: "140px", marginRight: "10px"}} id="giftSet" className="relative" onMouseOver={overMenu} >
           <Link href="/products?category=giftSet" className="text-black">선물세트</Link>
           <ol id="submenu" onMouseOut={outMenu} className={`w-full px-4 py-2 border border-[#FACC15] ${menu.giftSet || menu.todayMenu || menu.cow || menu.pork || menu.simple || menu.imported || menu.board ? "block" : "hidden"}  rounded-lg shadow-md text-sm font-semibold bg-[#271A11]`}>
             <div className="flex">
@@ -202,7 +202,7 @@ export const MegaMenu = ({user}: {user: User}) => {
                   <li key={category_menu}><Link href={`/products?category=giftSet&category_menu=${category_menu}`} className="text-black px-2">{category_menu}</Link></li>
                 ))}
               </div>
-              <div className="item" style={{width: "140px"}}>
+              <div className="item" style={{width: "140px", marginRight: "40px"}}>
                 {categoriesMenu.cow.map((category_menu) => (
                   <li key={category_menu}><Link href={`/products?category=cow&category_menu=${category_menu}`} className="text-black px-2">{category_menu}</Link></li>
                 ))}
@@ -230,10 +230,10 @@ export const MegaMenu = ({user}: {user: User}) => {
             </div>
           </ol>
         </li>
-        <li style={{width: "140px"}} id="cow" className="relative" onMouseOver={overMenu} >
+        <li style={{width: "140px", marginRight: "10px"}} id="cow" className="relative" onMouseOver={overMenu} >
           <Link href="/products?category=cow" className="text-black">소고기🐮</Link>
         </li>
-        <li style={{width: "140px"}} id="pork" className="relative" onMouseOver={overMenu} >
+        <li style={{width: "140px", marginRight: "10px"}} id="pork" className="relative" onMouseOver={overMenu} >
           <Link href="/products?category=pork" className="text-black">돼지고기🐷</Link>
         </li>
         <li style={{width: "140px"}} id="imported" className="relative" onMouseOver={overMenu} >
