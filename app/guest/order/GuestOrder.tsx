@@ -91,7 +91,7 @@ export const OrderDetailContent = ({
 
 
   const totalDiscount = order.discount
-  const totalShipFee = Number(order?.total_price) >= 150000 ? 0 : 5000
+  const totalShipFee = Number(order?.total_price) >= 50000 ? 0 : 5000
   // const totalShipFee = order.shipfee
   const finalPrice = Number(order?.total_price) - totalDiscount + totalShipFee
 
@@ -465,7 +465,7 @@ export const OrderSuccessContent = ({
 
   const totalDiscount = order.discount
   // const totalShipFee = order.shipfee
-  const totalShipFee = Number(order?.total_price) >= 150000 ? 0 : 5000
+  const totalShipFee = Number(order?.total_price) >= 50000 ? 0 : 5000
   const finalPrice = Number(order?.total_price) - totalDiscount + totalShipFee
 
   // 결제에 필요한 정보

@@ -52,8 +52,8 @@ export const CartsDetailContent = ({user}: { user: User }) => {
 
     // 할인 주문 금액
     let calcOrderPrice = calcTotalPrice - calcDiscountedPrice
-    // 150000원 이상 무료배송
-    if( calcOrderPrice >= 150000 ) setShippingFee(0)
+    // 50000원 이상 무료배송
+    if( calcOrderPrice >= 50000 ) setShippingFee(0)
     else setShippingFee(5000)
     // 최종 결제 금액
     let calcFinalPrice = calcOrderPrice + shippingFee

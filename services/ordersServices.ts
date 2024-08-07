@@ -69,8 +69,8 @@ export const ordersServices = {
       formData.append("total_quantity", String(total_quantity))
       formData.append("total_count", String(total_count))
       formData.append("discount", String(discount))
-      // ⭐(할인가 기준) 15만원이상 무료배송, 건당 5,000원
-      if( total_discount_price >= 150000 ) shipfee = 0
+      // ⭐(할인가 기준) 5만원이상 무료배송, 건당 5,000원
+      if( total_discount_price >= 50000 ) shipfee = 0
       formData.append("shipfee", String(shipfee))
 
 
