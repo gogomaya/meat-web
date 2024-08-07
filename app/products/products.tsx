@@ -594,7 +594,7 @@ export const ProductsDetailContent = ({product, user}: { product: Product, user:
                     whiteSpace: "nowrap"
                   }}
                 >
-                  150,000원 이상 구매 시 무료배송
+                  50,000원 이상 구매 시 무료배송
                 </strong>
               </div>
             </div>
