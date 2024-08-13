@@ -36,7 +36,6 @@ export const commonServices = {
         "선물세트"
       ],
       cow: [
-        "특상 구이",
         "1＋＋ no.9 특상구이",
         "1＋＋ no.9 구이",
         "국거리/불고기",
